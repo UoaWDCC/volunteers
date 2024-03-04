@@ -18,7 +18,7 @@ FERN
 ## Branch convensions
 1. One Branch per Task
 2. Name branch VLT-<task_number>/what-is-being-done, e.g. VLT-001/add-user-authentication
-
+3. Pull Requests will be into 'development-main' branch as 'main' is deployed
 
 ## Setup Runbook
 
