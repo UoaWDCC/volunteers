@@ -2,11 +2,11 @@
 
 ## Tech Stack
 
-### FERN
-Firebase
-Express
-React
-Nextjs
+FERN
+- Firebase
+- Express
+- React
+- Nextjs
 
 ## Setup Runbook
 
