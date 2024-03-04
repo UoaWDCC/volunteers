@@ -15,6 +15,10 @@ FERN
 3. in ./api run yarn build, then yarn dev (local host backend)
 4. in ./web run yarn build, then yarn dev (local host frontend)
 
+## Branch convensions
+1. One Branch per Task
+2. Name branch VLT-<task_number>/what-is-being-done, e.g. VLT-001/add-user-authentication
+
 ## Setup Runbook
 
 1.  Create a new repository with UoAWDCC as owner
