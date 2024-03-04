@@ -8,6 +8,13 @@ FERN
 - React
 - Nextjs
 
+## How to run locally
+
+1. install node v21.6.2
+2. install yarn
+3. in ./api run yarn build, then yarn dev (local host backend)
+4. in ./web run yarn build, then yarn dev (local host frontend)
+
 ## Setup Runbook
 
 1.  Create a new repository with UoAWDCC as owner
