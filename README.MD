@@ -12,8 +12,8 @@ FERN
 
 1. install node v21.6.2 (or >= v14.17.3)
 2. install yarn
-3. in ./api run yarn build, then yarn dev (local host backend)
-4. in ./web run yarn build, then yarn dev (local host frontend)
+3. in ./api run yarn,  then yarn build, then yarn dev (local host backend)
+4. in ./web run yarn, then yarn build, then yarn dev (local host frontend)
 
 ## Branch convensions
 1. One Branch per Task
