@@ -1,7 +1,7 @@
 # React Template
 
 ## Tech Stack
-Hello I am Jos.
+Hello I am Jos :D
 FERN
 - Firebase
 - Express
