@@ -12,12 +12,12 @@ FERN
 
 1. install node v21.6.2 (or >= v14.17.3)
 2. install yarn
-3. in ./api run yarn build, then yarn dev (local host backend)
-4. in ./web run yarn build, then yarn dev (local host frontend)
+3. in ./api run yarn,  then yarn build, then yarn dev (local host backend)
+4. in ./web run yarn, then yarn build, then yarn dev (local host frontend)
 
 ## Branch convensions
 1. One Branch per Task
-2. Name branch VLT-<task_number>/what-is-being-done, e.g. VLT-001/add-user-authentication
+2. Name branch VOL-<task_number>/what-is-being-done, e.g. VLT-001/add-user-authentication
 3. Pull Requests will be into 'development-main' branch as 'main' is deployed
 
 ## Setup Runbook
