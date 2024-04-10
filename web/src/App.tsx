@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
 import Home from '@pages/Home';
 import MainMenu from '@pages/MainMenu';
+import NotFound from '@pages/NotFound';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: <MainMenu />,
+  },
+  {
+    path: '*',
+    element: <NotFound />,
   },
 ]);
 
