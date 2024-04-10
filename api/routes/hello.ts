@@ -1,23 +1,32 @@
-/* 
-  Example Route File
-*/
-import { Router } from 'express';
-import type { Request, Response } from 'express';
-import { z } from 'zod';
+const express = require("express");
+const router = express.Router();
+import { Request, Response } from "express";
 
-const helloRoutes = Router();
+// testing routers
 
-helloRoutes.get('/:name', async (req: Request, res: Response) => {
-  const Name = z.object({
-    name: z.string(),
-  });
-
-  const result = Name.safeParse(req.params);
-  if (!result.success) return res.status(400).send(result.error);
-
-  const { name }: z.infer<typeof Name> = result.data;
-
-  return res.status(200).send(`Kia Ora ${name}`);
+// get all
+router.get("/", (request: Request, response: Response) => {
+ response.json({ message: "'/' is working to GET ALL" });
 });
 
-export default helloRoutes;
+// get a single one
+router.get("/:id", (request: Request, response: Response) => {
+ response.json({ message: "'/:id' is working to GET a SINGLE one" });
+});
+
+// post a single one
+router.post("/", (request: Request, response: Response) => {
+ response.json({ message: "'/:id' is working to POST a single one" });
+});
+
+// delete a single one
+router.delete("/:id", (request: Request, response: Response) => {
+ response.json({ message: "'/:id' is working to DELETE a single one" });
+});
+
+// update a single one
+router.patch("/:id", (request: Request, response: Response) => {
+ response.json({ message: "'/:id' is working to UPDATE a single one" });
+});
+
+module.exports = router;
