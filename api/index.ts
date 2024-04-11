@@ -4,7 +4,8 @@ import { connect } from 'mongoose';
 import { config } from 'dotenv';
 
 // Import Routers
-import helloRoutes from './routes/hello';
+//import helloRoutes from './routes/hello';
+const helloRoutes = require('./routes/hello') // instead of line 7
 
 const app = express();
 config();
@@ -21,5 +22,5 @@ app.use('/hello', helloRoutes);
 
 const port = Number.parseInt(process.env.PORT || '3000');
 app.listen(port, () => {
-  console.log(`Listening on port ${port}`);
+ console.log(`Listening on port ${port}`);
 });
