@@ -40,7 +40,6 @@
     margin-left: 15px;
 }
 
-
 .sidebar .sidebar-links h3 {
     width: 125px;
     height: 64px;
@@ -57,6 +56,9 @@
     text-decoration: none;
 }
 
+.sidebar .sidebar-links div:hover{
+    background-color: rgba(255, 255, 255, 0.25);
+}
 /* Styles for current, selected link */
 
 .sidebar .sidebar-links .selected {
@@ -69,6 +71,10 @@
 
 .sidebar .sidebar-links .selected h3 {
     color: #5AB7F1;
+}
+
+.sidebar .sidebar-links .selected:hover, .sidebar .sidebar-links .selected .image-div:hover {
+    background-color: white;
 }
 
 /* Style for logout button */
@@ -89,7 +95,5 @@
 }
 
 .sidebar .logout-button:hover {
-
     background-color: rgba(3, 112, 190, 0.7);
-
 }
