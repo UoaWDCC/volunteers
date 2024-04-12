@@ -57,7 +57,6 @@
     text-decoration: none;
 }
 
-
 /* Styles for current, selected link */
 
 .sidebar .sidebar-links .selected {
@@ -70,4 +69,27 @@
 
 .sidebar .sidebar-links .selected h3 {
     color: #5AB7F1;
+}
+
+/* Style for logout button */
+.sidebar .logout-button {
+    display: flex;
+    width: 115px;
+    height: 35px;
+    background-color: rgba(3, 112, 190, 0.38);
+    border-radius: 30px;
+    align-self: center;
+    margin-top: auto;
+    margin-bottom: 35px;
+}
+
+.sidebar .logout-button h3 {
+    font-size: 10px;
+    margin: auto;
+}
+
+.sidebar .logout-button:hover {
+
+    background-color: rgba(3, 112, 190, 0.7);
+
 }

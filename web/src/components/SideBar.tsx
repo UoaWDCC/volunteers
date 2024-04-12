@@ -42,8 +42,12 @@ const SideBar = () => {
                         <h3>Settings</h3>
                     </Link>
                 </div>
-                
             </div>
+
+            <button className='logout-button'>
+                <img src='src/assets/sidebar/logout-icon.svg' alt='logout-icon' />
+                <h3>Log out</h3>
+            </button>
         </div>
      );
 }
