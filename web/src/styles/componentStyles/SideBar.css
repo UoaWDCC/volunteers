@@ -7,3 +7,10 @@
     margin: 2vh 5vh 2vh 3vh;
     border-radius: 30px;
 }
+
+.sidebar .club-logo {
+    height: 68px;
+    width: 68px;
+    margin-top: 8vh;
+    align-self: center;
+}
