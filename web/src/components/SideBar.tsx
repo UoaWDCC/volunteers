@@ -15,7 +15,7 @@ const SideBar = () => {
                 </div>
             
                 <div className="">
-                    <Link to='/discover'>
+                    <Link to='/'>
                         <div className='image-div'><img src='src/assets/sidebar/discover-icon.svg' alt='discover-icon' /></div>
                         <h3>Discover</h3>
                     </Link>
