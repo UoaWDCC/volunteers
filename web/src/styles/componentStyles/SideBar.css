@@ -15,7 +15,7 @@
     align-self: center;
 }
 
-/* Styles for sidebar links when unselected */
+/* Styles for sidebar links in general */
 
 .sidebar .sidebar-links {
     display: flex;
@@ -27,8 +27,10 @@
 .sidebar .sidebar-links div {
     display: flex;
     align-items: center;
-    width: 185px;
+    width: 190px;
     height: 64px;
+    border-radius: 30px 0px 0px 30px;
+    margin: 5px 0px 5px 0px;
 }
 
 .sidebar .sidebar-links .image-div {
@@ -40,13 +42,18 @@
 
 
 .sidebar .sidebar-links h3 {
+    width: 125px;
+    height: 64px;
+    align-content: center;
     font-size: 17px;
     color: white;
     margin-bottom: 0px;
-    margin-left: 10px;
+    margin-left: 15px;
 }
 
 .sidebar .sidebar-links a {
+    display: flex;
+    align-items: center;
     text-decoration: none;
 }
 
@@ -55,6 +62,10 @@
 
 .sidebar .sidebar-links .selected {
     background-color: white;
+}
+
+.sidebar .sidebar-links .selected a {
+    cursor: default;
 }
 
 .sidebar .sidebar-links .selected h3 {
