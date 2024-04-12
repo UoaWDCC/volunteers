@@ -1,7 +1,3 @@
-* {
-    border-color: black;
-}
-
 .sidebar {
     display: flex;
     flex-direction: column;
@@ -19,6 +15,8 @@
     align-self: center;
 }
 
+/* Styles for sidebar links when unselected */
+
 .sidebar .sidebar-links {
     display: flex;
     flex-direction: column;
@@ -29,23 +27,36 @@
 .sidebar .sidebar-links div {
     display: flex;
     align-items: center;
-    width: 190px;
+    width: 185px;
     height: 64px;
 }
 
-.sidebar .sidebar-links img {
+.sidebar .sidebar-links .image-div {
+    justify-content: center;
     width: 35px;
     height: 35px;
-    margin-left: 10px;
+    margin-left: 15px;
 }
+
 
 .sidebar .sidebar-links h3 {
     font-size: 17px;
     color: white;
-    margin-left: 10px;
     margin-bottom: 0px;
+    margin-left: 10px;
 }
 
 .sidebar .sidebar-links a {
     text-decoration: none;
+}
+
+
+/* Styles for current, selected link */
+
+.sidebar .sidebar-links .selected {
+    background-color: white;
+}
+
+.sidebar .sidebar-links .selected h3 {
+    color: #5AB7F1;
 }
