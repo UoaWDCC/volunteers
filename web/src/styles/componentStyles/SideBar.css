@@ -24,7 +24,7 @@
     align-items: flex-end;
 }
 
-.sidebar .sidebar-tabs .unselected-tab, .sidebar .sidebar-tabs .selected {
+.sidebar .sidebar-tabs .unselected-tab :has(h3, .image-div), .sidebar .sidebar-tabs .selected :has(h3, .image-div){
     display: flex;
     align-items: center;
     width: 190px;
@@ -32,6 +32,8 @@
     margin: -5px 0px -5px 0px;
     -webkit-mask: url(src/assets/sidebar/link-tab-mask.svg) no-repeat center;
     mask: url(src/assets/sidebar/link-tab-mask.svg) no-repeat center;
+    -webkit-transition: background-color 0.4s;
+    transition: background-color 0.4s;
 }
 
 .sidebar .sidebar-tabs .image-div {
@@ -50,6 +52,8 @@
     font-size: 17px;
     color: white;
     margin-bottom: 0px;
+    -webkit-transition: color 0.5s;
+    transition: color 0.5s;
 }
 
 .sidebar .sidebar-tabs a {
@@ -58,22 +62,27 @@
     text-decoration: none;
 }
 
+
 .sidebar .sidebar-tabs .unselected-tab :has(h3:hover, .image-div:hover){
     background-color: rgba(255, 255, 255, 0.25);
 }
 
 /* Styles for current, selected link */
 
-.sidebar .sidebar-tabs .selected {
+.sidebar .sidebar-tabs .selected :has(h3, .image-div) {
     background-color: white;
+    -webkit-transition: background-color 0.5s;
+    transition: background-color 0.5s;
 }
 
 .sidebar .sidebar-tabs .selected a {
     cursor: default;
 }
 
-.sidebar .sidebar-tabs .selected h3 {
+.sidebar .sidebar-tabs .selected :has(h3, .image-div) h3 {
     color: #5AB7F1;
+    -webkit-transition: color 0.4s;
+    transition: color 0.4s;
 }
 
 
@@ -87,6 +96,8 @@
     align-self: center;
     margin-top: auto;
     margin-bottom: 35px;
+    -webkit-transition: background-color 0.4s;
+    transition: background-color 0.4s;
 }
 
 .sidebar .logout-button h3 {
