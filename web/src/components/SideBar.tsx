@@ -10,7 +10,7 @@ const SideBar = () => {
         <div className="sidebar">
             <img className='club-logo' src='src/assets/club-logo.svg' alt='club-logo' />
 
-            <div className="sidebar-links">
+            <div className="sidebar-links"> 
                 <div className={selectedTab === "dashboard" ? "selected" : "" }>
                     <Link onClick={() => setSelectedTab("dashboard")} to='/'>
                         <div className='image-div'><img src='src/assets/sidebar/dashboard-icon.svg' alt='dashboard-icon' /></div>
