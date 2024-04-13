@@ -17,70 +17,65 @@
 
 /* Styles for sidebar links in general */
 
-.sidebar .sidebar-links {
+.sidebar .sidebar-tabs {
     display: flex;
     flex-direction: column;
     margin-top: 5vh;
     align-items: flex-end;
 }
 
-.sidebar .sidebar-links div {
+.sidebar .sidebar-tabs .unselected-tab, .sidebar .sidebar-tabs .selected {
     display: flex;
     align-items: center;
     width: 190px;
-    height: 127px;
-    margin: -25px -5px -25px 0px;
+    height: 84px;
+    margin: -5px 0px -5px 0px;
     -webkit-mask: url(src/assets/sidebar/link-tab-mask.svg) no-repeat center;
     mask: url(src/assets/sidebar/link-tab-mask.svg) no-repeat center;
 }
 
-.sidebar .sidebar-links .image-div {
-    justify-content: center;
-    width: 35px;
-    height: 35px;
-    margin-left: 15px;
+.sidebar .sidebar-tabs .image-div {
+    width: 65px;
+    height: 65px;
 }
 
-.sidebar .sidebar-links h3 {
+.sidebar .sidebar-tabs .image-div img {
+    margin: 13px auto 0px auto;
+}
+
+.sidebar .sidebar-tabs h3 {
     width: 125px;
     height: 64px;
     align-content: center;
     font-size: 17px;
     color: white;
     margin-bottom: 0px;
-    margin-left: 15px;
 }
 
-.sidebar .sidebar-links a {
+.sidebar .sidebar-tabs a {
     display: flex;
     align-items: center;
     text-decoration: none;
 }
 
-.sidebar .sidebar-links div:hover{
+.sidebar .sidebar-tabs .unselected-tab :has(h3:hover, .image-div:hover){
     background-color: rgba(255, 255, 255, 0.25);
 }
 
-.sidebar .sidebar-links .image-div:hover {
-    background-color: transparent;
-}
 /* Styles for current, selected link */
 
-.sidebar .sidebar-links .selected {
+.sidebar .sidebar-tabs .selected {
     background-color: white;
 }
 
-.sidebar .sidebar-links .selected a {
+.sidebar .sidebar-tabs .selected a {
     cursor: default;
 }
 
-.sidebar .sidebar-links .selected h3 {
+.sidebar .sidebar-tabs .selected h3 {
     color: #5AB7F1;
 }
 
-.sidebar .sidebar-links .selected:hover, .sidebar .sidebar-links .selected .image-div:hover {
-    background-color: white;
-}
 
 /* Style for logout button */
 .sidebar .logout-button {
