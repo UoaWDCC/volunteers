@@ -1,0 +1,129 @@
+.heading1,
+.hours h2,
+.shifts h2 {
+  color: #323232;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 2.1vw;
+  margin: 0px;
+}
+
+.heading3,
+.hours p,
+.shifts p {
+  color: #323232;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 1vw;
+  margin: 0.4vw 0vw;
+}
+
+.hour-counter {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 3.5em;
+  max-width: 45%; /* maying using em/rem would be better here? but then CSS refactor would be needed*/
+  margin: 0 auto;
+  align-items: center;
+  flex-wrap: no-wrap;
+  padding: 2% 3%;
+}
+
+.user-on-new-line {
+  display: block;
+}
+
+.see-more {
+  background-color: #3c9ddd;
+  border-radius: 18px;
+  padding: 1.8% 3.5%;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.6vw;
+  transition: all 400ms ease;
+}
+
+.see-more:hover {
+  background-color: #307caf;
+  text-decoration: none;
+}
+
+.hour-counter .my-stats {
+  margin-left: auto;
+  display: flex;
+}
+
+.shifts,
+.hours {
+  background-color: #f7f7fb;
+  border-radius: 20%;
+  padding: 1vw 2.8vw;
+  text-align: center;
+  margin-left: 2vw;
+}
+
+/* Scaling for 1366x768 monitors */
+@media screen and (max-width: 1366px) {
+  .shifts h2,
+  .hours h2 {
+    font-size: 3vw;
+  }
+
+  .shifts p,
+  .hours p {
+    font-size: 1.5vw;
+  }
+
+  .heading1 {
+    font-size: 2.5vw;
+  }
+
+  .heading3 {
+    font-size: 1.5vw;
+  }
+
+  .my-stats {
+    flex-direction: column;
+  }
+
+  .hour-counter {
+    padding: 1% 4%;
+  }
+
+  .shifts,
+  .hours {
+    margin: 10px;
+  }
+
+  .see-more {
+    font-size: 1.2vw;
+  }
+}
+
+/* Scaling for 1280x1024 monitors */
+@media screen and (max-width: 1280px) {
+  .shifts h2,
+  .hours h2 {
+    font-size: 3vw;
+  }
+
+  .shifts p,
+  .hours p {
+    font-size: 1.4vw;
+  }
+
+  .heading1 {
+    font-size: 2.8vw;
+  }
+
+  .heading3 {
+    font-size: 2vw;
+  }
+}
+
+/* Scaling for teeny weeny winy phones and stuff */
+@media screen and (max-width: 800px) {
+  .hour-counter {
+    border-radius: 2.8em;
+  }
+}
