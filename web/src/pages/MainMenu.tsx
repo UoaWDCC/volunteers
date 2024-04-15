@@ -1,11 +1,14 @@
 import NavBar from '../components/NavBar'
-
+import Footer from '../components/Footer';
 import '../styles/pageStyles/MainMenu.css';
 
 
 function MainMenu() {
   return (
-    <NavBar />
+    <div className="MainMenu">
+      <NavBar />
+      <Footer />
+    </div>
   );
 }
 
