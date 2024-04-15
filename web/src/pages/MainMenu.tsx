@@ -1,4 +1,6 @@
 import { useEffect, useState } from 'react';
+import NavBar from '../components/NavBar'
+import Footer from '../components/Footer';
 import '../styles/pageStyles/MainMenu.css';
 
 function MainMenu() {
@@ -22,7 +24,7 @@ function MainMenu() {
   }, []);
 
   return (
-    <div>
+    <div className="MainMenu">
       {/* Render testList data */}
       <h1>Test List</h1>
       <ul>
@@ -30,6 +32,7 @@ function MainMenu() {
           <li key={item.id}>{item.name} - {item.number}</li>
         ))}
       </ul>
+      <Footer />
     </div>
   );
 }
