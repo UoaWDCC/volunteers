@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import '../styles/pageStyles/MainMenu.css';
 
 function MainMenu() {
-  const [testList, setTestList] = useState([]);
+  const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
 
   useEffect(() => {
     const fetchTestList = async () => {
@@ -27,7 +27,7 @@ function MainMenu() {
       <h1>Test List</h1>
       <ul>
         {testList.map((item) => (
-          <li key={item.id}>{item.name}</li>
+          <li key={item.id}>{item.name} - {item.number}</li>
         ))}
       </ul>
     </div>
