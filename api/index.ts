@@ -4,8 +4,8 @@ import { connect } from 'mongoose';
 import { config } from 'dotenv';
 
 // Import Routers
-//import helloRoutes from './routes/hello';
-const helloRoutes = require('./routes/hello') // instead of line 7
+//import routes from './routes/endpoints';
+const routes = require('./routes/endpoints') // instead of line 7
 
 const app = express();
 config();
@@ -18,7 +18,7 @@ app.use(cors());
 app.use(express.static('public'));
 
 // Routes
-app.use('/hello', helloRoutes);
+app.use('/api', routes);
 
 const port = Number.parseInt(process.env.PORT || '3000');
 app.listen(port, () => {
