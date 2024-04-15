@@ -1,11 +1,16 @@
-import NavBar from '../components/NavBar'
+import { useEffect, useState} from 'react';
+
 
 import '../styles/pageStyles/MainMenu.css';
 
-
 function MainMenu() {
-  return (
-    <NavBar />
+
+
+
+  return (    
+    <div>
+      Hi
+    </div>
   );
 }
 
