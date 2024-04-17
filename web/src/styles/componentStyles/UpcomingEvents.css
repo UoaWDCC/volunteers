@@ -1,0 +1,45 @@
+
+.upcoming-events {
+  display: flex;
+  flex-direction: column;
+  background: white;
+  height: 96vh;
+  width: 275px;
+  margin: 2vh 5vh 2vh 3vh;
+  border-radius: 30px;
+  font-family: Arial;
+  font-weight: lighter;
+}
+.heading {
+    margin-left: 1rem;
+    margin-top: 0.8rem;
+}
+
+.events {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 20%;
+    overflow: scroll;
+    margin-left: 1rem;
+    margin-right: 1rem;
+}
+
+.header, .below-header {
+    padding-left: 2rem;
+    margin: 0;
+}
+
+.header {
+    padding-top: 4vh;
+    color: black;
+    font-size:38px;
+    line-height: 1.15;
+}
+.below-header {
+    color: black;
+    font-size: 17px;
+    line-height: 1.15;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
