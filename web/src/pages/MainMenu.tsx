@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import NavBar from '../components/NavBar'
 import Footer from '../components/Footer';
 import '../styles/pageStyles/MainMenu.css';
-import UpcomingEvents from '@components/UpcomingEvents';
 
 function MainMenu() {
   const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
@@ -27,7 +26,6 @@ function MainMenu() {
   return (
     <div className="MainMenu">
       {/* Render testList data */}
-      <UpcomingEvents/>
       <ul>
         {testList.map((item) => (
           <li key={item.id}>{item.name} - {item.number}</li>
