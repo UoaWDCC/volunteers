@@ -1,0 +1,119 @@
+.container {
+  display: flex;
+  background-color: #ffffff;
+  border-radius: 3.5em;
+  margin: 10px;
+  align-items: center;
+  flex-wrap: no-wrap;
+  position: relative;
+  padding: 1;
+  flex-direction: column;
+  height: 503px;
+  border: 1px solid red;
+}
+
+.div1{
+  display: flex;
+  padding: 10px;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: absolute;
+  top: 0px;
+  border: 1px solid red;
+  width: 779px;
+  align-items: center;
+}
+
+header {
+  background-color: #f0f0f0;
+  padding: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+h1 {
+  color:#323232;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 2.1vw;
+  margin: 100px;
+  top: 0;
+  left: 0;
+}
+
+
+.div2 {
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0px;
+  width: 779px;
+  border: 1px solid red;
+}
+
+.card {
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  margin: 10px;
+  padding: 20px;
+  width: 192px;
+  height: 348px;background: url('https://via.placeholder.com/192x348');
+  align-items: center;
+}
+
+.card h2 {
+  margin-top: 0;
+}
+
+.details {
+  background-color: #f7f7fb;
+  border-radius: 20%;
+  position: absolute;
+  bottom: 8px;
+  text-align: left;
+  width: 172px;
+  height: 105px;
+}
+
+.details h2 {
+  color: #323232;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 15px;
+  margin: 5px;
+  margin-left: 15px;
+}
+
+.details p {
+  color: #323232;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 10px;
+  margin: 0px;
+  margin-left: 15px;
+}
+
+.more-info {
+  background-color: #3c9ddd;
+  border-radius: 18px;
+  padding: 1.8% 3.5%;
+  text-decoration: none;
+  color: #ffffff;
+  font-size: 0.6vw;
+  transition: all 400ms ease;
+  width: 67px;
+  height: 24px;
+  bottom: 10px;
+  right: 10px;
+  float: right;
+  position: absolute;
+}
+
+.more-info:hover {
+  background-color: #307caf;
+  text-decoration: none;
+}
