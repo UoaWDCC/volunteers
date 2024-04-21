@@ -1,16 +1,19 @@
-import { initializeApp } from "firebase/app";
-import { db } from "../config/firebase";
-import { config } from 'dotenv';
+import { db } from '../config/firebase';
+import { collection, getDocs } from 'firebase/firestore';
+import { Request, Response } from 'express';
 
-config();
 
-const firebaseConfig = {
-    apiKey: process.env.apiKey,
-    authDomain: process.env.authDomain,
-    projectId: process.env.projectId,
-    storageBucket: process.env.storageBucket,
-    messagingSenderId: process.env.messagingSenderId,
-    appId: process.env.appId,
-    measurementId: process.env.measurementId
+const colRef = collection(db, 'users');
+
+async function getUsers(req: Request, res: Response): Promise<void> {
+    const docs = await getDocs(colRef);
+    const users = docs.docs.map(doc => doc.data());
+    
+    res.json(users);
+    
+    // Print out the users for testing purposes
+    console.log(users);
+
 }
 
+export { getUsers };
