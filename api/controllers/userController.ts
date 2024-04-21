@@ -3,11 +3,11 @@ import { collection, getDocs } from 'firebase/firestore';
 import { Request, Response } from 'express';
 
 
-const colRef = collection(db, 'users');
+const colRef = collection(db, "users");
 
 async function getUsers(req: Request, res: Response): Promise<void> {
-    const docs = await getDocs(colRef);
-    const users = docs.docs.map(doc => doc.data());
+    const userDocs = await getDocs(colRef);
+    const users = userDocs.docs.map(doc => doc.data());
     
     res.json(users);
     
