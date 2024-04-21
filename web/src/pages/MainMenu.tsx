@@ -26,7 +26,6 @@ function MainMenu() {
   return (
     <div className="MainMenu">
       <Header />
-      {/* <NavBar /> */}
       {/* Render testList data */}
       <ul>
         {testList.map((item) => (
