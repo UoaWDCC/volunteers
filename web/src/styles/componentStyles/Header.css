@@ -13,17 +13,22 @@
   padding: 20px 30px;
 }
 
-.login {
+.links {
+  display: flex;
+  flex-direction: row-reverse;
   font-size: 14px;
   color: black;
+  margin: 0;
+}
+
+.button {
   padding: 10px 20px;
   border-radius: 8px;
   border-color: #2D4F8F;
   border-width: 1px;
-  margin: 0;
 }
 
-.login:hover {
+.button:hover {
   text-decoration: underline;
   cursor: pointer;
 }

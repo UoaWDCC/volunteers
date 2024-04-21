@@ -10,9 +10,9 @@ function Header() {
         </div>
 
         <div className="header-right">
-          <div className="buttons">
-            <p className="login">Sign In</p>
-          </div>
+          <ul className="links">
+            <li className="button">Sign in</li>
+          </ul>
         </div>
       </div>
     </header>
