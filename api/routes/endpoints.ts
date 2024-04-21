@@ -4,6 +4,7 @@ const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
 
+import userEndpoints from './api/users';
 
 import { db } from '../config/firebase';
 import { collection, getDocs } from 'firebase/firestore';
@@ -20,6 +21,10 @@ router.get("/getTest", async (req: Request, res: Response) => {
         res.status(500).json({ error: "Internal server error" });
     }
 });
+
+
+// User entity endpoints
+router.use("/", userEndpoints);
 
 
 // testing routers
@@ -48,9 +53,5 @@ router.delete("/:id", (request: Request, response: Response) => {
 router.patch("/:id", (request: Request, response: Response) => {
  response.json({ message: "'/:id' is working to UPDATE a single one" });
 });
-
-
-
-
 
 module.exports = router;
