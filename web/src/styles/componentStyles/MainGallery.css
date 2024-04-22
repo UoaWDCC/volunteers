@@ -1,0 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+* {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.gallery {
+  position: relative;
+  filter: saturate(0.7); /* ADJUST OR REMOVE THIS AS NEEDED */
+}
+
+/* displaying image gallery correctly */
+.image {
+  display: flex;
+  overflow: hidden;
+  aspect-ratio: 8/2;
+  border-radius: 3em; /* idk why border radius is all wack when using %*/
+}
+
+.picture {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  flex-shrink: 0;
+  flex-grow: 0;
+  transition: translate 700ms ease-in-out;
+}
+
+/* gallery buttons */
+.back,
+.forward {
+  background-color: #f7f7fb;
+  color: #000000;
+  border-radius: 50%;
+  margin-right: 4%;
+  margin-left: 4%;
+  scale: 0.9;
+  height: 3.8em;
+  box-shadow: 0.1em 0.2em 0.3em rgba(0, 0, 0, 0.3);
+  transition: 200ms ease-in-out, transform 80ms ease-in-out;
+}
+
+.back {
+  position: absolute;
+  top: 44%;
+  left: 0%;
+}
+
+.forward {
+  position: absolute;
+  top: 44%;
+  right: 0%;
+}
+
+.back:hover,
+.forward:hover {
+  background-color: #000000;
+  color: #f7f7fb;
+}
+
+.back:active,
+.forward:active {
+  background-color: rgba(46, 46, 46, 0.61);
+  transform: translate3d(0px, 3px, 0);
+}
+
+/* event details */
+.details {
+  position: absolute;
+  left: 0%;
+  bottom: 0%;
+  color: #000000;
+  margin-left: 4%;
+  margin-bottom: 1.5%;
+}
+
+.text {
+  margin-bottom: 0.5em;
+}
+
+.details h1 {
+  display: inline-block;
+  font-size: 2.3em;
+  font-weight: 600;
+  background-color: rgba(247, 247, 251, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: 0.4em;
+  padding: 0.3em 0.5em;
+  margin: 0;
+  box-shadow: 0.1em 0.2em 0.3em rgba(0, 0, 0, 0.2);
+}
+
+.details p {
+  max-width: 70ch;
+  max-height: 3em;
+  font-size: 1.2em;
+  font-weight: 500;
+  margin: 0;
+  margin-left: 1em;
+}
+
+/* see more events button */
+.see-more {
+  background-color: #f7f7fb;
+  backdrop-filter: blur(8px);
+  color: #000000;
+  border-radius: 10em;
+  font-size: 0.7em;
+  font-weight: 600;
+  margin-left: 1em;
+  box-shadow: 0.1em 0.2em 0.3em rgba(0, 0, 0, 0.5);
+  transition: 200ms ease-in-out, transform 80ms ease-in-out;
+}
+
+.see-more:hover {
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.see-more:active {
+  transform: translate3d(0px, 3px, 0);
+  background-color: rgba(46, 46, 46, 0.61);
+}
+
+.poo {
+  overflow-wrap: break-word;
+}
