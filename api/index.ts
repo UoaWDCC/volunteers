@@ -1,6 +1,5 @@
 import express, { json } from 'express';
 import cors from 'cors';
-import { connect } from 'mongoose';
 import { config } from 'dotenv';
 
 // Import Routers
@@ -9,9 +8,6 @@ const routes = require('./routes/endpoints') // instead of line 7
 
 const app = express();
 config();
-
-// const databaseUrl: string = process.env.DATABASE_URL!;
-// connect(databaseUrl);
 
 app.use(json());
 app.use(cors());
