@@ -1,5 +1,5 @@
 import { db } from '../config/firebase';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc } from 'firebase/firestore';
 import { Request, Response } from 'express';
 
 
@@ -42,4 +42,14 @@ async function addUser(req: Request, res: Response): Promise<void> {
     console.log(newUser.id)
 }
 
-export { getUsers, addUser };
+async function deleteUser(req: Request, res: Response): Promise<void> {
+    const userRef = doc(db, "users", req.body.id);
+
+    await deleteDoc(userRef);
+
+    res.json("User deleted");
+
+    // Print out message for testing purposes
+    console.log("User deleted");
+}
+export { getUsers, addUser, deleteUser };
