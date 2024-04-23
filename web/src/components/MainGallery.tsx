@@ -8,6 +8,7 @@ interface MainGalleryProps {
   data: { imageSrc: string; alt: string; title: string; description: string }[]
 }
 
+// data is an array of objects stored in json
 const MainGallery = ({ data }: MainGalleryProps) => {
   
   // set the index of the current event to display
