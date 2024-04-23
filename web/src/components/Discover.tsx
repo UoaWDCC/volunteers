@@ -1,50 +1,21 @@
 // WelcomeStats
 import "../styles/componentStyles/Discover.css";
-
+import DiscoverCard from "./DiscoverCard";
 function Discover() {
   return (
   <div className="container">
-    <div className = "div1">
-      <h1 className="Discover">Discover</h1>
-      <button className="view-all">View all</button>
+     <div className = "div1">
+      <div className="LeftContent">
+        <h1 className="Discover">Discover</h1>
+      </div>
+      <div className="rightContent">
+        <button className="view-all">View all</button>
+      </div>
     </div>
     <div className="div2">
-        <div className="card">
-          <div className="details">
-            <h2>Produce Packer</h2>
-            <p>Company</p>
-            <p>Day</p>
-            <p>Time</p>
-            <p>Hours</p>
-            <button className="more-info">
-              More info
-            </button>
-          </div>
-        </div>
-        <div className="card">
-          <div className="details">
-            <h2>Produce Packer</h2>
-            <p>Company</p>
-            <p>Day</p>
-            <p>Time</p>
-            <p>Hours</p>
-            <button className="more-info">
-              More info
-            </button>
-          </div>
-        </div>
-        <div className="card">
-          <div className="details">
-            <h2>Produce Packer</h2>
-            <p>Company</p>
-            <p>Day</p>
-            <p>Time</p>
-            <p>Hours</p>
-            <button className="more-info">
-              More info
-            </button>
-          </div>
-        </div>
+        <DiscoverCard/>
+        <DiscoverCard/>
+        <DiscoverCard/>
     </div>
   </div>
   );
