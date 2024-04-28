@@ -2,11 +2,11 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
-    margin: 10px;
-    padding: 20px;
+    padding: 5px;
     width: 192px;
     height: 348px;background: url('https://via.placeholder.com/192x348');
     align-items: center;
+    position: absolute;
   }
   
   .card h2 {

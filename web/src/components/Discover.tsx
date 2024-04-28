@@ -3,7 +3,7 @@ import "../styles/componentStyles/Discover.css";
 import DiscoverCard from "./DiscoverCard";
 function Discover() {
   return (
-  <div className="container">
+  <div className="discovery-container">
      <div className = "div1">
       <div className="LeftContent">
         <h1 className="Discover">Discover</h1>
