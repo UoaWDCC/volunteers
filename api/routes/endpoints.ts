@@ -4,6 +4,9 @@ const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
 
+
+import userEndpoints from './api/users';
+
 import { db } from "../config/firebase";
 import {
   collection,
@@ -28,6 +31,10 @@ router.get("/getTest", async (req: Request, res: Response) => {
 
 // Collection reference
 const colRef = collection(db, "events");
+
+// User entity endpoints
+router.use("/", userEndpoints);
+
 
 // testing routers
 
@@ -71,3 +78,4 @@ router.patch("/:id", (request: Request, response: Response) => {
 });
 
 module.exports = router;
+
