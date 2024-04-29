@@ -14,15 +14,18 @@
     "@tanstack/react-query": "^5.18.1",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
+    "add": "^2.0.6",
     "axios": "^1.6.7",
     "firebase": "^10.11.0",
     "react": "^18.2.0",
     "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
+    "react-icons": "^5.1.0",
     "react-router": "^6.22.0",
     "react-router-dom": "^6.22.0",
     "tailwind-merge": "^2.2.1",
     "universal-cookie": "^7.0.2",
+    "yarn": "^1.22.22",
     "zod": "^3.22.4"
   },
   "devDependencies": {
