@@ -1,0 +1,39 @@
+.header {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+}
+
+.header-content {
+  display: flex;
+  flex-grow: 1;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1260px;
+  padding: 20px 30px;
+}
+
+.links {
+  display: flex;
+  flex-direction: row-reverse;
+  font-size: 14px;
+  color: black;
+  margin: 0;
+}
+
+.button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border-color: #2D4F8F;
+  border-width: 1px;
+}
+
+.button:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+img {
+  width: 150px;
+  height: auto;
+}
