@@ -64,4 +64,4 @@ function Sponsors() {
         </div>
     );
 }
-export default Sponsors
+export default Sponsors;
