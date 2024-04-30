@@ -34,7 +34,7 @@ function MainMenu() {
           <li key={item.id}>{item.name} - {item.number}</li>
         ))}
       </ul>
-      {/*<MainGallery data={events} />*/}
+      <MainGallery data={events} />
       <Sponsors/>
       <Footer />
     </div>
