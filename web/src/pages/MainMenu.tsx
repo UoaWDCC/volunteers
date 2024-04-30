@@ -4,7 +4,7 @@ import Footer from '../components/Footer';
 import '../styles/pageStyles/MainMenu.css';
 import MainGallery from '@components/MainGallery';
 import { events } from '../data/MainGalleryEvents.json'; // Import events data from JSON file to display on main page gallery, THIS MAY CHANGE IN THE FUTURE
-
+import Sponsors from '@components/Sponsors';
 function MainMenu() {
   const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
 
@@ -35,6 +35,7 @@ function MainMenu() {
         ))}
       </ul>
       <MainGallery data={events} />
+      <Sponsors/>
       <Footer />
     </div>
   );
