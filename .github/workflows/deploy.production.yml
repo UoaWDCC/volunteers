@@ -31,4 +31,3 @@ jobs:
           messagingSenderId: ${{ secrets.FLY_DB_MESSAGINGSENDERID }}
           projectId: ${{ secrets.FLY_DB_PROJECTID }}
           storageBucket: ${{ secrets.FLY_DB_STORAGEBUCKET }}
-      - run: echo "appID is ${{secrets.FLY_DB_APIKEY}}"
