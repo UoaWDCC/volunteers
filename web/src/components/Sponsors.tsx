@@ -1,5 +1,4 @@
 import "../styles/componentStyles/Sponsors.css";
-import SponsorList from "../data/SponsorList.json";
 import SponsorDiscount from "./SponsorDiscount";
 import {useState} from "react";
 
