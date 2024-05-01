@@ -11,7 +11,6 @@ const firebaseConfig = {
   measurementId:"G-TLM9P3DCKS",
   };
 
-// Check if Firebase is already initialized to prevent re-initialization
 const app = initializeApp(firebaseConfig);
 
 // Export Firebase authentication service
