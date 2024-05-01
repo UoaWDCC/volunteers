@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
 import MainMenu from '@pages/MainMenu';
 import NotFound from '@pages/NotFound';
+import Dashboard from '@pages/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,10 @@ const router = createBrowserRouter([
     path: '*',
     element: <NotFound />,
   },
+  {
+    path: '/dashboard',
+    element: <Dashboard />
+  }
 ]);
 
 export default function App() {
