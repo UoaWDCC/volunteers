@@ -1,4 +1,5 @@
-import "../styles/componentStyles/Header.css"
+import "../styles/componentStyles/Header.css";
+import { handleGoogle } from "../../services/firebase.tsx";
 
 function Header() {
   return (
@@ -11,7 +12,7 @@ function Header() {
 
         <div className="header-right">
           <ul className="links">
-            <li className="button">Sign in</li>
+            <li onClick={ handleGoogle } className="button">Sign in</li>
           </ul>
         </div>
       </div>
