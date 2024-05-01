@@ -1,7 +1,11 @@
 import '../styles/componentStyles/MainPageButtonHeadings.css'
 
-const MainPageButtonHeadings = ({heading = 'defaultText', onClick}) =>{
-    // default onClick function
+interface Props {
+    heading?: string;
+    onClick?: () => void;
+  }
+
+  const MainPageButtonHeadings: React.FC<Props> = ({ heading = 'defaultText', onClick }) => {
     const defaultOnClick = () =>{
         console.log('default action');
     };
