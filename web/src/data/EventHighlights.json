@@ -1,0 +1,34 @@
+{
+  "eventHighlights" : [
+    {
+      "id": 1,
+      "title": "Launch Night 1",
+      "description": "Random description about the event fbasdjklfnjdkslfhnjdaklsfhbjdklasfbjkaldsfjbkldasjklfbdjiaslkvbjdklmsajvbkldasjvbkla",
+      "imgA": "https://picsum.photos/288/346",
+      "imgB": "https://picsum.photos/439/215",
+      "imgC": "https://picsum.photos/439/215",
+      "imgD": "https://picsum.photos/179/215",
+      "imgE": "https://picsum.photos/192/241"
+    },
+    {
+      "id": 2,
+      "title": "Launch Night 2",
+      "description": "Random description about the event fbasdjklfnjdkslfhnjdaklsfhbjdklasfbjkaldsfjbkldasjklfbdjiaslkvbjdklmsajvbkldasjvbkla",
+      "imgA": "https://picsum.photos/200/300",
+      "imgB": "https://picsum.photos/200/300",
+      "imgC": "https://picsum.photos/200/300",
+      "imgD": "https://picsum.photos/200/300",
+      "imgE": "https://picsum.photos/200/300"
+    },
+    {
+      "id": 3,
+      "title": "Launch Night 3",
+      "description": "Random description about the event fbasdjklfnjdkslfhnjdaklsfhbjdklasfbjkaldsfjbkldasjklfbdjiaslkvbjdklmsajvbkldasjvbkla",
+      "imgA": "https://picsum.photos/200/300",
+      "imgB": "https://picsum.photos/200/300",
+      "imgC": "https://picsum.photos/200/300",
+      "imgD": "https://picsum.photos/200/300",
+      "imgE": "https://picsum.photos/200/300"
+    }
+]
+}
