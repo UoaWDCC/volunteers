@@ -29,31 +29,51 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
 
   return (
     <div className="event-highlights">
-      <div className="highlights-heading">
-        <MainPageButtonHeadings heading="Event Highlights" />
-      </div>
 
-      {data.map((event, index) => (
-        <div className={(index === eventIndex ? "event-slides-active" : "event-slides")} key={index}>
-          <img src={event.imgA} alt="" className="imgA" />
-          <img src={event.imgB} alt="" className="imgB" />
-          <img src={event.imgC} alt="" className="imgC" />
-          <img src={event.imgD} alt="" className="imgD" />
-          <img src={event.imgE} alt="" className="imgE" />
+      {/* <div className="highlights-heading">
+          <MainPageButtonHeadings heading="Event Highlights" />
+        </div> */}
+
+      <div className="slider">
+        {data.map((event, index) => (
+          <div className="event-slides" key={index} style={{ translate: `${-100 * eventIndex}%` }}>
+            <div className="highlights-heading">
+              <MainPageButtonHeadings heading="Event Highlights" />
+            </div>
+
+            <div className="images">
+              <div className="imgA">
+                <img src={event.imgA} alt="" />
+              </div>
+              <div className="imgB">
+                <img src={event.imgB} alt="" />
+              </div>
+              <div className="imgC">
+                <img src={event.imgC} alt="" />
+              </div>
+              <div className="imgD">
+                <img src={event.imgD} alt="" />
+              </div>
+              <div className="imgE">
+                <img src={event.imgE} alt="" />
+              </div>
+            </div>
+
+            <h1 className="highlights-title">{event.title}</h1>
+            <p className="highlights-description">{event.description}</p>
+          </div>
+        ))}
+
+        <div className='buttons'>
+          <button className='back' onClick={() => handleBack()}>
+            <IoIosArrowBack size={30} />
+          </button>
+          <button className='forward' onClick={() => handleForward()}>
+            <IoIosArrowForward size={30} />
+          </button>
         </div>
-      ))}
 
-      <div className='buttons'>
-        <button className='back' onClick={() => handleBack()}>
-          <IoIosArrowBack size={30} />
-        </button>
-        <button className='forward' onClick={() => handleForward()}>
-          <IoIosArrowForward size={30} />
-        </button>
       </div>
-
-      <h1 className="highlights-title">{data[eventIndex].title}</h1>
-      <p className="highlights-description">{data[eventIndex].description}</p>
     </div>
   )
 }

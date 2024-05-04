@@ -1,62 +1,8 @@
 .event-highlights {
-  position: relative;
   display: flex;
-  margin: auto;
-  margin-top: 4%;
-  width: 100%;
-  background-color: white;
+  position: relative;
+  margin: 4% 2%;
   aspect-ratio: 1.76/1;
-}
-
-.event-slides {
-  inset: 0;
-  opacity: 0;
-}
-
-.event-slides-active {
-  opacity: 1;
-}
-
-.event-slides-active img {
-  border-radius: 30px;
-  position: absolute;
-  filter: saturate(0.7);
-}
-
-.imgA {
-  top: 10%;
-  left: 5%;
-  width: 20%;
-}
-
-.imgB {
-  bottom: 5%;
-  left: 5%;
-  width: 35%;
-}
-
-.imgC {
-  top: 0%;
-  right: -8%;
-  width: 35%;
-}
-
-.imgD {
-  top: 40%;
-  right: 25%;
-  width: 10%;
-}
-
-.imgE {
-  right: 5%;
-  bottom: 10%;
-  width: 12%;
-}
-
-.highlights-heading {
-  position: absolute;
-  left: 50%; top: 10%;
-  transform: translate(-50%);
 }
 
 .forward {
@@ -67,24 +13,86 @@
   margin-left: 2%;
 }
 
+.slider {
+  width: 100%;
+  display: flex;
+  overflow: hidden;
+}
+
+.event-slides {
+  position: relative;
+  flex: 1 0 100%;
+  overflow: hidden;
+  transition: translate 700ms ease-in-out;
+  border: 2px solid black;
+}
+
+.highlights-heading {
+  left:50%; top: 5%;
+  transform: translate(-50%);
+  position: absolute;
+}
+
+.event-slides .images div {
+  position: absolute;
+}
+
+.event-slides img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+  border-radius: 25px;
+}
+
+.imgA {
+  top: 5%;
+  left: 2.5%;
+  width: 20%;
+  height: 40%;
+}
+
+.imgB {
+  bottom: 5%;
+  left: 5%;
+  width: 35%;
+  height: 30%;
+}
+
+.imgC {
+  top: 0%;
+  right: -5%;
+  width: 35%;
+  height: 30%;
+}
+
+.imgD {
+  top: 35%;
+  right: 25%;
+  width: 10%;
+  height: 20%;
+}
+
+.imgE {
+  bottom: 10%;
+  right: 5%;
+  width: 12.5%;
+  height: 25%;
+}
+
 .highlights-title {
   color: black;
   position: absolute;
-  left: 50%; top: 55%;
+  left: 45%; bottom: 30%;
   width: 15%;
   text-align: center;
-  transform: translate(-50%);
-  border: 2px solid black;
 }
 
 .highlights-description {
   color: black;
   position: absolute;
-  left: 50%; top: 40%;
-  width: 30%;
+  left: 35%; top: 40%;
+  width: 25%;
   text-wrap: wrap;
   word-wrap: break-word;
   text-align: center;
-  transform: translate(-60%);
-  border: 2px solid black;
 }
