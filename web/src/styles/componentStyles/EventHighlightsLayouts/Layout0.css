@@ -1,0 +1,52 @@
+.layout-0 .imgA {
+  top: 5%;
+  left: 2.5%;
+  width: 20%;
+  height: 40%;
+}
+
+.layout-0 .imgB {
+  bottom: 5%;
+  left: 5%;
+  width: 35%;
+  height: 30%;
+}
+
+.layout-0 .imgC {
+  top: 0%;
+  right: -5%;
+  width: 35%;
+  height: 30%;
+}
+
+.layout-0 .imgD {
+  top: 35%;
+  right: 25%;
+  width: 10%;
+  height: 20%;
+}
+
+.layout-0 .imgE {
+  bottom: 10%;
+  right: 5%;
+  width: 12.5%;
+  height: 25%;
+}
+
+.layout-0 .highlights-title {
+  color: black;
+  position: absolute;
+  left: 45%; bottom: 25%;
+  width: 15%;
+  text-align: center;
+}
+
+.layout-0 .highlights-description {
+  color: black;
+  position: absolute;
+  left: 35%; top: 40%;
+  width: 25%;
+  text-wrap: wrap;
+  word-wrap: break-word;
+  text-align: center;
+}

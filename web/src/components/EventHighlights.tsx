@@ -1,7 +1,9 @@
 import { useState } from "react"
 import MainPageButtonHeadings from "./MainPageButtonHeadings"
-import "../styles/componentStyles/EventHighlights.css"
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io"
+import "../styles/componentStyles/EventHighlights.css"
+import "../styles/componentStyles/EventHighlightsLayouts/Layout0.css"
+import "../styles/componentStyles/EventHighlightsLayouts/Layout1.css"
 
 interface EventHighlightProps {
   data: {
@@ -27,16 +29,18 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
     setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1))
   }
 
+  const layoutHandler = (index: number) => {
+    let layout = index % 3;
+
+    return ("event-slides layout-" + layout)
+  }
+
   return (
     <div className="event-highlights">
 
-      {/* <div className="highlights-heading">
-          <MainPageButtonHeadings heading="Event Highlights" />
-        </div> */}
-
       <div className="slider">
         {data.map((event, index) => (
-          <div className="event-slides" key={index} style={{ translate: `${-100 * eventIndex}%` }}>
+          <div className={layoutHandler(index)} key={index} style={{ translate: `${-100 * eventIndex}%` }}>
             <div className="highlights-heading">
               <MainPageButtonHeadings heading="Event Highlights" />
             </div>
