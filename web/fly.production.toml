@@ -10,10 +10,6 @@ primary_region = 'syd'
   # dockerfile contains non-sensitive build time env vars
   dockerfile = "Dockerfile.production"
 
-[[statics]]
-guest_path = "/web/src/assets"
-url_prefix = "/assets"
-
 [http_service]
   internal_port = 80
   force_https = true
