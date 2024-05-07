@@ -11,7 +11,7 @@ primary_region = 'syd'
   dockerfile = "Dockerfile.production"
 
 [[statics]]
-guest_path = "/src/assets"
+guest_path = "/web/src/assets"
 url_prefix = "/assets"
 
 [http_service]
