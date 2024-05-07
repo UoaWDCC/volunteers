@@ -1,15 +1,13 @@
 import "../styles/componentStyles/Header.css";
 import { handleGoogle } from "../../services/firebase.tsx";
 
-import clubLogo from "../assets/header-logo.svg";
-
 function Header() {
   return (
     <header className="header">
       <div className="header-content">
 
         <div className="header-left">
-          <img src={clubLogo} alt="Volunteers Club Logo" />
+          <img src="./public/assets/header-logo.svg" alt="Volunteers Club Logo" />
         </div>
 
         <div className="header-right">
