@@ -40,7 +40,7 @@ RUN yarn install --production=true
 FROM nginx
 
 # Copy built application
-COPY --from=build /src/public ./public
+COPY --from=build /src/public ./
 COPY --from=build /app/dist /usr/share/nginx/html
 COPY --link _redirects /usr/share/nginx/html/_redirects
 COPY nginx.conf /etc/nginx/nginx.conf
