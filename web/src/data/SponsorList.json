@@ -2,20 +2,20 @@
     "sponsors": [
         {
             "id": 1,
-            "imageSrcColour": "/public/assets/gallery/sponsors/bw/kompass-logo-colour.png",
-            "imageSrcBw": "../src/assets/gallery/sponsors/bw/kompass-logo-bw.png",
+            "imageSrcColour": "/public/assets/gallery/sponsors/colour/kompass-logo-colour.png",
+            "imageSrcBw": "/public/assets/gallery/sponsors/bw/kompass-logo-bw.png",
             "alt": "Kompass Coffee"
         },
         {
             "id": 2,
-            "imageSrcColour": "/public/assets/gallery/sponsors/bw/shelf-logo-colour.png",
-            "imageSrcBw": "../src/assets/gallery/sponsors/bw/shelf-logo-bw.png",
+            "imageSrcColour": "/public/assets/gallery/sponsors/colour/shelf-logo-colour.png",
+            "imageSrcBw": "/public/assets/gallery/sponsors/bw/shelf-logo-bw.png",
             "alt": "The Shelf Cafe"
         },
         {
             "id": 3,
-            "imageSrcColour": "/public/assets/gallery/sponsors/bw/sals-logo-colour.png",
-            "imageSrcBw": "../src/assets/gallery/sponsors/bw/sals-logo-bw.png",
+            "imageSrcColour": "/public/assets/gallery/sponsors/colour/sals-logo-colour.png",
+            "imageSrcBw": "/public/assets/gallery/sponsors/bw/sals-logo-bw.png",
             "alt": "Sal's Pizza"
         }
     ],
