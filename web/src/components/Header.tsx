@@ -7,7 +7,7 @@ function Header() {
       <div className="header-content">
 
         <div className="header-left">
-          <img src="./public/assets/header-logo.svg" alt="Volunteers Club Logo" />
+          <img src="/src/assets/header-logo.svg" alt="Volunteers Club Logo" />
         </div>
 
         <div className="header-right">
