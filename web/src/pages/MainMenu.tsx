@@ -6,6 +6,8 @@ import MainGallery from '@components/MainGallery';
 import { events } from '../data/MainGalleryEvents.json'; // Import events data from JSON file to display on main page gallery, THIS MAY CHANGE IN THE FUTURE
 import { sponsors } from '../data/SponsorList.json'; // Import events data from JSON file to display on main page gallery, THIS MAY CHANGE IN THE FUTURE
 import Sponsors from '@components/Sponsors';
+import OurAchievements from '@components/OurAchievements';
+import OurCommunity from '@components/OurCommunity';
 function MainMenu() {
   const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
 
@@ -36,6 +38,8 @@ function MainMenu() {
         ))}
       </ul>
       <MainGallery data={events} />
+      <OurAchievements/>
+      <OurCommunity/>
       <Sponsors data={sponsors}/>
       <Footer />
     </div>
