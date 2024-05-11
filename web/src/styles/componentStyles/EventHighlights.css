@@ -143,8 +143,8 @@
   position: absolute;
   top: 48%;
   background-color: rgba(85, 117, 154, 0.5);
-  border-radius: 8vh;
-  height: 6vh;
+  border-radius: 25px;
+  height: 5vh;
   scale: 0.6;
   color: white;
   box-shadow: 0.1em 0.2em 0.3em rgba(0, 0, 0, 0.3);
