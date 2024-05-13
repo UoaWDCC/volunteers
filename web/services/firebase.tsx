@@ -1,6 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { getAuth, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { DocumentData } from 'firebase/firestore';
 
 
 const firebaseConfig = {
@@ -20,33 +21,38 @@ const db = getFirestore(app);
 export const auth = getAuth(app);
 
 //checks UID corresponding with email
-export const checkUidExists = async (uid: string): Promise<boolean> => {
+interface CheckUidResult {
+  exists: boolean;
+  userDetails: DocumentData | undefined;
+}
+
+export const checkUidExists = async (uid: string): Promise<CheckUidResult> => {
   const userDoc = doc(db, 'users', uid);
   try {
     const docSnapshot = await getDoc(userDoc);
-    return docSnapshot.exists();
+    return { exists: docSnapshot.exists(), userDetails: docSnapshot.data() };
   } catch (error) {
     console.error("Error checking user UID in Firestore:", error);
-    return false;
+    return { exists: false, userDetails: undefined };
   }
 }
 
 //google sign in authentication
 export const handleGoogle = async () => {
-    const provider = await new GoogleAuthProvider();
-    try {
-      const result = await signInWithPopup(auth, provider);
-      const user = result.user;
-      const uidExists = await checkUidExists(user.uid);
-      console.log('UID exists in Firestore:', uidExists);
+  const provider = await new GoogleAuthProvider();
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+    const { exists: uidExists, userDetails } = await checkUidExists(user.uid);
+    console.log('UID exists in Firestore:', uidExists);
 
-      if (!uidExists){
-        window.location.href = 'register';
-      }else{
-        console.log("user exists");
-        return user;
-      }
-    }catch (error){
-      console.error(error);
+    if (!uidExists) {
+      window.location.href = 'register';
+    } else {
+      console.log("user exists", userDetails);  
+      return userDetails ;
     }
+  } catch (error) {
+    console.error("Error during Google sign-in:", error);
   }
+}
