@@ -17,6 +17,34 @@ const RegisterForm: React.FC = () => {
   const [accessibilityRequirements, setAccessibilityRequirements] = useState<string>('');
   const [fullLicense, setFullLicense] = useState<string>('');
 
+  //temporary style for readability
+  const formStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column', 
+    justifyContent: 'space-between',
+    margin: '20px',
+    padding: '20px',
+    border: '1px solid #ccc',
+    borderRadius: '8px',
+    gap: '5px'
+  };
+
+  const inputBoxes: React.CSSProperties = {
+    border: '1px solid #ccc',
+    borderRadius: '8px'
+  };
+
+  const inputLabel: React.CSSProperties = {
+    fontWeight: 'bold',
+  };
+
+  const registerButton: React.CSSProperties = {
+    color:'black',
+    border: '2px solid #ccc',
+    width: '100px'
+  };
+
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (auth.currentUser) {
@@ -45,19 +73,16 @@ const RegisterForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit} style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'space-between',
-      alignItems: 'center',
-    }}>
+    <form onSubmit={handleSubmit} style={formStyle}>
       <h3>Register User</h3>
-      <input placeholder='First Name...' value={firstName} onChange={e => setFirstName(e.target.value)} />
-      <input placeholder='Last Name...' value={lastName} onChange={e => setLastName(e.target.value)} />
-      <input type='email' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} />
-      <input type='tel' placeholder='Mobile' value={mobile} onChange={e => setMobile(e.target.value)} />
-      <input type='date' value={birthdate} onChange={e => setBirthdate(e.target.value)} />
-      <select name="gender" value={gender} onChange={e => setGender(e.target.value)}>
+      <input placeholder='First Name...' value={firstName} onChange={e => setFirstName(e.target.value)} style={inputBoxes} />
+      <input placeholder='Last Name...' value={lastName} onChange={e => setLastName(e.target.value)} style={inputBoxes}/>
+      <input type='email' placeholder='Email' value={email} onChange={e => setEmail(e.target.value)} style={inputBoxes}/>
+      <input type='tel' placeholder='Mobile' value={mobile} onChange={e => setMobile(e.target.value)} style={inputBoxes}/>
+      <label htmlFor="birthDate" style={inputLabel}>Date of Birth:</label>
+      <input type='date' name='birthDate' value={birthdate} onChange={e => setBirthdate(e.target.value)} style={inputBoxes}/>
+      <label htmlFor="gender" style={inputLabel}>Gender:</label>
+      <select name="gender" value={gender} onChange={e => setGender(e.target.value)} style={inputBoxes}>
         <option value="">Select Gender</option>
         <option value="male">Male</option>
         <option value="female">Female</option>
@@ -65,7 +90,8 @@ const RegisterForm: React.FC = () => {
         <option value="Prefer not to say">Prefer not to say</option>
         <option value="other">Other</option>
       </select>
-      <select name="dietary requirements" value={dietaryRequirements} onChange={e => setDietaryRequirements(e.target.value)}>
+      <label htmlFor="dietaryRequirments" style={inputLabel}>Dietary Requirements:</label>
+      <select name="dietaryRequirements" value={dietaryRequirements} onChange={e => setDietaryRequirements(e.target.value)} style={inputBoxes}>
         <option value="">Select Dietary Requirements</option>
         <option value="none">None</option>
         <option value="vegetarian">Vegetarian</option>
@@ -73,15 +99,19 @@ const RegisterForm: React.FC = () => {
         <option value="gluten-free">Gluten-Free</option>
         <option value="halal">Halal</option>
       </select>
-      <select name="accessibilityRequirements" value={accessibilityRequirements} onChange={e => setAccessibilityRequirements(e.target.value)}>
+      <label htmlFor="accessiblityRequirements" style={inputLabel}>Accessibility Requirements:</label>
+      <select name="accessibilityRequirements" value={accessibilityRequirements} onChange={e => setAccessibilityRequirements(e.target.value)} style={inputBoxes}>
+        <option value="NA">Please Select</option>
         <option value="Yes">Yes</option>
         <option value="No">No</option>
       </select>
-      <select name="fullLicense" value={fullLicense} onChange={e => setFullLicense(e.target.value)}>
+      <label htmlFor="fullLicense" style={inputLabel}>Do you have a full license?</label>
+      <select name="fullLicense" value={fullLicense} onChange={e => setFullLicense(e.target.value)} style={inputBoxes}>
+        <option value="NA">Please Select</option>
         <option value="Yes">Yes</option>
         <option value="No">No</option>
       </select>
-      <button type="submit">Register</button>
+      <button type="submit" style={registerButton}>Register</button>
     </form>
   );
 };

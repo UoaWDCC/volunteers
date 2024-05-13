@@ -19,6 +19,7 @@ const db = getFirestore(app);
 // Export Firebase authentication service
 export const auth = getAuth(app);
 
+//checks UID corresponding with email
 export const checkUidExists = async (uid: string): Promise<boolean> => {
   const userDoc = doc(db, 'users', uid);
   try {
@@ -30,6 +31,7 @@ export const checkUidExists = async (uid: string): Promise<boolean> => {
   }
 }
 
+//google sign in authentication
 export const handleGoogle = async () => {
     const provider = await new GoogleAuthProvider();
     try {

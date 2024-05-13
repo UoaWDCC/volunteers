@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
 import MainMenu from '@pages/MainMenu';
 import NotFound from '@pages/NotFound';
+import RegisterForm from '@components/RegisterForm';
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
   {
     path: '*',
     element: <NotFound />,
+  },
+  {
+    path: 'register',
+    element: <RegisterForm />,
   },
 ]);
 
