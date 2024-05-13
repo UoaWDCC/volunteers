@@ -8,7 +8,8 @@ import { sponsors } from '../data/SponsorList.json'; // Import events data from 
 import Sponsors from '@components/Sponsors';
 import EventHighlights from '@components/EventHighlights';
 import { eventHighlights } from '../data/EventHighlights.json';
-
+import OurAchievements from '@components/OurAchievements';
+import OurCommunity from '@components/OurCommunity';
 function MainMenu() {
   const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
 
@@ -40,6 +41,8 @@ function MainMenu() {
       </ul>
       <MainGallery data={events} />
       <EventHighlights data={eventHighlights} />
+      <OurAchievements/>
+      <OurCommunity/>
       <Sponsors data={sponsors}/>
       <Footer />
     </div>

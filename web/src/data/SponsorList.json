@@ -2,37 +2,37 @@
     "sponsors": [
         {
             "id": 1,
-            "imageSrcColour": "../src/assets/gallery/sponsors/colour/kompass-logo-colour.png",
-            "imageSrcBw": "../src/assets/gallery/sponsors/bw/kompass-logo-bw.png",
+            "imageSrcColour": "../../assets/gallery/sponsors/colour/kompass-logo-colour.png",
+            "imageSrcBw": "../../assets/gallery/sponsors/bw/kompass-logo-bw.png",
             "alt": "Kompass Coffee"
         },
         {
             "id": 2,
-            "imageSrcColour": "../src/assets/gallery/sponsors/colour/shelf-logo-colour.png",
-            "imageSrcBw": "../src/assets/gallery/sponsors/bw/shelf-logo-bw.png",
+            "imageSrcColour": "../../assets/gallery/sponsors/colour/shelf-logo-colour.png",
+            "imageSrcBw": "../../assets/gallery/sponsors/bw/shelf-logo-bw.png",
             "alt": "The Shelf Cafe"
         },
         {
             "id": 3,
-            "imageSrcColour": "../src/assets/gallery/sponsors/colour/sals-logo-colour.png",
-            "imageSrcBw": "../src/assets/gallery/sponsors/bw/sals-logo-bw.png",
+            "imageSrcColour": "../../assets/gallery/sponsors/colour/sals-logo-colour.png",
+            "imageSrcBw": "../../assets/gallery/sponsors/bw/sals-logo-bw.png",
             "alt": "Sal's Pizza"
         }
     ],
     "discounts": [
         {
             "id": 1,
-            "discount": "../src/assets/gallery/sponsors/colour/kompass-logo-colour.png",
+            "discount": "/public/assets/gallery/sponsors/colour/kompass-logo-colour.png",
             "alt": "Kompass Coffee"
         },
         {
             "id": 2,
-            "discount": "../src/assets/gallery/sponsors/colour/shelf-logo-colour.png",
+            "discount": "/public/assets/gallery/sponsors/colour/shelf-logo-colour.png",
             "alt": "The Shelf Cafe"
         },
         {
             "id": 3,
-            "discount": "../src/assets/gallery/sponsors/colour/sals-logo-colour.png",
+            "discount": "/public/assets/gallery/sponsors/colour/sals-logo-colour.png",
             "alt": "Sal's Pizza"
         }
     ]
