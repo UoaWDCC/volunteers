@@ -1,0 +1,20 @@
+.bellButtonContainer {
+    padding: 5px; 
+}
+
+.bellButtonContainer img{
+    width: 33px;
+    height: 33px;
+    margin-right: 10px;
+    float: right;
+    margin-bottom: 10px;
+    border-radius: 53px;
+}
+
+.bellButtonContainer .bellButton {
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    border-radius: 53px;
+    float: right;
+}

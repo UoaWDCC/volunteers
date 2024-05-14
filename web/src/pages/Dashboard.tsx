@@ -2,18 +2,20 @@ import SideBar from "@components/SideBar";
 import WelcomeStats from "@components/WelcomeStats";
 import Discover from "@components/Discover";
 import UpcomingEvents from "@components/UpcomingEvents";
+import BellButton from "@components/BellButton";
+import "../styles/pageStyles/Dashboard.css";
 
 const Dashboard = () => {
+    let content = <BellButton/>;
     return (
-        <div>
-            <div className="dashboard">
-                <SideBar/>
-            </div>
+        <div className="Dashboard-Div">
+            <SideBar/>
             <div>
+                {content}
                 <WelcomeStats/>
                 <Discover/>
-                <UpcomingEvents/>
-            </div>
+            </div>     
+            <UpcomingEvents/>
         </div>
     );
 }

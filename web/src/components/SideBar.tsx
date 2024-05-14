@@ -49,7 +49,7 @@ const SideBar = () => {
             </div>
 
             <button className='logout-button'>
-                <img src='src/assets/sidebar/logout-icon.svg' alt='logout-icon' />
+                <div className='image-div'><img src='src/assets/sidebar/logout-icon.svg' alt='logout-icon' /></div>
                 <h3>Log out</h3>
             </button>
         </div>

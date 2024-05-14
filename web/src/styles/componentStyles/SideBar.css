@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     background: linear-gradient(rgba(214,237,253,1) 0%, rgba(88,182,241,1) 100%);
-    height: 96vh;
+    height: 788px;
     width: 225px;
     margin: 2vh 5vh 2vh 3vh;
     border-radius: 30px;
@@ -42,7 +42,7 @@
 }
 
 .sidebar .sidebar-tabs .image-div img {
-    margin: 13px auto 0px auto;
+    margin: 0px auto 0px auto;
 }
 
 .sidebar .sidebar-tabs h3 {
@@ -107,4 +107,10 @@
 
 .sidebar .logout-button:hover {
     background-color: rgba(3, 112, 190, 0.7);
+}
+
+.sidebar .logout-button .image-div img {
+    margin: 0px auto 0px auto;
+    width: 100%;
+    align-self: left;
 }

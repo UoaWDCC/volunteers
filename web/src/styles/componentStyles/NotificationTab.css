@@ -7,7 +7,7 @@
     margin: 2vh 5vh 2vh 3vh;
   }
 
-.bg .back button{
+.bg .notifications .back button{
     color: black;
     background-color: rgba(244, 244, 244, 255);
     border-radius: 50%;
@@ -19,6 +19,7 @@
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
+    position: absolute;
   }
 
 .notifications{
@@ -127,7 +128,7 @@
     line-height: 1.2;
   }
 
-  .notification .button{
+  .notification .notibutton{
     justify-content: center;
     margin-top: 1rem;
     margin-right: 2.5rem;
@@ -138,7 +139,7 @@
     --vertical-padding: 0.1rem;
   }
 
-  .notification .button button{
+  .notification .notibutton button{
     background-color: rgba(60, 157, 221, 255);
     border-radius: 50%;
     font-size: xx-small;

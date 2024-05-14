@@ -55,6 +55,7 @@
     right: 10px;
     float: right;
     position: absolute;
+    margin-bottom: 5px;
 }
 
 .more-info:hover {

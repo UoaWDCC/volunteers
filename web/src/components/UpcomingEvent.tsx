@@ -9,7 +9,7 @@ const UpcomingEvent = () => {
                 <p className="event-time">6:00pm - 8:00pm</p>
                 <p className="event-type">Club Event</p>
             </div>
-            <div className="button">
+            <div className="event-button">
                 <button>&gt;</button>
             </div>
         </div>

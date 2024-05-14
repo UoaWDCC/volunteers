@@ -3,10 +3,10 @@ import '../styles/componentStyles/NotificationTab.css';
 function NotificationTab() {
   return (
     <div className="bg">
-    <div className="back">
-    <button>&gt;</button>
-    </div>
     <div className="notifications">
+    <div className="back">
+        <button>&gt;</button>
+      </div>
         <p className="heading">Notifications</p>
     <div className="tabs">
         <div className="all"><button>All</button></div>
@@ -21,7 +21,7 @@ function NotificationTab() {
         <p className="notification-type">Club Event</p>
     </div>
     
-    <div className="button">
+    <div className="notibutton">
         <button>&gt;</button>
     </div>
     </div>
