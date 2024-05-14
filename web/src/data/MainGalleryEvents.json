@@ -4,31 +4,31 @@
       "id": 1,
       "imageSrc": "/public/assets/gallery/events/sample1.png",
       "title": "Pink Ribbon Breakfast",
-      "description": "Qwoijhdoiasjiodoqwidihqoiasdqwdq",
+      "description": "Lorem Ipsum is simply dummy text of the printing and typesetting industry.",
       "alt": "Event 1"
     },
 
     {
       "id": 2,
       "imageSrc": "/public/assets/gallery/events/sample2.png",
-      "title": "Dbink RDibbon BDreakfast",
-      "description": "Description 2 ascas q2wq dwq qwd",
+      "title": "Volunteers Day",
+      "description": "Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it",
       "alt": "Event 2"
     },
 
     {
       "id": 3,
       "imageSrc": "/public/assets/gallery/events/sample3.png",
-      "title": "Qwbink RDibboqwen BDreakfeqast",
-      "description": "Descriptiwqeq112on 3",
+      "title": "Blue Ribbon Breakfast",
+      "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
       "alt": "Event 3"
     },
 
     {
       "id": 4,
       "imageSrc": "/public/assets/gallery/events/sample4.png",
-      "title": "QwdwdwdwdRDibboqwen BDreakfeqast",
-      "description": "Descriptiwqeq112on 3scriptiwqeq112on 3scriptiw qeq112on 3scriptiw qeq112on 3scr iptiwq eq112on 3scripti wqeq112on 3script iwqeq1 12on 3",
+      "title": "Volunteers Week",
+      "description": "Loren ipsom volunteer at your next local vendor today!",
       "alt": "Event 4"
     }
   ]
