@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Header from '@components/Header';
 import Footer from '../components/Footer';
 import '../styles/pageStyles/MainMenu.css';
@@ -11,34 +10,10 @@ import { eventHighlights } from '../data/EventHighlights.json';
 import OurAchievements from '@components/OurAchievements';
 import OurCommunity from '@components/OurCommunity';
 function MainMenu() {
-  const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
-
-  useEffect(() => {
-    const fetchTestList = async () => {
-      try {
-        const response = await fetch('/api/getTest');
-        if (!response.ok) {
-          throw new Error('Failed to fetch test list');
-        }
-        const data = await response.json();
-        setTestList(data);
-      } catch (error) {
-        console.error("Error fetching test list:", error);
-      }
-    };
-
-    fetchTestList();
-  }, []);
 
   return (
-    <div className="MainMenu">
+    <div className="primary-background">
       <Header />
-      {/* Render testList data */}
-      <ul>
-        {testList.map((item) => (
-          <li key={item.id}>{item.name} - {item.number}</li>
-        ))}
-      </ul>
       <MainGallery data={events} />
       <EventHighlights data={eventHighlights} />
       <OurAchievements/>
