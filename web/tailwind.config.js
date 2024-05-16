@@ -30,6 +30,14 @@ export default {
         md: "16px",
         sm: "14px",
       },
+      padding: {
+        'h-lg': "48px",
+        'h-md': "32px",
+        'h-sm': "24px",
+        'v-lg': "18px",
+        'v-md': "16px",
+        'v-sm': "14px"
+      },
       colors: {
         primary: "#3B87DD", /* blue */
         "primary-dark": "#255894", /* dark blue */
