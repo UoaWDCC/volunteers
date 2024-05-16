@@ -8,7 +8,11 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Work Sans']
+        sans: ['Work Sans'],
+        lora: ['Lora', 'serif'],
+        poppins: ['Poppins', 'serif']
+        //Poppins
+        //Lora
       },
       fontSize: {
         lg: "18px", 

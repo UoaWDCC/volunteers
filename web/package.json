@@ -16,6 +16,8 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.6.7",
     "firebase": "^10.11.0",
+    "poppins": "^0.1.1",
+    "poppins-font": "^1.0.1",
     "react": "^18.2.0",
     "react-cookies": "^0.1.1",
     "react-dom": "^18.2.0",
@@ -23,6 +25,7 @@
     "react-router": "^6.22.0",
     "react-router-dom": "^6.23.0",
     "tailwind-merge": "^2.2.1",
+    "typeface-lora": "^1.1.13",
     "universal-cookie": "^7.0.2",
     "zod": "^3.22.4"
   },
