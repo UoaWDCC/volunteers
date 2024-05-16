@@ -11,39 +11,33 @@ export default {
         sans: ['Work Sans']
       },
       fontSize: {
-        xlg: "37.46px", /*Welcome Back...*/
-        lg: "17.03px", /*Glad to see you're back...*/
-        md: "12.1px", /*Launch Night*/
-        sml: "7.26px", /*Monday 8th April...*/
-        xs: "4.98px" /*club Event*/
+        lg: "18px", 
+        md: "16px", 
+        sm: "14px",
       },
       letterSpacing: {
-        
+        lg: "48px",
+        md: "32px",
+        sm: "24px"
       },
       fontColor: {
-        primary: "#FFFFFF"
+        primary: "#000000"
       },
       lineHeight: {
-        xlg: "43.94px", /*Welcome Back...*/
-        lg: "19.97px", /*Glad to see you're back...*/
-        md: "14.2px", /*Launch Night*/
-        sml: "8.52px", /*Monday 8th April...*/
-        xs: "5.84px" /*club Event*/
+        lg: "18px", /*Glad to see you're back...*/
+        md: "16px", /*Launch Night*/
+        sm: "14px", /*Monday 8th April...*/
       },
       colors: {
-        primary: {
-          background: "#FFFEF9", /*white background*/
-          blue: "#3B87DD" /*main page bold blue + dashboard buttons etc*/
-        },
-        accent: {
-          lighter_blue: "#8BB4F9", /*About us button on main page*/
-        },
-        university: {
-          darkblue: "#255894" /*Classic UOA darker blue*/
-        },
-        dashboard: {
-          light_blue_gradient: "linear-gradient(180deg, #D6EDFD 0%, #58B6F1 100%)" /*Dashboard gradient*/
-        }
+        primary: "#3B87DD", /* blue */
+        "primary-dark": "#255894", /* dark blue */
+        "primary-light": "#8BB4F9", /* light blue */
+        secondary: "#F2504B", /* red */
+        "secondary-light": "#FE8686", /* light red */
+        neutral: "#FFFEF9", /* basically white */
+        "neutral-tan": "#FAF6EB", /* tan color */
+        black: "#33342E", /* lighter black */
+        grey: "#818181" /* grey */ 
       }
     },
   },
