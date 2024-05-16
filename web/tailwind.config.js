@@ -16,17 +16,15 @@ export default {
         sm: "14px",
       },
       letterSpacing: {
-        lg: "48px",
-        md: "32px",
-        sm: "24px"
+        // currently no letterSpacing rules on figma
       },
       fontColor: {
         primary: "#000000"
       },
       lineHeight: {
-        lg: "18px", /*Glad to see you're back...*/
-        md: "16px", /*Launch Night*/
-        sm: "14px", /*Monday 8th April...*/
+        lg: "18px",
+        md: "16px",
+        sm: "14px",
       },
       colors: {
         primary: "#3B87DD", /* blue */
