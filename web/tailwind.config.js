@@ -10,7 +10,7 @@ export default {
       fontFamily: {
         sans: ['Work Sans'],
         lora: ['Lora', 'serif'],
-        poppins: ['Poppins', 'serif']
+        serif: ['Poppins', 'serif']
         //Poppins
         //Lora
       },

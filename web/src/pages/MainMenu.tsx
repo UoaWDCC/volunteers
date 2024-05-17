@@ -13,6 +13,7 @@ function MainMenu() {
 
   return (
     <div className="primary-background">
+      <p className='font-lora text-lg padding-v-lg'>font-serif for poppins,  font-lora for lora,  sans for Work Sans</p>
       <Header />
       <MainGallery data={events} />
       <EventHighlights data={eventHighlights} />

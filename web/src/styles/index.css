@@ -4,6 +4,8 @@
 @tailwind utilities;
 /* global.css */
 
+
+
 /* Reset */
 body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, button, input {
   margin: 0;
@@ -13,7 +15,7 @@ body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, button, input {
 
 /* Typography */
 body {
-  font-family: 'Work Sans', Arial, sans-serif;
+  /*font-family: 'Work Sans', Arial, sans-serif;*/
   font-size: 16px;
   line-height: 1.6;
 }
