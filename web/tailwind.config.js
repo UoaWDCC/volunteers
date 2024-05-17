@@ -11,8 +11,6 @@ export default {
         sans: ['Work Sans'],
         lora: ['Lora', 'serif'],
         serif: ['Poppins', 'serif']
-        //Poppins
-        //Lora
       },
       fontSize: {
         lg: "18px", 
