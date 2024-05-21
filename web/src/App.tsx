@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
 import MainMenu from '@pages/MainMenu';
 import NotFound from '@pages/NotFound';
+import RegisterForm from '@components/RegisterForm';
 import TestingComponent from '@components/TestComponent';
 
 const router = createBrowserRouter([
@@ -15,6 +16,9 @@ const router = createBrowserRouter([
     element: <NotFound />,
   },
   {
+    path: 'register',
+    element: <RegisterForm />,
+  },
     path: '/testing',
     element: <TestingComponent />
   }
