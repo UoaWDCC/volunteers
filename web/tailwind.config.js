@@ -1,30 +1,106 @@
-import daisyui from 'daisyui';
-import themes from 'daisyui/src/theming/themes';
-
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  plugins: [daisyui],
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Montserrat'],
-        body: ['Open Sans'],
-      },
+  plugins: [require('tailwindcss-themer')({
+    defaultTheme: {
+      // put the default values of any config you want themed
+      // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
+      extend: {
+        colors: {
+          primary: "#3B87DD", /* blue */
+          "primary-dark": "#255894", /* dark blue */
+          "primary-light": "#8BB4F9", /* light blue */
+          secondary: "#F2504B", /* red */
+          "secondary-light": "#FE8686", /* light red */
+          neutral: "#FFFEF9", /* basically white */
+          "neutral-tan": "#FAF6EB", /* tan color */
+          black: "#33342E", /* lighter black */
+          grey: "#818181" /* grey */ 
+        },
+        fontSize: {
+          'number': ['80px', {
+            lineHeight: '120%',
+            letterSpacing: '0%',
+            fontWeight: '700', // 700 is bold
+          }],
+          'heading': ['48px', {
+            lineHeight: '120%',
+            letterSpacing: '0%',
+            fontWeight: '700',
+          }],
+          'subheading': ['32px', {
+            lineHeight: '120%',
+            letterSpacing: '0%',
+            fontWeight: '600', // using 'semibold' doesn't work
+          }],
+          'body': ['24px', {
+            lineHeight: '120%',
+            letterSpacing: '0%',
+            fontWeight: '500', // 500 = 'medium'
+          }],
+          'detail': ['16px', {
+            lineHeight: '120%',
+            letterSpacing: '0%',
+            fontWeight: '600', // semibold has weight 600 acording to tailwind docs
+          }],
+          'section-header': ['26px', {
+            lineHeight: '120%',
+            letterSpacing: '0%',
+            fontWeight: '700', // 700 = 'bold'
+          }],
+        },
+        fontFamily: {
+          serif: ["Lora", "serif"],
+          sans: ["Poppins", "sans-serif"], // sans is the default font if no font family is defined
+          mono: ["Roboto Mono", "monospace"],
+        }
+      }
     },
-  },
-  daisyui: {
     themes: [
       {
-        light: {
-          ...themes['light'],
-          accent: '#087df1',
-        },
-        dark: {
-          ...themes['dark'],
-          accent: '#087df1',
-        },
-      },
-    ],
-  },
+        // name your theme anything that could be a valid css class name
+        // remember what you named your theme because you will use it as a class to enable the theme
+        name: 'dashboard', // INCOMPLETE
+        // put any overrides your theme has here
+        // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
+        extend: {
+          colors: {
+            primary: 'yellow' // just a placeholder so you know when you've changed themes
+          },
+          fontSize: {
+            'heading': ['72px', {
+              lineHeight: '110%',
+              letterSpacing: '0%',
+              fontWeight: '700', // 700 is bold
+            }],
+            'heading': ['48px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '700',
+            }],
+            'subheading': ['32px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '700', 
+            }],
+            'body': ['24px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '500', // 500 = 'medium'
+            }],
+            'detail': ['18px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '600', // semibold has weight 600 acording to tailwind docs
+            }],
+          },
+          fontFamily: {
+            sans: ["Poppins", "sans-serif"],
+            serif: ["Poppins", "sans-serif"], // since there is no serif font defined
+            mono: ["Roboto Mono", "monospace"],
+          }
+        }
+      }
+    ]
+  })],
 };
