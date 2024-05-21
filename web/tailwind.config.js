@@ -65,7 +65,7 @@ export default {
         // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
         extend: {
           colors: {
-            primary: 'yellow' // just a placeholder so you know when you've changed themes
+            primary: "#3B87DD", /* blue */
           },
           fontSize: {
             'heading': ['72px', {
