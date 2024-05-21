@@ -55,18 +55,6 @@ const Sponsors = ({ data }: SponsorsProps) => {
                             {kompass ? <img src={bwImg[0]} alt={altText[0]} title={altText[0]}/> : <img src={colourImg[0]} alt={altText[0]} title={altText[0]}/>}
                             {kompass ? null : <SponsorDiscount name="Kompass Coffee" discount="10% OFF"/>}
                     </div>
-                    {/*
-                    {
-                        SponsorList.sponsors.map((sponsor) => {
-                            return (
-                                <div onMouseEnter={() => setHidden(false)}
-                                onMouseLeave={() => setHidden(true)}>
-                                    {hidden ? <img src={sponsor.imageSrcBw} alt={sponsor.alt} title={sponsor.alt}/> : <img src={sponsor.imageSrcColour} alt={sponsor.alt} title={sponsor.alt}/>}
-                                </div>
-                            )
-                        })
-                    }
-                */}
                 </div>
             </div>
         </div>

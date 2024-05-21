@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react';
 import Header from '@components/Header';
 import Footer from '../components/Footer';
 import '../styles/pageStyles/MainMenu.css';
@@ -6,36 +5,20 @@ import MainGallery from '@components/MainGallery';
 import { events } from '../data/MainGalleryEvents.json'; // Import events data from JSON file to display on main page gallery, THIS MAY CHANGE IN THE FUTURE
 import { sponsors } from '../data/SponsorList.json'; // Import events data from JSON file to display on main page gallery, THIS MAY CHANGE IN THE FUTURE
 import Sponsors from '@components/Sponsors';
+import EventHighlights from '@components/EventHighlights';
+import { eventHighlights } from '../data/EventHighlights.json';
+import OurAchievements from '@components/OurAchievements';
+import OurCommunity from '@components/OurCommunity';
 function MainMenu() {
-  const [testList, setTestList] = useState<{ id: string, name: string, number: number }[]>([]);
-
-  useEffect(() => {
-    const fetchTestList = async () => {
-      try {
-        const response = await fetch('/api/getTest');
-        if (!response.ok) {
-          throw new Error('Failed to fetch test list');
-        }
-        const data = await response.json();
-        setTestList(data);
-      } catch (error) {
-        console.error("Error fetching test list:", error);
-      }
-    };
-
-    fetchTestList();
-  }, []);
 
   return (
-    <div className="MainMenu">
+    <div className="primary-background">
+      <p className='font-serif text-font-primary text-lg px-h-md py-v-md'>font-serif for poppins,  font-lora for lora,  sans for Work Sans ::font-serif text-font-primary text-lg px-h-md py-v-md::</p>
       <Header />
-      {/* Render testList data */}
-      <ul>
-        {testList.map((item) => (
-          <li key={item.id}>{item.name} - {item.number}</li>
-        ))}
-      </ul>
       <MainGallery data={events} />
+      <EventHighlights data={eventHighlights} />
+      <OurAchievements/>
+      <OurCommunity/>
       <Sponsors data={sponsors}/>
       <Footer />
     </div>

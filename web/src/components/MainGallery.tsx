@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import '../styles/componentStyles/MainGallery.css'
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io'
 import { Link } from 'react-router-dom'
@@ -30,15 +30,15 @@ const MainGallery = ({ data }: MainGalleryProps) => {
     setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1))
   }
 
-  // function to autoscroll the images, ?MIGHT REMOVE THIS LATER?
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1))
-    }, 5000)
+  // // function to autoscroll the images, ?MIGHT REMOVE THIS LATER?
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1))
+  //   }, 5000)
 
-    // return a cleanup function to clear the interval when the component unmounts
-    return () => clearInterval(interval)
-  }, [data.length])
+  //   // return a cleanup function to clear the interval when the component unmounts
+  //   return () => clearInterval(interval)
+  // }, [data.length])
 
   return (
     <div className='gallery'>

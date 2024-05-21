@@ -4,6 +4,7 @@ import { useState } from 'react';
 import MainMenu from '@pages/MainMenu';
 import NotFound from '@pages/NotFound';
 import RegisterForm from '@components/RegisterForm';
+import TestingComponent from '@components/TestComponent';
 
 const router = createBrowserRouter([
   {
@@ -18,6 +19,9 @@ const router = createBrowserRouter([
     path: 'register',
     element: <RegisterForm />,
   },
+    path: '/testing',
+    element: <TestingComponent />
+  }
 ]);
 
 export default function App() {

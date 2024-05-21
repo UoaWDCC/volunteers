@@ -3,8 +3,9 @@
   justify-content: center;
   background-color: white;
 }
-
-.header-content {
+ 
+/* flex flex-grow justify-between items-center max-w-[1260px] px-[30px] py-[20px] */
+ .header-content {
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
@@ -13,6 +14,7 @@
   padding: 20px 30px;
 }
 
+/* flex flex-row-reverse text-lg text-fontColor m-0 */
 .links {
   display: flex;
   flex-direction: row-reverse;
@@ -20,6 +22,7 @@
   color: black;
   margin: 0;
 }
+
 
 .button {
   padding: 10px 20px;

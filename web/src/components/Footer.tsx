@@ -5,7 +5,7 @@ function Footer() {
     <footer className="foot">
       <div className="foot-content">
         <div id ="footer-section" className="footer-section-left">
-          <img src="\src\assets\Volunteers-logo-footer.jpg" alt="Volunteers Club Logo" className="footer-logo" />
+          <img src="\public\assets\Volunteers-logo-footer.jpg" alt="Volunteers Club Logo" className="footer-logo" />
           <p className = "copyright">© 2020 University of Auckland Volunteers Club</p>
         </div>
         
