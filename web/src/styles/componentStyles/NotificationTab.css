@@ -1,13 +1,17 @@
 .bg{
+    float: right;
     display: flex;
     flex-direction: row;
     background-color: white;
     height: 96vh;
     width: 400px;
-    margin: 2vh 5vh 2vh 3vh;
+    margin: 4vh 5vh 2vh 3vh;
+    position: absolute;
+    top: 8px;
+    right: 16px;
   }
 
-.bg .notifications .back button{
+.bg .notifications .back .noti-back{
     color: black;
     background-color: rgba(244, 244, 244, 255);
     border-radius: 50%;
@@ -19,6 +23,8 @@
     margin-top: 1rem;
     margin-left: 1rem;
     margin-right: 1rem;
+    width: 33px;
+    height: 33px;
     position: absolute;
   }
 
