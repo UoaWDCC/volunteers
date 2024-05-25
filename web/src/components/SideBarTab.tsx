@@ -15,7 +15,7 @@ const SideBarTab: React.FC<SideBarTabProps> = ({ image, tabName, selectedTab, se
             <div className="w-[65px] h-[65px]">
                 <img className="w-[52px] h-[52px]" src={image} alt={tabName + " icon"} />
             </div>
-            <h3 className="h-[125px] w-[64px] content-center text-[17px] mb-0">{tabName}</h3>
+            <h3 className="h-[125px] w-[64px] content-center font-sans text-[17px] mb-0">{tabName}</h3>
         </Link>
     );
 };

@@ -17,9 +17,9 @@ const SideBar = () => {
                 <SideBarTab image='/public/assets/sidebar/settings-icon.svg' tabName='settings' selectedTab={selectedTab} setSelectedTab={setSelectedTab} /> 
             </div>
 
-            <button className='logout-button'>
-                <img src='/public/assets/sidebar/logout-icon.svg' alt='logout-icon' />
-                <h3>Log out</h3>
+            <button className="flex w-[130px] h-[35px] items-center bg-[#0370bE61] rounded-[30px] self-center mb-[35px] mt-auto transition-all duration-[400] hover:bg-[#0370BEB3]">
+                <img className="h-[25px] w-[25px]" src='/public/assets/sidebar/logout-icon.svg' alt='logout-icon' />
+                <h3 className="text-[13px] m-auto font-sans" >Log out</h3>
             </button>
         </div>
      );
