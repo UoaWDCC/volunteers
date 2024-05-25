@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import '../styles/componentStyles/SideBar.css';
 import { useState } from 'react';
 
 const SideBar = () => {
@@ -7,10 +6,10 @@ const SideBar = () => {
     const [selectedTab, setSelectedTab] = useState('dashboard');
 
     return ( 
-        <div className="sidebar">
-            <img className='club-logo' src='/public/assets/club-logo.svg' alt='club-logo' />
+        <div className="flex flex-col bg-gradient-to-b from-[#D6EDFD] to-[#58B6F1] h-[96vh] w-[225px] my-[2vh] mx-[3vh] rounded-[30px]">
+            <img className="h-[68px] w-[68px] mt-[8vh] self-center" src='/public/assets/club-logo.svg' alt='club-logo' />
 
-            <div className="sidebar-tabs"> 
+            <div className="flex flex-col mt-[5vh] items-end"> 
                 <div className={selectedTab === "dashboard" ? "selected" : "unselected-tab" }>
                     <Link onClick={() => setSelectedTab("dashboard")} to='/'>
                         <div className='image-div'><img src='/public/assets/sidebar/dashboard-icon.svg' alt='dashboard-icon' /></div>
