@@ -1,20 +1,18 @@
-import '../styles/componentStyles/Footer.css';
-
 function Footer() {
   return (
-    <footer className="foot">
-      <div className="foot-content">
-        <div id ="footer-section" className="footer-section-left">
+    <footer className="flex justify-center h-auto">
+      <div className="flex flex-wrap justify-between items-center max-w-[1208px] w-full mx-auto px-5">
+        <div className="p-4 flex-1">
           <img src="\public\assets\Volunteers-logo-footer.jpg" alt="Volunteers Club Logo" className="footer-logo" />
-          <p className = "copyright">© 2020 University of Auckland Volunteers Club</p>
+          <p className = "text-detail text-grey mt-5 ">© 2020 University of Auckland Volunteers Club</p>
         </div>
         
-        <div id = "footer-section" className="footer-section-right">
-          <div className="footer-section-right-content">
-            <h3 className = "community">Community</h3>
-            <ul className ="footer-socials">
-              <li><a href="#" className="footer-link">Instagram</a></li>
-              <li className = "footer-socials-item"><a href="#" className="footer-link">Facebook</a></li>
+        <div className="p-4 flex-1 flex justify-end mr-[30px]">
+          <div>
+            <h3 className = "text-detail text-grey font-sans">Community</h3>
+            <ul className ="text-detail font-sans">
+              <li><a href="#" className="text-black">Instagram</a></li>
+              <li><a href="#" className="text-black">Facebook</a></li>
             </ul>
           </div>
         </div>
