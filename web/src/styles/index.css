@@ -7,6 +7,13 @@
 
 
 
+@layer utilities {
+  .mask-tab { /* Tailwind doesnt support masks, so need to use css. This is used in SideBarTab.tsx */
+    -webkit-mask: url(/public/assets/sidebar/link-tab-mask.svg) no-repeat center;
+    mask: url(/public/assets/sidebar/link-tab-mask.svg) no-repeat center;
+  }
+}
+
 /* Reset */
 body, h1, h2, h3, h4, h5, h6, p, ul, ol, li, button, input {
   margin: 0;
