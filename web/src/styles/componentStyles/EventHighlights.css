@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lora:wght@400..700&display=swap');
 
-.event-highlights {
+/* .event-highlights {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -29,16 +29,16 @@
 
 .event-slides .images div {
   position: absolute;
-}
+} */
 
-.event-slides img {
+/* .event-slides img {
   object-fit: cover;
   width: 100%;
   height: 100%;
   border-radius: 35px;
-}
+} */
 
-.imgA {
+/* .imgA {
   top: 5%;
   left: 13.5%;
   width: 21%;
@@ -66,16 +66,16 @@
   bottom: 2.5%;
   right: 30%;
   width: 12.5%;
-}
+} */
 
-.icon1 {
+/* .icon1 {
   position: absolute;
   width: 10%;
   height: auto;
   bottom: 0%; left: 41%;
-}
+} */
 
-.icon2 {
+/* .icon2 {
   position: absolute;
   width: 8%;
   height: auto;
@@ -87,22 +87,22 @@
   width: 32%;
   height: auto;
   top: 22%; left: -4%;
-}
+} */
 
-.highlights-heading {
+/* .highlights-heading {
   position: absolute;
   top: 3%;
   z-index: 1;
-}
+} */
 
-.static-text {
+/* .static-text {
   position: absolute;
   width: 30%;
   height: 25%;
   z-index: 3;
-}
+} */
 
-.highlights-text {
+/* .highlights-text {
   opacity: 0;
   display: flex;
   position: absolute;
@@ -116,29 +116,29 @@
 .highlights-text[data-active] {
   opacity: 1;
   transition-delay: 0;
-}
+} */
 
-.highlight-title {
+/* .highlight-title {
   color: black;
   text-align: center;
   font-family: "Lora", sans-serif;
   font-weight: 700;
   font-size: 3vw;
-}
+} */
 
-.highlight-description {
+/* .highlight-description {
   color: black;
   text-align: center;
   font-family: "Lora", sans-serif;
   font-weight: 600;
   font-size: 1vw;
-}
+} */
 
-.buttons {
+/* .buttons {
   z-index: 4;
-}
+} */
 
-.highlights-back,
+/* .highlights-back,
 .highlights-forward {
   position: absolute;
   top: 48%;
@@ -149,27 +149,27 @@
   color: white;
   box-shadow: 0.1em 0.2em 0.3em rgba(0, 0, 0, 0.3);
   transition: 200ms ease-in-out, transform 80ms ease-in-out;
-}
+} */
 
-.highlights-back {
+/* .highlights-back {
   left: 5%;
 }
 
 .highlights-forward {
   right: 5%;
-}
+} */
 
-.highlights-back:hover,
+/* .highlights-back:hover,
 .highlights-forward:hover {
   background-color: rgba(0, 0, 0, 0.5);
   color: #f7f7fb;
-}
+} */
 
-.highlights-back:active,
+/* .highlights-back:active,
 .highlights-forward:active {
   background-color: rgba(46, 46, 46, 0.61);
   transform: translate3d(0px, 3px, 0);
-}
+} */
 
 img {
     -webkit-user-drag: none;
