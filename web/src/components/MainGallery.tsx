@@ -60,7 +60,7 @@ const MainGallery = ({ data }: MainGalleryProps) => {
         </button>
       </div>
 
-      <h1 className='title absolute top-[4%] left-[9%] z-20 text-[3.3vw] font-[600] text-primary font-serif'>Make a Difference. Be a Volunteer.</h1>
+      <h1 className='title absolute top-[4%] left-[9%] z-20 text-[3.3vw] font-bold text-primary font-serif'>Make a Difference. Be a Volunteer.</h1>
       <h1 className='title2 absolute bottom-[2.8%] left-[2%] z-20 text-white bg-[#e9e9e952] p-[1.2%] rounded-3xl backdrop-blur-[4px] font-[600] shadow-lg '>{data[imgIndex].title}</h1>
       <button className='see-more absolute bottom-[5%] right-0 z-20 w-[33.4%] h-[11%] text-[1vw] rounded-3xl flex justify-center items-center gap-3 bg-primary-dark font-mono hover:bg-blue hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-1 transition-all ease-in-out duration-100' onClick={() => handleSeeMore}>
         See other upcoming events <FaArrowRight className='inline' size={15} />
