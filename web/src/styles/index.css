@@ -66,9 +66,9 @@ button {
   font-size: 1rem;
 }
 
-button:hover {
+/* button:hover {
   background-color: #0056b3;
-}
+} */
 
 /* Containers */
 .container {
