@@ -36,7 +36,7 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
               <div className="absolute top-[5%] left-[13.5%] w-[21%]">
                 <img className="object-cover w-full h-full rounded-sm" src={event.imgA} />
               </div>
-              <div className="absolute bottom-[5%] left-[5%] w-[38%]">
+              <div className="absolute bottom-[10%] left-[5%] w-[38%]">
                 <img className="object-cover w-full h-full rounded-sm" src={event.imgB} />
               </div>
               <div className="absolute top-[19%] right-[22.5%] w-[11%]">
@@ -71,7 +71,7 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
         <IoIosArrowRoundForward className='absolute top-[45%] right-[6%] w-10 h-10 text-white bg-[#9FA1A6]/[0.9] rounded-full cursor-pointer hover:bg-black/[0.75] active:bg-[#464646]/[0.5] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms]' onClick={() => handleForward()}/>
       </div>
 
-      <img src="./public/assets/EventHighlights/Vector.svg" alt="" className="absolute w-[10%] h-auto bottom-0 left-[41%]"/>
+      <img src="./public/assets/EventHighlights/Vector.svg" alt="" className="absolute w-[10%] h-auto bottom-[5%] left-[41%]"/>
       <img src="./public/assets/EventHighlights/Vector (1).svg" alt="" className="absolute w-[8%] h-auto top-[30%] right-[18%]"/>
       <img src="./public/assets/EventHighlights/Figure 11.svg" alt="" className="absolute w-[25%] h-auto top-[24%] left-0"/>
     </div>
