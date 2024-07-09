@@ -1,4 +1,4 @@
-import { handleGoogle } from "../../services/firebase.tsx";
+import { handleGoogle } from "../firebase/firebase.tsx";
 
 function Header() {
   return (
