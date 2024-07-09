@@ -1,20 +1,21 @@
-// Complete in Issue
+// import { useState } from "react";
+// import { onAuthStateChanged } from "firebase/auth";
 
-import { useState } from "react";
+// function StaffAuth() {
+//   const [isStaff, setAsStaff] = useState(false);
 
-function StaffAuth() {
+//   function checkIfStaff(email) {
+//     const splitEmail = email.split("@");
+//     const emailDomain = splitEmail[1];
 
-    const [isStaff, setAsStaff] = useState(false);
+//     return emailDomain === "auckland.ac.nz"; // and some other checks like maybe just ADMIN = their email
+//   }
 
-    function checkIfStaff(email: string) {
-        const splitEmail = email.split("@");
-        const emailDomain = splitEmail[1];
-    
-        return emailDomain === "auckland.ac.nz"; // Add check for specific volunteering admin email
-      }
-    
-    
-    return isStaff;
-}
 
-export default StaffAuth;
+// etc
+
+
+//   return isStaff;
+// }
+
+// export default StaffAuth;
