@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import SponsorDiscount from './SponsorDiscount';
 import MainPageButtonHeadings from './MainPageButtonHeadings';
-
+ 
 interface SponsorsProps {
   data: { imageSrcBw: string; imageSrcColour: string; alt: string; id: number }[]
 }
@@ -29,7 +29,7 @@ const Sponsors = ({ data }: SponsorsProps) => {
   ];
 
   return (
-    <div className="flex flex-col items-center h-[85vh] bg-white text-black font-medium">
+    <div className="flex flex-col items-center h-[85vh] bg-neutral text-black font-medium">
       <div className="flex flex-col items-center">
         <MainPageButtonHeadings heading="Our Sponsors"/>
         <div className="text-center mt-[1rem]">
