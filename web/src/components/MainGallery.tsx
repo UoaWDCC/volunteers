@@ -49,7 +49,7 @@ const MainGallery = ({ data }: MainGalleryProps) => {
         </div>
       </Link>
 
-      <img className='absolute z-20 right-0 bottom-0 w-[100%] aspect-[8/3] contrast-200' src='..\public\assets\gallery\borders\galleryBorder.svg' />
+      <img className='absolute z-20 right-0 bottom-0 w-[100%] aspect-[8/3] contrast-200' src='..\assets\gallery\borders\galleryBorder.svg' />
 
       <div className='buttons z-50 absolute flex bg-[#ffffff00] text-white top-[47%] w-[100%]'>
         <button className='back ml-[2%] mr-auto scale-[0.8] h-[3.6em] rounded-full bg-[#e9e9e952] backdrop-blur-[4px] shadow-lg hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#1a26449c] active:translate-y-1 transition-all ease-in-out duration-180' onClick={() => handleBack()}>

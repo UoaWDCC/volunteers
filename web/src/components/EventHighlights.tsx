@@ -76,9 +76,9 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
         </button>
       </div>
 
-      <img src="./public/assets/EventHighlights/Vector.svg" alt="" className="icon1"/>
-      <img src="./public/assets/EventHighlights/Vector (1).svg" alt="" className="icon2"/>
-      <img src="./public/assets/EventHighlights/Figure 11.svg" alt="" className="icon3"/>
+      <img src="./assets/EventHighlights/Vector.svg" alt="" className="icon1"/>
+      <img src="./assets/EventHighlights/Vector (1).svg" alt="" className="icon2"/>
+      <img src="./assets/EventHighlights/Figure 11.svg" alt="" className="icon3"/>
     </div>
   )
 }
