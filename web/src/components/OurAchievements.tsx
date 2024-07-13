@@ -6,6 +6,7 @@ const OurAchievements = () => {
       <MainPageButtonHeadings heading="Our Achievements" />
       <div className="achievements flex flex-row gap-4 items-center mt-8">
         <img
+          loading="lazy"
           className="rounded-[30px] object-cover w-[150px] h-[200px]"
           src="/assets/gallery/events/sample1.png"
           title="img1"
@@ -24,6 +25,7 @@ const OurAchievements = () => {
         </div>
 
         <img
+          loading="lazy"
           className="rounded-[30px] object-cover w-[300px] h-[350px]"
           src="/assets/gallery/events/sample3.png"
           title="img2"
@@ -42,6 +44,7 @@ const OurAchievements = () => {
         </div>
 
         <img
+          loading="lazy"
           className="rounded-[30px] object-cover w-[150px] h-[200px]"
           src="/assets/gallery/events/sample4.png"
           title="img3"
