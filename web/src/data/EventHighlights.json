@@ -4,41 +4,41 @@
       "id": 1,
       "title": "Relay for Life",
       "description": "It was a huge success, thanks to our amazing participants and generous donors! Together, we raised an impressive $8,433 placing us second in the community group category!",
-      "imgA": "./assets/EventHighlights/Events/RelayForLife/image 44.svg",
-      "imgB": "./assets/EventHighlights/Events/RelayForLife/image 47.svg",
-      "imgC": "./assets/EventHighlights/Events/RelayForLife/image 46.svg",
-      "imgD": "./assets/EventHighlights/Events/RelayForLife/image 48.svg",
-      "imgE": "./assets/EventHighlights/Events/RelayForLife/image 45.svg"
+      "imgA": "/assets/EventHighlights/Events/RelayForLife/image 44.svg",
+      "imgB": "/assets/EventHighlights/Events/RelayForLife/image 47.svg",
+      "imgC": "/assets/EventHighlights/Events/RelayForLife/image 46.svg",
+      "imgD": "/assets/EventHighlights/Events/RelayForLife/image 48.svg",
+      "imgE": "/assets/EventHighlights/Events/RelayForLife/image 45.svg"
     },
     {
       "id": 2,
       "title": "Volunteers Day",
       "description": "The biggest day of the year for us! There were opportunities like Elder Care Volunteering where students connected with residents through music, arts, and crafts!\n Other students volunteered for the Takapuna Beach Clean Up, helping to preserve the beautiful beach!",
-      "imgA": "./assets/EventHighlights/Events/VolunteersDay/image 44 (1).svg",
-      "imgB": "./assets/EventHighlights/Events/VolunteersDay/image 47 (1).svg",
-      "imgC": "./assets/EventHighlights/Events/VolunteersDay/image 46 (1).svg",
-      "imgD": "./assets/EventHighlights/Events/VolunteersDay/image 48 (1).svg",
-      "imgE": "./assets/EventHighlights/Events/VolunteersDay/image 45 (1).svg"
+      "imgA": "/assets/EventHighlights/Events/VolunteersDay/image 44 (1).svg",
+      "imgB": "/assets/EventHighlights/Events/VolunteersDay/image 47 (1).svg",
+      "imgC": "/assets/EventHighlights/Events/VolunteersDay/image 46 (1).svg",
+      "imgD": "/assets/EventHighlights/Events/VolunteersDay/image 48 (1).svg",
+      "imgE": "/assets/EventHighlights/Events/VolunteersDay/image 45 (1).svg"
     },
     {
       "id": 3,
       "title": "Blind Low Vision",
       "description": "All the volunteers helped Blind Low Vision NZ to clean all their donation buckets! The organisation helps to train guide dogs who support Kiwis who are blind, deafblind, or have low vision.",
-      "imgA": "./assets/EventHighlights/Events/BlindLowVision/image 44 (2).svg",
-      "imgB": "./assets/EventHighlights/Events/BlindLowVision/image 47 (2).svg",
-      "imgC": "./assets/EventHighlights/Events/BlindLowVision/image 46 (2).svg",
-      "imgD": "./assets/EventHighlights/Events/BlindLowVision/image 48 (2).svg",
-      "imgE": "./assets/EventHighlights/Events/BlindLowVision/image 45 (2).svg"
+      "imgA": "/assets/EventHighlights/Events/BlindLowVision/image 44 (2).svg",
+      "imgB": "/assets/EventHighlights/Events/BlindLowVision/image 47 (2).svg",
+      "imgC": "/assets/EventHighlights/Events/BlindLowVision/image 46 (2).svg",
+      "imgD": "/assets/EventHighlights/Events/BlindLowVision/image 48 (2).svg",
+      "imgE": "/assets/EventHighlights/Events/BlindLowVision/image 45 (2).svg"
     },
     {
       "id": 3,
       "title": "Pub Quiz",
       "description": "A great night filled with some very interesting questions and free food!",
-      "imgA": "./assets/EventHighlights/Events/PubQuiz/image 44 (3).svg",
-      "imgB": "./assets/EventHighlights/Events/PubQuiz/image 47 (3).svg",
-      "imgC": "./assets/EventHighlights/Events/PubQuiz/image 46 (3).svg",
-      "imgD": "./assets/EventHighlights/Events/PubQuiz/image 48 (3).svg",
-      "imgE": "./assets/EventHighlights/Events/PubQuiz/image 45 (3).svg"
+      "imgA": "/assets/EventHighlights/Events/PubQuiz/image 44 (3).svg",
+      "imgB": "/assets/EventHighlights/Events/PubQuiz/image 47 (3).svg",
+      "imgC": "/assets/EventHighlights/Events/PubQuiz/image 46 (3).svg",
+      "imgD": "/assets/EventHighlights/Events/PubQuiz/image 48 (3).svg",
+      "imgE": "/assets/EventHighlights/Events/PubQuiz/image 45 (3).svg"
     }
 ]
 }
