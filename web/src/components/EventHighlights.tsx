@@ -35,19 +35,19 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
           <div className="event-slides" key={index} style={{ translate: `${-100 * eventIndex}%` }}>
             <div className="images">
               <div className="imgA">
-                <img src={event.imgA} />
+                <img width={293} height={352}  src={event.imgA} />
               </div>
               <div className="imgB">
-                <img src={event.imgB} />
+                <img width={504} height={245} src={event.imgB} />
               </div>
               <div className="imgC">
-                <img src={event.imgC} />
+                <img width={188} height={187} src={event.imgC} />
               </div>
               <div className="imgD">
-                <img src={event.imgD} />
+                <img width={450} height={220} src={event.imgD} />
               </div>
               <div className="imgE">
-                <img src={event.imgE} />
+                <img width={189} height={261} src={event.imgE} />
               </div>
             </div>
           </div>
