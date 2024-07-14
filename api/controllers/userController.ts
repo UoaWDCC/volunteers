@@ -7,12 +7,12 @@ const colRef = collection(db, "users");
 
 async function getUsers(req: Request, res: Response): Promise<void> {
     const userDocs = await getDocs(colRef);
-    const users = userDocs.docs.map(doc => doc.data());
+    const users = userDocs.docs.map(doc => ({...doc.data(), id: doc.id}));
     
-    res.json(users);
+    res.json(users).status(200);
     
     // Print out the users for testing purposes
-    console.log(users);
+    // console.log(users);
 }
 
 async function addUser(req: Request, res: Response): Promise<void> {
@@ -44,10 +44,19 @@ async function addUser(req: Request, res: Response): Promise<void> {
 
 async function deleteUser(req: Request, res: Response): Promise<void> {
     const userRef = doc(db, "users", req.body.id);
+    const docSnapshot = (await getDoc(userRef));
+    
+    if (!docSnapshot.exists()) {
+      console.log("Document does not exist")
+      res.status(404).send("Document not found")
+      return;
+    }
+
+    const user = { id:docSnapshot.id, ...docSnapshot.data() }
 
     await deleteDoc(userRef);
 
-    res.json("User deleted");
+    res.json(user).status(200);
 
     // Print out message for testing purposes
     console.log("User deleted");
@@ -61,7 +70,6 @@ async function getUser(req: Request, res: Response): Promise<void> {
     
     // Print out message for testing purposes
     console.log(user);
-
 }
 
 export { getUsers, addUser, deleteUser, getUser };
