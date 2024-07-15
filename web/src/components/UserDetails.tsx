@@ -1,11 +1,15 @@
 import { User } from "@pages/AdminUsers";
 import { useUsersContext } from "../Hooks/UseUsersContext";
+import { useState } from "react";
 // import { useEffect } from 'react';
 
 const UserDetails = ({ user }: { user: User }) => {
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [studentID, setStudentID] = useState(user.studentID);
   const { dispatch } = useUsersContext()
 
-  const handleClick = async () => {
+  const handleClickDelete = async () => {
     const response = await fetch('http://localhost:3000/api/removeUser', {
       method: 'DELETE',
       headers: {
@@ -20,12 +24,21 @@ const UserDetails = ({ user }: { user: User }) => {
     }
   }
 
+  const handleClickEdit = () => {
+
+  }
+
   return (
-    <div className="flex border">
-      <p className="w-40">{user.firstName}</p>
-      <p className="w-40">{user.lastName}</p>
-      <p className="w-40">{user.studentID}</p>
-      <span onClick={handleClick} className="flex justify-self-end hover:cursor-pointer">Delete</span>
+    <div className="flex border justify-between items-center h-10 px-2">
+      <div className="flex">
+        <p className="w-40 m-0">{firstName}</p>
+        <p className="w-40 m-0">{lastName}</p>
+        <p className="w-40 m-0">{studentID}</p>
+      </div>
+      <div className="flex gap-4">
+        <span onClick={handleClickEdit}className="hover:cursor-pointer">Edit</span>
+        <span onClick={handleClickDelete} className="hover:cursor-pointer">Delete</span>
+      </div>
     </div>
   )
 }

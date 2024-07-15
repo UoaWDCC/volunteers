@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import UserDetails from "@components/UserDetails";
-import { UsersContextProvider } from "../context/UserContext";
 import { useUsersContext } from "../Hooks/UseUsersContext";
 
 // Has to be a better way to do this. Users database kinda a mess so not sure what parameters there should be
