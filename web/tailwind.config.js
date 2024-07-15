@@ -15,7 +15,9 @@ export default {
           neutral: "#FFFEF9", /* basically white */
           "neutral-tan": "#FAF6EB", /* tan color */
           black: "#33342E", /* lighter black */
-          grey: "#818181" /* grey */ 
+          grey: "#818181", /* grey */ 
+          lightGrey: "#D9D9D9", /* light grey */
+          blueButtonHover: "#60ABF6"
         },
         fontSize: {
           'number': ['80px', {

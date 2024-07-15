@@ -2,7 +2,7 @@ import MainPageButtonHeadings from "./MainPageButtonHeadings";
 
 const OurAchievements = () => {
   return (
-    <div className="flex flex-col items-center h-screen bg-white font-medium">
+    <div className="flex flex-col items-center h-screen bg-neutral font-medium">
       <MainPageButtonHeadings heading="Our Achievements" />
       <div className="achievements flex flex-row gap-4 items-center mt-8">
         <img
@@ -12,7 +12,7 @@ const OurAchievements = () => {
           alt="img1"
         />
 
-        <div className="w-[180px] h-[250px] bg-[#D9D9D9] font-semibold tracking-[-1px] rounded-[30px]">
+        <div className="w-[180px] h-[250px] bg-lightGrey font-semibold tracking-[-1px] rounded-[30px]">
           <p className="text-center text-lg leading-[8px] mt-12">
             Relay for life:
           </p>
@@ -30,7 +30,7 @@ const OurAchievements = () => {
           alt="img2"
         />
 
-        <div className="w-[180px] h-[250px] bg-[#D9D9D9] font-semibold tracking-[-1px] rounded-[30px]">
+        <div className="w-[180px] h-[250px] bg-lightGrey font-semibold tracking-[-1px] rounded-[30px]">
           <p className="text-center text-lg leading-[8px] mt-12">
             UoA Clubs Awards:
           </p>
