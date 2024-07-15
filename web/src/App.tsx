@@ -7,6 +7,7 @@ import RegisterForm from '@components/RegisterForm';
 import TestingComponent from '@components/TestComponent';
 import AdminUsers from '@pages/AdminUsers';
 import { UsersContextProvider } from './context/UserContext';
+import Admin from '@pages/Admin';
 
 const router = createBrowserRouter([
   {
@@ -27,12 +28,15 @@ const router = createBrowserRouter([
     element: <TestingComponent />,
   },
   {
+    path: '/admin',
+    element: <Admin />,
+  },
+  {
     path: '/admin/users',
     element: 
       <UsersContextProvider>
         <AdminUsers />
-      </UsersContextProvider>
-    ,
+      </UsersContextProvider>,
   },
 ]);
 

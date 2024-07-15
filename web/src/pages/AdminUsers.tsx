@@ -32,7 +32,12 @@ export default function AdminUsers() {
   }, [users])
 
   return (
-      <div className="border w-[80%] m-auto my-8">
+      <div className="flex flex-col w-[80%] m-auto my-8 gap-2">
+        <div className="flex flex-row px-2">
+          <div className="w-40">First Name</div>
+          <div className="w-40">Last Name</div>
+          <div className="w-40">Student ID</div>
+        </div>
         {users && users.map((user: User) => (
           <UserDetails key={user.id} user={user} />
         ))}
