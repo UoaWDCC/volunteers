@@ -1,5 +1,5 @@
 import { useUsersContext } from "../Hooks/UseUsersContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 // Not sure if this should be in the file?
 export interface User {
@@ -18,17 +18,40 @@ export interface User {
   emLastName: string;
   emMobile: string;
   emRelationship: string;
+  events: string[];
 }
 
 const UserDetails = ({ user }: { user: User }) => {
   // Local state
   const [details, setDetails] = useState<User>({ ...user });
+  const [eventData, setEventData] = useState<any[]>([])
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [showDetails, setShowDetails] = useState(false);
 
   // dispatch function to update global state
-  const { dispatch } = useUsersContext()
+  const { dispatch } = useUsersContext();
+
+  useEffect(() => {
+    const fetchEventData = async (eventId: string) => {
+      try {
+        const response = await fetch(`http://localhost:3000/api/${eventId}`)
+        const data = await response.json();
+        return data;
+      } catch (err) {
+        console.error("Failed", err)
+        return null;
+      }
+    };
+
+    const fetchAllEvents = async () => {
+      const eventsDataPromises = user.events.map(eventId => fetchEventData(eventId));
+      const eventsData = await Promise.all(eventsDataPromises);
+      setEventData(eventsData.filter(event => event !== null));
+    };
+
+    fetchAllEvents();
+  }, [user.events])
 
   const handleClickDelete = async () => {
     const confirmDelete = window.confirm('Are you sure want to remove ' + user.firstName + '?')
@@ -63,19 +86,16 @@ const UserDetails = ({ user }: { user: User }) => {
   }
 
   const handleSave = async () => {
-    const updatedUser = { ...details }
-
     const response = await fetch('http://localhost:3000/api/updateUser', {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(updatedUser)
+      body: JSON.stringify({...details})
     })
-    const json = await response.json()
 
     if (response.ok) {
-      console.log("User updated", json)
+      setDetails({...details})
     }
 
     disableEditMode();
@@ -103,26 +123,26 @@ const UserDetails = ({ user }: { user: User }) => {
               </div>
               <div className="flex-[1] m-0 border">
                 <input type="text" className="w-full" value={details.lastName}
-                  onChange={(e) => (setDetails({ ...details, lastName: e.target.value }))}
+                  onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, lastName: e.target.value }))}
                 />
               </div>
               <div className="flex-[2] m-0 border">
                 <input type="text" className="w-full" value={details.email}
-                  onChange={(e) => (setDetails({ ...details, email: e.target.value }))}
+                  onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, email: e.target.value }))}
                 />
               </div>
               <div className="flex-[1] m-0 border">
                 <input type="text" className="w-full" value={details.mobile}
-                  onChange={(e) => (setDetails({ ...details, mobile: e.target.value }))}
+                  onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, mobile: e.target.value }))}
                 />
               </div>
               <div className="flex-[1] m-0 border">
                 <input type="text" className="w-full" value={details.dOB}
-                  onChange={(e) => (setDetails({ ...details, dOB: e.target.value }))}
+                  onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, dOB: e.target.value }))}
                 />
               </div>
               <div className="flex flex-[1]">
-                <select className="w-full" id="" value={details.gender} onChange={(e) => setDetails({ ...details, gender: e.target.value })}>
+                <select className="w-full" id="" value={details.gender} onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, gender: e.target.value }))}>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Non-Binary">Non-binary</option>
@@ -147,7 +167,7 @@ const UserDetails = ({ user }: { user: User }) => {
 
                     <div className="flex w-[50%]">
                       <div className="flex-auto text-center">Year Level:</div>
-                      <select className="flex-auto mr-4" id="" value={details.year} onChange={(e) => setDetails({ ...details, year: e.target.value })}>
+                      <select className="flex-auto mr-4" id="" value={details.year} onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, year: e.target.value }))}>
                         <option value="1st Year">1st Year</option>
                         <option value="2nd Year">2nd Year</option>
                         <option value="3rd Year">3rd Year</option>
@@ -159,7 +179,7 @@ const UserDetails = ({ user }: { user: User }) => {
 
                     <div className="flex w-[50%]">
                       <div className="flex-auto text-center">License:</div>
-                      <select className="flex-auto mr-4" id="" value={details.license} onChange={(e) => setDetails({ ...details, license: e.target.value })}>
+                      <select className="flex-auto mr-4" id="" value={details.license} onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, license: e.target.value }))}>
                         <option value="Full">Full</option>
                         <option value="Restricted">Restricted</option>
                         <option value="None">None</option>
@@ -172,14 +192,14 @@ const UserDetails = ({ user }: { user: User }) => {
                     <div className="flex-[1]">
                       <div className="underline">Dietary Requirements</div>
                       <input type="text" className="" value={details.dietary}
-                        onChange={(e) => (setDetails({ ...details, dietary: e.target.value }))}
+                        onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, dietary: e.target.value }))}
                       />
                     </div>
 
                     <div className="flex-[1]">
                       <div className="underline">Accessibility Requirements</div>
                       <input type="text" className="" value={details.accessibility}
-                        onChange={(e) => (setDetails({ ...details, accessibility: e.target.value }))}
+                        onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, accessibility: e.target.value }))}
                       />
                     </div>
                   </div>
@@ -244,19 +264,17 @@ const UserDetails = ({ user }: { user: User }) => {
 
           {/* Details panel display mode */}
           {showDetails ? (
-            <div className="flex p-2 border border-black border-t-0 rounded">
-              <div className="flex-col flex-[1]">
+            <div className="flex p-2 border border-black border-t-0 rounded flex-wrap">
+              <div className="flex-col flex-[2]">
                 <div className="flex justify-evenly">
                   <div className="">Year Level: {details.year}</div>
                   <div className="">Driver's License: {details.license}</div>
                 </div>
-
                 <div className="flex">
                   <div className="flex-[1]">
                     <div className="underline">Dietary Requirements</div>
                     <div className="">{details.dietary}</div>
                   </div>
-
                   <div className="flex-[1]">
                     <div className="underline">Accessibility Requirements</div>
                     <div className="">{details.accessibility}</div>
@@ -273,6 +291,15 @@ const UserDetails = ({ user }: { user: User }) => {
                   <div className="">Mobile: {details.emMobile}</div>
                   <div className="">Relationship: {details.emRelationship}</div>
                 </div>
+              </div>
+
+              <div className="flex-[1]">
+                <div className="underline">Events Attending</div>
+                {eventData.map((event, index) => (
+                  <div key={index}>
+                    <div className="">{event.title}</div>
+                  </div>
+                ))}
               </div>
             </div>
           ) : (
