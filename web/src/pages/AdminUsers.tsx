@@ -1,14 +1,9 @@
 import { useEffect } from "react";
 import UserDetails from "@components/UserDetails";
 import { useUsersContext } from "../Hooks/UseUsersContext";
+import { User } from "../components/UserDetails"
 
-// Has to be a better way to do this. Users database kinda a mess so not sure what parameters there should be
-export interface User {
-  id: string;
-  firstName: string;
-  lastName: string;
-  studentID: string;
-}
+
 
 export default function AdminUsers() {
   const {users, dispatch} = useUsersContext()
@@ -32,11 +27,16 @@ export default function AdminUsers() {
   }, [users])
 
   return (
-      <div className="flex flex-col w-[80%] m-auto my-8 gap-2">
-        <div className="flex flex-row px-2">
-          <div className="w-40">First Name</div>
-          <div className="w-40">Last Name</div>
-          <div className="w-40">Student ID</div>
+      <div className="flex flex-col w-[90%] m-auto my-8 gap-2">
+        <div className="flex flex-[0_0_75%] px-2">
+          <div className="flex-[1]">First Name</div>
+          <div className="flex-[1]">Last Name</div>
+          <div className="flex-[2]">Email</div>
+          <div className="flex-[1]">Mobile</div>
+          <div className="flex-[1]">Date of Birth</div>
+          <div className="flex-[1]">Gender</div>
+          {/*Spacer div for alignment*/}
+          <div className="flex-[0_0_21%]"></div>
         </div>
         {users && users.map((user: User) => (
           <UserDetails key={user.id} user={user} />
