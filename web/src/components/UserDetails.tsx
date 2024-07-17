@@ -116,27 +116,27 @@ const UserDetails = ({ user }: { user: User }) => {
           {/* Main info edit mode */}
           <div className="flex border border-gray-600 justify-between items-center h-10 px-2 rounded gap-2">
             <div className="flex flex-[0_0_79%]">
-              <div className="flex-[1] m-0 border">
+              <div className="flex-[1] m-0">
                 <input type="text" className="w-full" value={details.firstName}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, firstName: e.target.value }))}
                 />
               </div>
-              <div className="flex-[1] m-0 border">
+              <div className="flex-[1] m-0">
                 <input type="text" className="w-full" value={details.lastName}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, lastName: e.target.value }))}
                 />
               </div>
-              <div className="flex-[2] m-0 border">
+              <div className="flex-[2] m-0">
                 <input type="text" className="w-full" value={details.email}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, email: e.target.value }))}
                 />
               </div>
-              <div className="flex-[1] m-0 border">
+              <div className="flex-[1] m-0">
                 <input type="text" className="w-full" value={details.mobile}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, mobile: e.target.value }))}
                 />
               </div>
-              <div className="flex-[1] m-0 border">
+              <div className="flex-[1] m-0">
                 <input type="text" className="w-full" value={details.dOB}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, dOB: e.target.value }))}
                 />
@@ -152,7 +152,7 @@ const UserDetails = ({ user }: { user: User }) => {
               </div>
             </div>
 
-            <div className="flex justify-end flex-[0_0_21%] gap-2 border">
+            <div className="flex justify-end flex-[0_0_21%] gap-2">
               <span onClick={handleCancel} className="hover:cursor-pointer border border-gray-400 px-2 rounded">Cancel</span>
               <span onClick={handleSave} className="hover:cursor-pointer rounded px-2 text-green-600 border border-green-600">Save</span>
             </div>
@@ -247,15 +247,15 @@ const UserDetails = ({ user }: { user: User }) => {
           {/* Main info display mode */}
           <div className="flex border border-gray-600 justify-between items-center h-10 px-2 rounded gap-2">
             <div className="flex flex-[0_0_79%]">
-              <div className="flex-[1] m-0 border">{details.firstName}</div>
-              <div className="flex-[1] m-0 border">{details.lastName}</div>
-              <div className="flex-[2] m-0 border">{details.email}</div>
-              <div className="flex-[1] m-0 border">{details.mobile}</div>
-              <div className="flex-[1] m-0 border">{details.dOB}</div>
-              <div className="flex-[1] m-0 border">{details.gender}</div>
+              <div className="flex-[1] m-0">{details.firstName}</div>
+              <div className="flex-[1] m-0">{details.lastName}</div>
+              <div className="flex-[2] m-0">{details.email}</div>
+              <div className="flex-[1] m-0">{details.mobile}</div>
+              <div className="flex-[1] m-0">{details.dOB}</div>
+              <div className="flex-[1] m-0r">{details.gender}</div>
             </div>
 
-            <div className="flex justify-end flex-[0_0_21%] gap-2 border">
+            <div className="flex justify-end flex-[0_0_21%] gap-2">
               <span onClick={toggleShowDetails} className="hover:cursor-pointer border border-gray-400 px-2 rounded">{showDetails ? "Hide Details" : "Show Details"}</span>
               <span onClick={enableEditMode} className="hover:cursor-pointer border border-gray-400 px-2 rounded">Edit</span>
               <span onClick={handleClickDelete} className="hover:cursor-pointer rounded px-2 text-red-600 border border-red-600">Delete</span>
