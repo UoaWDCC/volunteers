@@ -8,7 +8,7 @@ const apiUrl = 'http://localhost:3001';
 export const getUserById = async (userId: string) => {
     console.log("Get User By Id");
     try {
-        const response = await axios.get(`${apiUrl}/api/getUsers`, {
+        const response = await axios.get(`${apiUrl}/api/getUser`, {
         params: { id: userId }
         });
         return response.data;

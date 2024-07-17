@@ -1,30 +1,30 @@
-import { getAllUsers } from "@utils/UserService";
+import { getUserById } from "@utils/UserService";
 import { useEffect, useState } from "react";
 
+
+const testId = 'AUBf2qRfJKcmkIQfJI4S';
+
 const Users: React.FC = () => {
-  const [users, setUsers] = useState<any[]>([]);
+  const [user, setUser] = useState<any>(null);
 
   useEffect(() => {
-    console.log('useEffect triggered'); // Add a log to check if useEffect is triggered
+    console.log('useEffect triggered');
 
-    const fetchUsers = async () => {
+    const fetchUser = async () => {
       try {
-        const usersData = await getAllUsers();
-        setUsers(usersData);
+        const userData = await getUserById(testId);
+        setUser(userData);
       } catch (error) {
-        console.error('Error fetching all users:', error);
+        console.error('Error fetching user:', error);
       }
     };
 
-    fetchUsers();
+    fetchUser();
   }, []);
-
-  console.log('Component rendering'); // Add a log to check if component is rendering
 
   return (
     <div>
       <h1>All Users</h1>
-      {/* Render users here */}
     </div>
   );
 };
