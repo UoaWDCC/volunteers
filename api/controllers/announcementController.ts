@@ -2,6 +2,7 @@ import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, QuerySnapshot } from 'firebase/firestore';
 import { Request, Response } from 'express';
 
+// import { UserFilters } from '../enums/UserFilters'
 
 const colRef = collection(db, "Announcements");
 
@@ -21,6 +22,8 @@ export async function getAnnouncementByUser(req: Request, res: Response): Promis
         const currentLocalTime = new Date();
         console.log(currentLocalTime);
 
+        const user = req.body.user;
+        console.log(user);
 
         const querySnapshot = await getDocs(colRef);
         const announcements = querySnapshot.docs
@@ -28,8 +31,20 @@ export async function getAnnouncementByUser(req: Request, res: Response): Promis
                 const startDate = doc.data().StartDate;
                 const endDate = doc.data().EndDate;
 
-                console.log('Start Date:', startDate.toDate(), 'End Date:', endDate.toDate(), 'Current Time:', currentLocalTime);
+                // console.log('Start Date:', startDate.toDate(), 'End Date:', endDate.toDate(), 'Current Time:', currentLocalTime);
                 return startDate.toDate() <= currentLocalTime && currentLocalTime <= endDate.toDate();
+            })
+            .filter((doc) => {
+                // get filters array
+                const filters = doc.data().Filters;   
+                const userYearOfStudy = user.yearOfStudy;
+                
+                if (!filters.includes(userYearOfStudy)) {
+                    return false;
+                }
+
+                
+                return true;
             })
             .map((doc) => doc.data());
         
