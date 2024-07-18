@@ -1,6 +1,7 @@
 import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
 import { Request, Response } from 'express';
+import { error } from 'console';
 
 
 const colRef = collection(db, "users");
@@ -49,19 +50,36 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
 
     res.json("User deleted");
 
-    // Print out message for testing purposes
     console.log("User deleted");
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {
-    const userRef = doc(db, "users", req.body.id);
-    const user = (await getDoc(userRef)).data();
-    
-    res.json(user);
-    
-    // Print out message for testing purposes
-    console.log(user);
 
+    try {
+
+        const userId = req.body.id;
+
+        if (!userId) {
+            res.status(400).json({error: "User Id is Required"});
+            return;
+        }
+
+
+        const userRef = doc(db, 'users', userId);
+        const userSnapshot = await getDoc(userRef);
+
+        if (userSnapshot.exists()) {
+            const user = userSnapshot.data();
+            res.json(user);
+            console.log(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user:', error);
+        res.status(500).json({ error: 'Internal server error' });
+    }
+    
 }
 
 export { getUsers, addUser, deleteUser, getUser };

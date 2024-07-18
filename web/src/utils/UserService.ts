@@ -2,15 +2,16 @@
 
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3001';
+const apiUrl = 'http://localhost:3002';
 
 // Fetch a user by ID
 export const getUserById = async (userId: string) => {
     console.log("Get User By Id");
     try {
-        const response = await axios.get(`${apiUrl}/api/getUser`, {
-        params: { id: userId }
+        const response = await axios.post(`${apiUrl}/api/getUser`, {
+            id: userId
         });
+        
         return response.data;
     } catch (error) {
         console.error('Error fetching user:', error);
