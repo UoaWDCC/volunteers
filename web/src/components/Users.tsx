@@ -1,4 +1,4 @@
-import { getUserById, getAllAnnouncements } from "@utils/UserService";
+import { getUserById, getAnnouncementByUser } from "@utils/UserService";
 import { useEffect, useState } from "react";
 
 // FirstYear
@@ -25,12 +25,12 @@ const Users: React.FC = () => {
         setUser(userData);
         console.log(user);
 
-        const announcementData = await getAllAnnouncements();
+        const announcementData = await getAnnouncementByUser(user);
         setAnnouncements(announcementData);
         console.log(announcements);
 
       } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error('Error fetching user');
       }
     };
 

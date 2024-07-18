@@ -12,8 +12,6 @@ import OurCommunity from '@components/OurCommunity';
 // import Announcements from '@components/Announcements';
 
 // getUserById
-import { getAllUsers } from '../utils/UserService';
-
 import Users from '@components/Users';
 
 function MainMenu() {

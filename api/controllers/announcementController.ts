@@ -12,5 +12,20 @@ export async function getAllAnnouncements(req: Request, res: Response): Promise<
     
     res.json(announcements);
     
+    // console.log(announcements);
+}
+
+
+export async function getAnnouncementByUser(req: Request, res: Response): Promise<void> {
+    const userDocs = await getDocs(colRef);
+    const announcements = userDocs.docs.map(doc => doc.data());
+
+    // console.log(req);
+    const user = req.body;
+    console.log(user);
+
+    
+    res.json(announcements);
+    
     console.log(announcements);
 }

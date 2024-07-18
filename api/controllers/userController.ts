@@ -13,7 +13,7 @@ async function getUsers(req: Request, res: Response): Promise<void> {
     res.json(users);
     
     // Print out the users for testing purposes
-    console.log(users);
+    // console.log(users);
 }
 
 async function addUser(req: Request, res: Response): Promise<void> {
@@ -71,12 +71,12 @@ async function getUser(req: Request, res: Response): Promise<void> {
         if (userSnapshot.exists()) {
             const user = userSnapshot.data();
             res.json(user);
-            console.log(user);
+            // console.log(user);
         } else {
             res.status(404).json({ error: 'User not found' });
         }
     } catch (error) {
-        console.error('Error fetching user:', error);
+        console.error('Error fetching user');
         res.status(500).json({ error: 'Internal server error' });
     }
     
