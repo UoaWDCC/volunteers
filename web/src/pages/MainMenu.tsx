@@ -11,7 +11,7 @@ import OurAchievements from '@components/OurAchievements';
 import OurCommunity from '@components/OurCommunity';
 // import Announcements from '@components/Announcements';
 
-import Users from '@components/Users';
+import ShowCaseUserAnnouncements from '@components/ShowCaseUserAnnouncements';
 
 function MainMenu() {
 
@@ -19,7 +19,7 @@ function MainMenu() {
     <div className="primary-background">
       
       {/* <Announcements user={}/> */}
-      <Users/>
+      <ShowCaseUserAnnouncements/>
     
       
       {/* <p className='font-serif text-font-primary text-lg px-h-md py-v-md'>font-serif for poppins,  font-lora for lora,  sans for Work Sans ::font-serif text-font-primary text-lg px-h-md py-v-md::</p> */}
