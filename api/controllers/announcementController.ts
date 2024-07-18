@@ -2,7 +2,6 @@ import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, QuerySnapshot } from 'firebase/firestore';
 import { Request, Response } from 'express';
 
-// import { UserFilters } from '../enums/UserFilters'
 
 const colRef = collection(db, "Announcements");
 
@@ -14,6 +13,30 @@ export async function getAllAnnouncements(req: Request, res: Response): Promise<
     res.json(announcements);
     
     // console.log(announcements);
+}
+
+
+export async function getAllCurrentAnnouncements(req: Request, res: Response): Promise<void> {
+    try {
+        const currentLocalTime = new Date();
+
+        const querySnapshot = await getDocs(colRef);
+        const announcements = querySnapshot.docs
+            .filter((doc) => {
+                const startDate = doc.data().StartDate;
+                const endDate = doc.data().EndDate;
+
+                return startDate.toDate() <= currentLocalTime && currentLocalTime <= endDate.toDate();
+            })
+            .map((doc) => doc.data());
+        
+        console.log(announcements);
+
+        res.json(announcements);
+    } catch (error) {
+        console.error('Error getting documents: ', error);
+        res.status(500).json({ error: 'Failed to fetch announcements' });
+    }
 }
 
 
