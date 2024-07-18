@@ -24,7 +24,6 @@ export const getAllUsers = async () => {
     console.log("Get all users");
     try {
         const response = await axios.get(`${apiUrl}/api/getUsers`);
-        console
         console.log(response);
         return response.data;
     } catch (error) {
@@ -32,3 +31,30 @@ export const getAllUsers = async () => {
         throw error;
     }
   };
+
+// leaving announcements in here until figure out how to have automatic url / port
+export const getAnnouncements = async (user: any) => {
+    console.log("Get Announcements");
+    try {
+        const response = await axios.post(`${apiUrl}/api/getAnnouncements`, {
+            user: user
+        });
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching all users:', error);
+        throw error;
+    }
+};
+
+export const getAllAnnouncements = async () => {
+    console.log("Get Announcements");
+    try {
+        const response = await axios.get(`${apiUrl}/api/getAllAnnouncements`);
+        console.log(response);
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching all users:', error);
+        throw error;
+    }
+};

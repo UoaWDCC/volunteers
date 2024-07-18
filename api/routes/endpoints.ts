@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 
 
 import userEndpoints from './api/users';
+import announcementEndpoints from './api/announcements';
 
 import { db } from "../config/firebase";
 import {
@@ -34,6 +35,8 @@ const colRef = collection(db, "events");
 
 // User entity endpoints
 router.use("/", userEndpoints);
+router.use("/", announcementEndpoints);
+
 
 
 // testing routers
