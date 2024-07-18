@@ -13,6 +13,10 @@ const userSchema = new Schema({
     maxLength: 40,
     minLength: 1,
   },
+  yearOfStudy: {
+    type: [String],
+    default: [],
+  },
 });
 
 const User = model('User', userSchema);
