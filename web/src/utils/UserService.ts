@@ -34,7 +34,7 @@ export const getAllUsers = async () => {
 
 // leaving announcements in here until figure out how to have automatic url / port
 export const getAnnouncementByUser = async (user: any) => {
-    console.log("Get Announcements");
+    console.log("Get Announcements", user);
     try {
         const response = await axios.post(`${apiUrl}/api/getAnnouncementByUser`, {
             user

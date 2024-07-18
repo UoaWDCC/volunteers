@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 
 
 // get ID from login authentication
-const testId = 'AUBf2qRfJKcmkIQfJI4S';
+const testId = '7pBAPzYW3br28BOsraoH';
 
 const Users: React.FC = () => {
   const [user, setUser] = useState<any>(null);
@@ -18,28 +18,22 @@ const Users: React.FC = () => {
 
   useEffect(() => {
     console.log('useEffect triggered');
-
-    const fetchUser = async () => {
+  
+    const fetchUserAndAnnouncements = async () => {
       try {
         const userData = await getUserById(testId);
         setUser(userData);
-        console.log(user);
-
-        const announcementData = await getAnnouncementByUser(user);
+  
+        const announcementData = await getAnnouncementByUser(userData);
         setAnnouncements(announcementData);
-        console.log(announcements);
-
       } catch (error) {
-        console.error('Error fetching user');
+        console.error('Error fetching user or announcements:', error);
       }
     };
-
-    fetchUser();
+  
+    fetchUserAndAnnouncements();
   }, []);
 
-  // getAnnouncements endpoint
-  // send all of user body to backend endpoint
-  
 
   return (
     <div>
