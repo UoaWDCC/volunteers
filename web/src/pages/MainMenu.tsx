@@ -13,13 +13,16 @@ import OurCommunity from '@components/OurCommunity';
 
 import ShowCaseUserAnnouncements from '@components/ShowCaseUserAnnouncements';
 
+
 function MainMenu() {
 
   return (
     <div className="primary-background">
       
       {/* <Announcements user={}/> */}
+
       <ShowCaseUserAnnouncements/>
+
     
       
       {/* <p className='font-serif text-font-primary text-lg px-h-md py-v-md'>font-serif for poppins,  font-lora for lora,  sans for Work Sans ::font-serif text-font-primary text-lg px-h-md py-v-md::</p> */}
