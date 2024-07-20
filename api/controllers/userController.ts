@@ -1,5 +1,5 @@
 import { db } from '../config/firebase';
-import { collection, getDocs, addDoc, deleteDoc, doc, getDoc } from 'firebase/firestore';
+import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Request, Response } from 'express';
 
 
@@ -64,4 +64,31 @@ async function getUser(req: Request, res: Response): Promise<void> {
 
 }
 
-export { getUsers, addUser, deleteUser, getUser };
+async function updateUser(req: Request, res: Response): Promise<void> {
+    try {
+        const userRef = doc(db, "users", req.body.id);
+        const userDoc = await getDoc(userRef);
+
+        if (!userDoc.exists()) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
+
+        await updateDoc(userRef, req.body);
+        
+        // Fetch the updated user data for testing purposes
+        const updatedUserDoc = await getDoc(userRef);
+        const updatedUser = updatedUserDoc.data();
+
+        res.json(updatedUser);
+        console.log(updatedUser);
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+
+
+export { getUsers, addUser, deleteUser, getUser, updateUser };
