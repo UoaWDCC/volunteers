@@ -98,6 +98,7 @@ const UserDetails = ({ user }: { user: User }) => {
       setDetails({...details})
     }
 
+    dispatch({type: 'UPDATE_USER', payload: {...details}})
     disableEditMode();
   }
 

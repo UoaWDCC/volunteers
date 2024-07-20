@@ -1,5 +1,5 @@
 import { createContext, useReducer, Dispatch, ReactNode } from "react";
-import { User } from "@pages/AdminUsers";
+import { User } from "@components/UserDetails";
 
 interface Action {
   type: string;
@@ -22,6 +22,15 @@ export const usersReducer = (state: {users: User[]}, action: Action) => {
     case 'DELETE_USER':
       return {
         users: state.users.filter((user) => user.id !== action.payload.id)
+      }
+    case 'UPDATE_USER':
+      return {
+        users: state.users.map((user) => {
+          if (user.id === action.payload.id) {
+            return {...user, ...action.payload}
+          }
+          return user;
+        })
       }
     default:
       return state;

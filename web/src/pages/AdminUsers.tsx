@@ -23,6 +23,10 @@ export default function AdminUsers() {
     fetchAllUsers();
   }, [])
 
+  useEffect(() => {
+    console.log(users)
+  }, [users])
+
   const filteredUsers = selectedYear === 'All' ? users : users.filter(user => user.year === selectedYear)
 
   return (
