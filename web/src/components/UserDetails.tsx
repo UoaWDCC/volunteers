@@ -96,9 +96,9 @@ const UserDetails = ({ user }: { user: User }) => {
 
     if (response.ok) {
       setDetails({...details})
+      dispatch({type: 'UPDATE_USER', payload: {...details}})
     }
 
-    dispatch({type: 'UPDATE_USER', payload: {...details}})
     disableEditMode();
   }
 
