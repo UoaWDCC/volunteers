@@ -7,7 +7,6 @@ router.get("/getUsers", getUsers);
 router.post("/addUser", addUser);
 router.delete("/removeUser", deleteUser);
 router.get("/getUser", getUser)
-router.put("/updateUser", updateUser)
-
+router.patch("/updateUser", updateUser)
 
 export default router;
