@@ -73,18 +73,27 @@ async function getUser(req: Request, res: Response): Promise<void> {
 }
 
 async function updateUser(req: Request, res: Response): Promise<void> {
-  const userID = req.body.id;
-  const userRef = doc(db, "users", userID)
+    try {
+        const userRef = doc(db, "users", req.body.id);
+        const userDoc = await getDoc(userRef);
 
-  const docSnapshot = await getDoc(userRef);
-  if (!docSnapshot.exists()) {
-    res.status(404).send("User does not exist")
-    return;
-  }
+        if (!userDoc.exists()) {
+            res.status(404).json({ message: 'User not found' });
+            return;
+        }
 
-  await updateDoc(userRef, req.body);
-  const updatedUser = docSnapshot.data()
-  res.status(200).json(updatedUser)
+        await updateDoc(userRef, req.body);
+        
+        // Fetch the updated user data for testing purposes
+        const updatedUserDoc = await getDoc(userRef);
+        const updatedUser = updatedUserDoc.data();
+
+        res.json(updatedUser);
+        console.log(updatedUser);
+    } catch (error) {
+        console.error('Error updating user:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
 }
 
 export { getUsers, addUser, deleteUser, getUser, updateUser };
