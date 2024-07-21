@@ -3,7 +3,7 @@ function Footer() {
     <footer className="flex justify-center h-auto">
       <div className="flex flex-wrap justify-between items-center max-w-[1208px] w-full mx-auto px-5">
         <div className="p-4 flex-1">
-          <img src="\public\assets\Volunteers-logo-footer.jpg" alt="Volunteers Club Logo" className="footer-logo" />
+          <img loading="lazy" src="/assets/Volunteers-logo-footer.jpg" alt="Volunteers Club Logo" className="footer-logo" />
           <p className = "text-detail text-grey mt-5 ">© 2020 University of Auckland Volunteers Club</p>
         </div>
         

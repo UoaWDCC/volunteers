@@ -44,12 +44,12 @@ const MainGallery = ({ data }: MainGalleryProps) => {
       <Link to={`/events/${imgIndex + 1}`}>
         <div className='image flex overflow-hidden aspect-[8/3]'>
           {data.map((event, index) => (
-            <img src={event.imageSrc} alt={event.alt} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
+            <img loading="lazy" src={event.imageSrc} alt={event.alt} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
           ))}
         </div>
       </Link>
 
-      <img className='absolute z-20 right-0 bottom-0 w-[100%] aspect-[8/3] contrast-200' src='..\public\assets\gallery\borders\galleryBorder.svg' />
+      <img loading="lazy" className='absolute z-20 right-0 bottom-0 w-[100%] aspect-[8/3] contrast-200' src='..\assets\gallery\borders\galleryBorder.svg' />
 
       <div className='buttons z-50 absolute flex bg-[#ffffff00] text-white top-[47%] w-[100%]'>
         <button className='back ml-[2%] mr-auto scale-[0.8] h-[3.6em] rounded-full bg-[#e9e9e952] backdrop-blur-[4px] shadow-lg hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#1a26449c] active:translate-y-1 transition-all ease-in-out duration-180' onClick={() => handleBack()}>
