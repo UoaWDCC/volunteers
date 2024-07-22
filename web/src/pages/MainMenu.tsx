@@ -9,19 +9,22 @@ import EventHighlights from '@components/EventHighlights';
 import { eventHighlights } from '../data/EventHighlights.json';
 import OurAchievements from '@components/OurAchievements';
 import OurCommunity from '@components/OurCommunity';
-function MainMenu() {
+import AuthenticationContextProvider from '../context/AuthenticationContextProvider';
 
+function MainMenu() {
   return (
-    <div className="primary-background">
-      <p className='font-serif text-font-primary text-lg px-h-md py-v-md'>font-serif for poppins,  font-lora for lora,  sans for Work Sans ::font-serif text-font-primary text-lg px-h-md py-v-md::</p>
-      <Header />
-      <MainGallery data={events} />
-      <EventHighlights data={eventHighlights} />
-      <OurAchievements/>
-      <OurCommunity/>
-      <Sponsors data={sponsors}/>
-      <Footer />
-    </div>
+    <AuthenticationContextProvider>
+      <div className='primary-background'>
+        <p className='font-serif text-font-primary text-lg px-h-md py-v-md'>font-serif for poppins, font-lora for lora, sans for Work Sans ::font-serif text-font-primary text-lg px-h-md py-v-md::</p>
+        <Header />
+        <MainGallery data={events} />
+        <EventHighlights data={eventHighlights} />
+        <OurAchievements />
+        <OurCommunity />
+        <Sponsors data={sponsors} />
+        <Footer />
+      </div>
+    </AuthenticationContextProvider>
   );
 }
 
