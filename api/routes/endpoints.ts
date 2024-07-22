@@ -4,7 +4,6 @@ const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
 
-
 import userEndpoints from './api/users';
 import announcementEndpoints from './api/announcements';
 
@@ -15,7 +14,9 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
+import { json } from "stream/consumers";
 
 // Temp test to show that DB is working
 router.get("/getTest", async (req: Request, res: Response) => {
@@ -42,7 +43,7 @@ router.use("/", announcementEndpoints);
 // testing routers
 
 // get all events
-router.get("/", (request: Request, response: Response) => {
+router.get("/", async (request: Request, response: Response) => {
   getDocs(colRef)
     .then((snapshot) => {
       let events: any = [];
@@ -57,8 +58,10 @@ router.get("/", (request: Request, response: Response) => {
 });
 
 // get a single one
-router.get("/:id", (request: Request, response: Response) => {
-  response.json({ message: "'/:id' is working to GET a SINGLE one" });
+router.get("/:id", async (request: Request, response: Response) => {
+  const eventRef = doc(db, "events", request.params.id)
+  const event = (await getDoc(eventRef)).data()
+  response.status(200).json(event)
 });
 
 // post a single one

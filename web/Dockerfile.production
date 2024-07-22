@@ -45,7 +45,7 @@ COPY --link _redirects /usr/share/nginx/html/_redirects
 COPY nginx.conf /etc/nginx/nginx.conf
 
 # Serve the public folder
-COPY --link public /usr/share/nginx/html/public
+COPY --link public/* /usr/share/nginx/html/
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 80
