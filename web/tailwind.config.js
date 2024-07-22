@@ -15,7 +15,9 @@ export default {
           neutral: "#FFFEF9", /* basically white */
           "neutral-tan": "#FAF6EB", /* tan color */
           black: "#33342E", /* lighter black */
-          grey: "#818181" /* grey */ 
+          grey: "#818181", /* grey */ 
+          lightGrey: "#D9D9D9", /* light grey */
+          blueButtonHover: "#60ABF6"
         },
         fontSize: {
           'number': ['80px', {
@@ -65,7 +67,7 @@ export default {
         // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
         extend: {
           colors: {
-            primary: "#3B87DD", /* blue */
+            primary: "#3C9DDD", /* blue */
           },
           fontSize: {
             'heading': ['72px', {
