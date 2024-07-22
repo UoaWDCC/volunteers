@@ -11,6 +11,7 @@ config();
 
 app.use(json());
 app.use(cors());
+
 app.use(express.static('public'));
 
 // Routes

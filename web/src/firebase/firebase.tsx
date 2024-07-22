@@ -26,6 +26,8 @@ interface CheckUidResult {
   userDetails: DocumentData | undefined;
 }
 
+export { db };
+
 export const checkUidExists = async (uid: string): Promise<CheckUidResult> => {
   const userDoc = doc(db, 'users', uid);
   try {
