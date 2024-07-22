@@ -9,7 +9,6 @@ import EventHighlights from '@components/EventHighlights';
 import { eventHighlights } from '../data/EventHighlights.json';
 import OurAchievements from '@components/OurAchievements';
 import OurCommunity from '@components/OurCommunity';
-// import Announcements from '@components/Announcements';
 
 import ShowCaseUserAnnouncements from '@components/ShowCaseUserAnnouncements';
 
@@ -19,7 +18,6 @@ function MainMenu() {
   return (
     <div className="primary-background">
       
-      {/* <Announcements user={}/> */}
 
       <ShowCaseUserAnnouncements/>
 
