@@ -1,7 +1,6 @@
 import { useState } from "react"
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward} from "react-icons/io";
-import "../styles/componentStyles/EventHighlights.css"
 
 interface EventHighlightProps {
   data: {
