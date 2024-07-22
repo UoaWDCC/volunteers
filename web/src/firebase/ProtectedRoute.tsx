@@ -12,7 +12,6 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
   children,
   accessLevelReq = AccessLevel.USER,
-  ...rest
 }) => {
   const { loading, user, VolUser } = useContext(AuthenticationContext);
   const location = useLocation();
@@ -21,14 +20,16 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({
     return <div className="loading loading-spinner" />;
   }
 
-  if (user) {
+  if (user && VolUser) {
     if (VolUser.role === accessLevelReq || accessLevelReq === AccessLevel.USER) {
       return <>{children}</>;
     }
     return <p>Access Denied!</p>;
   }
 
-  return <Navigate to="/login" state={{ from: location }} />;
+
+  // TODO: Change to login page
+  return <Navigate to="/" state={{ from: location }} />;
 };
 
 export default ProtectedRoute;
