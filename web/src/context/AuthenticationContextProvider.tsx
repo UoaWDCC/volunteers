@@ -1,6 +1,6 @@
 // copied from https://github.com/UoaWDCC/VPS/blob/master/frontend/src/context/AuthenticationContextProvider.jsx
 import { signInWithPopup } from 'firebase/auth';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAuthState } from 'react-firebase-hooks/auth';
 import 'react-firebase-hooks/auth'; // Add this line to import the type declarations
 import { auth } from '../firebase/firebase';
@@ -19,6 +19,13 @@ import { ReactNode } from 'react';
 export default function AuthenticationContextProvider({ children }: { children: ReactNode }) {
   const [user, loading, error] = useAuthState(auth);
   const [userRole, setUserRole] = useState<any>(null);
+
+  useEffect(() => {
+    if (user) {
+      const userID = user.uid;
+      useGetSimplified(`/volunteers/api/routes/api${userID}`, setUserRole);
+    }
+  }, [user]);
 
   /**
    * No idToken is stored in state to ensure the non-expired idToken is always used
@@ -43,9 +50,9 @@ export default function AuthenticationContextProvider({ children }: { children: 
 
   // getting role from backend
   // const [userRole, setUserRole] = useState();
-  const userID = user == null ? 'null' : user.uid; // this is to avoid null pointer exceptions while confining to hook rules
+  // const userID = user == null ? 'null' : user.uid; // this is to avoid null pointer exceptions while confining to hook rules
   // useGetSimplified(`/api/staff/${userID}`, setUserRole);
-  useGetSimplified(`volunteers/api/routes/api${userID}`, setUserRole);
+  // useGetSimplified(`volunteers/api/routes/api${userID}`, setUserRole);
 
   // creating user object with role property
   const CustomUser = {

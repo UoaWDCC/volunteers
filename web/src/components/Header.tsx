@@ -1,16 +1,22 @@
 import { handleGoogle } from '../firebase/firebase.tsx';
 // import AuthenticationContext from '../context/AuthenticationContext.tsx';
-import AuthenticationContext, { AuthenticationContextProps } from '../context/AuthenticationContext.tsx';
+import AuthenticationContext from '../context/AuthenticationContext.tsx';
 import { useContext } from 'react';
 
 function Header() {
   // const { signInUsingGoogle } = useContext(AuthenticationContext) || { signInUsingGoogle: undefined };
-  const authContext = useContext(AuthenticationContext) as AuthenticationContextProps;
+  // const authContext = useContext(AuthenticationContext) as AuthenticationContextProps;
+  // const { signInUsingGoogle } = authContext;
+  const authContext = useContext(AuthenticationContext);
+
+  if (!authContext) {
+    return null;
+  }
+
   const { signInUsingGoogle } = authContext;
 
   return (
     <header className='flex justify-center bg-neutral-tan'>
-      .\mvnw.cmd clean javafx:run
       <div className='flex flex-grow justify-between items-center min-w-min px-44 py-3'>
         <div>
           <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-auto min-w-[150px]' />
