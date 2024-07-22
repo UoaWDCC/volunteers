@@ -2,7 +2,7 @@
 
 import axios from 'axios';
 
-const apiUrl = 'http://localhost:3002';
+const apiUrl = 'http://localhost:3000';
 
 // Fetch a user by ID
 export const getUserById = async (userId: string) => {

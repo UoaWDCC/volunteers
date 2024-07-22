@@ -30,7 +30,7 @@ interface Announcement {
 // SecondYear
 // PostGrad
 // Other
-const testId = '7pBAPzYW3br28BOsraoH';
+const testId = 'AUBf2qRfJKcmkIQfJI4S';
 
 const AnnouncementList: React.FC<{ announcements: Announcement[] }> = ({ announcements }) => (
   <div>
