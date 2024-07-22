@@ -59,6 +59,7 @@ const ShowCaseUserAnnouncements: React.FC = () => {
       try {
         const userData = await getUserById(testId);
         setUser(userData);
+        console.log(user);
 
         const announcementData = await getAnnouncementByUser(userData);
         setAnnouncements(announcementData);
