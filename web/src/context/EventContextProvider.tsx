@@ -9,7 +9,7 @@ export default function EventContextProvider({children}: { children: ReactNode }
 
     async function fetchEvents() {
         // Fetch events from API
-        fetch("http://localhost:3000/api/")
+        fetch("http://localhost:3000/api/events")
             .then(response => response.json())
             .then(data => {
                 setEvents(data);
