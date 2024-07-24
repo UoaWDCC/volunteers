@@ -5,7 +5,7 @@ const router = express.Router();
 
 router.get("/", getEvents);
 router.post("/", addEvent);
-router.delete("/", deleteEvent);
+router.delete("/:id", deleteEvent);
 router.get("/:id", getEvent);
 router.patch("/:id", updateEvent);
 
