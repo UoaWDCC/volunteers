@@ -1,5 +1,11 @@
 import React from "react";
 
-const EventContext = React.createContext({});
+interface ReactContextType {
+    events: any[];
+    setEvents: Function;
+    fetchEvents: Function;
+}
+
+const EventContext = React.createContext<ReactContextType | null>(null);
 
 export default EventContext;
