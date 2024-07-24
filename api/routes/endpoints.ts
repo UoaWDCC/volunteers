@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 
 
 import userEndpoints from './api/users';
+import eventEndpoints from './api/events';
 
 import { db } from "../config/firebase";
 import {
@@ -29,53 +30,12 @@ router.get("/getTest", async (req: Request, res: Response) => {
   }
 });
 
-// Collection reference
-const colRef = collection(db, "events");
 
 // User entity endpoints
-router.use("/", userEndpoints);
+router.use("/users", userEndpoints);
 
-
-// testing routers
-
-// get all events
-router.get("/", (request: Request, response: Response) => {
-  getDocs(colRef)
-    .then((snapshot) => {
-      let events: any = [];
-      snapshot.docs.forEach((doc) => {
-        events.push({ ...doc.data(), id: doc.id });
-      });
-      response.json(events);
-    })
-    .catch((err) => {
-      console.log(err.message);
-    });
-});
-
-// get a single one
-router.get("/:id", (request: Request, response: Response) => {
-  response.json({ message: "'/:id' is working to GET a SINGLE one" });
-});
-
-// post a single one
-router.post("/", async (request: Request, response: Response) => {
-    const newEvent = await addDoc(colRef, request.body)
-    response.json(newEvent.id)
-  }
-)
-
-// delete a single one
-router.delete("/:id", async (request: Request, response: Response) => {
-    const docRef = doc(db, "events", request.body.id);
-    const userDelete = await deleteDoc(docRef)
-    response.json(userDelete)
-});
-
-// update a single one
-router.patch("/:id", (request: Request, response: Response) => {
-  response.json({ message: "'/:id' is working to UPDATE a single one" });
-});
+// Event entity endpoints
+router.use("/events", eventEndpoints);
 
 module.exports = router;
 
