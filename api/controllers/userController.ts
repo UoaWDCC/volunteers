@@ -44,8 +44,10 @@ async function addUser(req: Request, res: Response): Promise<void> {
 }
 
 async function deleteUser(req: Request, res: Response): Promise<void> {
-  const userRef = doc(db, "users", req.body.id);
+
+  const userRef = doc(db, "users", req.params.id);
   const docSnapshot = (await getDoc(userRef));
+
 
   if (!docSnapshot.exists()) {
     console.log("Document does not exist")
@@ -59,10 +61,9 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {
-
     try {
 
-        const userId = req.body.id;
+        const userId = req.params.id;
 
         if (!userId) {
             res.status(400).json({error: "User Id is Required"});
@@ -89,7 +90,7 @@ async function getUser(req: Request, res: Response): Promise<void> {
 
 async function updateUser(req: Request, res: Response): Promise<void> {
     try {
-        const userRef = doc(db, "users", req.body.id);
+        const userRef = doc(db, "users", req.params.id);
         const userDoc = await getDoc(userRef);
 
         if (!userDoc.exists()) {
