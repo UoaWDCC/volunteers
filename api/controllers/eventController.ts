@@ -45,4 +45,4 @@ async function updateEvent(req: Request, res: Response): Promise<void> {
     res.json({ message: "'/:id' is working to UPDATE a single one" });
 }
 
-export default { getEvents, getEvent, addEvent, deleteEvent, updateEvent };
+export { getEvents, getEvent, addEvent, deleteEvent, updateEvent };
