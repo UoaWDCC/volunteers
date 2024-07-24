@@ -43,7 +43,7 @@ async function addUser(req: Request, res: Response): Promise<void> {
 }
 
 async function deleteUser(req: Request, res: Response): Promise<void> {
-    const userRef = doc(db, "users", req.body.id);
+    const userRef = doc(db, "users", req.params.id);
 
     await deleteDoc(userRef);
 
@@ -54,7 +54,7 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {
-    const userRef = doc(db, "users", req.body.id);
+    const userRef = doc(db, "users", req.params.id);
     const user = (await getDoc(userRef)).data();
     
     res.json(user);
@@ -66,7 +66,7 @@ async function getUser(req: Request, res: Response): Promise<void> {
 
 async function updateUser(req: Request, res: Response): Promise<void> {
     try {
-        const userRef = doc(db, "users", req.body.id);
+        const userRef = doc(db, "users", req.params.id);
         const userDoc = await getDoc(userRef);
 
         if (!userDoc.exists()) {
