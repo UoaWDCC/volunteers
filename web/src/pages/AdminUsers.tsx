@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import UserDetails from "@components/UserDetails";
-import { useUsersContext } from "../Hooks/UseUsersContext";
+import { useUsersContext } from "../Hooks/useUsersContext";
 import { User } from "../components/UserDetails"
 
 
 
 export default function AdminUsers() {
-  const { users, dispatch } = useUsersContext()
+  const { users, dispatch } = useUsersContext();
   const [selectedYear, setSelectedYear] = useState('All');
 
   useEffect(() => {

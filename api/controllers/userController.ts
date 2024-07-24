@@ -63,13 +63,31 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {
-  const userRef = doc(db, "users", req.body.id);
-  const user = (await getDoc(userRef)).data();
+  try {
+    const id = req.body.id;
 
-  res.json(user);
+    if (!id) {
+      res.status(400).json({ error: 'ID is required' });
+      return;
+    }
 
-  // Print out message for testing purposes
-  console.log(user);
+    const userRef = doc(db, 'users', id);
+    const userDoc = await getDoc(userRef);
+
+    if (!userDoc.exists()) {
+      res.status(404).json({ error: 'User not found' });
+      return;
+    }
+
+    const user = userDoc.data();
+    res.json(user);
+
+    // Print out message for testing purposes
+    console.log(user);
+  } catch (error) {
+    console.error('Error getting user:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
 }
 
 async function updateUser(req: Request, res: Response): Promise<void> {

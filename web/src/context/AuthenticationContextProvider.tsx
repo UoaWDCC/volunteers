@@ -1,42 +1,25 @@
-// copied from https://github.com/UoaWDCC/VPS/blob/master/frontend/src/context/AuthenticationContextProvider.jsx
-import { signInWithPopup } from 'firebase/auth';
-import { useEffect, useState } from 'react';
+import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
 import { useAuthState } from 'react-firebase-hooks/auth';
-import 'react-firebase-hooks/auth'; // Add this line to import the type declarations
 import { auth } from '../firebase/firebase';
-import { GoogleAuthProvider } from 'firebase/auth';
-const googleProvider = new GoogleAuthProvider();
-import AuthenticationContext from './AuthenticationContext';
-import { useGetSimplified } from '../../hooks/crudHooks';
-
-/**
- * This is a Context Provider made with the React Context API
- * AuthenticationContext grants access to functions and variables related to Firebase login
- */
+import AuthenticationContext, { AuthenticationContextProps } from './AuthenticationContext';
+import { useUserRole } from '../Hooks/useUserRole';
 import { ReactNode } from 'react';
+import { getUserById } from '@utils/UserService';
 
-//!!REPLACED BY VSCODE PARAMETER TYPES [url] INFERERED!!
+const googleProvider = new GoogleAuthProvider();
+
 export default function AuthenticationContextProvider({ children }: { children: ReactNode }) {
   const [user, loading, error] = useAuthState(auth);
-  const [userRole, setUserRole] = useState<any>(null);
 
-  useEffect(() => {
-    if (user) {
-      const userID = user.uid;
-      useGetSimplified(`/volunteers/api/routes/api${userID}`, setUserRole);
-    }
-  }, [user]);
+  // Fetch user role using the custom hook
+  // currently just gets undefined because its asking with null ID
+  const userRole =  useUserRole(user ? user.uid : null);
 
-  /**
-   * No idToken is stored in state to ensure the non-expired idToken is always used
-   * @returns idToken or null if user is not signed in
-   */
   async function getUserIdToken() {
     if (user) {
       const token = await user.getIdToken();
       return token;
     }
-
     return null;
   }
 
@@ -48,32 +31,32 @@ export default function AuthenticationContextProvider({ children }: { children: 
     auth.signOut();
   }
 
-  // getting role from backend
-  // const [userRole, setUserRole] = useState();
-  // const userID = user == null ? 'null' : user.uid; // this is to avoid null pointer exceptions while confining to hook rules
-  // useGetSimplified(`/api/staff/${userID}`, setUserRole);
-  // useGetSimplified(`volunteers/api/routes/api${userID}`, setUserRole);
-
-  // creating user object with role property
+  // Type assertion to ensure user is User | null
   const CustomUser = {
-    firebaseUserObj: user,
+    firebaseUserObj: user as User | null,
     role: userRole,
   };
 
+  const contextValue: AuthenticationContextProps = {
+    getUserIdToken,
+    loading,
+    user: user as User | null,
+    error: error || null,
+    signOut,
+    signInUsingGoogle,
+    CustomUser,
+  };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error: {error.message}</div>;
+  }
+
   return (
-    <AuthenticationContext.Provider
-      value={
-        {
-          getUserIdToken,
-          loading,
-          user,
-          error,
-          signOut,
-          signInUsingGoogle,
-          CustomUser, // can use different name
-        } as any
-      }
-    >
+    <AuthenticationContext.Provider value={contextValue}>
       {children}
     </AuthenticationContext.Provider>
   );
