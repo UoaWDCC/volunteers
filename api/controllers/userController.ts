@@ -1,6 +1,7 @@
 import { db } from '../config/firebase';
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
 import { Request, Response } from 'express';
+import { error } from 'console';
 
 
 const colRef = collection(db, "users");
@@ -12,56 +13,79 @@ async function getUsers(req: Request, res: Response): Promise<void> {
     res.json(users);
     
     // Print out the users for testing purposes
-    console.log(users);
+    // console.log(users);
 }
 
 async function addUser(req: Request, res: Response): Promise<void> {
-    // Get all users
-    const userDocs = await getDocs(colRef);
-    const users = userDocs.docs.map(doc => doc.data());
-    const studentID = req.body.studentID;
+  // Get all users
+  const userDocs = await getDocs(colRef);
+  const users = userDocs.docs.map(doc => doc.data());
+  const studentID = req.body.studentID;
 
-    // Check if studentID is already in use
-    for (let i = 0; i < users.length; i++) {
-        if (users[i].studentID === studentID) {
-            // Student ID is not unique, send error message and return
-            res.status(400).send("Student ID must be unique");
+  // Check if studentID is already in use
+  for (let i = 0; i < users.length; i++) {
+    if (users[i].studentID === studentID) {
+      // Student ID is not unique, send error message and return
+      res.status(400).send("Student ID must be unique");
 
-            // Print out error message for testing purposes
-            console.log("Student ID must be unique");
-            return;
-        }
+      // Print out error message for testing purposes
+      console.log("Student ID must be unique");
+      return;
     }
+  }
 
-    // New studentID is unique, add user to database
-    const newUser = await addDoc(colRef, req.body);
+  // New studentID is unique, add user to database
+  const newUser = await addDoc(colRef, req.body);
 
-    res.json(newUser.id);
+  res.json(newUser.id);
 
-    // Print out the new user id for testing purposes
-    console.log(newUser.id)
+  // Print out the new user id for testing purposes
+  console.log(newUser.id)
 }
 
 async function deleteUser(req: Request, res: Response): Promise<void> {
-    const userRef = doc(db, "users", req.params.id);
 
-    await deleteDoc(userRef);
+  const userRef = doc(db, "users", req.params.id);
+  const docSnapshot = (await getDoc(userRef));
 
-    res.json("User deleted");
 
-    // Print out message for testing purposes
+  if (!docSnapshot.exists()) {
+    console.log("Document does not exist")
+    res.status(404).send("Document not found")
+    return;
+  }
+
+  const user = { id: docSnapshot.id, ...docSnapshot.data() }
+
     console.log("User deleted");
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {
-    const userRef = doc(db, "users", req.params.id);
-    const user = (await getDoc(userRef)).data();
-    
-    res.json(user);
-    
-    // Print out message for testing purposes
-    console.log(user);
+    try {
 
+        const userId = req.params.id;
+
+        if (!userId) {
+            res.status(400).json({error: "User Id is Required"});
+            return;
+        }
+
+
+        const userRef = doc(db, 'users', userId);
+        const userSnapshot = await getDoc(userRef);
+
+        if (userSnapshot.exists()) {
+            const user = userSnapshot.data();
+            res.json(user);
+            // console.log(user);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        console.error('Error fetching user');
+        res.status(500).json({ error: 'Internal server error' });
+    }
+    
 }
 
 async function updateUser(req: Request, res: Response): Promise<void> {
@@ -87,8 +111,5 @@ async function updateUser(req: Request, res: Response): Promise<void> {
         res.status(500).json({ message: 'Internal server error' });
     }
 }
-
-
-
 
 export { getUsers, addUser, deleteUser, getUser, updateUser };

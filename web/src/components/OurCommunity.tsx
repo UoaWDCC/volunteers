@@ -25,12 +25,14 @@ const OurCommunity = () => {
                 <div className="absolute top-0 left-0 right-0 flex flex-col items-center">
                     <div className="flex w-full h-1/2">
                         <img
+                            loading="lazy"
                             className="object-cover rounded-[20px] ml-[10vw] mt-[5vh] h-[25vh] w-[19vh] transform rotate-[-15deg]"
                             src="/assets/gallery/events/sample1.png"
                             title="img1"
                             alt="img1"
                         />
                         <img
+                            loading="lazy"
                             className="object-cover rounded-[20px] ml-[53vw] mt-[12vh] h-[35vh] w-[27vh] transform rotate-[17deg]"
                             src="/assets/gallery/events/sample3.png"
                             title="img2"
@@ -39,12 +41,14 @@ const OurCommunity = () => {
                     </div>
                     <div className="flex w-full h-1/2">
                         <img
+                            loading="lazy"
                             className="object-cover rounded-[20px] ml-[23vw] mt-[5vh] h-[35vh] w-[30vh] transform rotate-[7deg]"
                             src="/assets/gallery/events/sample3.png"
                             title="img3"
                             alt="img3"
                         />
                         <img
+                            loading="lazy"
                             className="object-cover rounded-[20px] ml-[25vw] mt-[8vh] h-[25vh] w-[17vh] transform rotate-[-7deg]"
                             src="/assets/gallery/events/sample4.png"
                             title="img4"

@@ -4,9 +4,9 @@ const express = require("express");
 const router = express.Router();
 import { Request, Response } from "express";
 
-
 import userEndpoints from './api/users';
 import eventEndpoints from './api/events';
+import announcementEndpoints from './api/announcements';
 
 import { db } from "../config/firebase";
 import {
@@ -15,7 +15,9 @@ import {
   addDoc,
   deleteDoc,
   doc,
+  getDoc,
 } from "firebase/firestore";
+import { json } from "stream/consumers";
 
 // Temp test to show that DB is working
 router.get("/getTest", async (req: Request, res: Response) => {
@@ -31,11 +33,10 @@ router.get("/getTest", async (req: Request, res: Response) => {
 });
 
 
-// User entity endpoints
+// Endpoints
 router.use("/users", userEndpoints);
-
-// Event entity endpoints
 router.use("/events", eventEndpoints);
+router.use("/announcements", announcementEndpoints);
 
 module.exports = router;
 
