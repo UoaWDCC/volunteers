@@ -12,3 +12,5 @@ function LoginModalContextProvider({children}: { children: ReactNode }) {
     </LoginModalContext.Provider>
   );
 }
+
+export default LoginModalContextProvider;
