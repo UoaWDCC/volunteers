@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import LoginModalContext from '../context/LoginModalContext';
+import { handleGoogle } from '../firebase/firebase';
 
 const LoginModal = () => {
     const { showModal, setShowModal } = useContext(LoginModalContext);
@@ -18,7 +19,7 @@ const LoginModal = () => {
                     <p className='fontFamily-sans text-[14px]'>Track your hours, stay updated on events, and join our community of dedicated volunteers!</p>
                     <button className='w-[345px] h-[45px] mt-[30px] flex justify-start items-center rounded-lg bg-transparent border-2 border-solid border-lightGrey'> 
                         <img src='/assets/loginModal/googleIcon.png' className='w-[35px] h-[35px]' />
-                        <p className='fontFamily-sans font-semibold text-black text-[16px] ml-[40px] mt-[15px]'>Continue with Google</p>
+                        <p onClick={handleGoogle} className='fontFamily-sans font-semibold text-black text-[16px] ml-[40px] mt-[15px]'>Continue with Google</p>
                     </button>
                 </div>
                 <div className='w-1/2'>
