@@ -11,8 +11,7 @@ const LoginModal = () => {
     return ( 
         <div className='fixed z-[100] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center' onClick={() => setShowModal(false)}>
             <div className='w-[940px] h-[560px] m-0 rounded-3xl bg-white flex justify-between items-center'>
-                <button className='absolute top-0 right-0 mt-[20px] mr-[20px]' onClick={() => setShowModal(false)} />
-                    <img src='/assets/loginModal/closeIcon.png' />
+                <img src='/assets/loginModal/closeButton.png' className='absolute top-[70px] right-[290px] mt-[20px] mr-[20px]' onClick={() => setShowModal(false)} />
                 <div className='w-1/2 px-[55px] flex flex-col'> 
                     <img src='/assets/club-logo.svg' className='self-center mb-[50px] mt-[-90px]' />
                     <h2 className='fontFamily-sans font-bold'>Log in or sign up</h2>
