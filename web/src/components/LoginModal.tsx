@@ -5,13 +5,11 @@ import { handleGoogle } from '../firebase/firebase';
 const LoginModal = () => {
     const { showModal, setShowModal } = useContext(LoginModalContext);
 
-    if (!showModal) {
-        return null;
-    }
+    const baseBackgroundStyle = "fixed z-[100] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 "
 
     return ( 
-        <div id='modalBackground' className='fixed z-[100] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center' onClick={(e) => {if (e.target == document.getElementById("modalBackground")) {setShowModal(false)}}}>
-            <div className='w-[940px] h-[560px] m-0 rounded-3xl bg-white flex justify-between items-center'>
+        <div id='modalBackground' className={showModal ? baseBackgroundStyle + 'opacity-100 visible' : baseBackgroundStyle + 'opacity-0 invisible'} onClick={(e) => {if (e.target == document.getElementById("modalBackground")) {setShowModal(false);}}}>
+            <div className='w-[940px] h-[560px] mt- m-0 rounded-3xl bg-white flex justify-between items-center'>
 
                 <img src='/assets/loginModal/closeButton.png' className='absolute top-[70px] right-[290px] mt-[20px] mr-[20px] transition-opacity opacity-80 hover:opacity-100' onClick={() => setShowModal(false)} />
 
