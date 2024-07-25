@@ -9,7 +9,7 @@ const LoginModal = () => {
     }
 
     return ( 
-        <div className='fixed z-[100] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center' onClick={() => setShowModal(false)}>
+        <div id='modalBackground' className='fixed z-[100] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center' onClick={(e) => {if (e.target == document.getElementById("modalBackground")) {setShowModal(false)}}}>
             <div className='w-[940px] h-[560px] m-0 rounded-3xl bg-white flex justify-between items-center'>
                 <img src='/assets/loginModal/closeButton.png' className='absolute top-[70px] right-[290px] mt-[20px] mr-[20px]' onClick={() => setShowModal(false)} />
                 <div className='w-1/2 px-[55px] flex flex-col'> 
