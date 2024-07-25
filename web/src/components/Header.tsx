@@ -14,7 +14,7 @@ function Header() {
         <div>
           <ul className="flex flex-row text-sm text-white font-mono m-0 gap-5">
             <li onClick={ () => {setShowModal(true)} } className="px-[30px] py-[10px] bg-primary rounded-[2rem] hover:underline cursor-pointer">Login</li>
-            <li className="px-[30px] py-[10px] bg-primary rounded-[2rem] hover:underline cursor-pointer">Register</li>
+            <li onClick={ () => {setShowModal(true)} } className="px-[30px] py-[10px] bg-primary rounded-[2rem] hover:underline cursor-pointer">Register</li>
           </ul>
         </div>
       </div>
