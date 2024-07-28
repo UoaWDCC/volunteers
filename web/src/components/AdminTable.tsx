@@ -1,9 +1,9 @@
 
 const AdminTable = ({event}:any) => {
     return (
-        <table className="striped-table">
-            <thead>
-            <tr>
+        <table className="striped-table min-w-full border-4">
+        <thead className="border-4">
+            <tr className="">
                 <th>Event Name</th>
                 <th>Date</th>
                 <th>Time</th>
@@ -12,7 +12,7 @@ const AdminTable = ({event}:any) => {
                 Actions
                 </th>
             </tr>
-            </thead>
+        </thead>
         
         <tbody>
           {event.length > 0 ? (
@@ -23,7 +23,8 @@ const AdminTable = ({event}:any) => {
                 <td>{event.date}</td>
                 <td>{event.time}</td>
                 <td>{event.tag} </td>
-                <td className="text-right">
+                <div className="flex flex-row justify-between w-[80%]">
+                <td className="flex-1 flex justify-center">
                   <button
                     //onClick={() => handleEdit(event.id)}
                     className="button muted-button"
@@ -31,7 +32,7 @@ const AdminTable = ({event}:any) => {
                     Edit
                   </button>
                 </td>
-                <td className="text-left">
+                <td className="flex-1 flex justify-center">
                   <button
                     //onClick={() => handleDelete(employee.id)}
                     className="button muted-button"
@@ -39,11 +40,12 @@ const AdminTable = ({event}:any) => {
                     Delete
                   </button>
                 </td>
+                </div>
               </tr>
             ))
           ) : (
             <tr>
-              <td colSpan={7}>No Employees</td>
+                {!event ? <td colSpan={7}>No Employees</td> : <td colSpan={7}>Employees Loading . . .</td>}
             </tr>
           )}
         </tbody>
