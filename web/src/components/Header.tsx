@@ -1,8 +1,6 @@
 import { handleGoogle } from '../firebase/firebase.tsx';
-// import AuthenticationContext from '../context/AuthenticationContext.tsx';
 import AuthenticationContext from '../context/AuthenticationContext.tsx';
 import { useContext } from 'react';
-import { getUserById } from '@utils/UserService.ts';
 
 function Header() {
   // const { signInUsingGoogle } = useContext(AuthenticationContext) || { signInUsingGoogle: undefined };
@@ -33,6 +31,7 @@ function Header() {
           </ul>
         </div>
       </div>
+      {/* TESTING STUFF*/}
       {!isUserLoggedIn && <button onClick={signInUsingGoogle}>Sign In</button>}
       {isUserLoggedIn && <button onClick={signOut}>Sign Out</button>}
       <button onClick={() => console.log(currentUser)}>log currentUser</button>
@@ -43,11 +42,12 @@ function Header() {
           <h3 className='inline'>
             test:{' '}
             {(() => {
-              getUserByStudentID('1234567');
-              return 'User fetched';
+              getUserByStudentID('11234567');
+              return 'User fetched?';
             })()}
           </h3>
         )}
+        {/* TESTING STUFF*/}
       </div>
     </header>
   );

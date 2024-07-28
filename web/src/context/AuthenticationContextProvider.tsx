@@ -126,7 +126,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
       return json;
     } else {
-      console.log('User does not exist in db');
+      console.error('User does not exist in db');
+      return null;
     }
   }
 
