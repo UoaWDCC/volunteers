@@ -1,7 +1,10 @@
+import AdminHeader from "./AdminHeader";
 
-const AdminTable = ({event}:any) => {
+const AdminEventsTable = ({event, setIsAdding}:any) => {
     return (
-        <table className="striped-table min-w-full border-4">
+      <div>
+        <AdminHeader setIsAdding={setIsAdding}/>
+        <table className="striped-table min-w-full border-4 m-[1rem]">
         <thead className="border-4">
             <tr className="">
                 <th>Event Name</th>
@@ -50,7 +53,8 @@ const AdminTable = ({event}:any) => {
           )}
         </tbody>
       </table>
+      </div>
     )
 }
 
-export default AdminTable;
+export default AdminEventsTable;
