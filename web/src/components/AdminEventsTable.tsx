@@ -1,6 +1,6 @@
 import AdminHeader from "./AdminHeader";
 
-const AdminEventsTable = ({event, setIsAdding}:any) => {
+const AdminEventsTable = ({event, setIsAdding, handleDelete}:any) => {
     return (
       <div>
         <AdminHeader setIsAdding={setIsAdding}/>
@@ -37,7 +37,7 @@ const AdminEventsTable = ({event, setIsAdding}:any) => {
                 </td>
                 <td className="flex-1 flex justify-center">
                   <button
-                    //onClick={() => handleDelete(employee.id)}
+                    onClick={() => handleDelete(event.id)}
                     className="button muted-button"
                   >
                     Delete
