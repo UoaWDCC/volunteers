@@ -1,6 +1,10 @@
+import { useContext } from "react";
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
+import LoginModalContext from "../context/LoginModalContext";
  
 const OurCommunity = () => {
+    const {setShowModal} = useContext(LoginModalContext);
+
     return (
         <div className="flex flex-col items-center h-screen bg-neutral text-black font-medium">
             
@@ -17,7 +21,7 @@ const OurCommunity = () => {
                     </div>
                     <div className="text-center text-[5rem] leading-[150%] font-semibold mt-[3.5rem]">1,200</div>
                     <div className="text-center text-[1.4rem]">volunteers in our club</div>
-                    <button className="text-white text-[0.7rem] py-[1rem] mt-[2.2rem] rounded-[30px] px-8 leading-[0.5rem] bg-primary">
+                    <button onClick={() => {setShowModal(true)}} className="text-white z-10 text-[0.7rem] py-[1rem] mt-[2.2rem] rounded-[30px] px-8 leading-[0.5rem] bg-primary">
                         Sign me up!
                     </button>
                 </div>
