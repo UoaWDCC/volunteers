@@ -11,7 +11,11 @@ const AdminAddEvent = ({ events, setEvents, setIsAdding, getEvents }:any) => {
 
     const handleAdd = async (e:any) => {
         e.preventDefault();
-    
+        const confirmAdd = window.confirm(
+            "Are you sure want to add this event?"
+          );
+
+        if (confirmAdd) {
         const newEvent = {
           title,
           date,
@@ -30,7 +34,7 @@ const AdminAddEvent = ({ events, setEvents, setIsAdding, getEvents }:any) => {
 
         setEvents(events);
         setIsAdding(false);
-        getEvents();
+        getEvents();}
     };
     
 
@@ -66,7 +70,7 @@ const AdminAddEvent = ({ events, setEvents, setIsAdding, getEvents }:any) => {
                 <input
                 className="bg-lightGrey rounded-[10px] pl-[5px] pr-[5px] mr-[1em] text-grey"
                 id="eventTime"
-                type="text"
+                type="time"
                 name="eventTime"
                 placeholder="Time"
                 required
