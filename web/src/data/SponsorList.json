@@ -1,5 +1,5 @@
 {
-    "sponsors": [
+    "sponsors": [ 
         {
             "id": 1,
             "imageSrcColour": "../../assets/gallery/sponsors/colour/kompass-logo-colour.png",
@@ -22,17 +22,17 @@
     "discounts": [
         {
             "id": 1,
-            "discount": "/public/assets/gallery/sponsors/colour/kompass-logo-colour.png",
+            "discount": "/assets/gallery/sponsors/colour/kompass-logo-colour.png",
             "alt": "Kompass Coffee"
         },
         {
             "id": 2,
-            "discount": "/public/assets/gallery/sponsors/colour/shelf-logo-colour.png",
+            "discount": "/assets/gallery/sponsors/colour/shelf-logo-colour.png",
             "alt": "The Shelf Cafe"
         },
         {
             "id": 3,
-            "discount": "/public/assets/gallery/sponsors/colour/sals-logo-colour.png",
+            "discount": "/assets/gallery/sponsors/colour/sals-logo-colour.png",
             "alt": "Sal's Pizza"
         }
     ]
