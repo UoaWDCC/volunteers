@@ -85,8 +85,8 @@ const AdminAddEvent = ({ events, setEvents, setIsAdding, getEvents }:any) => {
                 />
                 
                 <div style={{ marginTop: '30px' }}>
-                <button type="submit" value="Add">Add</button>
-                <button type="submit" value="Cancel" onClick={() => setIsAdding(false)} >Cancel</button>
+                <button className="bg-primary hover:bg-blueButtonHover mr-[1em]" type="submit" value="Add">Add</button>
+                <button className="bg-primary hover:bg-blueButtonHover" type="submit" value="Cancel" onClick={() => setIsAdding(false)} >Cancel</button>
                 
                 </div>
             </form>

@@ -3,6 +3,7 @@ import { collection, getDocs, doc, deleteDoc } from "firebase/firestore";
 import { db } from "../firebase/firebase";
 import AdminEventsTable from "@components/AdminEventsTable";
 import AdminAddEvent from "@components/AdminAddEvent";
+import AdminEditEvent from "@components/AdminEditEvent";
 
 export default function AdminEvents() {
   const [events, setEvents] = useState<any[]>([]);
@@ -28,6 +29,14 @@ export default function AdminEvents() {
     getEvents();
   }, []);
 
+  // Edit an Event
+  const handleEdit = (id:any) => {
+    const [event] = events.filter(event => event.id === id)
+    setSelectedEvent(event)
+    setIsEditing(true);
+
+  }
+
   // Delete an Event
   const handleDelete = (id: any) => {
     const confirmDelete = window.confirm(
@@ -41,6 +50,13 @@ export default function AdminEvents() {
 
   return (
     <div className="">
+        {isEditing && <AdminEditEvent
+        events={events}
+        selectedEvent={selectedEvent}
+        setEvents={setEvents}
+        setIsEditing={setIsEditing}
+        getEvents={getEvents}
+    />}
       {isAdding ? (
         <AdminAddEvent
           events={events}
@@ -53,6 +69,8 @@ export default function AdminEvents() {
           event={events}
           setIsAdding={setIsAdding}
           handleDelete={handleDelete}
+          selectedEvent={setSelectedEvent}
+          handleEdit={handleEdit}
         />
       )}
     </div>

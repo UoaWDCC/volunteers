@@ -1,6 +1,6 @@
 import AdminHeader from "./AdminHeader";
 
-const AdminEventsTable = ({event, setIsAdding, handleDelete}:any) => {
+const AdminEventsTable = ({event, setIsAdding, handleDelete, handleEdit}:any) => {
     return (
       <div>
         <AdminHeader setIsAdding={setIsAdding}/>
@@ -21,7 +21,6 @@ const AdminEventsTable = ({event, setIsAdding, handleDelete}:any) => {
           {event.length > 0 ? (
             event.map((event:any) => (
               <tr key={event.id}>
-                {/*<td>{i + 1}</td>*/}
                 <td>{event.title}</td>
                 <td>{event.date}</td>
                 <td>{event.time}</td>
@@ -29,8 +28,8 @@ const AdminEventsTable = ({event, setIsAdding, handleDelete}:any) => {
                 <div className="flex flex-row justify-between w-[80%]">
                 <td className="flex-1 flex justify-center">
                   <button
-                    //onClick={() => handleEdit(event.id)}
-                    className="button muted-button"
+                    onClick={() => handleEdit(event.id)}
+                    className="button muted-button bg-primary hover:bg-blueButtonHover"
                   >
                     Edit
                   </button>
@@ -38,7 +37,7 @@ const AdminEventsTable = ({event, setIsAdding, handleDelete}:any) => {
                 <td className="flex-1 flex justify-center">
                   <button
                     onClick={() => handleDelete(event.id)}
-                    className="button muted-button"
+                    className="button muted-button bg-primary hover:bg-blueButtonHover"
                   >
                     Delete
                   </button>
