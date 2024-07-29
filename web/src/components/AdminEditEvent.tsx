@@ -68,7 +68,7 @@ const AdminEditEvent = ({
           <input
             className="bg-lightGrey rounded-[10px] pl-[5px] pr-[5px] mr-[1em] text-grey"
             id="eventTime"
-            type="text"
+            type="time"
             name="eventTime"
             placeholder={time}
             required
