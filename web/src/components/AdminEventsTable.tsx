@@ -47,7 +47,7 @@ const AdminEventsTable = ({event, setIsAdding, handleDelete, handleEdit}:any) =>
             ))
           ) : (
             <tr>
-                {!event ? <td colSpan={7}>No Events</td> : <td colSpan={7}>Events Loading . . .</td>}
+                {event.length == 0 ? <td colSpan={7}>No Events</td> : <td colSpan={7}>Events Loading . . .</td>}
             </tr>
           )}
         </tbody>
