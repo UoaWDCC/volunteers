@@ -1,21 +1,26 @@
-// import { useState } from "react";
-// import { onAuthStateChanged } from "firebase/auth";
+import { useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "./firebase";
 
-// function StaffAuth() {
-//   const [isStaff, setAsStaff] = useState(false);
+function StaffAuth() {
+  const [isStaff, setAsStaff] = useState(false);
 
-//   function checkIfStaff(email) {
-//     const splitEmail = email.split("@");
-//     const emailDomain = splitEmail[1];
+  function checkIfStaff(email: string) {
+    const splitEmail = email.split("@");
+    const emailDomain = splitEmail[1];
 
-//     return emailDomain === "auckland.ac.nz"; // and some other checks like maybe just ADMIN = their email
-//   }
+    return emailDomain === "auckland.ac.nz";
+  }
 
+  onAuthStateChanged(auth, (user) => {
+    if (user && user.email) {
+      setAsStaff(checkIfStaff(user.email));
+    } else {
+      setAsStaff(false);
+    }
+  });
 
-// etc
+  return isStaff;
+}
 
-
-//   return isStaff;
-// }
-
-// export default StaffAuth;
+export default StaffAuth;
