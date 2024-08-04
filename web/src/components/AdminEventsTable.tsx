@@ -18,6 +18,8 @@ const AdminEventsTable = ({event, setEvents, setIsAdding, handleDelete, handleEd
               sortedEvents.sort((a, b) => a.title.localeCompare(b.title));
           } else if (sortOption === 'title-descending'){
               sortedEvents.sort((a, b) => b.title.localeCompare(a.title));
+          } else if (sortOption === 'tag'){
+             sortedEvents.sort((a, b) => a.tag.localeCompare(b.tag));
           } else if (sortOption === 'none') {
               getEvents(); // Fetch and set the original events
               return;
@@ -43,6 +45,7 @@ const AdminEventsTable = ({event, setEvents, setIsAdding, handleDelete, handleEd
               <option value="date-descending">Date: Descending</option>
               <option value="title-ascending">Title: Ascending</option>
               <option value="title-descending">Title: Descending</option>
+              <option value="tag">Tag</option>
             </select>
           </div>
         </div>
