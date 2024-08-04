@@ -67,10 +67,10 @@ const AdminEventsTable = ({event, setEvents, setIsAdding, handleDelete, handleEd
           {event.length > 0 ? (
             event.map((event:any) => (
               <tr key={event.id}>
-                <td>{event.title}</td>
-                <td>{event.date}</td>
-                <td>{event.time}</td>
-                <td>{event.tag} </td>
+                <td className="text-center">{event.title}</td>
+                <td className="text-center">{event.date}</td>
+                <td className="text-center">{event.time}</td>
+                <td className="text-center">{event.tag} </td>
                 <div className="flex flex-row justify-between w-[80%]">
                 <td className="flex-1 flex justify-center">
                   <button
