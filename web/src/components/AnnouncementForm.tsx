@@ -24,23 +24,23 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = () => {
   ];
 
   const handleTagChange = (tag: string) => {
-    setSelectedTags(prevState =>
+    setSelectedTags((prevState) =>
       prevState.includes(tag)
-        ? prevState.filter(t => t !== tag)
+        ? prevState.filter((t) => t !== tag)
         : [...prevState, tag]
     );
   };
 
   const formatDateTime = (date: string, time: string): string => {
     const dateTime = new Date(`${date}T${time}`);
-    return dateTime.toLocaleString('en-GB', {
-      day: '2-digit',
-      month: 'long',
-      year: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit',
-      second: '2-digit',
-      timeZoneName: 'short',
+    return dateTime.toLocaleString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+      timeZoneName: "short",
     });
   };
 
@@ -79,90 +79,151 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = () => {
   };
 
   return (
-    <div>
-      <h2>Post an Announcement</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="title">Title:</label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="message">Message:</label>
-          <textarea
-            id="message"
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label>Tags:</label>
-          <div>
-            {tags.map(tag => (
-              <label key={tag}>
-                <input
-                  type="checkbox"
-                  value={tag}
-                  checked={selectedTags.includes(tag)}
-                  onChange={() => handleTagChange(tag)}
-                />
-                {tag}
+    <div className="bg-lightGrey min-h-screen flex justify-center items-center p-4">
+      <div className="bg-neutral rounded-lg shadow-lg p-8 max-w-4xl w-full">
+        <h2 className="text-heading text-primary mb-6 text-center">
+          Create Announcement
+        </h2>
+        <form onSubmit={handleSubmit}>
+          <div className="grid grid-cols-2 gap-4 mb-4">
+            <div>
+              <label
+                htmlFor="title"
+                className="text-detail text-black block mb-2"
+              >
+                Title
               </label>
-            ))}
+              <input
+                type="text"
+                id="title"
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                required
+                className="w-full p-3 border border-lightGrey rounded-lg"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="startDate"
+                className="text-detail text-black block mb-2"
+              >
+                Start Date
+              </label>
+              <input
+                type="date"
+                id="startDate"
+                value={startDate}
+                onChange={(e) => setStartDate(e.target.value)}
+                required
+                className="w-full p-3 border border-lightGrey rounded-lg"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="endDate"
+                className="text-detail text-black block mb-2"
+              >
+                End Date
+              </label>
+              <input
+                type="date"
+                id="endDate"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                required
+                className="w-full p-3 border border-lightGrey rounded-lg"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="startTime"
+                className="text-detail text-black block mb-2"
+              >
+                Start Time
+              </label>
+              <input
+                type="time"
+                id="startTime"
+                value={startTime}
+                onChange={(e) => setStartTime(e.target.value)}
+                required
+                className="w-full p-3 border border-lightGrey rounded-lg"
+              />
+            </div>
+            <div>
+              <label
+                htmlFor="endTime"
+                className="text-detail text-black block mb-2"
+              >
+                End Time
+              </label>
+              <input
+                type="time"
+                id="endTime"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
+                className="w-full p-3 border border-lightGrey rounded-lg"
+              />
+            </div>
           </div>
-        </div>
-        <div>
-          <label htmlFor="startDate">Start Date:</label>
-          <input
-            type="date"
-            id="startDate"
-            value={startDate}
-            onChange={(e) => setStartDate(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="startTime">Start Time:</label>
-          <input
-            type="time"
-            id="startTime"
-            value={startTime}
-            onChange={(e) => setStartTime(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="endDate">End Date:</label>
-          <input
-            type="date"
-            id="endDate"
-            value={endDate}
-            onChange={(e) => setEndDate(e.target.value)}
-            required
-          />
-        </div>
-        <div>
-          <label htmlFor="endTime">End Time:</label>
-          <input
-            type="time"
-            id="endTime"
-            value={endTime}
-            onChange={(e) => setEndTime(e.target.value)}
-            required
-          />
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? "Posting..." : "Submit"}
-        </button>
-      </form>
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      {success && <p style={{ color: "green" }}>Announcement posted successfully!</p>}
+          <div className="mb-4">
+            <label
+              htmlFor="message"
+              className="text-detail text-black block mb-2"
+            >
+              Message
+            </label>
+            <textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+              className="w-full p-3 border border-lightGrey rounded-lg h-32"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="text-detail text-black block mb-2">Tags</label>
+            <div className="flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <label
+                  key={tag}
+                  className={`text-body text-black bg-neutral border border-lightGrey rounded-lg px-4 py-2 cursor-pointer ${
+                    selectedTags.includes(tag)
+                      ? "bg-primary-light text-neutral"
+                      : ""
+                  }`}
+                  onClick={() => handleTagChange(tag)}
+                >
+                  <input
+                    type="checkbox"
+                    value={tag}
+                    checked={selectedTags.includes(tag)}
+                    onChange={() => handleTagChange(tag)}
+                    className="hidden"
+                  />
+                  {tag}
+                </label>
+              ))}
+            </div>
+          </div>
+          <button
+            type="submit"
+            disabled={loading}
+            className={`w-full py-3 text-neutral font-bold rounded-lg ${
+              loading ? "bg-grey" : "bg-primary hover:bg-blueButtonHover"
+            }`}
+          >
+            {loading ? "Posting..." : "Submit"}
+          </button>
+        </form>
+        {error && <p className="text-secondary mt-4 text-center">{error}</p>}
+        {success && (
+          <p className="text-primary mt-4 text-center">
+            Announcement posted successfully!
+          </p>
+        )}
+      </div>
     </div>
   );
 };
