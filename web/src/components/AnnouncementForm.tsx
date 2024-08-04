@@ -80,92 +80,26 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = () => {
 
   return (
     <div className="bg-lightGrey min-h-screen flex justify-center items-center p-4">
-      <div className="bg-neutral rounded-lg shadow-lg p-8 max-w-4xl w-full">
-        <h2 className="text-heading text-primary mb-6 text-center">
+      <div className="bg-white rounded-3xl shadow-lg p-8 max-w-lg w-full">
+        <h2 className="font-bold text-3xl mb-5">
           Create Announcement
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="grid grid-cols-2 gap-4 mb-4">
-            <div>
-              <label
-                htmlFor="title"
-                className="text-detail text-black block mb-2"
-              >
-                Title
-              </label>
-              <input
-                type="text"
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-                className="w-full p-3 border border-lightGrey rounded-lg"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="startDate"
-                className="text-detail text-black block mb-2"
-              >
-                Start Date
-              </label>
-              <input
-                type="date"
-                id="startDate"
-                value={startDate}
-                onChange={(e) => setStartDate(e.target.value)}
-                required
-                className="w-full p-3 border border-lightGrey rounded-lg"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="endDate"
-                className="text-detail text-black block mb-2"
-              >
-                End Date
-              </label>
-              <input
-                type="date"
-                id="endDate"
-                value={endDate}
-                onChange={(e) => setEndDate(e.target.value)}
-                required
-                className="w-full p-3 border border-lightGrey rounded-lg"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="startTime"
-                className="text-detail text-black block mb-2"
-              >
-                Start Time
-              </label>
-              <input
-                type="time"
-                id="startTime"
-                value={startTime}
-                onChange={(e) => setStartTime(e.target.value)}
-                required
-                className="w-full p-3 border border-lightGrey rounded-lg"
-              />
-            </div>
-            <div>
-              <label
-                htmlFor="endTime"
-                className="text-detail text-black block mb-2"
-              >
-                End Time
-              </label>
-              <input
-                type="time"
-                id="endTime"
-                value={endTime}
-                onChange={(e) => setEndTime(e.target.value)}
-                required
-                className="w-full p-3 border border-lightGrey rounded-lg"
-              />
-            </div>
+          <div className="mb-4">
+            <label
+              htmlFor="title"
+              className="text-detail text-black block mb-2"
+            >
+              Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+              required
+              className="w-full p-3 border border-lightGrey rounded-lg"
+            />
           </div>
           <div className="mb-4">
             <label
@@ -188,12 +122,11 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = () => {
               {tags.map((tag) => (
                 <label
                   key={tag}
-                  className={`text-body text-black bg-neutral border border-lightGrey rounded-lg px-4 py-2 cursor-pointer ${
+                  className={`text-sm text-black border border-lightGrey rounded-2xl px-4 py-2 cursor-pointer ${
                     selectedTags.includes(tag)
-                      ? "bg-primary-light text-neutral"
+                      ? "bg-primary text-neutral"
                       : ""
                   }`}
-                  onClick={() => handleTagChange(tag)}
                 >
                   <input
                     type="checkbox"
@@ -206,6 +139,70 @@ const AnnouncementForm: React.FC<AnnouncementFormProps> = () => {
                 </label>
               ))}
             </div>
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="startDate"
+              className="text-detail text-black block mb-2"
+            >
+              Start Date
+            </label>
+            <input
+              type="date"
+              id="startDate"
+              value={startDate}
+              onChange={(e) => setStartDate(e.target.value)}
+              required
+              className="w-full p-3 border border-lightGrey rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="startTime"
+              className="text-detail text-black block mb-2"
+            >
+              Start Time
+            </label>
+            <input
+              type="time"
+              id="startTime"
+              value={startTime}
+              onChange={(e) => setStartTime(e.target.value)}
+              required
+              className="w-full p-3 border border-lightGrey rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="endDate"
+              className="text-detail text-black block mb-2"
+            >
+              End Date
+            </label>
+            <input
+              type="date"
+              id="endDate"
+              value={endDate}
+              onChange={(e) => setEndDate(e.target.value)}
+              required
+              className="w-full p-3 border border-lightGrey rounded-lg"
+            />
+          </div>
+          <div className="mb-4">
+            <label
+              htmlFor="endTime"
+              className="text-detail text-black block mb-2"
+            >
+              End Time
+            </label>
+            <input
+              type="time"
+              id="endTime"
+              value={endTime}
+              onChange={(e) => setEndTime(e.target.value)}
+              required
+              className="w-full p-3 border border-lightGrey rounded-lg"
+            />
           </div>
           <button
             type="submit"
