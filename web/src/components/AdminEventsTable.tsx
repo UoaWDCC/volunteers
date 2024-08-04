@@ -1,9 +1,52 @@
 import AdminHeader from "./AdminHeader";
+import { useState, useEffect } from "react";
 
-const AdminEventsTable = ({event, setIsAdding, handleDelete, handleEdit}:any) => {
+const AdminEventsTable = ({event, setEvents, setIsAdding, handleDelete, handleEdit, getEvents}:any) => {
+    const [sortOption, setSortOption] = useState('none');
+    const handleSortChange = (event:any) => {
+      setSortOption(event.target.value);
+    };  
+
+    useEffect(() => {
+      const sortEvents = () => {
+          let sortedEvents = [...event]; // Create a copy of the array
+          if (sortOption === 'date-ascending') {
+              sortedEvents.sort((a, b) => a.date.localeCompare(b.date));
+          } else if (sortOption === 'date-descending') {
+              sortedEvents.sort((a, b) => b.date.localeCompare(a.date));
+          } else if (sortOption === 'title-ascending'){
+              sortedEvents.sort((a, b) => a.title.localeCompare(b.title));
+          } else if (sortOption === 'title-descending'){
+              sortedEvents.sort((a, b) => b.title.localeCompare(a.title));
+          } else if (sortOption === 'none') {
+              getEvents(); // Fetch and set the original events
+              return;
+          }
+          setEvents(sortedEvents); // Update the state with sorted events
+      };
+      
+      sortEvents();
+  }, [sortOption, event, setEvents, getEvents]);
+
     return (
       <div>
         <AdminHeader setIsAdding={setIsAdding}/>
+        {/*<AdminSortEvents event={event} setEvents={setEvents}/>*/}
+        <div className="flex">
+          <div className="ml-[1em]">
+            Sort By:
+          </div>
+          <div className="ml-[1em]">
+            <select onChange={handleSortChange}>
+              <option value="none">None</option>
+              <option value="date-ascending">Date: Ascending</option>
+              <option value="date-descending">Date: Descending</option>
+              <option value="title-ascending">Title: Ascending</option>
+              <option value="title-descending">Title: Descending</option>
+            </select>
+          </div>
+        </div>
+
         <table className="striped-table min-w-full border-4 m-[1rem]">
         <thead className="border-4">
             <tr className="">

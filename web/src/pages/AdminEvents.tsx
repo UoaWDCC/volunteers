@@ -34,7 +34,6 @@ export default function AdminEvents() {
     const [event] = events.filter(event => event.id === id)
     setSelectedEvent(event)
     setIsEditing(true);
-
   }
 
   // Delete an Event
@@ -71,6 +70,8 @@ export default function AdminEvents() {
           handleDelete={handleDelete}
           selectedEvent={setSelectedEvent}
           handleEdit={handleEdit}
+          setEvents={setEvents}
+          getEvents={getEvents}
         />
       )}
     </div>
