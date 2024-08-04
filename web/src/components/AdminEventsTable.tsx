@@ -93,7 +93,7 @@ const AdminEventsTable = ({event, setEvents, setIsAdding, handleDelete, handleEd
             ))
           ) : (
             <tr>
-                {event.length == 0 ? <td colSpan={7}>No Events</td> : <td colSpan={7}>Events Loading . . .</td>}
+                <td colSpan={7}>Events Loading . . .</td>
             </tr>
           )}
         </tbody>
