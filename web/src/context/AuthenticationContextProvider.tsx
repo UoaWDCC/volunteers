@@ -70,10 +70,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function initializeUser(user: User | null) {
     if (user) {
+      console.log('ititalsing');
       setCurrentUser(user);
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
       console.log('Google user is logged in as:', user);
+      const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
+      if (!uidExists) {
+        console.log('User not found in db, redirecting to register page');
+        signOut();
+      }
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
