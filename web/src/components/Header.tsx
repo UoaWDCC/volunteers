@@ -1,12 +1,11 @@
 import AuthenticationContext from '../context/AuthenticationContext.tsx';
 import { useContext } from 'react';
-import { useContext } from "react";
 import LoginModalContext from "../context/LoginModalContext.tsx";
 
 function Header() {
   const {setShowModal} = useContext(LoginModalContext);
   const authContext = useContext(AuthenticationContext);
-  const { signOut, isUserLoggedIn } = authContext as { signOut: () => void; isUserLoggedIn: boolean };
+  const { signOut, isUserLoggedIn } = authContext as unknown as { signOut: () => void; isUserLoggedIn: boolean };
 
   if (!authContext) {
     return null;
