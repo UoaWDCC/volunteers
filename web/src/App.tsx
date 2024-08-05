@@ -8,9 +8,7 @@ import TestingComponent from '@components/TestComponent';
 import AdminUsers from '@pages/AdminUsers';
 import { UsersContextProvider } from './context/UserContext';
 import Admin from '@pages/Admin';
-import Signup from '@pages/Signup';
-import SignupAdditional from '@pages/SignupAdditional';
-import SignupEmergency from '@pages/SignupEmergency';
+import AdminEvents from '@pages/AdminEvents';
 
 const router = createBrowserRouter([
   {
@@ -41,17 +39,10 @@ const router = createBrowserRouter([
       </UsersContextProvider>,
   },
   {
-    path: '/Signup',
-    element: <Signup />,
-  },
-  {
-    path: '/SignupAdditional',
-    element: <SignupAdditional />,
-  },
-  {
-    path: '/SignupEmergency',
-    element: <SignupEmergency />,
-  },
+
+    path: '/admin/events',
+    element: <AdminEvents/>
+  }
 ]);
 
 export default function App() {
