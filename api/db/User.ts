@@ -17,6 +17,21 @@ const userSchema = new Schema({
     type: [String],
     default: [],
   },
+  studentID: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+  uid: {
+    type: String,
+    required: false,
+    unique: true,
+  },
+  userRole: {
+    type: String,
+    required: false,
+    unique: true,
+  },
 });
 
 const User = model('User', userSchema);
