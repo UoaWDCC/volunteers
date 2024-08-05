@@ -39,6 +39,7 @@ const router = createBrowserRouter([
       </UsersContextProvider>,
   },
   {
+
     path: '/admin/events',
     element: <AdminEvents/>
   }

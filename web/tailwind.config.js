@@ -17,7 +17,8 @@ export default {
           black: "#33342E", /* lighter black */
           grey: "#818181", /* grey */ 
           lightGrey: "#D9D9D9", /* light grey */
-          blueButtonHover: "#60ABF6"
+          blueButtonHover: "#60ABF6",
+          "greybg": "#6E7780", /*light grey bg for form*/
         },
         fontSize: {
           'number': ['80px', {
