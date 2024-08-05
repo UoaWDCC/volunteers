@@ -8,9 +8,7 @@ const apiUrl = 'http://localhost:3000';
 export const getUserById = async (userId: string) => {
     console.log("Get User By Id");
     try {
-        const response = await axios.post(`${apiUrl}/api/getUser`, {
-            id: userId
-        });
+        const response = await axios.get(`${apiUrl}/api/users/${userId}`)
         
         return response.data;
     } catch (error) {
@@ -36,7 +34,7 @@ export const getAllUsers = async () => {
 export const getAnnouncementByUser = async (user: any) => {
     console.log("Get Announcements", user);
     try {
-        const response = await axios.post(`${apiUrl}/api/getAnnouncementByUser`, {
+        const response = await axios.post(`${apiUrl}/api/announcements/getAnnouncementByUser`, {
             user
         });
         // console.log(response);
@@ -50,7 +48,7 @@ export const getAnnouncementByUser = async (user: any) => {
 export const getAllAnnouncements = async () => {
     console.log("Get Announcements");
     try {
-        const response = await axios.get(`${apiUrl}/api/getAllAnnouncements`);
+        const response = await axios.get(`${apiUrl}/api/announcements/getAllAnnouncements`);
         // console.log(response);
         return response.data;
     } catch (error) {
