@@ -96,14 +96,13 @@ async function updateUser(req: Request, res: Response): Promise<void> {
             res.status(404).json({ message: 'User not found' });
             return;
         }
-
         await updateDoc(userRef, req.body);
         
         // Fetch the updated user data for testing purposes
         const updatedUserDoc = await getDoc(userRef);
         const updatedUser = updatedUserDoc.data();
 
-        res.json(updatedUser);
+        res.status(200).json(updatedUser);
         console.log(updatedUser);
     } catch (error) {
         console.error('Error updating user:', error);

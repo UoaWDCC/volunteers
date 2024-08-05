@@ -82,7 +82,7 @@ const UserDetails = ({ user }: { user: User }) => {
   }
 
   const handleSave = async () => {
-    const response = await fetch(`http://localhost:3000/api/updateUser${user.id}`, {
+    const response = await fetch(`http://localhost:3000/api/users/${user.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',
