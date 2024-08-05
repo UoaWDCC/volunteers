@@ -8,6 +8,7 @@ import TestingComponent from '@components/TestComponent';
 import AdminUsers from '@pages/AdminUsers';
 import { UsersContextProvider } from './context/UserContext';
 import Admin from '@pages/Admin';
+import AdminEvents from '@pages/AdminEvents';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
         <AdminUsers />
       </UsersContextProvider>,
   },
+  {
+    path: '/admin/events',
+    element: <AdminEvents/>
+  }
 ]);
 
 export default function App() {
