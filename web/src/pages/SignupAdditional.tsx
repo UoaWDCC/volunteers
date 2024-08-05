@@ -75,7 +75,8 @@ function SignupAdditional() {
 
     <div>
     <label htmlFor="gender" className="inline-block text-sm font-medium text-gray-900 text-black mt-4">Dietary Requirements</label>
-    <p className="inline-block text-red-600">*</p>
+    <p className="inline-block text-white">*</p>
+    <p className="inline-block text-sm font-medium text-black">(If Other, please specify below)</p>
       <div className="flex space-x-3">
         <div>
         <input type="checkbox" id="vegan" className="peer hidden"/>
@@ -106,7 +107,7 @@ function SignupAdditional() {
 
     <div>
     <label htmlFor="gender" className="inline-block text-sm font-medium text-gray-900 text-black mt-4">Driver's License</label>
-    <p className="inline-block text-red-600">*</p>
+    <p className="inline-block text-white">*</p>
       <ul className="flex space-x-3">
         <li><div>
         <input type="radio" id="none" className="peer hidden" name="license"/>
@@ -128,9 +129,9 @@ function SignupAdditional() {
     </div> 
 
     <div>
-          <label htmlFor="first_name" className="inline-block text-sm font-medium text-black mt-4">Accessibility Requirements</label>
+          <label htmlFor="first_name" className="inline-block text-sm font-medium text-black mt-4">Accessibility/Other Dietary Needs</label>
           <p className="inline-block text-white">*</p>
-          <input type="text" id="first_name" className="border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20" placeholder="Wheelchair access" />
+          <input type="text" id="first_name" className="border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20" placeholder="Wheelchair access, seafood allergy" />
     </div>
 </form>
   <div className="bg-slate-100 py-5 rounded-b-[1rem] flex space-x-2 -mt-[6.5px]">
