@@ -35,7 +35,7 @@ const UserDetails = ({ user }: { user: User }) => {
   useEffect(() => {
     const fetchEventData = async (eventId: string) => {
       try {
-        const response = await fetch(`http://localhost:3000/api/${eventId}`)
+        const response = await fetch(`http://localhost:3000/api/events/${eventId}`)
         const data = await response.json();
         return data;
       } catch (err) {
@@ -51,18 +51,14 @@ const UserDetails = ({ user }: { user: User }) => {
     };
 
     fetchAllEvents();
-  }, [user.events])
+  }, [])
 
   const handleClickDelete = async () => {
     const confirmDelete = window.confirm('Are you sure want to remove ' + user.firstName + '?')
 
     if (confirmDelete) {
-      const response = await fetch('http://localhost:3000/api/removeUser', {
+      const response = await fetch(`http://localhost:3000/api/users/${user.id}`, {
         method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ id: user.id })
       })
       const json = await response.json()
 
@@ -86,7 +82,7 @@ const UserDetails = ({ user }: { user: User }) => {
   }
 
   const handleSave = async () => {
-    const response = await fetch('http://localhost:3000/api/updateUser', {
+    const response = await fetch(`http://localhost:3000/api/updateUser${user.id}`, {
       method: 'PATCH',
       headers: {
         'Content-Type': 'application/json',

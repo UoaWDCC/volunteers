@@ -8,7 +8,7 @@ const colRef = collection(db, "users");
 
 async function getUsers(req: Request, res: Response): Promise<void> {
     const userDocs = await getDocs(colRef);
-    const users = userDocs.docs.map(doc => doc.data());
+    const users = userDocs.docs.map(doc => ({id: doc.id, ...doc.data()}));
     
     res.json(users);
     
@@ -48,7 +48,6 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
   const userRef = doc(db, "users", req.params.id);
   const docSnapshot = (await getDoc(userRef));
 
-
   if (!docSnapshot.exists()) {
     console.log("Document does not exist")
     res.status(404).send("Document not found")
@@ -56,8 +55,8 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
   }
 
   const user = { id: docSnapshot.id, ...docSnapshot.data() }
-
-    console.log("User deleted");
+  await deleteDoc(userRef);
+  res.status(200).json(user);
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {

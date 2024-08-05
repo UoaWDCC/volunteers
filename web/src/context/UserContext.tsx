@@ -1,4 +1,4 @@
-import { createContext, useReducer, Dispatch, ReactNode } from "react";
+import { createContext, Dispatch } from "react";
 import { User } from "@components/UserDetails";
 
 export interface Action {

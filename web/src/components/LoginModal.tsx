@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import LoginModalContext from '../context/LoginModalContext';
-import { handleGoogle } from '../firebase/firebase';
+import AuthenticationContext from '../context/AuthenticationContext';
 
 const LoginModal = () => {
     const { showModal, setShowModal } = useContext(LoginModalContext);
+    const { signInUsingGoogle } = useContext(AuthenticationContext) as unknown as { signInUsingGoogle: () => void };
 
     const baseBackgroundStyle = "fixed z-[100] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 "
 
@@ -19,7 +20,7 @@ const LoginModal = () => {
                     <h2 className='fontFamily-sans font-bold'>Log in or sign up</h2>
                     <p className='fontFamily-sans text-[14px]'>Track your hours, stay updated on events, and join our community of dedicated volunteers!</p>
 
-                    <button onClick={handleGoogle} className='w-[345px] h-[45px] mt-[30px] flex justify-start items-center rounded-lg bg-transparent border-2 border-solid border-lightGrey transition-colors active:bg-lightGrey'> 
+                    <button onClick={signInUsingGoogle} className='w-[345px] h-[45px] mt-[30px] flex justify-start items-center rounded-lg bg-transparent border-2 border-solid border-lightGrey transition-colors active:bg-lightGrey'> 
                         <img src='/assets/loginModal/googleIcon.png' className='w-[35px] h-[35px]' />
                         <p  className='fontFamily-sans font-semibold text-black text-[16px] ml-[40px] mt-[15px]'>Continue with Google</p>
                     </button>
