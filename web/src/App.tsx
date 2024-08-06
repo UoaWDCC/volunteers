@@ -6,7 +6,7 @@ import NotFound from '@pages/NotFound';
 import RegisterForm from '@components/RegisterForm';
 import TestingComponent from '@components/TestComponent';
 import AdminUsers from '@pages/AdminUsers';
-import { UsersContextProvider } from './context/UserContext';
+import { UsersContextProvider } from './context/UserContextProvider';
 import Admin from '@pages/Admin';
 import AdminEvents from '@pages/AdminEvents';
 

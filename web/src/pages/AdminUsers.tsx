@@ -12,7 +12,7 @@ export default function AdminUsers() {
   useEffect(() => {
     const fetchAllUsers = async () => {
       // Not sure why proxy doesn't work?
-      const response = await fetch('http://localhost:3000/api/getUsers')
+      const response = await fetch('http://localhost:3000/api/users/')
       const json = await response.json()
 
       if (response.ok) {
@@ -22,10 +22,6 @@ export default function AdminUsers() {
 
     fetchAllUsers();
   }, [])
-
-  useEffect(() => {
-    console.log(users)
-  }, [users])
 
   const filteredUsers = selectedYear === 'All' ? users : users.filter(user => user.year === selectedYear)
 
