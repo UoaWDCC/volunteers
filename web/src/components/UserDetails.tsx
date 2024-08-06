@@ -124,7 +124,7 @@ const UserDetails = ({ user }: { user: User }) => {
                 />
               </div>
               <div className="flex-[2] m-0">
-                <input type="text" className="w-full" value={details.email}
+                <input type="email" className="w-full" value={details.email}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, email: e.target.value }))}
                 />
               </div>
@@ -134,7 +134,7 @@ const UserDetails = ({ user }: { user: User }) => {
                 />
               </div>
               <div className="flex-[1] m-0">
-                <input type="text" className="w-full" value={details.dOB}
+                <input type="date" className="w-full" value={details.dOB}
                   onChange={(e) => setDetails((oldDetails) => ({ ...oldDetails, dOB: e.target.value }))}
                 />
               </div>
