@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import LoginModalContext from '../context/LoginModalContext';
 import AuthenticationContext from '../context/AuthenticationContext.tsx';
-// import { is } from 'date-fns/locale';
 
 const LoginModal = () => {
   const { showModal, setShowModal } = useContext(LoginModalContext);
@@ -28,8 +27,8 @@ const LoginModal = () => {
         }
       }}
     >
-      <div className='w-[940px] h-[560px] mt- m-0 rounded-3xl bg-white flex justify-between items-center'>
-        <img src='/assets/loginModal/closeButton.png' className='absolute top-[70px] right-[290px] mt-[20px] mr-[20px] transition-opacity opacity-80 hover:opacity-100' onClick={() => setShowModal(false)} />
+      <div className='relative w-[940px] h-[560px] mt- m-0 rounded-3xl bg-white flex justify-between items-center'>
+        <img src='/assets/loginModal/closeButton.png' className='absolute top-[2%] right-[2%] mt-[20px] mr-[20px] transition-opacity cursor-pointer opacity-100 hover:opacity-80' onClick={() => setShowModal(false)} />
 
         <div className='w-1/2 px-[55px] flex flex-col'>
           <img src='/assets/club-logo.svg' className='self-center mb-[50px] mt-[-90px]' />

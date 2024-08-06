@@ -26,7 +26,7 @@ function Header() {
                   onClick={() => {
                     setShowModal(true);
                   }}
-                  className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover:underline cursor-pointer'
+                  className='px-[30px] py-[10px] rounded-[2rem] bg-primary font-mono cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'
                 >
                   Login
                 </li>
@@ -34,14 +34,14 @@ function Header() {
                   onClick={() => {
                     setShowModal(true);
                   }}
-                  className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover:underline cursor-pointer'
+                  className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover: cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'
                 >
                   Register
                 </li>
               </>
             )}
             {isUserLoggedIn && (
-              <li onClick={signOut} className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover:underline cursor-pointer'>
+              <li onClick={signOut} className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover: cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'>
                 Sign Out
               </li>
             )}
