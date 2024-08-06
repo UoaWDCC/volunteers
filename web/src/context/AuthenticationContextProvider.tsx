@@ -27,7 +27,8 @@ import AuthenticationContext from './AuthenticationContext';
 import { ReactNode } from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
+// import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
+import { collection, getDocs, query, where, DocumentData } from 'firebase/firestore';
 
 const googleProvider = new GoogleAuthProvider();
 
