@@ -64,11 +64,6 @@ function Signup() {
     setDriversLicense(id);
   };
 
-  //useffect to handleGenderChange and update checkbox ui
-  // useEffect(() => {
-  //   console.log('settings', gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship);
-  // }, [gender, yearLevel, dietaryRequirements]);
-
   //initialise pages on startup
   useEffect(() => {
     goToRegisterPage();
