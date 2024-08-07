@@ -3,12 +3,15 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { useState } from 'react';
 import MainMenu from '@pages/MainMenu';
 import NotFound from '@pages/NotFound';
-import RegisterForm from '@components/RegisterForm';
 import TestingComponent from '@components/TestComponent';
 import AdminUsers from '@pages/AdminUsers';
 import { UsersContextProvider } from './context/UserContextProvider';
 import Admin from '@pages/Admin';
 import AdminEvents from '@pages/AdminEvents';
+// import Signup from '@pages/Signup';
+// import SignupAdditional from '@pages/SignupAdditional';
+// import SignupEmergency from '@pages/SignupEmergency';
+import SignUpPage from '@pages/SignUpPage';
 
 const router = createBrowserRouter([
   {
@@ -21,9 +24,9 @@ const router = createBrowserRouter([
   },
   {
     path: 'register',
-    element: <RegisterForm />,
+    element: <SignUpPage />,
   },
-  { 
+  {
     path: '/testing',
     element: <TestingComponent />,
   },
@@ -33,16 +36,16 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin/users',
-    element: 
+    element: (
       <UsersContextProvider>
         <AdminUsers />
-      </UsersContextProvider>,
+      </UsersContextProvider>
+    ),
   },
   {
-
     path: '/admin/events',
-    element: <AdminEvents/>
-  }
+    element: <AdminEvents />,
+  },
 ]);
 
 export default function App() {

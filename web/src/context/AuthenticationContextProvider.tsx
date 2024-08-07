@@ -27,7 +27,8 @@ import AuthenticationContext from './AuthenticationContext';
 import { ReactNode } from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
-import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
+// import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
+import { collection, getDocs, query, where, DocumentData } from 'firebase/firestore';
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -75,11 +76,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
       console.log('Google user is logged in as:', user);
-      const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
-      if (!uidExists) {
-        console.log('User not found in db, redirecting to register page');
-        signOut();
-      }
+      // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
+      // if (!uidExists) {
+      //   console.log('User not found in db, redirecting to register page');
+      //   signOut();
+      // }
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
@@ -120,27 +121,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // checking uid in firestore document im not really sure what "document" is, currently the register form is set up to write to
     // "document" and not "collection" so uids uploaded to "document" will not be in the collection and vice versa. Probably
     // something we would want to look into.
-    const userDoc = doc(db, 'users', uid);
-    try {
-      console.log(`Checking uid: ${uid}`);
-      const docSnapshot = await getDoc(userDoc);
-      return { exists: docSnapshot.exists(), userDetails: docSnapshot.data() };
-    } catch (error) {
-      console.error('Error checking user UID in Firestore:', error);
-      return { exists: false, userDetails: undefined };
-    }
-    // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
-    // const colRef = collection(db, 'users');
-    // const q = query(colRef, where('uid', '==', uid));
-    // const querySnapshot = await getDocs(q);
-
-    // if (!querySnapshot.empty) {
-    //   console.log('user exists');
-    //   return { exists: !querySnapshot.empty, userDetails: querySnapshot.docs[0].data() };
-    // } else {
-    //   console.error('user does not exist');
+    // const userDoc = doc(db, 'users', uid);
+    // try {
+    //   console.log(`Checking uid: ${uid}`);
+    //   const docSnapshot = await getDoc(userDoc);
+    //   return { exists: docSnapshot.exists(), userDetails: docSnapshot.data() };
+    // } catch (error) {
+    //   console.error('Error checking user UID in Firestore:', error);
     //   return { exists: false, userDetails: undefined };
     // }
+    // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
+    const colRef = collection(db, 'users');
+    const q = query(colRef, where('uid', '==', uid));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      console.log('user exists');
+      return { exists: !querySnapshot.empty, userDetails: querySnapshot.docs[0].data() };
+    } else {
+      console.error('user does not exist');
+      return { exists: false, userDetails: undefined };
+    }
   };
 
   function signOut() {
