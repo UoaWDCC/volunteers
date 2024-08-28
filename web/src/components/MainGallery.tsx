@@ -12,10 +12,24 @@ interface GalleryData {
 const MainGallery = () => {
   // set the index of the current event to display
   const [imgIndex, setImgIndex] = useState(0);
-  const [data, setData] = useState<GalleryData[]>([{
-    title: "", 
-    image: ""
-  } ]);
+  const [data, setData] = useState<GalleryData[]>([
+    {
+      title: "Relay For Life", 
+      image: "/assets/EventHighlights/Events/RelayForLife/imgB.png"
+    },
+    {
+      title:"Volunteers Day",
+      image: "/assets/EventHighlights/Events/VolunteersDay/imgB.png"
+    },
+    {
+      title:"Blind Low Vision",
+      image: "/assets/EventHighlights/Events/BlindLowVision/imgB.png"
+    },
+    {
+      title: "Pub Quiz",
+      image: "/assets/EventHighlights/Events/PubQuiz/imgB.png"
+    }
+    ]);
 
   useEffect(() => {
     // Fetch gallery data

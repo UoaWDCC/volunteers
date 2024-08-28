@@ -21,23 +21,23 @@ interface OurAchievementsData {
 
 const OurAchievements = () => {
   const [data, setData] = useState<OurAchievementsData>({
-    leftImage: "", 
+    leftImage: "/assets/gallery/events/sample1.png", 
     leftText: {
-      topText: "", 
-      middleText: "", 
-      bottomText: ""
+      topText: "Relay for life:\nSilver Award", 
+      middleText: "$8,043", 
+      bottomText: "raised"
     }, 
-    middleImage: "", 
+    middleImage: "/assets/gallery/events/sample3.png", 
     rightText: {
-      topText: "", 
-      middleText: "", 
-      bottomText: ""
+      topText: "UoA Clubs Awards:\nRunner Up", 
+      middleText: "2023", 
+      bottomText: "Cause of the Year"
     }, 
-    rightImage: ""
+    rightImage: "/assets/gallery/events/sample4.png"
   });
 
   useEffect(() => {
-    // Fetch gallery data
+    // Fetch achievements data
     axios.get('http://localhost:3000/api/homepage/achievements')
       .then((res) => {
         setData(res.data);

@@ -16,18 +16,29 @@ interface EventHighlightData {
 const EventHighlights = () => {
 
   const [eventIndex, setEventIndex] = useState(0)
-  const [data, setData] = useState<EventHighlightData[]>([{
-    title: "", 
-    description: "", 
-    topLeftImage: "", 
-    bottomLeftImage: "", 
-    topRightImage: "", 
-    rightImage: "", 
-    bottomRightImage: ""
-  } ]);
+  const [data, setData] = useState<EventHighlightData[]>([
+    {
+    title: "Relay For Life", 
+    description: "It was a huge success, thanks to our amazing participants and generous donors! Together, we raised an impressive $8,433 placing us second in the community group category!", 
+    topLeftImage: "/assets/EventHighlights/Events/RelayForLife/imgA.png", 
+    bottomLeftImage: "/assets/EventHighlights/Events/RelayForLife/imgB.png", 
+    topRightImage: "/assets/EventHighlights/Events/RelayForLife/imgC.png", 
+    rightImage: "/assets/EventHighlights/Events/RelayForLife/imgD.png", 
+    bottomRightImage: "/assets/EventHighlights/Events/RelayForLife/imgE.png"
+    },
+    {
+      title:"Volunteers Day",
+      description: "The biggest day of the year for us! There were opportunities like Elder Care Volunteering where students connected with residents through music, arts, and crafts!\n Other students volunteered for the Takapuna Beach Clean Up, helping to preserve the beautiful beach!",
+      topLeftImage: "/assets/EventHighlights/Events/VolunteersDay/imgA.png",
+      bottomLeftImage: "/assets/EventHighlights/Events/VolunteersDay/imgB.png",
+      topRightImage: "/assets/EventHighlights/Events/VolunteersDay/imgC.png",
+      rightImage: "/assets/EventHighlights/Events/VolunteersDay/imgD.png",
+      bottomRightImage: "/assets/EventHighlights/Events/VolunteersDay/imgE.png"
+    }
+  ]);
 
   useEffect(() => {
-    // Fetch gallery data
+    // Fetch highlight data
     axios.get('http://localhost:3000/api/homepage/highlights')
       .then((res) => {
         setData(res.data);
