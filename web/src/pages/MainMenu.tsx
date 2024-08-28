@@ -14,6 +14,9 @@ import LoginModalContextProvider from '../context/LoginModalContextProvider';
 import LoginModal from '@components/LoginModal';
 
 function MainMenu() {
+  // Fetch content from the database
+  
+
   return (
     <div className="primary-background">
       {/* <ShowCaseUserAnnouncements/> */}
