@@ -1,17 +1,53 @@
+import { useEffect, useState } from "react";
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
+import axios from "axios";
 
 // define the props for the OurAchievements component to accept
-interface OurAchievementsProps {
-  data: { 
-    leftImg: string,
-    leftTxt: string, 
-    middleImg: string, 
-    rightTxt: string, 
-    rightImg: string 
-  };
+interface OurAchievementsData {
+  leftImage: string,
+  leftText: {
+    topText: string,
+    middleText: string,
+    bottomText: string
+  }, 
+  middleImage: string, 
+  rightText: {
+    topText: string,
+    middleText: string,
+    bottomText: string
+  } 
+  rightImage: string 
 }
 
-const OurAchievements = ({data}: OurAchievementsProps) => {
+const OurAchievements = () => {
+  const [data, setData] = useState<OurAchievementsData>({
+    leftImage: "", 
+    leftText: {
+      topText: "", 
+      middleText: "", 
+      bottomText: ""
+    }, 
+    middleImage: "", 
+    rightText: {
+      topText: "", 
+      middleText: "", 
+      bottomText: ""
+    }, 
+    rightImage: ""
+  });
+
+  useEffect(() => {
+    // Fetch gallery data
+    axios.get('http://localhost:3000/api/homepage/achievements')
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  , []);
+
   return (
     <div className="flex flex-col items-center h-screen bg-neutral font-medium">
       <MainPageButtonHeadings heading="Our Achievements" />
@@ -19,47 +55,44 @@ const OurAchievements = ({data}: OurAchievementsProps) => {
         <img
           loading="lazy"
           className="rounded-[30px] object-cover w-[150px] h-[200px]"
-          src="/assets/gallery/events/sample1.png"
-          title="img1"
-          alt="img1"
+          src={data.leftImage}
+          alt="Left Image"
         />
 
         <div className="w-[180px] h-[250px] bg-lightGrey font-semibold tracking-[-1px] rounded-[30px]">
           <p className="text-center text-lg leading-[8px] mt-12">
-            Relay for life:
+            {data.leftText.topText.split("\n")[0]}
           </p>
-          <p className="text-center text-lg leading-[8px]">Silver Award</p>
+          <p className="text-center text-lg leading-[8px]">{data.leftText.topText.split("\n")[1]}</p>
           <p className="text-center text-[2.3em] leading-[8px] mt-12 mb-10">
-            $8,043
+            {data.leftText.middleText}
           </p>
-          <p className="text-center text-lg leading-[8px]">raised</p>
+          <p className="text-center text-lg leading-[8px]">{data.leftText.bottomText}</p>
         </div>
 
         <img
           loading="lazy"
           className="rounded-[30px] object-cover w-[300px] h-[350px]"
-          src="/assets/gallery/events/sample3.png"
-          title="img2"
-          alt="img2"
+          src={data.middleImage}
+          alt="Middle Image"
         />
 
         <div className="w-[180px] h-[250px] bg-lightGrey font-semibold tracking-[-1px] rounded-[30px]">
           <p className="text-center text-lg leading-[8px] mt-12">
-            UoA Clubs Awards:
+            {data.rightText.topText.split("\n")[0]}
           </p>
-          <p className="text-center text-lg leading-[8px]">Runner Up</p>
+          <p className="text-center text-lg leading-[8px]">{data.rightText.topText.split("\n")[1]}</p>
           <p className="text-center text-[2.3em] leading-[8px] mt-12 mb-10">
-            2023
+            {data.rightText.middleText}
           </p>
-          <p className="text-center text-lg leading-[8px]">Cause of the Year</p>
+          <p className="text-center text-lg leading-[8px]">{data.rightText.bottomText}</p>
         </div>
 
         <img
           loading="lazy"
           className="rounded-[30px] object-cover w-[150px] h-[200px]"
-          src="/assets/gallery/events/sample4.png"
-          title="img3"
-          alt="img3"
+          src={data.rightImage}
+          alt="Right Image"
         />
       </div>
     </div>

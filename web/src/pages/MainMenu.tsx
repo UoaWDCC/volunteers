@@ -29,7 +29,7 @@ function MainMenu() {
           <Header />
           <MainGallery />
           <EventHighlights />
-          <OurAchievements data={achievements} />
+          <OurAchievements />
           <OurCommunity data = {community} />
           <Sponsors data={sponsors}/>
           <Footer />
