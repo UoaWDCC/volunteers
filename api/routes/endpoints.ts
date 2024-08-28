@@ -7,6 +7,7 @@ import { Request, Response } from "express";
 import userEndpoints from './api/users';
 import eventEndpoints from './api/events';
 import announcementEndpoints from './api/announcements';
+import homepageEndpoints from './api/homepage';
 
 import { db } from "../config/firebase";
 import {
@@ -37,6 +38,7 @@ router.get("/getTest", async (req: Request, res: Response) => {
 router.use("/users", userEndpoints);
 router.use("/events", eventEndpoints);
 router.use("/announcements", announcementEndpoints);
+router.use("/homepage", homepageEndpoints);
 
 module.exports = router;
 

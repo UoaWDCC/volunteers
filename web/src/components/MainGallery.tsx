@@ -1,17 +1,47 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 // import '../styles/componentStyles/MainGallery.css'
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-// define the props for the MainGallery component to accept
-interface MainGalleryProps {
-  data: { title: string; description: string; imgB: string }[];
+interface GalleryData {
+  title: string;
+  image: string;
 }
 
-// data is an array of objects stored in json
-const MainGallery = ({ data }: MainGalleryProps) => {
+const MainGallery = () => {
   // set the index of the current event to display
-  const [imgIndex, setEventIndex] = useState(0);
+  const [imgIndex, setImgIndex] = useState(0);
+  const [data, setData] = useState<GalleryData[]>([
+    {
+      title: "Relay For Life", 
+      image: "/assets/EventHighlights/Events/RelayForLife/imgB.png"
+    },
+    {
+      title:"Volunteers Day",
+      image: "/assets/EventHighlights/Events/VolunteersDay/imgB.png"
+    },
+    {
+      title:"Blind Low Vision",
+      image: "/assets/EventHighlights/Events/BlindLowVision/imgB.png"
+    },
+    {
+      title: "Pub Quiz",
+      image: "/assets/EventHighlights/Events/PubQuiz/imgB.png"
+    }
+    ]);
+
+  useEffect(() => {
+    // Fetch gallery data
+    axios.get('http://localhost:3000/api/homepage/gallery')
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  , []);
 
   // =============== NOT YET IMPLEMENTED ===============
   // function to handle the "See other upcoming events" button when clicked
@@ -22,28 +52,30 @@ const MainGallery = ({ data }: MainGalleryProps) => {
 
   // handle the back and forward buttons to change the image
   const handleBack = () => {
-    setEventIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
+    setImgIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
   };
 
   const handleForward = () => {
-    setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+    setImgIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
   };
 
   // function to autoscroll the images
   useEffect(() => {
     const interval = setInterval(() => {
-      setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+      setImgIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
     }, 7000);
 
     // return a cleanup function to clear the interval when the component unmounts
     return () => clearInterval(interval);
   }, [imgIndex, data.length]);
 
+  
+
   return (
     <div className='gallery relative'>
       <div className='image flex overflow-hidden aspect-[8/3]'>
         {data.map((event, index) => (
-          <img loading='lazy' src={event.imgB} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
+          <img loading='lazy' src={event.image} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
         ))}
       </div>
 
