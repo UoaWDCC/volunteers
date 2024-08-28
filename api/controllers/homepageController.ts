@@ -31,4 +31,16 @@ async function getAchievements(req: Request, res: Response): Promise<void> {
     res.status(200).json(doc);
 }
 
-export { getGallery, getHighlights, getAchievements };
+async function getCommunity(req: Request, res: Response): Promise<void> {
+    const colRef = collection(db, "community");
+    const docs = await getDocs(colRef);
+
+    // Only return the first document from the community collection. Since there should only be one document in the collection, this is fine.
+    const doc = docs.docs.map(doc => doc.data())[0];
+
+    // Return the single document from the community collection
+    res.status(200).json(doc);
+}
+
+
+export { getGallery, getHighlights, getAchievements, getCommunity };
