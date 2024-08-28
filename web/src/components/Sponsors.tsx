@@ -4,9 +4,10 @@ import MainPageButtonHeadings from './MainPageButtonHeadings';
 import { sponsors } from '../data/SponsorList.json'; // Import events data from JSON file to display on main page gallery, THIS MAY CHANGE IN THE FUTURE
  
 interface SponsorData {
-  image: string,
+  logo: string,
   name: string,
   discount: string, 
+  website: string
 }
 
 const Sponsors = () => {
@@ -16,6 +17,8 @@ const Sponsors = () => {
   const [sals, setSals] = useState(true);
 
   const data = sponsors;
+
+  // Theres no need to store a black & white and colour image, just store one image and use css to change the colour. Have a look at the grayscale filter in css.
 
   const bwImg = [
     data[0].imageSrcBw,
