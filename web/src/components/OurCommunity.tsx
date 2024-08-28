@@ -2,7 +2,18 @@ import { useContext } from "react";
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
 import LoginModalContext from "../context/LoginModalContext";
  
-const OurCommunity = () => {
+// define the props for the OurCommunity component to accept
+interface OurCommunityProps {
+    data: { 
+        topleftImg: string, 
+        bottomleftImg: string, 
+        topRightImg: string, 
+        bottomRightImg: string,
+        volunteerStatistic: string 
+    };
+  }
+
+const OurCommunity = ({data}: OurCommunityProps) => {
     const {setShowModal} = useContext(LoginModalContext);
 
     return (

@@ -1,6 +1,17 @@
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
 
-const OurAchievements = () => {
+// define the props for the OurAchievements component to accept
+interface OurAchievementsProps {
+  data: { 
+    leftImg: string,
+    leftTxt: string, 
+    middleImg: string, 
+    rightTxt: string, 
+    rightImg: string 
+  };
+}
+
+const OurAchievements = ({data}: OurAchievementsProps) => {
   return (
     <div className="flex flex-col items-center h-screen bg-neutral font-medium">
       <MainPageButtonHeadings heading="Our Achievements" />

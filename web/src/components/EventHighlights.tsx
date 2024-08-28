@@ -11,7 +11,7 @@ interface EventHighlightProps {
     imgC: string,
     imgD: string,
     imgE: string
-  }[]
+  }[];
 }
 
 const EventHighlights = ({ data }: EventHighlightProps) => {

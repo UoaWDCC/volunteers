@@ -15,7 +15,9 @@ import LoginModal from '@components/LoginModal';
 
 function MainMenu() {
   // Fetch content from the database
-  
+  let gallery = eventHighlights;
+  let achievements = eventHighlights;
+  let community = eventHighlights;
 
   return (
     <div className="primary-background">
@@ -25,10 +27,10 @@ function MainMenu() {
         <LoginModalContextProvider>
           <LoginModal />
           <Header />
-          <MainGallery data={eventHighlights} />
+          <MainGallery data={gallery} />
           <EventHighlights data={eventHighlights} />
-          <OurAchievements/>
-          <OurCommunity/>
+          <OurAchievements data={achievements} />
+          <OurCommunity data = {community} />
           <Sponsors data={sponsors}/>
           <Footer />
         </LoginModalContextProvider>

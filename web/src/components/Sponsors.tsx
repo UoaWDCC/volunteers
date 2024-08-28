@@ -3,7 +3,12 @@ import SponsorDiscount from './SponsorDiscount';
 import MainPageButtonHeadings from './MainPageButtonHeadings';
  
 interface SponsorsProps {
-  data: { imageSrcBw: string; imageSrcColour: string; alt: string; id: number }[]
+  data: { 
+    imageSrcBw: string, 
+    imageSrcColour: string,
+    alt: string, 
+    id: number 
+  }[];
 }
 
 const Sponsors = ({ data }: SponsorsProps) => {
