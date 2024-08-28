@@ -1,20 +1,25 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
 // import '../styles/componentStyles/MainGallery.css'
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-// define the props for the MainGallery component to accept
-interface MainGalleryProps {
-  data: { 
-    title: string,  
-    image: string 
-  }[];
-}
-
-// data is an array of objects stored in json
-const   MainGallery = ({ data }: MainGalleryProps) => {
+const   MainGallery = () => {
   // set the index of the current event to display
   const [imgIndex, setEventIndex] = useState(0);
+  const [data, setData] = useState<{ title: string, image: string }[]>([{title: "", image: ""} ]);
+
+  useEffect(() => {
+    // Fetch gallery data
+    axios.get('http://localhost:3000/api/homepage/gallery')
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  , []);
 
   // =============== NOT YET IMPLEMENTED ===============
   // function to handle the "See other upcoming events" button when clicked
@@ -41,6 +46,8 @@ const   MainGallery = ({ data }: MainGalleryProps) => {
     // return a cleanup function to clear the interval when the component unmounts
     return () => clearInterval(interval);
   }, [imgIndex, data.length]);
+
+  
 
   return (
     <div className='gallery relative'>
