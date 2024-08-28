@@ -12,12 +12,42 @@ import AuthenticationContextProvider from '../context/AuthenticationContextProvi
 // import ShowCaseUserAnnouncements from '@components/ShowCaseUserAnnouncements';
 import LoginModalContextProvider from '../context/LoginModalContextProvider';
 import LoginModal from '@components/LoginModal';
+import { useEffect } from 'react';
+import axios from 'axios';
+
+interface MainGalleryProps {
+  title: string,  
+  image: string 
+}
 
 function MainMenu() {
-  // Fetch content from the database
-  let gallery = eventHighlights;
+  let gallery: MainGalleryProps[] = [];
   let achievements = eventHighlights;
   let community = eventHighlights;
+
+  useEffect(() => {
+    // Fetch gallery data
+    axios.get('/api/homepage/gallery')
+      .then((res) => {
+        gallery = res.data;
+        console.log(gallery);
+      });
+
+    // Fetch event highlights data
+    // fetch('/api/getEventHighlights')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
+
+    // Fetch sponsor data
+    // fetch('/api/getSponsors')
+    //   .then((res) => res.json())
+    //   .then((data) => {
+    //     console.log(data);
+    //   });
+  }
+  , []);
 
   return (
     <div className="primary-background">
