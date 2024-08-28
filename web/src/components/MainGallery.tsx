@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 interface MainGalleryProps {
   data: { 
     title: string,  
-    img: string 
+    image: string 
   }[];
 }
 
@@ -46,7 +46,7 @@ const   MainGallery = ({ data }: MainGalleryProps) => {
     <div className='gallery relative'>
       <div className='image flex overflow-hidden aspect-[8/3]'>
         {data.map((event, index) => (
-          <img loading='lazy' src={event.img} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
+          <img loading='lazy' src={event.image} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
         ))}
       </div>
 
