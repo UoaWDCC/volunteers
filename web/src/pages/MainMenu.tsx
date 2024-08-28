@@ -30,7 +30,7 @@ function MainMenu() {
           <MainGallery />
           <EventHighlights />
           <OurAchievements />
-          <OurCommunity data = {community} />
+          <OurCommunity />
           <Sponsors data={sponsors}/>
           <Footer />
         </LoginModalContextProvider>
