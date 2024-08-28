@@ -28,7 +28,7 @@ function MainMenu() {
           <LoginModal />
           <Header />
           <MainGallery />
-          <EventHighlights data={eventHighlights} />
+          <EventHighlights />
           <OurAchievements data={achievements} />
           <OurCommunity data = {community} />
           <Sponsors data={sponsors}/>
