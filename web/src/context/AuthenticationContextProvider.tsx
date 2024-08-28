@@ -21,6 +21,7 @@ INFORMATION:
   opposed to the Google user object.
 */
 
+import axios from 'axios';
 import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
 import { auth, db } from '../firebase/firebase';
 import AuthenticationContext from './AuthenticationContext';
@@ -131,15 +132,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     //   return { exists: false, userDetails: undefined };
     // }
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
-    const colRef = collection(db, 'users');
-    const q = query(colRef, where('uid', '==', uid));
-    const querySnapshot = await getDocs(q);
-
-    if (!querySnapshot.empty) {
-      console.log('user exists');
-      return { exists: !querySnapshot.empty, userDetails: querySnapshot.docs[0].data() };
-    } else {
-      console.error('user does not exist');
+    try {
+      const response = await axios.get("http://localhost:3000/api/users/${uid}");
+  
+      if (response.status === 200) {
+        console.log('user exists in Firestore with UID:', uid);
+        return { exists: true, userDetails: response.data };
+      } else {
+        console.error('User not found with UID:', uid);
+        return { exists: false, userDetails: undefined };
+      }
+    } catch (error) {
+      console.error('Error checking user UID via API:', error);
       return { exists: false, userDetails: undefined };
     }
   };
