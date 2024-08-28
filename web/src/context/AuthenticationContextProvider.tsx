@@ -186,26 +186,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     this function returns a user's JSON data from the firestore user collection based on the studentID
     this does NOT return the user's google user object, only the user's data from the firestore db
   */
-  async function getFirestoreCollectionUserByStudentID(studentID: string): Promise<DocumentData | null> {
-    try {
-      // Reference to the 'users' collection NOT the users document
-      const colRef = collection(db, 'users');
-      const q = query(colRef, where('studentID', '==', studentID));
-      const querySnapshot = await getDocs(q);
-
-      // If a document is found, return the first document's data
-      if (!querySnapshot.empty) {
-        console.log('User with studentID: ', studentID, ' exists in db users collection');
-        return querySnapshot.docs[0].data();
-      } else {
-        console.error('User with studentID: ', studentID, ' does not exist in db users collection');
+    async function getFirestoreCollectionUserByStudentID(studentID: string): Promise<DocumentData | null> {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/users`);
+    
+        if (response.status === 200 && response.data.length > 0) {
+          const users = response.data;
+          const user = users.find((user: any) => user.studentID === studentID);
+    
+          if (user) {
+            console.log('User with studentID:', studentID, 'exists in db users collection');
+            return user;
+          } else {
+            console.error('User with studentID:', studentID, 'does not exist in db users collection');
+            return null;
+          }
+        } else {
+          console.error('No users found in db');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching users via API:', error);
         return null;
       }
-    } catch (error) {
-      console.error('Error fetching user by studentID:', error);
-      return null;
     }
-  }
 
   const contextValue = {
     currentUser,
