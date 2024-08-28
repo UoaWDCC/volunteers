@@ -5,36 +5,50 @@ import AdminAddEvent from "@components/AdminAddEvent";
 import AdminEditEvent from "@components/AdminEditEvent";
 
 export default function AdminEvents() {
+  /**
+   * Extracting necessary values and functions from the event context
+   */
   const {
     events,
     setSelectedEvent,
     fetchEvents,
-    addEvent,
-    editEvent,
     deleteEvent,
-  } = useEventContext(); // Get values from context
+  } = useEventContext(); 
 
+  /**
+   * State to manage whether the Add Event or Edit Event forms are displayed
+   */
   const [isAdding, setIsAdding] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
 
+  /**
+   * Fetch events when the component mounts
+   */
   useEffect(() => {
-    fetchEvents(); // Fetch events using the context method
+    fetchEvents(); 
   }, []);
 
-  // Handle edit event
+  /**
+   * Handle editing an event
+   * Filters the events array to find the event with the matching ID, 
+   * sets it as the selected event, and opens the edit form.
+   */
   const handleEdit = (id: any) => {
     const [event] = events.filter((event) => event.id === id);
     setSelectedEvent(event);
     setIsEditing(true);
   };
 
-  // Handle delete event
+  /**
+   * Handle deleting an event
+   * Prompts the user for confirmation before deleting the event.
+   */
   const handleDelete = async (id: any) => {
     const confirmDelete = window.confirm(
       "Are you sure you want to remove this event?"
     );
     if (confirmDelete) {
-      await deleteEvent(id); // Use context method to delete the event
+      await deleteEvent(id); 
     }
   };
 
@@ -66,4 +80,3 @@ export default function AdminEvents() {
     </div>
   );
 }
-
