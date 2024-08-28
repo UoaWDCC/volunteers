@@ -12,6 +12,7 @@ import AdminEvents from '@pages/AdminEvents';
 // import SignupAdditional from '@pages/SignupAdditional';
 // import SignupEmergency from '@pages/SignupEmergency';
 import SignUpPage from '@pages/SignUpPage';
+import EventContextProvider from './context/EventContextProvider';
 
 const router = createBrowserRouter([
   {
@@ -44,7 +45,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/admin/events',
-    element: <AdminEvents />,
+    element: 
+    (<EventContextProvider>
+    <AdminEvents />
+    </EventContextProvider>),
   },
 ]);
 
