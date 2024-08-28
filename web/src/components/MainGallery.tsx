@@ -4,10 +4,15 @@ import { useEffect, useState } from 'react';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-const   MainGallery = () => {
+interface GalleryData {
+  title: string;
+  image: string;
+}
+
+const MainGallery = () => {
   // set the index of the current event to display
-  const [imgIndex, setEventIndex] = useState(0);
-  const [data, setData] = useState<{ title: string, image: string }[]>([{title: "", image: ""} ]);
+  const [imgIndex, setImgIndex] = useState(0);
+  const [data, setData] = useState<GalleryData[]>([{title: "", image: ""} ]);
 
   useEffect(() => {
     // Fetch gallery data
@@ -30,17 +35,17 @@ const   MainGallery = () => {
 
   // handle the back and forward buttons to change the image
   const handleBack = () => {
-    setEventIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
+    setImgIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
   };
 
   const handleForward = () => {
-    setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+    setImgIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
   };
 
   // function to autoscroll the images
   useEffect(() => {
     const interval = setInterval(() => {
-      setEventIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
+      setImgIndex((prevIndex) => (prevIndex === data.length - 1 ? 0 : prevIndex + 1));
     }, 7000);
 
     // return a cleanup function to clear the interval when the component unmounts
