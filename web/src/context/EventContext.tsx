@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useContext, ReactNode } from "react";
 
 interface ReactContextType {
     events: any[];
@@ -12,6 +12,15 @@ interface ReactContextType {
   }
   
 
-const EventContext = React.createContext<ReactContextType | null>(null);
+  const EventContext = createContext<ReactContextType | undefined>(undefined);
+
+  export function useEventContext() {
+    const context = useContext(EventContext);
+    if (context === undefined) {
+      throw new Error("useEventContext must be used within an EventContextProvider");
+    }
+    return context;
+  }
+  
 
 export default EventContext;
