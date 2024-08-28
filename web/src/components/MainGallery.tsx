@@ -12,7 +12,10 @@ interface GalleryData {
 const MainGallery = () => {
   // set the index of the current event to display
   const [imgIndex, setImgIndex] = useState(0);
-  const [data, setData] = useState<GalleryData[]>([{title: "", image: ""} ]);
+  const [data, setData] = useState<GalleryData[]>([{
+    title: "", 
+    image: ""
+  } ]);
 
   useEffect(() => {
     // Fetch gallery data

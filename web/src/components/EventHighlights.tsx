@@ -1,22 +1,42 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
 import { IoIosArrowRoundBack, IoIosArrowRoundForward} from "react-icons/io";
+import axios from "axios";
 
-interface EventHighlightProps {
-  data: {
-    title: string,
-    description: string,
-    imgA: string,
-    imgB: string,
-    imgC: string,
-    imgD: string,
-    imgE: string
-  }[];
+interface EventHighlightData {
+  title: string,
+  description: string,
+  topLeftImage: string, // img A
+  bottomLeftImage: string, // img B
+  topRightImage: string, // img C
+  rightImage: string, // img D
+  bottomRightImage: string // img E
 }
 
-const EventHighlights = ({ data }: EventHighlightProps) => {
+const EventHighlights = () => {
 
   const [eventIndex, setEventIndex] = useState(0)
+  const [data, setData] = useState<EventHighlightData[]>([{
+    title: "", 
+    description: "", 
+    topLeftImage: "", 
+    bottomLeftImage: "", 
+    topRightImage: "", 
+    rightImage: "", 
+    bottomRightImage: ""
+  } ]);
+
+  useEffect(() => {
+    // Fetch gallery data
+    axios.get('http://localhost:3000/api/homepage/highlights')
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+  , []);
 
   const handleBack = () => {
     setEventIndex((prevIndex) => (prevIndex === 0 ? data.length - 1 : prevIndex - 1));
@@ -33,19 +53,19 @@ const EventHighlights = ({ data }: EventHighlightProps) => {
           <div className="relative overflow-hidden flex-grow flex-shrink-0 basis-full transition-[translate] duration-[850ms] ease-in-out" key={index} style={{ translate: `${-100 * eventIndex}%` }}>
             <div className="images">
               <div className="absolute top-[5%] left-[13.5%] w-[21%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.imgA} />
+                <img className="object-cover w-full h-full rounded-sm" src={event.topLeftImage} />
               </div>
               <div className="absolute bottom-[10%] left-[5%] w-[38%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.imgB} />
+                <img className="object-cover w-full h-full rounded-sm" src={event.bottomLeftImage} />
               </div>
               <div className="absolute top-[19%] right-[22.5%] w-[11%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.imgC} />
+                <img className="object-cover w-full h-full rounded-sm" src={event.topRightImage} />
               </div>
               <div className="absolute top-[40%] right-[0%] w-[27.5%]">
-                <img className="object-cover w-full h-full rounded-sm rounded-r-none" src={event.imgD} />
+                <img className="object-cover w-full h-full rounded-sm rounded-r-none" src={event.rightImage} />
               </div>
               <div className="absolute bottom-[2.5%] right-[30%] w-[12.5%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.imgE} />
+                <img className="object-cover w-full h-full rounded-sm" src={event.bottomRightImage} />
               </div>
             </div>
           </div>
