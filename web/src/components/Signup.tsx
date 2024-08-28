@@ -273,7 +273,7 @@ function Signup() {
                           Mobile Number
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123-456-7890' required value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={mobile} onChange={(e) => setMobile(e.target.value)} />
                       </div>
                       <div>
                         <label htmlFor='upi' className='inline-block text-sm font-medium text-black'>
@@ -590,7 +590,7 @@ function Signup() {
                           Mobile Number
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123-456-7890' required value={emergencyContactMobile} onChange={(e) => setEmergencyContactMobile(e.target.value)} />
+                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={emergencyContactMobile} onChange={(e) => setEmergencyContactMobile(e.target.value)} />
                       </div>
                       <div>
                         <label htmlFor='relationship' className='inline-block text-sm font-medium text-black'>
