@@ -12,6 +12,8 @@ import AdminEvents from '@pages/AdminEvents';
 // import SignupAdditional from '@pages/SignupAdditional';
 // import SignupEmergency from '@pages/SignupEmergency';
 import SignUpPage from '@pages/SignUpPage';
+import RegisterModalErrorContextProvider from './context/RegisterModalErrorContextProvider';
+import RegisterErrorModal from '@components/RegisterErrorModal';
 
 const router = createBrowserRouter([
   {
@@ -24,7 +26,12 @@ const router = createBrowserRouter([
   },
   {
     path: 'register',
-    element: <SignUpPage />,
+    element: (
+      <RegisterModalErrorContextProvider>
+        <RegisterErrorModal />
+      <SignUpPage />
+      </RegisterModalErrorContextProvider>
+  ),
   },
   {
     path: '/testing',
