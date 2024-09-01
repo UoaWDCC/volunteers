@@ -1,8 +1,12 @@
-function NotificationTab() {
+interface NotificationTabProps {
+  toggleNotificationTab: () => void;
+}
+
+function NotificationTab({ toggleNotificationTab }: NotificationTabProps) {
   return (
-    <div className="absolute flex flex-row bg-white h-[96vh] w-[400px] m-[2vh_5vh_2vh_3vh] right-0 z-50 shadow-lg">
+    <div className="absolute flex flex-row bg-white h-[96vh] w-[400px] m-[2vh_5vh_2vh_3vh] right-0 shadow-lg">
       <div>
-        <button className="text-black bg-gray-100 rounded-full text-sm py-1 px-2.5 mt-4 ml-4 mr-4 hover:text-white hover:bg-primary">&gt;</button>
+        <button className="text-black bg-gray-100 rounded-full text-sm py-1 px-2.5 mt-4 ml-4 mr-4 hover:text-white hover:bg-primary" onClick={toggleNotificationTab}>&gt;</button>
       </div>
       <div className="flex flex-col font-light">
         <p className="font-sans font-medium text-black text-[38px] pt-[4vh] leading-[1.15] ml-4 mt-2">Notifications</p>

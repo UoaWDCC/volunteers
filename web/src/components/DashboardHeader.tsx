@@ -3,11 +3,18 @@ import NotificationTab from "@components/NotificationTab";
 import { useState } from "react";
 
 const DashboardHeader = () => {
+  const [isNotificationTabOpen, setNotificationTabOpen] = useState(false);
   const [isNotificationTabVisible, setNotificationTabVisible] = useState(false);
 
   const toggleNotificationTab = () => {
-    setNotificationTabVisible(!isNotificationTabVisible);
-  }
+    if (isNotificationTabOpen) {
+      setNotificationTabOpen(false);
+      setTimeout(() => setNotificationTabVisible(false), 300)
+    } else {
+      setNotificationTabVisible(true);
+      setNotificationTabOpen(true)
+    }
+  };
 
   return (
     <div className="">
@@ -26,8 +33,8 @@ const DashboardHeader = () => {
         </div>
       </div>
 
-      <div className="relative">
-        {isNotificationTabVisible && <NotificationTab />}
+      <div className={`relative transform transition-transform duration-300 ${isNotificationTabOpen ? 'translate-x-0' : 'translate-x-full'} z-50`}>
+        {isNotificationTabVisible && <NotificationTab toggleNotificationTab={toggleNotificationTab} />}
       </div>
 
     </div>
