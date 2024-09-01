@@ -33,10 +33,9 @@ const DashboardHeader = () => {
         </div>
       </div>
 
-      <div className={`relative transform transition-transform duration-300 ${isNotificationTabOpen ? 'translate-x-0' : 'translate-x-full'} z-50`}>
+      <div className={`relative transform transition-transform z-50 ${isNotificationTabOpen ? 'translate-x-0 duration-[400ms]' : 'translate-x-[200%] duration-[800ms]'}`}>
         {isNotificationTabVisible && <NotificationTab toggleNotificationTab={toggleNotificationTab} />}
       </div>
-
     </div>
   );
 }

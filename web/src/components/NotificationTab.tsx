@@ -4,7 +4,7 @@ interface NotificationTabProps {
 
 function NotificationTab({ toggleNotificationTab }: NotificationTabProps) {
   return (
-    <div className="absolute flex flex-row bg-white h-[96vh] w-[400px] m-[2vh_5vh_2vh_3vh] right-0 shadow-lg">
+    <div className="absolute flex flex-row bg-white h-[96vh] w-[400px] shadow-lg top-2 right-4">
       <div>
         <button className="text-black bg-gray-100 rounded-full text-sm py-1 px-2.5 mt-4 ml-4 mr-4 hover:text-white hover:bg-primary" onClick={toggleNotificationTab}>&gt;</button>
       </div>
