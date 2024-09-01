@@ -1,7 +1,6 @@
 function NotificationTab() {
   return (
-    <div className="dashboard">
-    <div className="flex flex-row bg-white h-[96vh] w-[400px] m-[2vh_5vh_2vh_3vh]">
+    <div className="absolute flex flex-row bg-white h-[96vh] w-[400px] m-[2vh_5vh_2vh_3vh] right-0 z-50 shadow-lg">
       <div>
         <button className="text-black bg-gray-100 rounded-full text-sm py-1 px-2.5 mt-4 ml-4 mr-4 hover:text-white hover:bg-primary">&gt;</button>
       </div>
@@ -12,13 +11,13 @@ function NotificationTab() {
           <button className="text-black font-medium bg-gray-100 px-3 py-1 text-[11px] rounded-full hover:text-white hover:bg-primary">Announcements</button>
           <button className="text-black font-medium bg-gray-100 px-3 py-1 text-[11px] rounded-full ml-2 hover:text-white hover:bg-primary">Reminders</button>
         </div>
-        
+
         <p className="text-[12px] font-medium ml-4 mt-3 mb-3">
           WooHoo! You've reached a milestone!
-          <br/>
+          <br />
           <p className="text-[9px]">Posted 20 mins ago</p>
         </p>
-        
+
         <div className="flex flex-row justify-between ml-4 mb-4">
           <div>
             <p className="text-[12px] mb-0 font-[450]">Launch Night</p>
@@ -31,7 +30,6 @@ function NotificationTab() {
           </div>
         </div>
       </div>
-    </div>
     </div>
   );
 }
