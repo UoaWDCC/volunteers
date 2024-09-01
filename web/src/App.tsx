@@ -37,22 +37,6 @@ const router = createBrowserRouter([
     path: '/testing',
     element: <TestingComponent />,
   },
-  {
-    path: '/admin',
-    element: <Admin />,
-  },
-  {
-    path: '/admin/users',
-    element: (
-      <UsersContextProvider>
-        <AdminUsers />
-      </UsersContextProvider>
-    ),
-  },
-  {
-    path: '/admin/events',
-    element: <AdminEvents />,
-  },
 ]);
 
 export default function App() {
