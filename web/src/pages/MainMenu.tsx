@@ -4,7 +4,6 @@ import '../styles/pageStyles/MainMenu.css';
 import MainGallery from '@components/MainGallery';
 import Sponsors from '@components/Sponsors';
 import EventHighlights from '@components/EventHighlights';
-import { eventHighlights } from '../data/EventHighlights.json';
 import OurAchievements from '@components/OurAchievements';
 import OurCommunity from '@components/OurCommunity';
 import AuthenticationContextProvider from '../context/AuthenticationContextProvider';
