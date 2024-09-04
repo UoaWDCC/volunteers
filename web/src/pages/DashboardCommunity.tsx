@@ -1,6 +1,6 @@
 import CommunityGalleryWhole from '@components/CommunityGalleryWhole';
 
-function Dashboard() {
+function DashboardCommunity() {
   return (
     <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
         {/* width of the left nav bar */}
@@ -36,4 +36,4 @@ function Dashboard() {
   );
 }
 
-export default Dashboard;
+export default DashboardCommunity;

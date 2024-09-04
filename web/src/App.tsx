@@ -10,7 +10,7 @@ import TestingComponent from '@components/TestComponent';
 import SignUpPage from '@pages/SignUpPage';
 import RegisterModalErrorContextProvider from './context/RegisterModalErrorContextProvider';
 import RegisterErrorModal from '@components/RegisterErrorModal';
-import Dashboard from '@pages/Dashboard';
+import DashboardCommunity from '@pages/DashboardCommunity';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard />,
+    element: <DashboardCommunity />,
   },
 ]);
 
