@@ -15,7 +15,7 @@ const Sponsors = () => {
   const [data, setData] = useState<SponsorData[]>([{logo: "", name: "", discount: "", website: ""}]);
 
   useEffect(() => {
-    // Fetch gallery data
+    // Fetch sponsor data
     axios.get('http://localhost:3000/api/homepage/sponsors')
       .then((res) => {
         setData(res.data);
