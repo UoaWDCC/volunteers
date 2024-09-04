@@ -35,7 +35,7 @@ const router = createBrowserRouter([
     element: <TestingComponent />,
   },
   {
-    path: '/dashboard',
+    path: '/dashboard', // can probably change this to /dashboard/community or something idk, im not sure how we are handling changing tabs within the dashboard
     element: <DashboardCommunity />,
   },
 ]);
