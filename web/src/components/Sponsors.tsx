@@ -28,8 +28,6 @@ const Sponsors = () => {
     }
   , []);
 
-  // Theres no need to store a black & white and colour image, just store one image and use css to change the colour. Have a look at the grayscale filter in css.
-
   return (
     <div className="flex flex-col items-center h-[85vh] bg-neutral text-black font-medium">
       <div className="flex flex-col items-center">
