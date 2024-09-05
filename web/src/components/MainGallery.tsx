@@ -72,7 +72,8 @@ const MainGallery = () => {
   
 
   return (
-    <div className='gallery relative'>
+    <div className="p-24 bg-neutral">
+      <div className='gallery relative'>
       <div className='image flex overflow-hidden aspect-[8/3]'>
         {data.map((event, index) => (
           <img loading='lazy' src={event.image} key={index} className='picture object-cover w-[100%] h-[100%] shrink-0 grow-0 transition-translate 700ms ease-in-out duration-700' style={{ translate: `${-100 * imgIndex}%` }} />
@@ -97,6 +98,7 @@ const MainGallery = () => {
       <button className='see-more absolute bottom-[2%] right-0 z-20 w-[33.1%] h-[13%] text-[1.3vw] rounded-3xl flex justify-center items-center gap-3 bg-primary font-mono hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-1 transition-all ease-in-out duration-100' onClick={() => handleSeeMore}>
         See other upcoming events! <FaArrowRight className='inline' size={20} />
       </button>
+    </div>
     </div>
   );
 };
