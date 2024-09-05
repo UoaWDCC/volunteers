@@ -9,13 +9,13 @@ function Header() {
 
   if (!authContext) {
     return null;
-  }
+  } 
 
   return (
     <header className='flex justify-center bg-neutral-tan'>
-      <div className='flex flex-grow justify-between items-center min-w-min px-44 py-3'>
+      <div className='flex flex-grow justify-between items-center min-w-min px-24 py-2'>
         <div>
-          <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-auto min-w-[150px]' />
+          <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-auto min-w-[100px]' />
         </div>
 
         <div>
