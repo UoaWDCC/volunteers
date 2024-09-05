@@ -10,7 +10,7 @@ import TestingComponent from '@components/TestComponent';
 import SignUpPage from '@pages/SignUpPage';
 import RegisterModalErrorContextProvider from './context/RegisterModalErrorContextProvider';
 import RegisterErrorModal from '@components/RegisterErrorModal';
-import DashboardCommunity from '@pages/DashboardCommunity';
+import Dashboard from '@pages/Dashboard';
 
 const router = createBrowserRouter([
   {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
   },
   {
     path: '/dashboard', // can probably change this to /dashboard/community or something idk, im not sure how we are handling changing tabs within the dashboard
-    element: <DashboardCommunity />,
+    element: <Dashboard />,
   },
 ]);
 
