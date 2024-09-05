@@ -58,7 +58,7 @@ const EventHighlights = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center relative bg-neutral-tan overflow-hidden aspect-[1.41/1]">
+    <div className="flex flex-col justify-center items-center relative bg-neutral overflow-hidden aspect-[1.41/1]">
       <div className="flex absolute w-full h-full overflow-hidden z-[2]">
         {data.map((event, index) => (
           <div className="relative overflow-hidden flex-grow flex-shrink-0 basis-full transition-[translate] duration-[850ms] ease-in-out" key={index} style={{ translate: `${-100 * eventIndex}%` }}>

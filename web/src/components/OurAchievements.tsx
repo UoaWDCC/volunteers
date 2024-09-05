@@ -49,12 +49,12 @@ const OurAchievements = () => {
   , []);
 
   return (
-    <div className="flex flex-col items-center h-screen bg-neutral font-medium">
-      <MainPageButtonHeadings heading="Our Achievements" />
-      <div className="achievements flex flex-row gap-4 items-center mt-8">
+    <div className="flex flex-col items-center justify-center bg-neutral-tan font-medium py-20 pb-44">
+      <MainPageButtonHeadings heading="Achievements" />
+      <div className="achievements flex flex-row gap-4 items-center mt-8 bg-primary-dark px-11 py-32 rounded-3xl">
         <img
           loading="lazy"
-          className="rounded-[30px] object-cover w-[150px] h-[200px]"
+          className="rounded-[30px] object-cover w-[150px] h-[200px]" 
           src={data.leftImage}
           alt="Left Image"
         />
