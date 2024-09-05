@@ -3,6 +3,7 @@ import DashboardCommunity from "../components/DashboardCommunity";
 import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/DashboardDiscover";
+import SearchBar from "@components/SearchBar";
 
 function Dashboard() {
     const [tab, setTab] = useState(1);
@@ -42,9 +43,15 @@ function Dashboard() {
 
             {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
             <div className='flex flex-col w-[85%] marker:p-5'>
-                <div className='bg-yellow-100'>
-                    {/* place searchbar component here and remove bg-yellow */}
-                    <h1>header</h1>
+                <div className='bg-yellow-100 flex flex-row justify-end p-5'>
+                    {/* place notifcation stuff in here and remove bg-yellow for henrys thing it'll probably break the styling a bit but it shouldnt be too hard to fix, maybe instead of having a whole nav bar just have the notifcation and pfp component as separate thing or something*/}
+                    {tab === 5 &&(
+                        <>
+                            <h1>other thig</h1>
+                            <SearchBar />
+                        </>
+                    )}
+                    <h1>notifs</h1>
                 </div>
 
                 {/* whole tabs go in here */}
