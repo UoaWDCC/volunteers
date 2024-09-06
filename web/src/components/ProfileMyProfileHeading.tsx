@@ -1,4 +1,3 @@
-import React from 'react';
 
 const ProfileMyProfileHeading = ({ name }: { name: string }) => {
   return (
