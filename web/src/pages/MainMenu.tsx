@@ -10,6 +10,7 @@ import AuthenticationContextProvider from '../context/AuthenticationContextProvi
 // import ShowCaseUserAnnouncements from '@components/ShowCaseUserAnnouncements';
 import LoginModalContextProvider from '../context/LoginModalContextProvider';
 import LoginModal from '@components/LoginModal';
+import AboutUs from '@components/AboutUs';
 
 function MainMenu() {
   return (
@@ -21,6 +22,7 @@ function MainMenu() {
           <LoginModal />
           <Header />
           <MainGallery />
+          <AboutUs />
           <EventHighlights />
           <OurAchievements />
           <OurCommunity />
