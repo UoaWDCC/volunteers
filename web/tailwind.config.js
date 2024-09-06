@@ -68,7 +68,7 @@ export default {
         // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
         extend: {
           colors: {
-            primary: "#3C9DDD", /* blue */
+            primary: "#3B87DD", /* blue */
           },
           fontSize: {
             'heading': ['72px', {
@@ -96,6 +96,11 @@ export default {
               letterSpacing: '0%',
               fontWeight: '600', // semibold has weight 600 acording to tailwind docs
             }],
+            'heading1': ['32px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '700', // 700 is bold
+            }]
           },
           fontFamily: {
             sans: ["Poppins", "sans-serif"],
