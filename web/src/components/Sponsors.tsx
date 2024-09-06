@@ -37,7 +37,7 @@ const Sponsors = () => {
   ];
 
   return (
-    <div className="flex flex-col items-center h-[85vh] bg-neutral text-black font-medium">
+    <div className="flex flex-col items-center h-[85vh] bg-neutral-tan text-black font-medium pt-20">
       <div className="flex flex-col items-center">
         <MainPageButtonHeadings heading="Our Sponsors"/>
         <div className="text-center mt-[1rem]">
