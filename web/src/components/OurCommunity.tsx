@@ -36,7 +36,7 @@ const OurCommunity = () => {
       , []);
 
     return (
-        <div className="flex flex-col items-center bg-neutral text-black font-medium py-8 border">
+        <div className="flex flex-col items-center bg-neutral text-black font-medium pt-20">
             
             <div className="relative w-full h-screen">
                 <div className="flex flex-col items-center">
