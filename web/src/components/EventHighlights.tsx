@@ -69,13 +69,13 @@ const EventHighlights = () => {
               <div className="absolute bottom-[10%] left-[10%] w-[32%]">
                 <img className="object-cover w-full h-full rounded-sm" src={event.bottomLeftImage} />
               </div>
-              <div className="absolute top-[19%] right-[22.5%] w-[8%]">
+              <div className="absolute top-[18%] right-[22.5%] w-[10%]">
                 <img className="object-cover w-full h-full rounded-sm" src={event.topRightImage} />
               </div>
-              <div className="absolute top-[40%] right-[-2%] w-[22.5%]">
+              <div className="absolute top-[44%] right-[-2%] w-[25%]">
                 <img className="object-cover w-full h-full rounded-sm" src={event.rightImage} />
               </div>
-              <div className="absolute bottom-[2.5%] right-[30%] w-[8%]">
+              <div className="absolute bottom-[2.5%] right-[30%] w-[10%]">
                 <img className="object-cover w-full h-full rounded-sm" src={event.bottomRightImage} />
               </div>
             </div>
@@ -102,11 +102,11 @@ const EventHighlights = () => {
       </div>
 
       {/*Spiral*/}
-      <img loading="lazy" src="./assets/EventHighlights/swirl.svg" alt="" className="absolute w-[8%] h-auto bottom-[3%] left-[40.5%]" />
+      <img loading="lazy" src="./assets/graphics/swirlDBlue.svg" alt="" className="absolute w-[8%] h-auto bottom-[3%] left-[40.5%]" />
       {/*Flower*/}
-      <img loading="lazy" src="./assets/EventHighlights/flower.svg" alt="" className="absolute w-[7%] h-auto top-[29%] right-[18%]" />
+      <img loading="lazy" src="./assets/graphics/flowerLRed.svg" alt="" className="absolute w-[7%] h-auto top-[32%] right-[18%]" />
       {/*Star*/}
-      <img loading="lazy" src="./assets/EventHighlights/sparkle.svg" alt="" className="absolute w-[20%] h-auto top-[22.5%] left-[4%]" />
+      <img loading="lazy" src="./assets/graphics/sparkleRed.svg" alt="" className="absolute w-[18%] h-auto top-[27%] left-[4.5%]" />
     </div>
   )
 }
