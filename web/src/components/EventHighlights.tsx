@@ -97,8 +97,8 @@ const EventHighlights = () => {
       </div>
 
       <div className='z-[4]'>
-        <FaArrowLeft className='absolute top-[50%] left-[6%] w-10 h-10 text-white bg-[#C7D6E7]/[0.6] rounded-full cursor-pointer hover:bg-primary/[0.6] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms] p-3' onClick={() => handleBack()}/>
-        <FaArrowRight className='absolute top-[50%] right-[6%] w-10 h-10 text-white bg-[#C7D6E7]/[0.6] rounded-full cursor-pointer hover:bg-primary/[0.6] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms] p-3' onClick={() => handleForward()}/>
+        <FaArrowLeft className='absolute top-[50%] left-[6%] w-10 h-10 text-white bg-[#C7D6E7]/[0.6] backdrop-blur-[4px] rounded-full cursor-pointer hover:bg-primary/[0.6] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms] p-3' onClick={() => handleBack()}/>
+        <FaArrowRight className='absolute top-[50%] right-[6%] w-10 h-10 text-white bg-[#C7D6E7]/[0.6] backdrop-blur-[4px] rounded-full cursor-pointer hover:bg-primary/[0.6] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms] p-3' onClick={() => handleForward()}/>
       </div>
 
       {/*Spiral*/}
