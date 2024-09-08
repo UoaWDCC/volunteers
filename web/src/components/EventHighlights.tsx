@@ -58,36 +58,36 @@ const EventHighlights = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center relative bg-neutral overflow-hidden h-screen">
-      <div className="flex absolute w-full h-full overflow-hidden z-[2]">
+    <div className="flex flex-col justify-center items-center relative bg-neutral overflow-hidden w-full h-[60vw] border border-red-600">
+      <div className="absolute flex w-full h-full overflow-hidden z-10">
         {data.map((event, index) => (
           <div className="relative overflow-hidden flex-grow flex-shrink-0 basis-full transition- [translate] duration-[850ms] ease-in-out" key={index} style={{ translate: `${-100 * eventIndex}%` }}>
             <div className="">
-              <div className="absolute top-[5%] left-[15%] w-[15%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.topLeftImage} />
+              <div className="absolute top-[7%] left-[15%] w-[16%] h-[33%]">
+                <img className="object-cover w-full h-full rounded-3xl" src={event.topLeftImage} />
               </div>
-              <div className="absolute bottom-[10%] left-[10%] w-[32%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.bottomLeftImage} />
+              <div className="absolute bottom-[10%] left-[6%] w-[32%] h-[24%]">
+                <img className="object-cover w-full h-full rounded-3xl" src={event.bottomLeftImage} />
               </div>
-              <div className="absolute top-[18%] right-[22.5%] w-[10%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.topRightImage} />
+              <div className="absolute top-[22%] right-[22.5%] w-[13%] h-[20%]">
+                <img className="object-cover w-full h-full rounded-3xl" src={event.topRightImage} />
               </div>
-              <div className="absolute top-[44%] right-[-2%] w-[25%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.rightImage} />
+              <div className="absolute top-[48%] right-[-2%] w-[28%] h-[22%]">
+                <img className="object-cover w-full h-full rounded-3xl" src={event.rightImage} />
               </div>
-              <div className="absolute bottom-[2.5%] right-[30%] w-[10%]">
-                <img className="object-cover w-full h-full rounded-sm" src={event.bottomRightImage} />
+              <div className="absolute bottom-[2.5%] right-[30%] w-[10%] h-[24%]">
+                <img className="object-cover w-full h-full rounded-3xl" src={event.bottomRightImage} />
               </div>
             </div>
           </div>
         ))}
       </div>
 
-      <ul className="absolute w-[30%] h-[25%] z-[3]">
+      <ul className="absolute w-[30%] top-[45%] h-auto">
         {data.map((event, index) => (
           <li className="data-[active=true]:opacity-100 data-[active=true]:delay-0 opacity-0 flex absolute flex-col justify-start items-center transition-opacity duration-[850ms] ease-in-out delay-200" key={index} data-active={index == eventIndex ? "true" : null}>
-            <h1 className="text-black text-center font-serif text-heading">{event.title}</h1>
-            <p className="text-black text-center font-serif text-detail w-[80%]">{event.description}</p>
+            <h1 className="text-black text-center font-serif text-heading m-0 mb-2">{event.title}</h1>
+            <p className="text-black text-center font-sans text-detail m-0 sm:max-xl:opacity-0">{event.description}</p>
           </li>
         ))}
       </ul>
@@ -96,15 +96,15 @@ const EventHighlights = () => {
         <MainPageButtonHeadings heading="Event Highlights" />
       </div>
 
-      <div className='z-[4]'>
+      <div className='z-20'>
         <FaArrowLeft className='absolute top-[50%] left-[6%] w-10 h-10 text-white bg-[#C7D6E7]/[0.6] backdrop-blur-[4px] rounded-full cursor-pointer hover:bg-primary/[0.6] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms] p-3' onClick={() => handleBack()}/>
         <FaArrowRight className='absolute top-[50%] right-[6%] w-10 h-10 text-white bg-[#C7D6E7]/[0.6] backdrop-blur-[4px] rounded-full cursor-pointer hover:bg-primary/[0.6] transform active:translate-y-[3px] shadow-lg transition-[all_ease-in-out_200ms] transition-[transform_ease-in-out_80ms] p-3' onClick={() => handleForward()}/>
       </div>
 
       {/*Spiral*/}
-      <img loading="lazy" src="./assets/graphics/swirlDBlue.svg" alt="" className="absolute w-[8%] h-auto bottom-[3%] left-[40.5%]" />
+      <img loading="lazy" src="./assets/graphics/swirlDBlue.svg" alt="" className="absolute w-[8%] h-auto bottom-[3%] left-[36%]" />
       {/*Flower*/}
-      <img loading="lazy" src="./assets/graphics/flowerLRed.svg" alt="" className="absolute w-[7%] h-auto top-[32%] right-[18%]" />
+      <img loading="lazy" src="./assets/graphics/flowerLRed.svg" alt="" className="absolute w-[7%] h-auto top-[38%] right-[19%]" />
       {/*Star*/}
       <img loading="lazy" src="./assets/graphics/sparkleRed.svg" alt="" className="absolute w-[18%] h-auto top-[27%] left-[4.5%]" />
     </div>

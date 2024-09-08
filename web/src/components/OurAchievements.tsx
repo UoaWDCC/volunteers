@@ -50,7 +50,7 @@ const OurAchievements = () => {
 
   return (
     <div className="relative flex flex-col items-center justify-center bg-neutral-tan font-medium py-20 pb-44">
-      <img src="./assets/graphics/camera.svg" alt="" className="absolute h-auto top-[-25%] right-[-7%]" />
+      <img src="./assets/graphics/camera.svg" alt="" className="absolute h-auto top-[-25%] right-[-7%] z-50" />
       <img src="./assets/graphics/trophy.svg" alt="" className="absolute h-auto bottom-[-24%] left-[-10%] z-50" />
 
       <MainPageButtonHeadings heading="Achievements" />
