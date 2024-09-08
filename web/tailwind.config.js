@@ -99,7 +99,22 @@ export default {
             'heading1': ['32px', {
               lineHeight: '120%',
               letterSpacing: '0%',
-              fontWeight: '700', // 700 is bold
+              fontWeight: '700', //
+            }],
+            'heading2': ['24px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '600', // 
+            }],
+            'heading3': ['16px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '600', 
+            }],
+            'body-heading': ['14px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '500', 
             }]
           },
           fontFamily: {
