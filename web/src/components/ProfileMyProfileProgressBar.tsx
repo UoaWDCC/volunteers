@@ -11,7 +11,7 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
   const percentage = (completedHours / totalHours) * 100;
 
   return (
-    <div className="w-[305px] h-[390px] bg-white rounded-3xl p-6 flex flex-col justify-between items-center">
+    <div className="w-[305px] h-[390px] bg-white shadow-lg rounded-3xl p-6 flex flex-col justify-between items-center">
       {/* Title */}
       
       <h2 className="dashboard text-heading2 text-primary w-[212px] mb-0">
