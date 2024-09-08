@@ -2,25 +2,28 @@ import React from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
-interface VolunteeringTrackerProps {
+interface ProfileMyProfileProgressBarProps {
   totalHours: number; // Total hours required for the next level
   completedHours: number; // Completed volunteering hours
 }
 
-const VolunteeringTracker: React.FC<VolunteeringTrackerProps> = ({ totalHours, completedHours }) => {
+const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = ({ totalHours, completedHours }) => {
   const percentage = (completedHours / totalHours) * 100;
 
   return (
-    <div className="w-[305px] h-[390px] bg-white shadow-lg rounded-lg p-6 flex flex-col justify-between items-center">
+    <div className="w-[305px] h-[390px] bg-white rounded-3xl p-6 flex flex-col justify-between items-center">
       {/* Title */}
-      <h2 className="dashboard text-heading2 font-bold text-heading text-center text-primary">
-        Volunteering Tracker
+      
+      <h2 className="dashboard text-heading2 text-primary w-[212px] mb-0">
+        Volunteering <br />Tracker
       </h2>
+      
 
       {/* Circular Progress Bar */}
       <div className="w-[150px] h-[150px] relative">
         <CircularProgressbar
           value={percentage}
+          strokeWidth={11}
           styles={buildStyles({
             pathColor: '#3B87DD', 
             trailColor: '#E0E0E0', 
@@ -37,11 +40,11 @@ const VolunteeringTracker: React.FC<VolunteeringTrackerProps> = ({ totalHours, c
       </div>
 
       {/* Bottom Text */}
-      <p className="text-body text-center mt-4">
+      <p className="dashboard text-body-heading text-center mt-4 w-[212px]">
         {totalHours - completedHours} more hours to reach Level 3!
       </p>
     </div>
   );
 };
 
-export default VolunteeringTracker;
+export default ProfileMyProfileProgressBar;
