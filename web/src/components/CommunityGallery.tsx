@@ -45,7 +45,7 @@ const hours = '14';
 
   
     return (  
-        <div className='bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg max-[1887px]:px-[6%] max-[1755px]:px-[13%] max-[1510px]:px-[8%]'>
+        <div className='bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg max-[1887px]:px-[6%] max-[1770px]:px-[13%] max-[1510px]:px-[8%]'>
             <p>People you may know from {event} at {location}</p>
             <div className='flex gap-x-[4%] justify-between gap-y-2 flex-wrap'>
                 {/* hardcoded 4 people, this shoulded be mapped with however many people in the event?? */}
