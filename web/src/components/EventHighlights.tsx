@@ -58,7 +58,7 @@ const EventHighlights = () => {
   }
 
   return (
-    <div className="flex flex-col justify-center items-center relative bg-neutral overflow-hidden w-full h-[60vw] border border-red-600">
+    <div className="flex flex-col justify-center items-center relative bg-neutral overflow-hidden w-full h-[60vw]">
       <div className="absolute flex w-full h-full overflow-hidden z-10">
         {data.map((event, index) => (
           <div className="relative overflow-hidden flex-grow flex-shrink-0 basis-full transition- [translate] duration-[850ms] ease-in-out" key={index} style={{ translate: `${-100 * eventIndex}%` }}>
