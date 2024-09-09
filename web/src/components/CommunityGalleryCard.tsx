@@ -13,11 +13,11 @@ const CommunityGalleryCard = ({name, hours, profileImgLink}: CommunityGalleryCar
     };
 
     return (  
-        <div className="w-[300px] h-[540px] rounded-2xl relative max-[1887px]:w-[250px] max-[1887px]:h-[510px]">
+        <div className="w-[300px] h-[540px] rounded-2xl relative max-[1887px]:w-[270px] max-[1887px]:h-[510px] max-[1755px]:w-[300px]">
             <div className="bg-primary h-[23%] rounded-t-2xl">
             </div>
 
-            <div className="bg-lightGrey absolute w-[150px] top-[7%] right-[25%] rounded-full max-[1887px]:w-[125px]"> 
+            <div className="bg-lightGrey absolute w-[150px] top-[7%] right-[25%] rounded-full max-[1887px]:w-[125px] max-[1887px]:right-[26%] max-[1755px]:right-[28%]"> 
                 <img src={profileImgLink} alt="" className="w-[100%] aspect-square rounded-full"/>
             </div>
 
