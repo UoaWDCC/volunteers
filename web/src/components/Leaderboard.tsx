@@ -18,12 +18,18 @@ function Leaderboard() {
 
             <div className="flex flex-row items-center justify-center">
                 <p className="text-detail text-[10pt] text-primary-dark">{"Rank: " + ranking}</p>
-                <p className="text-detail text-[10pt] text-primary-dark ml-5">{"Hours: " + hours}</p>
+                <p className="text-detail text-[10pt] text-primary-dark ml-3">{"Hours: " + hours}</p>
             </div>
 
-            <div className="flex flex-row items-center justify-center mt-5">
+            <div className="flex flex-row items-center justify-center">
                 <button className={leaderboardFilter == "all" ? "bg-white text-black after:block after:h-1 after:rounded-lg after:bg-primary-dark" :"bg-white text-grey"} onClick={() => setLeaderboardFilter("all")}>All</button>
                 <button className={leaderboardFilter == "friends" ? "bg-white text-black after:block after:h-1 after:rounded-lg after:bg-primary-dark" :"bg-white text-grey"} onClick={() => setLeaderboardFilter("friends")}>My Friends</button>
+            </div>
+
+            <div className="w-[90%] h-8 flex flex-row items-center justify-between bg-primary rounded-xl pt-4 px-5">
+                <h3 className="text-[7pt] text-white">Rank</h3>
+                <h3 className="text-[7pt] text-white">Volunteer</h3>
+                <h3 className="text-[7pt] text-white">Hours</h3>
             </div>
 
         </div>
