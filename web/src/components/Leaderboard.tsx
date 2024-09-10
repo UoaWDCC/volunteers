@@ -1,4 +1,8 @@
+import { useState } from "react";
+
 function Leaderboard() {
+    const [leaderboardFilter, setLeaderboardFilter] = useState("all"); // Filter for the leaderboard
+
     const profileImg = "assets/gallery/events/sample1.png"; // Temporary image for the leaderboard
     const name = "John Doe"; // Temporary name for the leaderboard
     const ranking = "1st"; // Temporary ranking for the leaderboard
@@ -16,6 +20,12 @@ function Leaderboard() {
                 <p className="text-detail text-[10pt] text-primary-dark">{"Rank: " + ranking}</p>
                 <p className="text-detail text-[10pt] text-primary-dark ml-5">{"Hours: " + hours}</p>
             </div>
+
+            <div className="flex flex-row items-center justify-center mt-5">
+                <button className={leaderboardFilter == "all" ? "bg-white text-black after:block after:h-1 after:rounded-lg after:bg-primary-dark" :"bg-white text-grey"} onClick={() => setLeaderboardFilter("all")}>All</button>
+                <button className={leaderboardFilter == "friends" ? "bg-white text-black after:block after:h-1 after:rounded-lg after:bg-primary-dark" :"bg-white text-grey"} onClick={() => setLeaderboardFilter("friends")}>My Friends</button>
+            </div>
+
         </div>
     );
 }
