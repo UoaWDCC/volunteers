@@ -9,7 +9,7 @@ interface LeaderboardEntryProps {
 }
 
 function Leaderboard() {
-    const profileImg = "assets/gallery/events/sample1.png"; // Temporary image for the leaderboard
+    const profileImg = "assets/EventHighlights/Events/BlindLowVision/imgA.png"; // Temporary image for the leaderboard
     const name = "John Doe"; // Temporary name for the leaderboard
     const ranking = "1st"; // Temporary ranking for the leaderboard
     const hours = 14; // Temporary hours for the leaderboard
@@ -105,7 +105,7 @@ function Leaderboard() {
         <div className="h-full w-4/5 pt-7 pb-2 flex flex-col items-center bg-white rounded-2xl">
             <h2 className="text-primary text-section-header font-semibold">Leaderboard</h2>
 
-            <img src={profileImg} alt="profile" className="w-[90px] h-[90px] rounded-full m-2" />
+            <img src={profileImg} alt="profile" className="object-cover w-[90px] h-[90px] rounded-full m-2" />
             
             <h3 className="text-detail mb-1">{name}</h3>
 
