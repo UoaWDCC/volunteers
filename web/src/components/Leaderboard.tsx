@@ -102,7 +102,7 @@ function Leaderboard() {
     }
 
     return (
-        <div className="h-full w-4/5 pt-7 flex flex-col items-center bg-white rounded-2xl">
+        <div className="h-full w-4/5 pt-7 pb-2 flex flex-col items-center bg-white rounded-2xl">
             <h2 className="text-primary text-section-header font-semibold">Leaderboard</h2>
 
             <img src={profileImg} alt="profile" className="w-[90px] h-[90px] rounded-full m-2" />
@@ -119,13 +119,13 @@ function Leaderboard() {
                 <button className={leaderboardFilter == "friends" ? "bg-white text-black after:block after:h-1 after:rounded-lg after:bg-primary-dark" :"bg-white text-grey"} onClick={() => changeLeaderboardFilter("friends")}>My Friends</button>
             </div>
 
-            <div className="w-[90%] h-8 flex flex-row items-center justify-between bg-primary rounded-xl pt-4 px-3">
+            <div className="w-[90%] mt-3 h-8 flex flex-row items-center justify-between bg-primary rounded-xl pt-4 px-3">
                 <h3 className="text-[7pt] text-white">Rank</h3>
                 <h3 className="text-[7pt] text-white">Volunteer</h3>
                 <h3 className="text-[7pt] text-white">Hours</h3>
             </div>
 
-            <div className="w-[90%] h-full flex flex-col pt-4 px-3 overflow-y-scroll">
+            <div className="w-[90%] h-full flex flex-col pt-4 px-3 scrollbar-none overflow-y-scroll">
                 {leaderboardData.map((entry: LeaderboardEntryProps) => (
                     <LeaderboardEntry key={entry.rank} rank={entry.rank} img={entry.img} name={entry.name} hours={entry.hours} />
                 ))}
