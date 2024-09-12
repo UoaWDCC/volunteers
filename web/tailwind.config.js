@@ -68,7 +68,7 @@ export default {
         // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
         extend: {
           colors: {
-            primary: "#3C9DDD", /* blue */
+            primary: "#3B87DD", /* blue */
             "white-background": "#F5F5F5", 
           },
           fontSize: {
@@ -87,16 +87,42 @@ export default {
               letterSpacing: '0%',
               fontWeight: '700', 
             }],
-            'body': ['24px', {
+            'body': ['14px', {
               lineHeight: '120%',
               letterSpacing: '0%',
-              fontWeight: '500', // 500 = 'medium'
+              fontWeight: '400', // 500 = 'medium'
             }],
             'detail': ['18px', {
               lineHeight: '120%',
               letterSpacing: '0%',
               fontWeight: '600', // semibold has weight 600 acording to tailwind docs
             }],
+            'heading1': ['32px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '700', //
+            }],
+            'heading2': ['24px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '600', // 
+            }],
+            'heading3': ['16px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '600', 
+            }],
+            'body-heading': ['14px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '500', 
+            }]
+            ,
+            'detail-regular': ['10px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '400', 
+            }]
           },
           fontFamily: {
             sans: ["Poppins", "sans-serif"],
