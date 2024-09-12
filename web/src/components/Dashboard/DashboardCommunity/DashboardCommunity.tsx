@@ -1,5 +1,5 @@
-import CommunityGalleryWhole from '@components/CommunityGalleryWhole';
-import Leaderboard from './Leaderboard';
+import CommunityGalleryWhole from '@components/Dashboard/DashboardCommunity/CommunityGalleryWhole';
+import Leaderboard from '../../Leaderboard';
 
 function DashboardCommunity() {
   return (
