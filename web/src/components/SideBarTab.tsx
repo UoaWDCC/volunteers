@@ -1,4 +1,3 @@
-import { FunctionComponent, SVGProps } from 'react';
 
 type SideBarTabProps = {
     unselected: string;
