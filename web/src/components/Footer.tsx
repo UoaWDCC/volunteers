@@ -1,9 +1,10 @@
 function Footer() {
   return (
-    <footer className="flex justify-center h-auto">
-      <div className="flex flex-wrap justify-between items-center max-w-[1208px] w-full mx-auto px-5">
+    <footer className="flex flex-col items-center justify-center h-auto bg-neutral p-16">
+      <p className="m-0 p-0 font-bold">Make sure to show the UoA Volunteers Club Sticker on your student ID card!</p>
+      <div className="flex flex-wrap justify-between items-center max-w-[1500px] w-full mx-auto px-5 py-8 bg-neutral-tan rounded-3xl">
         <div className="p-4 flex-1">
-          <img loading="lazy" src="/assets/Volunteers-logo-footer.jpg" alt="Volunteers Club Logo" className="footer-logo" />
+          <img loading="lazy" src="/assets/footer-logo.svg" alt="Volunteers Club Logo" className="footer-logo" />
           <p className = "text-detail text-grey mt-5 ">© 2020 University of Auckland Volunteers Club</p>
         </div>
         

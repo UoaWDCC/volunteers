@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import RegisterModalErrorContext from '../context/RegisterModalErrorContext';
 
 const RegisterErrorModal = () => {
-    const { showModal, setShowModal, message, error, missingFields } = useContext(RegisterModalErrorContext);
+    const { showModal, setShowModal, message, error } = useContext(RegisterModalErrorContext);
     const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
     return ( 
     <div

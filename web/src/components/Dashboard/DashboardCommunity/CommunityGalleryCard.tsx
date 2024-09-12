@@ -18,7 +18,7 @@ const CommunityGalleryCard = ({name, hours, profileImgLink}: CommunityGalleryCar
             </div>
 
             <div className="bg-lightGrey absolute w-[150px] top-[7%] right-[25%] rounded-full max-[1887px]:w-[125px] max-[1887px]:right-[26%] max-[1755px]:right-[28%]"> 
-                <img src={profileImgLink} alt="" className="w-[100%] aspect-square rounded-full"/>
+                <img src={profileImgLink} alt="" className="w-[100%] object-cover aspect-square rounded-full"/>
             </div>
 
             <div className="border-b-[1px] border-x-[1px] rounded-b-2xl border-lightGrey2 h-[70%] flex flex-col items-center">

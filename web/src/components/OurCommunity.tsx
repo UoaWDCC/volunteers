@@ -36,7 +36,8 @@ const OurCommunity = () => {
       , []);
 
     return (
-        <div className="flex flex-col items-center h-screen bg-neutral text-black font-medium">
+        <div className="relative flex flex-col items-center bg-neutral text-black font-medium pt-20 overflow-hidden">
+            <img src="./assets/graphics/helpingHand.svg" alt="" className="absolute bottom-[-3%] right-[-4.5%]" />
             
             <div className="relative w-full h-screen">
                 <div className="flex flex-col items-center">

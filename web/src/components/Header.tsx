@@ -9,17 +9,14 @@ function Header() {
 
   if (!authContext) {
     return null;
-  }
+  } 
 
   return (
-    <header className='flex justify-center bg-neutral-tan'>
-      <div className='flex flex-grow justify-between items-center min-w-min px-44 py-3'>
-        <div>
-          <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-auto min-w-[150px]' />
-        </div>
+    <header className='flex justify-between items-center bg-neutral-tan px-24 py-3'>
+        <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-auto' />
 
         <div>
-          <ul className='flex flex-row text-sm text-white font-mono m-0 gap-5'>
+          <ul className='flex flex-row text-sm text-white font-mono m-0 gap-6'>
             {!isUserLoggedIn && (
               <>
                 <li
@@ -47,7 +44,6 @@ function Header() {
             )}
           </ul>
         </div>
-      </div>
     </header>
   );
 }
