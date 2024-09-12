@@ -1,5 +1,5 @@
 import { useState } from "react";
-import DashboardCommunity from "../components/DashboardCommunity";
+import DashboardCommunity from "../components/Dashboard/DashboardCommunity/DashboardCommunity";
 import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/DashboardDiscover";
