@@ -13,7 +13,6 @@ function DashboardDiscover() {
                 <div className='mb-5 h-[60%]'>
                     {/* adjust sizes and stuff as needed */}
                     <EventsScrollContainer/>
-                    <p>bottom stuff</p>
                 </div>
             
         </div>
