@@ -42,6 +42,9 @@ const router = createBrowserRouter([
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
+
+  document.title = 'UoA Volunteers Club';
+
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
