@@ -3,6 +3,7 @@ import DashboardCommunity from "../components/Dashboard/DashboardCommunity/Dashb
 import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/DashboardDiscover";
+import DashboardCalendar from "@components/DashboardCalendar";
 import SearchBar from "@components/SearchBar";
 import DashboardHeader from "@components/DashboardHeader";
 import SideBar from "@components/SideBar";
@@ -50,14 +51,18 @@ function Dashboard() {
                     )}
                     <DashboardHeader/>
                 </div>
-        {/* whole tabs go in here */}
-        <div className="flex flex-row">
-          {/* <DashboardCommunity /> */}
-          {tab === 1 && <DashboardDashboard />}
-          {tab === 2 && <DashboardDiscover />}
-          {tab === 3 && <DashboardProfile />}
-          {tab === 4 && <h1>Calendar</h1>}
-          {tab === 5 && <DashboardCommunity />}
+
+                {/* whole tabs go in here */}
+                <div className='flex flex-row'>
+                    {/* <DashboardCommunity /> */}
+                    {tab === 1 && <DashboardDashboard />}
+                    {tab === 2 && <DashboardDiscover />}
+                    {tab === 3 && <DashboardProfile />}
+                    {tab === 4 && <DashboardCalendar />}
+                    {tab === 5 && <DashboardCommunity />}
+                </div>
+            </div>
+
         </div>
       </div>
     </div>
