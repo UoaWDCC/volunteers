@@ -1,3 +1,4 @@
+import EventsScrollContainer from "./Discover/EventsScrollContainer"
 export default function TestingComponent() {
     return (
         <div> {/*try add className="dashboard" inside the div tag */}
@@ -8,7 +9,7 @@ export default function TestingComponent() {
             <h1 className="bg-secondary-light text-body font-sans">Secondary-light Body Poppins (medium)</h1>
             <h1 className="bg-neutral text-detail ">Neutral Poppins (semibold)</h1>
             <h1 className="bg-grey text-section-header font-serif">Grey Section Header Lora</h1>
-
+            <EventsScrollContainer/>
         </div>
     )
 }

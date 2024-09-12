@@ -42,5 +42,13 @@ async function getCommunity(req: Request, res: Response): Promise<void> {
     res.status(200).json(doc);
 }
 
+async function getSponsors(req: Request, res: Response): Promise<void> {
+    const colRef = collection(db, "sponsors");
+    const docs = await getDocs(colRef);
 
-export { getGallery, getHighlights, getAchievements, getCommunity };
+    // Return an array of the data from the sponsors collection
+    res.status(200).json(docs.docs.map(doc => doc.data()));
+}
+
+
+export { getGallery, getHighlights, getAchievements, getCommunity, getSponsors };

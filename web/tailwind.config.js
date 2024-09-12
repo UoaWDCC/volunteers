@@ -69,6 +69,7 @@ export default {
         extend: {
           colors: {
             primary: "#3B87DD", /* blue */
+            "white-background": "#F5F5F5", 
           },
           fontSize: {
             'heading': ['72px', {
@@ -131,5 +132,7 @@ export default {
         }
       }
     ]
-  })],
+  }),
+  require('tailwind-scrollbar'),
+  ],
 };
