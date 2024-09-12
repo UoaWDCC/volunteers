@@ -8,7 +8,7 @@ function DashboardDiscover() {
                 {/* width of the gallery */}
                 <div className='flex flex-col bg-white mb-5 h-[33%] rounded-lg shadow-md'>
                     <div className='flex flex-row p-7'>
-                    <div className='bg-slate-200 h-[200px] w-[680px] rounded-lg'></div>
+                    <div className='bg-slate-200 h-[105%] w-[680px] rounded-lg'></div>
                     <div className="flex flex-col">
                     <div className='pl-5 text-2xl font-medium text-primary pt-1'>This month's event...</div>
                     <div className='pl-5 pt-3'>Sat, 11 May</div>
