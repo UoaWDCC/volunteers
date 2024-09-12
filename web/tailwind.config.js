@@ -105,5 +105,7 @@ export default {
         }
       }
     ]
-  })],
+  }),
+  require('tailwind-scrollbar'),
+  ],
 };

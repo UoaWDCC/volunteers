@@ -1,12 +1,13 @@
-import Header from "@components/Header";
-import Footer from "../components/Footer";
-import "../styles/pageStyles/MainMenu.css";
-import MainGallery from "@components/MainGallery";
-import Sponsors from "@components/Sponsors";
-import EventHighlights from "@components/EventHighlights";
-import OurAchievements from "@components/OurAchievements";
-import OurCommunity from "@components/OurCommunity";
-import AuthenticationContextProvider from "../context/AuthenticationContextProvider";
+import Header from '@components/Header';
+import Footer from '../components/Footer';
+import '../styles/pageStyles/MainMenu.css';
+import MainGallery from '@components/MainGallery';
+import SponsorsList from '@components/SponsorsList';
+import EventHighlights from '@components/EventHighlights';
+import OurAchievements from '@components/OurAchievements';
+import OurCommunity from '@components/OurCommunity';
+import AuthenticationContextProvider from '../context/AuthenticationContextProvider';
+
 // import ShowCaseUserAnnouncements from '@components/ShowCaseUserAnnouncements';
 import LoginModalContextProvider from "../context/LoginModalContextProvider";
 import LoginModal from "@components/LoginModal";
@@ -23,7 +24,7 @@ function MainMenu() {
           <EventHighlights />
           <OurAchievements />
           <OurCommunity />
-          <Sponsors />
+          <SponsorsList />
           <Footer />
         </LoginModalContextProvider>
       </AuthenticationContextProvider>
