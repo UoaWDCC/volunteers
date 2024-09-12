@@ -9,7 +9,7 @@ function DashboardCommunity() {
                     <CommunityGalleryWhole />
                 </div>
                     
-                <div className='flex justify-end w-[20%] h-[40vw]'>
+                <div className='flex justify-end w-[20%] h-[84vh]'>
                     <Leaderboard />
                 </div>
             
