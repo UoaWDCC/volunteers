@@ -1,4 +1,21 @@
-export default function Event() {
+type Event = {
+    event_title: string;
+    description: string;
+    tasks: string;
+    notes: string;
+    contact: string;
+    tag: string[];
+    start_date_time: Date;
+    end_date_time: Date;
+    location: string;
+    image: string;
+}
+
+interface EventProps {
+    event: Event;
+}
+
+export default function Event(event: EventProps) {
     return (
         <div className="dashboard bg-white-background hover:bg-white hover:shadow-sm ease-in duration-500 items-center m-4 flex rounded-xl"> {/* event-container */}
             <div className="w-3/4 flex items-center">
