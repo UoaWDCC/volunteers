@@ -86,10 +86,10 @@ export default {
               letterSpacing: '0%',
               fontWeight: '700', 
             }],
-            'body': ['24px', {
+            'body': ['14px', {
               lineHeight: '120%',
               letterSpacing: '0%',
-              fontWeight: '500', // 500 = 'medium'
+              fontWeight: '400', // 500 = 'medium'
             }],
             'detail': ['18px', {
               lineHeight: '120%',
@@ -115,6 +115,12 @@ export default {
               lineHeight: '120%',
               letterSpacing: '0%',
               fontWeight: '500', 
+            }]
+            ,
+            'detail-regular': ['10px', {
+              lineHeight: '120%',
+              letterSpacing: '0%',
+              fontWeight: '400', 
             }]
           },
           fontFamily: {
