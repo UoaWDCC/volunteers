@@ -1,4 +1,4 @@
-import EventsScrollContainer from "./Discover/EventsScrollContainer";
+import EventsScrollContainer from "./EventsScrollContainer";
 
 function DashboardDiscover() {
   return (

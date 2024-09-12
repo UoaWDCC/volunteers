@@ -2,7 +2,7 @@ import { useState } from "react";
 import DashboardCommunity from "../components/Dashboard/DashboardCommunity/DashboardCommunity";
 import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
-import DashboardDiscover from "@components/DashboardDiscover";
+import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
 import SearchBar from "@components/SearchBar";
 import DashboardHeader from "@components/DashboardHeader";
 
