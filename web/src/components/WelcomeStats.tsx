@@ -10,8 +10,8 @@ function WelcomeStats() {
   const { User, Hours } = Data;
 
   return (
-    <div className="bg-white rounded-xl shadow-lg p-6 flex items-center space-x-4">
-      <div className="flex-1">
+    <div className="bg-white rounded-xl shadow-lg flex items-center space-x-4">
+      <div className="flex-1 p-6">
         <h1 className="text-2xl font-bold text-blue-600">
           Welcome back {User}!
         </h1>
@@ -39,7 +39,7 @@ function WelcomeStats() {
         <img
           src="./public/assets/dashboard/welcomeHandHeart.png"
           alt="Heart Hands"
-          className="w-20 h-20"
+          className="w-[100%] h-[100] rounded-xl"
         />
       </div>
     </div>
