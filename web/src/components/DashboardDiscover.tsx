@@ -1,4 +1,4 @@
-
+import EventsScrollContainer from "./Discover/EventsScrollContainer";
 
 function DashboardDiscover() {
   return (
@@ -10,8 +10,9 @@ function DashboardDiscover() {
                     <h1>top component</h1>
                 </div>
                     
-                <div className='bg-green-100 mb-5 h-[60%]'>
+                <div className='mb-5 h-[60%]'>
                     {/* adjust sizes and stuff as needed */}
+                    <EventsScrollContainer/>
                     <p>bottom stuff</p>
                 </div>
             
