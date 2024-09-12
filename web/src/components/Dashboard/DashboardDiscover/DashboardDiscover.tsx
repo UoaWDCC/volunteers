@@ -1,6 +1,38 @@
+import { useEffect, useState } from "react";
 import EventsScrollContainer from "./EventsScrollContainer";
+import axios from "axios";
+
+type Event = {
+  event_title: string;
+  description: string;
+  tasks: string;
+  notes: string;
+  contact: string;
+  tag: string[];
+  start_date_time: Date;
+  end_date_time: Date;
+  location: string;
+  image: string;
+  host: string;
+}
 
 function DashboardDiscover() {
+  const [events, setEvents] = useState<Event[]>([]);
+
+    // Get events from backend
+    useEffect(() => {
+        axios.get("http://localhost:3000/api/events")
+            .then((response) => {
+                console.log(response.data);
+                setEvents(response.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+        }
+    , []);
+
+
   return (
     <div className="overflow-hidden flex flex-col w-[100%] h-screen px-5">
 
@@ -27,7 +59,7 @@ function DashboardDiscover() {
                     
                 <div className='mb-5 h-[60%]'>
                     {/* adjust sizes and stuff as needed */}
-                    <EventsScrollContainer/>
+                    <EventsScrollContainer events = {events}/>
                 </div>
             
         </div>

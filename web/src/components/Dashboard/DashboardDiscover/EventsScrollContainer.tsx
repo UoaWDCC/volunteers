@@ -16,31 +16,16 @@ type Event = {
     host: string;
 }
 
-interface EventProps {
-    event: Event;
+interface EventsProps {
+    events: Event[];
 }
 
-export default function EventsScrollContainer() {
-    const [events, setEvents] = useState<Event[]>([]);
-
-    // Get events from backend
-    useEffect(() => {
-        axios.get("http://localhost:3000/api/events")
-            .then((response) => {
-                console.log(response.data);
-                setEvents(response.data);
-            })
-            .catch((error) => {
-                console.log(error);
-            });
-        }
-    , []);
+export default function EventsScrollContainer({events}: EventsProps) {
     
-
     return (
         <div className="dashboard bg-white-background h-96 overflow-y-scroll">
-            {events.map((e) => (
-                <Event event={e} />
+            {events.map((e, index) => (
+                <Event key={index} event={e} />
             ))
             }
 
