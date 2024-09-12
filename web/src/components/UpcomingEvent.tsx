@@ -1,18 +1,16 @@
 const UpcomingEvent = () => {
-    return (
-      <div className="flex justify-between bg-white text-black p-1 mb-0 ml-8 font-light">
-        <div className="flex flex-col">
-          <p className="text-[15px] mb-0">Launch Night</p>
-          <p className="text-[9px] leading-tight m-0">Monday 8th April 2024</p>
-          <p className="text-[9px] leading-tight m-0">6:00pm - 8:00pm</p>
-          <p className="text-[6px] bg-gray-200 px-2 py-1 rounded-xl mt-1 ml-[0.5rem] mr-[3rem]">Club Event</p>
-        </div>
-        <div className="flex items-center mx-4">
-          <button className="bg-primary rounded-full text-[12px] px-[6.5px] py-[0px] hover:bg-blueButtonHover">&gt;</button>
-        </div>
+  return (
+    <div className="flex justify-between bg-white text-black mb-8 ml-10 font-light">
+      <div className="flex flex-col w-[90%]">
+        <div className="h-[100px] w-[100%] bg-slate-400 hover:bg-blue-500 transition-colors duration-300"></div>
+        <p className="text-[9px] leading-tight m-0">Mon 11th May | 2pm</p>
+        <p className="text-[15px] mb-0">Launch Night</p>
+        <p className="text-[9px] leading-tight m-0">
+          University of Auckland | General Library
+        </p>
       </div>
-    );
-  }
-  
-  export default UpcomingEvent;
-  
+    </div>
+  );
+};
+
+export default UpcomingEvent;
