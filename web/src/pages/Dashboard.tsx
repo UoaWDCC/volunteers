@@ -5,6 +5,7 @@ import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/DashboardDiscover";
 import SearchBar from "@components/SearchBar";
 import DashboardHeader from "@components/DashboardHeader";
+import SideBar from "@components/SideBar";
 
 function Dashboard() {
   const [tab, setTab] = useState(1);
@@ -29,17 +30,13 @@ function Dashboard() {
     setTab(5);
   };
 
-  return (
-    <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
-      {/* width of the left nav bar */}
-      {/* place thing component here and remove bg-primary */}
-      <div className="bg-primary w-[15%] h-auto">
-        <h1>side thing test</h1>
-        <button onClick={switchDashboard}>dashboard</button>
-        <button onClick={switchDiscover}>discover</button>
-        <button onClick={switchProfile}>profile</button>
-        <button onClick={switchCalendar}>calendar</button>
-        <button onClick={switchCommunity}>community</button>
+    return (
+        <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
+            {/* width of the left nav bar */}
+            {/* place thing component here and remove bg-primary */}
+            <div className='bg-primary w-[15%] h-auto'> 
+                <SideBar switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}/>
+            </div>
 
             {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
             <div className='flex flex-col w-[85%] marker:p-5'>
