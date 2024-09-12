@@ -1,14 +1,24 @@
-const UpcomingEvent = () => {
+import React from "react";
+
+type Event = {
+  date: string;
+  time: string;
+  title: string;
+  location: string;
+  img: string;
+};
+
+const UpcomingEvent = ({ event }: { event: Event }) => {
   return (
-    <div className="flex justify-between bg-white text-black mb-8 ml-10 font-light">
-      <div className="flex flex-col w-[90%]">
-        <div className="h-[100px] w-[100%] bg-slate-400 hover:bg-blue-500 transition-colors duration-300"></div>
-        <p className="text-[14px] leading-tight m-0">Mon 11th May | 2pm</p>
-        <p className="text-[20px] mb-0">Launch Night</p>
-        <p className="text-[14px] leading-tight m-0">
-          University of Auckland | General Library
-        </p>
-      </div>
+    <div className="flex flex-col bg-white text-black p-4 mb-4">
+      <img
+        className="h-200 w-[80%] bg-grey rounded-[10px] object-cover"
+        src={event.img || "./public/assets/dashboard/emptyEventImage.png"}
+        alt="event image"
+      />
+      <p className="text-sm">{event.date}</p>
+      <h2 className="text-xl font-semibold">{event.title}</h2>
+      <p className="text-sm">{event.location}</p>
     </div>
   );
 };

@@ -31,6 +31,7 @@
     "typeface-lora": "^1.1.13",
     "typeface-poppins": "^1.1.13",
     "universal-cookie": "^7.0.2",
+    "web": "file:",
     "zod": "^3.22.4"
   },
   "devDependencies": {
