@@ -1,5 +1,4 @@
 // WelcomeStats
-import { Link } from "react-router-dom";
 
 function WelcomeStats() {
   const Data = {
