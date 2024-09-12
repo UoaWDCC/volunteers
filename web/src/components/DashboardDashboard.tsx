@@ -15,7 +15,7 @@ function DashboardDashboard() {
         </div>
       </div>
 
-      <div className="bg-green-100 w-[30%] h-[40vw]">
+      <div className="w-[30%] h-[40vw]">
         {/* adjust sizes and stuff as needed */}
         <Leaderboard />
       </div>
