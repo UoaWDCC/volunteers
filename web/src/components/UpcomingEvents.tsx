@@ -2,9 +2,9 @@ import UpcomingEvent from "./UpcomingEvent";
 
 const UpcomingEvents = () => {
   return (
-    <div className="flex flex-col bg-white h-[96vh] m-[2vh_0vh_2vh_0vh] rounded-[30px] font-light">
+    <div className="flex flex-col bg-white h-[96vh] mt-5 rounded-[30px] font-light">
       <div>
-        <p className="text-black text-[38px] leading-[1.15] pl-8 pt-[4vh] m-0 font-semibold">
+        <p className="text-black text-[38px] leading-[1.15] pl-8 pt-2 m-0 font-semibold">
           Upcoming Events
         </p>
         <p className="text-black text-[17px] leading-[1.15] pl-8 pt-4 pb-5 m-0">
