@@ -10,7 +10,7 @@ type Event = {
 
 const UpcomingEvent = ({ event }: { event: Event }) => {
   return (
-    <div className="flex flex-col bg-white text-black p-4 mb-4">
+    <div className="flex flex-col bg-white text-black">
       <img
         className="h-200 w-[80%] bg-grey rounded-[10px] object-cover"
         src={event.img || "./public/assets/dashboard/emptyEventImage.png"}

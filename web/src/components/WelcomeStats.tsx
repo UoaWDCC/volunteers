@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 function WelcomeStats() {
   const Data = {
-    User: "[placeholder]",
+    User: "John Doe",
     Hours: 40,
   };
 

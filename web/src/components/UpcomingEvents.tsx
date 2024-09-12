@@ -59,7 +59,7 @@ const UpcomingEvents = () => {
           See what's going on!
         </p>
       </div>
-      <div className="flex-grow overflow-auto">
+      <div className="flex-grow overflow-auto ml-5">
         <div className="grid grid-cols-2 gap-5">
           <UpcomingEvent event={event_test_one} />
           <UpcomingEvent event={event_test_six} />
