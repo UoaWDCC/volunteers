@@ -4,6 +4,7 @@ import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/DashboardDiscover";
 import SearchBar from "@components/SearchBar";
+import DashboardHeader from "@components/DashboardHeader";
 
 function Dashboard() {
     const [tab, setTab] = useState(1);
@@ -51,7 +52,7 @@ function Dashboard() {
                             <SearchBar />
                         </>
                     )}
-                    <h1>notifs</h1>
+                    <DashboardHeader/>
                 </div>
 
                 {/* whole tabs go in here */}
