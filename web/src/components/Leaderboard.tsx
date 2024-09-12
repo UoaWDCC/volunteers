@@ -121,7 +121,7 @@ function Leaderboard() {
 
             <div className="w-[90%] mt-3 h-8 flex flex-row items-center justify-between bg-primary rounded-xl pt-4 px-3">
                 <h3 className="text-[7pt] text-white">Rank</h3>
-                <h3 className="text-[7pt] text-white">Volunteer</h3>
+                <h3 className="text-[7pt] text-white ml-[-120px]">Volunteer</h3>
                 <h3 className="text-[7pt] text-white">Hours</h3>
             </div>
 
