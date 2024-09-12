@@ -1,5 +1,4 @@
 import { useState } from 'react';
-// import { useNavigate } from 'react-router-dom';
 
 const ProfileMyProfileOverview = () => {
   const [profile] = useState({
@@ -19,20 +18,11 @@ const ProfileMyProfileOverview = () => {
     emergencyMobile: '234 567 8901',
   });
 
-  // const navigate = useNavigate();
-
-  // const goToEditPage = () => {
-  //   // navigate('/edit-profile'); 
-  // };
-
   return (
     <div
-      className="dashboard bg-white rounded-2xl shadow-md"
+      className="dashboard bg-white rounded-2xl shadow-md w-full flex flex-col"
       style={{
-        width: '710px', 
-        height: '603px',
         padding: '30px',  
-        margin: '0 auto', 
       }}
     >
       <div className="flex justify-between mb-6">
