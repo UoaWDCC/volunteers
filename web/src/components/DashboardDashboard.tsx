@@ -1,3 +1,4 @@
+import Leaderboard from "./Leaderboard";
 
 
 function DashboardDashboard() {
@@ -18,7 +19,7 @@ function DashboardDashboard() {
                     
                 <div className='bg-green-100 w-[30%] h-[40vw]'>
                     {/* adjust sizes and stuff as needed */}
-                    <p>leaderboard</p>
+                    <Leaderboard />
                 </div>
             
         </div>

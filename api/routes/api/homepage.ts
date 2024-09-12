@@ -1,4 +1,4 @@
-import { getAchievements, getCommunity, getGallery, getHighlights } from "../../controllers/homepageController";
+import { getAchievements, getCommunity, getGallery, getHighlights, getSponsors } from "../../controllers/homepageController";
 
 const express = require("express");
 
@@ -8,5 +8,6 @@ router.get("/gallery", getGallery);
 router.get("/highlights", getHighlights);
 router.get("/achievements", getAchievements);
 router.get("/community", getCommunity);
+router.get("/sponsors", getSponsors);
 
 export default router;
