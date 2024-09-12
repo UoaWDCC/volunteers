@@ -1,4 +1,5 @@
 import CommunityGalleryWhole from '@components/CommunityGalleryWhole';
+import Leaderboard from './Leaderboard';
 
 function DashboardCommunity() {
   return (
@@ -13,7 +14,7 @@ function DashboardCommunity() {
                 {/* width of the leadboard thing thing */}
                 <div className='bg-green-100 w-[30%] h-[40vw]'>
                     {/* place thing component here and remove bg-green */}
-                    <p>leadboard</p>
+                    <Leaderboard />
                 </div>
             
         </div>
