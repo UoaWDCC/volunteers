@@ -1,11 +1,14 @@
 import { useNavigate } from 'react-router-dom';
 import AuthenticationContext from '../context/AuthenticationContext';
+import RegisterModalErrorContext from '../context/RegisterModalErrorContext.tsx';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../firebase/firebase';
+import RegisterErrorModal from './RegisterErrorModal.tsx';
 
 function Signup() {
   const navigate = useNavigate();
+  const { showModal, setShowModal, setMessage, setError, setMissingFields } = useContext(RegisterModalErrorContext);
   const authContext = useContext(AuthenticationContext);
   const { currentUser, uid } = authContext as unknown as { currentUser: any; uid: string; signOut: () => void; isUserLoggedIn: boolean };
 
@@ -24,7 +27,7 @@ function Signup() {
   const [mobile, setMobile] = useState<string>('');
   const [birthdate, setBirthdate] = useState<string>('');
   const [upi, setUpi] = useState<string>('');
-  const [gender, setGender] = useState<string[]>([]);
+  const [gender, setGender] = useState<string>('');
   // second page
   const [yearLevel, setYearLevel] = useState<string>('');
   const [dietaryRequirements, setDietaryRequirements] = useState<string[]>([]);
@@ -37,12 +40,8 @@ function Signup() {
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { id, checked } = event.target;
-    if (checked) {
-      setGender((prev) => [...prev, id]);
-    } else {
-      setGender((prev) => prev.filter((item) => item !== id));
-    }
+    const { id } = event.target;
+      setGender(id);
   };
 
   const handleYearLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -94,6 +93,72 @@ function Signup() {
   // write to collection not document
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setShowModal(true);
+    console.log('Validating info');
+    if(!firstName || !lastName || !email || !mobile || !upi || !gender || !yearLevel || !emergencyContactFirstName || !emergencyContactLastName || !emergencyContactMobile || !emergencyContactRelationship) {
+      setError('Missing Fields.');
+      const missingFieldsList = [];
+      if (!firstName) {
+        missingFieldsList.push('First Name');
+      }
+      if (!lastName) {
+        missingFieldsList.push('Last Name');
+      }
+      if (!email) {
+        missingFieldsList.push('Email');
+      }
+      if (!mobile) {
+        missingFieldsList.push('Mobile Number');
+      }
+      if (!upi) {
+        missingFieldsList.push('UPI');
+      }
+      if (!gender) {
+        missingFieldsList.push('Gender');
+      }
+      if (!yearLevel) {
+        missingFieldsList.push('Year Level');
+      }
+      if (!emergencyContactFirstName) {
+        missingFieldsList.push('Emergency Contact First Name');
+      }
+      if (!emergencyContactLastName) {
+        missingFieldsList.push('Emergency Contact Last Name');
+      }
+      if (!emergencyContactMobile) {
+        missingFieldsList.push('Emergency Contact Mobile Number');
+      }
+      if (!emergencyContactRelationship) {
+        missingFieldsList.push('Emergency Contact Relationship');
+      }
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setShowModal(true);
+      return;
+    }
+
+    if (!validatePhoneNumber(mobile)) {
+      setError('Invalid Mobile Number.');
+      setMessage('Please enter a valid mobile number or enter in the correct format.');
+      setShowModal(true);
+      return;
+    }
+
+    if (!validatePhoneNumber(emergencyContactMobile)) {
+      setError('Invalid Emergency Contact Mobile Number.');
+      setMessage('Please enter a valid emergency contact mobile number or enter in the correct format.');
+      setShowModal(true);
+      return;
+    }
+
+    if(!validatEmail(email)) {
+      console.log('Invalid Email');
+      setError('Invalid Email.');
+      setMessage('Please enter a valid email address.');
+      setShowModal(true);
+      return;
+    }
+    setShowModal(false);
     if (currentUser) {
       try {
         // Reference to the 'users' collection
@@ -102,6 +167,7 @@ function Signup() {
         const querySnapshot = await getDocs(q);
 
         if (querySnapshot.empty) {
+
           // If the user does not exist, add a new document to the collection
           await addDoc(colRef, {
             uid,
@@ -134,8 +200,23 @@ function Signup() {
     }
   };
 
+  function validatePhoneNumber(phoneNumber: string) {
+      phoneNumber = phoneNumber.replace(/\s/g, '');
+      const phonePattern9 = /^\d{3}\d{3}\d{3}$/;
+      const phonePattern10 = /^\d{3}\d{3}\d{4}$/;
+      const phonePattern11 = /^\d{4}\d{3}\d{4}$/;
+      
+      return phonePattern10.test(phoneNumber) || phonePattern11.test(phoneNumber) || phonePattern9.test(phoneNumber);
+    }
+
+  function validatEmail(email: string) {
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    return emailPattern.test(email);
+  }
+
   return (
     <div>
+      {showModal && (<RegisterErrorModal/>)}
       <form onSubmit={handleSubmit}>
         {page1 && (
           // REGISTER PAGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -192,7 +273,7 @@ function Signup() {
                           Mobile Number
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123-456-7890' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' required value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={mobile} onChange={(e) => setMobile(e.target.value)} />
                       </div>
                       <div>
                         <label htmlFor='upi' className='inline-block text-sm font-medium text-black'>
@@ -216,31 +297,31 @@ function Signup() {
                       <p className='inline-block text-red-600'>*</p>
                       <div className='flex space-x-3'>
                         <div>
-                          <input type='checkbox' id='male' className='peer hidden' onChange={handleGenderChange} checked={gender.includes('male')} />
+                          <input type='radio' id='male' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'male'} />
                           <label htmlFor='male' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Male
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='female' className='peer hidden' onChange={handleGenderChange} checked={gender.includes('female')} />
+                          <input type='radio' id='female' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'female'} />
                           <label htmlFor='female' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Female
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='non-binary' className='peer hidden' onChange={handleGenderChange} checked={gender.includes('non-binary')} />
+                          <input type='radio' id='non-binary' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('non-binary')} />
                           <label htmlFor='non-binary' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Non-binary
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='other' className='peer hidden' onChange={handleGenderChange} checked={gender.includes('other')} />
+                          <input type='radio' id='other' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('other')} />
                           <label htmlFor='other' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Other
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='prefernottosay' className='peer hidden' onChange={handleGenderChange} checked={gender.includes('prefernottosay')} />
+                          <input type='radio' id='prefernottosay' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('prefernottosay')} />
                           <label htmlFor='prefernottosay' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Prefer not to say
                           </label>
@@ -360,37 +441,37 @@ function Signup() {
                       <p className='inline-block text-sm font-medium text-black'>(If Other, please specify below)</p>
                       <div className='flex space-x-3'>
                         <div>
-                          <input type='checkbox' id='vegan' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegan')} />
+                          <input type='checkbox' id='vegan' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegan')} required value={dietaryRequirements}/>
                           <label htmlFor='vegan' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Vegan
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='vegetarian' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegetarian')} />
+                          <input type='checkbox' id='vegetarian' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegetarian')} required value={dietaryRequirements}/>
                           <label htmlFor='vegetarian' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Vegetarian
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='dairyfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('dairyfree')} />
+                          <input type='checkbox' id='dairyfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('dairyfree')} required value={dietaryRequirements}/>
                           <label htmlFor='dairyfree' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Dairy-free
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='glutenfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('glutenfree')} />
+                          <input type='checkbox' id='glutenfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('glutenfree')} required value={dietaryRequirements}/>
                           <label htmlFor='glutenfree' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Gluten-free
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='halal' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('halal')} />
+                          <input type='checkbox' id='halal' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('halal')} required value={dietaryRequirements}/>
                           <label htmlFor='halal' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Halal
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='otherrequirements' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('otherrequirements')} />
+                          <input type='checkbox' id='otherrequirements' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('otherrequirements')} required value={dietaryRequirements}/>
                           <label htmlFor='otherrequirements' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Other
                           </label>
@@ -509,7 +590,7 @@ function Signup() {
                           Mobile Number
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123-456-7890' pattern='[0-9]{3}-[0-9]{3}-[0-9]{4}' required value={emergencyContactMobile} onChange={(e) => setEmergencyContactMobile(e.target.value)} />
+                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={emergencyContactMobile} onChange={(e) => setEmergencyContactMobile(e.target.value)} />
                       </div>
                       <div>
                         <label htmlFor='relationship' className='inline-block text-sm font-medium text-black'>
