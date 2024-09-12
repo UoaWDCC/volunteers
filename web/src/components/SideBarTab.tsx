@@ -1,22 +1,26 @@
-import { Link } from "react-router-dom";
+import { FunctionComponent, SVGProps } from 'react';
 
 type SideBarTabProps = {
-    image: string;
+    unselected: string;
+    selected: string;
     tabName: string;
     selectedTab: string;
     setSelectedTab: (tab: string) => void;
+    switchPage: () => void
 };
 
-const SideBarTab: React.FC<SideBarTabProps> = ({ image, tabName, selectedTab, setSelectedTab }) => {
-    const baseTabStyle = "flex flex-row items-center hover:no-underline w-[190px] h-[84px] my-[-5px] transition-all duration-[400] mask-tab"
+const SideBarTab: React.FC<SideBarTabProps> = ({ unselected, selected, tabName, selectedTab, setSelectedTab, switchPage }) => {
+    const baseTabStyle = "flex flex-row gap-2 items-center hover:no-underline w-[190px] h-[84px] transition-all duration-[400] bg-primary mask-tab my-[-5px]"
 
     return (
-        <Link className={selectedTab === tabName ? baseTabStyle + " bg-white text-[#5AB7F1]" : baseTabStyle + " hover:bg-[#ffffff40] text-white"} onClick={() => setSelectedTab(tabName)} to="/">
-            <div className="w-[65px] h-[65px] ml-[12px] mr-[-10px] mt-[22px]">
-                <img className="w-[40px] h-[40px]" src={image} alt={tabName + " icon"} />
+        <button className={selectedTab === tabName ? baseTabStyle + " bg-white text-primary" : baseTabStyle + " hover:bg-[#ffffff40] text-white"} onClick={() => {
+            setSelectedTab(tabName)
+            switchPage()}}> 
+            <div className="w-auto h-auto">
+                <img className="w-[25px] h-[25px]" src={selectedTab === tabName ? selected : unselected} alt={tabName + " icon"} />
             </div>
-            <h3 className="h-[125px] w-[64px] content-center font-sans text-[17px] mb-0">{tabName.substring(0, 1).toUpperCase() + tabName.substring(1)}</h3>
-        </Link>
+            <h3 className="font-sans text-[14px] m-0 capitalize text-nowrap mt-[6px]">{tabName}</h3>
+        </button>
     );
 };
  
