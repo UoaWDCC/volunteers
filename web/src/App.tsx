@@ -12,6 +12,7 @@ import RegisterModalErrorContextProvider from './context/RegisterModalErrorConte
 import RegisterErrorModal from '@components/RegisterErrorModal';
 import Dashboard from '@pages/Dashboard';
 
+
 const router = createBrowserRouter([
   {
     path: '/',
