@@ -1,25 +1,36 @@
 import { useState } from 'react';
 import SideBarTab from './SideBarTab';
+import { Link } from 'react-router-dom';
 
-const SideBar = () => {
+type SideBarProps = {
+    switchDashboard: () => void;
+    switchDiscover: () => void;
+    switchProfile: () => void;
+    switchCalendar: () => void;
+    switchCommunity: () => void;
+}
+
+const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, switchProfile, switchCalendar, switchCommunity}) => {
     
     const [selectedTab, setSelectedTab] = useState('dashboard');
 
     return ( 
-        <div className="flex flex-col bg-gradient-to-b from-[#D6EDFD] to-[#58B6F1] h-[96vh] w-[225px] my-[2vh] mx-[3vh] rounded-[30px]">
-            <img className="h-[68px] w-[68px] mt-[8vh] self-center" src='/public/assets/club-logo.svg' alt='club-logo' />
+        <div className="flex flex-col from-[#D6EDFD] to-[#58B6F1] h-[96vh] w-full rounded-[30px]">
+            <Link className="self-center" to={"/"}>
+                <img className="h-[68px] w-[68px] mt-[8vh] self-center" src='/public/assets/club-logo.svg' alt='club-logo' />
+            </Link>
 
             <div className="flex flex-col mt-[5vh] items-end"> 
-                <SideBarTab image='/assets/sidebar/dashboard-icon.svg' tabName='dashboard' selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-                <SideBarTab image='/assets/sidebar/discover-icon.svg' tabName='discover' selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-                <SideBarTab image='/assets/sidebar/profile-icon.svg' tabName='profile' selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-                <SideBarTab image='/assets/sidebar/social-icon.svg' tabName='social' selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-                <SideBarTab image='/assets/sidebar/settings-icon.svg' tabName='settings' selectedTab={selectedTab} setSelectedTab={setSelectedTab} /> 
-            </div>
+                <SideBarTab unselected='/assets/sidebar/dashboard_icon.svg' selected='/assets/sidebar/dashboard_icon_blue.svg' tabName='dashboard' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchDashboard}/>
+                <SideBarTab unselected='/assets/sidebar/discover_icon.svg' selected='/assets/sidebar/discover_icon_blue.svg' tabName='discover' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchDiscover}/>
+                <SideBarTab unselected='/assets/sidebar/profile_icon.svg' selected='/assets/sidebar/profile_icon_blue.svg' tabName='my profile' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchProfile}/>
+                <SideBarTab unselected='/assets/sidebar/calendar_icon.svg' selected='/assets/sidebar/calendar_icon_blue.svg' tabName='my calendar' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchCalendar}/>
+                <SideBarTab unselected='/assets/sidebar/community_icon.svg' selected='/assets/sidebar/community_icon_blue.svg' tabName='community' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchCommunity}/> 
+            </div>  
 
-            <button className="flex w-[130px] h-[35px] items-center bg-[#0370bE61] rounded-[30px] self-center mb-[35px] mt-auto transition-all duration-[400] hover:bg-[#0370BEB3]">
-                <img className="h-[25px] w-[25px]" src='/public/assets/sidebar/logout-icon.svg' alt='logout-icon' />
-                <h3 className="text-[13px] m-auto font-sans" >Log out</h3>
+            <button className="flex w-[130px] h-[35px] items-center bg-primary self-center mt-auto transition-all duration-[400] hover:bg-[#0370BEB3] gap-1.5">
+                <img className="h-[18px] w-[18px] m-0" src='/public/assets/sidebar/logout_icon.svg' alt='logout-icon' />
+                <h3 className="text-[13px] font-sans m-0 mt-[2px]" >Logout</h3>
             </button>
         </div>
      );
