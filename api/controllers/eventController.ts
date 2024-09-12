@@ -11,7 +11,13 @@ async function getEvents(req: Request, res: Response): Promise<void> {
     .then((snapshot) => {
       let events: any = [];
       snapshot.docs.forEach((doc) => {
-        events.push({ ...doc.data(), id: doc.id });  // Push each document's data and its ID into the events array
+        // Change Temporal to Date object
+        
+        let data = doc.data();
+        data.start_date_time = data.start_date_time.toDate();
+        data.end_date_time = data.end_date_time.toDate();
+
+        events.push({ ...data, id: doc.id });  // Push each document's data and its ID into the events array
       });
       res.json(events);  // Send the events data as JSON response
     })

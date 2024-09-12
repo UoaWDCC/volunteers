@@ -13,6 +13,7 @@ type Event = {
     end_date_time: Date;
     location: string;
     image: string;
+    host: string;
 }
 
 interface EventProps {
@@ -24,8 +25,9 @@ export default function EventsScrollContainer() {
 
     // Get events from backend
     useEffect(() => {
-        axios.get("http://localhost:3000/events")
+        axios.get("http://localhost:3000/api/events")
             .then((response) => {
+                console.log(response.data);
                 setEvents(response.data);
             })
             .catch((error) => {
