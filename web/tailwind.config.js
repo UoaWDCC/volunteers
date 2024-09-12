@@ -69,6 +69,7 @@ export default {
         extend: {
           colors: {
             primary: "#3C9DDD", /* blue */
+            "white-background": "#F5F5F5", 
           },
           fontSize: {
             'heading': ['72px', {

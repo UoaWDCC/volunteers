@@ -2,7 +2,7 @@ import Event from "./Event.tsx"
 
 export default function EventsScrollContainer() {
     return (
-        <div className="w-3/5 h-96 overflow-y-scroll">
+        <div className="dashboard bg-white-background h-96 overflow-y-scroll">
             <Event />
             <Event />
             <Event />
