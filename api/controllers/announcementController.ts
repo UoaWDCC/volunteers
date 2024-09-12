@@ -23,9 +23,8 @@ export async function getAllCurrentAnnouncements(req: Request, res: Response): P
     const querySnapshot = await getDocs(colRef);  // Fetch all documents from the "Announcements" collection
     const announcements = querySnapshot.docs
       .filter((doc) => {
-        const startDate = doc.data().StartDate;  // Get the start date of the announcement
-        const endDate = doc.data().EndDate;  // Get the end date of the announcement
-
+        const startDate = doc.data().start_date_time;
+        const endDate = doc.data().end_date_time;
         // Check if the current time falls within the start and end dates
         return startDate.toDate() <= currentLocalTime && currentLocalTime <= endDate.toDate();
       })
@@ -52,8 +51,8 @@ export async function getAnnouncementByUser(req: Request, res: Response): Promis
     const querySnapshot = await getDocs(colRef);  // Fetch all documents from the "Announcements" collection
     const announcements = querySnapshot.docs
       .filter((doc) => {
-        const startDate = doc.data().StartDate;  // Get the start date of the announcement
-        const endDate = doc.data().EndDate;  // Get the end date of the announcement
+        const startDate = doc.data().start_date_time;
+        const endDate = doc.data().end_date_time;
 
         // console.log('Start Date:', startDate.toDate(), 'End Date:', endDate.toDate(), 'Current Time:', currentLocalTime);
         return startDate.toDate() <= currentLocalTime && currentLocalTime <= endDate.toDate();  // Check if the current time falls within the start and end dates
