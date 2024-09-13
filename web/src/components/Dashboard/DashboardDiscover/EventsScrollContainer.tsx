@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Event from "./Event.tsx"
-import axios from "axios";
 
 type Event = {
     event_title: string;
@@ -14,6 +13,7 @@ type Event = {
     location: string;
     image: string;
     host: string;
+    coordinates: {longitude: string, latitude: string};
 }
 
 interface EventsProps {

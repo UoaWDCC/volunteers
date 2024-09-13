@@ -15,6 +15,7 @@ type Event = {
   location: string;
   image: string;
   host: string;
+  coordinates: {longitude: string, latitude: string};
 }
 
 function DashboardDiscover() {
@@ -31,7 +32,8 @@ function DashboardDiscover() {
     end_date_time: new Date(),
     location: "",
     image: "",
-    host: ""
+    host: "",
+    coordinates: {longitude: "", latitude: ""}
   });
 
   const days = ["SUN","MON","TUES","WED","THURS","FRI","SAT"];

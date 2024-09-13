@@ -12,6 +12,7 @@ type Event = {
     location: string;
     image: string;
     host: string;
+    coordinates: {longitude: string, latitude: string};
 }
 
 interface EventProps {

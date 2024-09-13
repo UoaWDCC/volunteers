@@ -13,6 +13,7 @@ type Event = {
     location: string;
     image: string;
     host: string;
+    coordinates: {longitude: string, latitude: string};
 }
 
 interface EventProps {
@@ -23,6 +24,8 @@ interface EventProps {
 export default function EventDetails({event, setEventDetails}: EventProps) {
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
+
+    const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=16&amp&output=embed"
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
     return (
@@ -69,8 +72,10 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                 </div>
 
                 <div className="flex flex-col w-[35%] pr-10">
-                    <div className="w-full h-[35vh] bg-grey rounded-3xl">
-                        &nbsp;
+                    <div className="w-full h-[35vh] object-cover">
+                        <iframe title="map" className="w-full h-full border-lightGrey border-solid border-2 rounded-lg"
+                                src={mapEmbed}
+                        />
                     </div>
 
                     <div className="flex flex-col w-full pl-2 mt-4">
