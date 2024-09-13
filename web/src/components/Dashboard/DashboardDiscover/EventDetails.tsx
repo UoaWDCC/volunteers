@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction} from "react";
-
 type Event = {
     event_title: string;
     description: string;
@@ -16,35 +14,21 @@ type Event = {
 
 interface EventProps {
     event: Event;
-    setEventDetails: Dispatch<SetStateAction<null|Event>>;
 }
 
-export default function Event({event, setEventDetails}: EventProps) {
+export default function EventDetails({event}: EventProps) {
     const startDate = new Date(event.start_date_time);
-
-    const days = ["SUN","MON","TUES","WED","THURS","FRI","SAT"];
-    const day = days[startDate.getDay()];
-
-    const months = ["JANUARY","FEBRUARY","MARCH","APRIL","MAY","JUNE","JULY","AUGUST","SEPTEMBER","OCTOBER","NOVEMBER","DECEMBER"];
-    const month  = months[startDate.getMonth()];
-
-    // Represent time in 12 hour format
-    const hours = startDate.getHours() > 12 ? startDate.getHours() - 12 : startDate.getHours();
-    const minutes = startDate.getMinutes() < 10 ? `0${startDate.getMinutes()}` : startDate.getMinutes();
-    const time = `${hours}:${minutes} ${startDate.getHours() > 12 ? "PM" : "AM"}`;
-
-
-    const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
+    const endDate = new Date(event.end_date_time);
 
     return (
-        <div onClick={() => setEventDetails(event)} className="dashboard bg-white-background hover:bg-white hover:shadow-sm ease-in duration-500 items-center m-4 flex rounded-xl"> {/* event-container */}
+        <div className="fixed left-[15%] top-[10%] flex flex-col w-[85%] h-[90%] px-5 bg-white"> {/* event-container */}
             <div className="w-3/4 flex items-center">
                 <div className="inline m-5"> {/* image-container */}
                     <img loading="lazy" className="h-24 w-40 object-cover rounded-md" src={event.image} />
                 </div>
                 
                 <div className="inline w-1/2  p-2"> {/* event details on the right */}
-                    <p className="mb-0 text-sm">{dateInfo}</p>
+                    <p className="mb-0 text-sm">{startDate.toISOString()}</p>
                     <h2 className="inline font-semibold text-base mb-1 text-xl">{event.event_title}</h2>
                     <p className="mb-0 text-sm">{event.location}</p>
                 </div>
@@ -57,6 +41,5 @@ export default function Event({event, setEventDetails}: EventProps) {
                 </div>
             </div>
         </div>
-
     )
 }

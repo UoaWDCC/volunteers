@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import Event from "./Event.tsx"
 import axios from "axios";
 
@@ -18,14 +18,15 @@ type Event = {
 
 interface EventsProps {
     events: Event[];
+    setEventDetails: Dispatch<SetStateAction<null|Event>>;
 }
 
-export default function EventsScrollContainer({events}: EventsProps) {
+export default function EventsScrollContainer({events, setEventDetails}: EventsProps) {
     
     return (
-        <div className="dashboard bg-white-background h-96 overflow-y-scroll">
+        <div className="dashboard bg-white-background h-[45vh] overflow-y-scroll">
             {events.map((e, index) => (
-                <Event key={index} event={e} />
+                <Event key={index} event={e} setEventDetails={setEventDetails}/>
             ))
             }
 

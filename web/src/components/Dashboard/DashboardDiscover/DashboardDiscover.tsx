@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import EventsScrollContainer from "./EventsScrollContainer";
 import axios from "axios";
+import EventDetails from "./EventDetails";
 
 type Event = {
   event_title: string;
@@ -17,6 +18,7 @@ type Event = {
 }
 
 function DashboardDiscover() {
+  const [eventDetails, setEventDetails] = useState<null|Event>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [flagshipEvent, setFlagshipEvent] = useState<Event>({
     event_title: "",
@@ -70,9 +72,9 @@ function DashboardDiscover() {
 
 
   return (
-    <div className="overflow-hidden flex flex-col w-[100%] h-screen px-5">
+    <div className="flex flex-col w-[100%] h-[85vh] px-5">
 
-                <div className='flex flex-col bg-white mb-5 h-[33%] rounded-lg shadow-md'>
+                <div className='flex flex-col bg-white mb-5 h-[40%] rounded-lg shadow-md'>
                     <div className='flex flex-row p-7'>
                     <img className='h-[190px] w-[680px] rounded-lg' src={flagshipEvent.image} />
                     <div className="flex flex-col">
@@ -93,9 +95,13 @@ function DashboardDiscover() {
                     
                 <div className='mb-5 h-[60%]'>
                     {/* adjust sizes and stuff as needed */}
-                    <EventsScrollContainer events = {events}/>
+                    <EventsScrollContainer events = {events} setEventDetails = {setEventDetails}/>
                 </div>
-            
+
+                {eventDetails && (
+                  <EventDetails event={eventDetails} />
+                )}
+
         </div>
         
   );
