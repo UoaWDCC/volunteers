@@ -1,3 +1,6 @@
+import { Dispatch, SetStateAction } from "react";
+import { IoArrowBackCircle } from "react-icons/io5";
+
 type Event = {
     event_title: string;
     description: string;
@@ -14,16 +17,19 @@ type Event = {
 
 interface EventProps {
     event: Event;
+    setEventDetails: Dispatch<SetStateAction<null|Event>>;
 }
 
-export default function EventDetails({event}: EventProps) {
+export default function EventDetails({event, setEventDetails}: EventProps) {
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
     return (
         <div className="flex flex-col items-center fixed left-[15%] top-[10%] w-[85%] h-[90%] px-5 pt-5 bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
-            <img src={event.image} className=" w-[95%] h-[45vh] rounded-3xl" />
+            <div className="self-start ml-6" onClick={() => setEventDetails(null)}><IoArrowBackCircle  size="40px" color="#3B87DD" /></div>
+
+            <img src={event.image} className=" w-[95%] h-[45vh] rounded-3xl mt-2" />
 
             <div className="flex flex-col w-full px-10 py-4">
                 <div className="flex flex-row justify-between items-center w-full">
