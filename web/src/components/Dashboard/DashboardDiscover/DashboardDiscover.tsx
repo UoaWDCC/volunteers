@@ -46,20 +46,21 @@ function DashboardDiscover() {
           .then((response) => {
               setEvents(response.data);
 
-            // Have default flagship event be next upcoming event
+            // Have default flagship event be next upcoming event by sorting events by date and taking the first one
             events.sort((a, b) => {
               return new Date(a.start_date_time).getTime() - new Date(b.start_date_time).getTime();
             });
 
             setFlagshipEvent(response.data[0]);
 
-            // Now check if there is a flagship event
+            // Now check if there is a flagship event (tagged as such) and set it as the flagship event
             response.data.forEach((event:Event) => {
               if (event.tag.includes("Flagship Event")) {
                 setFlagshipEvent(event);
               }
             },
 
+            // Need to do this for some reason to get calling methods on Date object to work
             startDate = new Date(flagshipEvent.start_date_time),
 
             );
