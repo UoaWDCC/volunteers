@@ -9,7 +9,7 @@ const DashboardHeader = () => {
   const toggleNotificationTab = () => {
     if (isNotificationTabOpen) {
       setNotificationTabOpen(false);
-      setTimeout(() => setNotificationTabVisible(false), 300)
+      setTimeout(() => setNotificationTabVisible(false), 800)
     } else {
       setNotificationTabVisible(true);
       setNotificationTabOpen(true)
