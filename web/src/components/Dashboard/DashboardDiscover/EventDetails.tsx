@@ -25,7 +25,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
 
-    const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=16&amp&output=embed"
+    const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=18&amp&output=embed"
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
     return (
