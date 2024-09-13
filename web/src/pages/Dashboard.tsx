@@ -3,8 +3,8 @@ import DashboardCommunity from "../components/Dashboard/DashboardCommunity/Dashb
 import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
-import DashboardCalendar from "@components/DashboardCalendar";
 import SearchBar from "@components/SearchBar";
+import ProfileEditModalContextProvider from "../context/ProfileEditModalContextProvider";
 import DashboardHeader from "@components/DashboardHeader";
 import SideBar from "@components/SideBar";
 
@@ -57,8 +57,13 @@ function Dashboard() {
                     {/* <DashboardCommunity /> */}
                     {tab === 1 && <DashboardDashboard />}
                     {tab === 2 && <DashboardDiscover />}
-                    {tab === 3 && <DashboardProfile />}
-                    {tab === 4 && <DashboardCalendar />}
+                    {tab === 3 &&
+                        <>
+                            <ProfileEditModalContextProvider>
+                                <DashboardProfile />
+                            </ProfileEditModalContextProvider>
+                        </>}
+                    {tab === 4 && <h1>Calendar</h1>}
                     {tab === 5 && <DashboardCommunity />}
                 </div>
             </div>
