@@ -19,7 +19,8 @@ interface EventProps {
 export default function EventDetails({event}: EventProps) {
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
-
+    
+    const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
     return (
         <div className="flex flex-col items-center fixed left-[15%] top-[10%] w-[85%] h-[90%] px-5 pt-5 bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
             <img src={event.image} className=" w-[95%] h-[45vh] rounded-3xl" />
@@ -36,20 +37,51 @@ export default function EventDetails({event}: EventProps) {
                     ))}
                 </div>
             </div>
+            
+            <div className="flex flex-row w-full justify-between">
+                <div className="w-[65%]">
+                    <div className="flex flex-col w-full px-10 mt-3">
+                        <h3 className="text-heading3 font-semibold">Description</h3>
+                        <p className="text-body-heading mt-[-20px]">{event.description}</p>
+                    </div>
 
-            <div className="flex flex-col w-full px-10 mt-3">
-                <h3 className="text-heading3 font-semibold">Description</h3>
-                <p className="text-body-heading mt-[-20px]">{event.description}</p>
-            </div>
+                    <div className="flex flex-col w-full px-10 mt-3">
+                        <h3 className="text-heading3 font-semibold">Key Tasks and Responsibilities</h3>
+                        <p className="text-body-heading mt-[-20px]">{event.tasks}</p>
+                    </div>
 
-            <div className="flex flex-col w-full px-10 mt-3">
-                <h3 className="text-heading3 font-semibold">Key Tasks and Responsibilities</h3>
-                <p className="text-body-heading mt-[-20px]">{event.tasks}</p>
-            </div>
+                    <div className="flex flex-col w-full px-10 mt-3">
+                        <h3 className="text-heading3 font-semibold">Important Notes</h3>
+                        <p className="text-body-heading mt-[-20px]">{event.notes}</p>
+                    </div>
 
-            <div className="flex flex-col w-full px-10 mt-3">
-                <h3 className="text-heading3 font-semibold">Important Notes</h3>
-                <p className="text-body-heading mt-[-20px]">{event.notes}</p>
+                    <div className="flex flex-col w-full px-10 mt-3">
+                        <h3 className="text-heading3 font-semibold">Contact Details</h3>
+                        <p className="text-body-heading mt-[-20px]">{"Hosted By: " + event.host}</p>
+                        <p className="text-body-heading mt-[-20px]">{event.contact}</p>
+                    </div>
+                </div>
+
+                <div className="flex flex-col w-[35%] pr-10">
+                    <div className="w-full h-[35vh] bg-grey rounded-3xl">
+                        &nbsp;
+                    </div>
+
+                    <div className="flex flex-col w-full pl-2 mt-4">
+                        <h3 className="text-heading3 font-semibold">Address</h3>
+                        <p className="text-body-heading mt-[-20px]">{event.location}</p>
+                    </div>
+
+                    <div className="flex flex-col w-full pl-2">
+                        <h3 className="text-heading3 font-semibold">Date</h3>
+                        <p className="text-body-heading mt-[-20px]">{startDate.toLocaleString("en-NZ", options)}</p>
+                    </div>
+
+                    <div className="flex flex-col w-full pl-2">
+                        <h3 className="text-heading3 font-semibold">Time</h3>
+                        <p className="text-body-heading mt-[-20px]">{startDate.toLocaleString("en-NZ", {hour:'numeric', minute:'numeric'}) + " - " + endDate.toLocaleString("en-NZ", {hour:'numeric', minute:'numeric'})}</p>
+                    </div>
+                </div>
             </div>
 
         </div> 
