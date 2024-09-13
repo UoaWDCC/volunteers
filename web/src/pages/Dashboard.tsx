@@ -4,6 +4,8 @@ import DashboardProfile from "@components/DashboardProfile";
 import DashboardDashboard from "@components/DashboardDashboard";
 import DashboardDiscover from "@components/DashboardDiscover";
 import SearchBar from "@components/SearchBar";
+import ProfileEditModalContextProvider from "../context/ProfileEditModalContextProvider";
+import RegisterModalErrorContextProvider from "../context/RegisterModalErrorContextProvider";
 
 function Dashboard() {
     const [tab, setTab] = useState(1);
@@ -59,7 +61,12 @@ function Dashboard() {
                     {/* <DashboardCommunity /> */}
                     {tab === 1 && <DashboardDashboard />}
                     {tab === 2 && <DashboardDiscover />}
-                    {tab === 3 && <DashboardProfile />}
+                    {tab === 3 &&
+                        <>
+                            <ProfileEditModalContextProvider>
+                                <DashboardProfile />
+                            </ProfileEditModalContextProvider>
+                        </>}
                     {tab === 4 && <h1>Calendar</h1>}
                     {tab === 5 && <DashboardCommunity />}
                 </div>

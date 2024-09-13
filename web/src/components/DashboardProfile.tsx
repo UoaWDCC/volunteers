@@ -1,9 +1,16 @@
 import { useContext } from "react";
 import ProfileEditModal from "./ProfileEditModal";
 import ProfileEditModalContext from "../context/ProfileEditModalContext";
+import RegisterErrorModal from "./RegisterErrorModal";
+import RegisterModalErrorContext from "../context/RegisterModalErrorContext";
 
 function DashboardProfile() {
     const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+    // const { showModal, setShowModal } = useContext(RegisterModalErrorContext);
+
+    function handleShowModal() {
+        setShowModal(true);
+    }
   return (
     <div className="overflow-hidden flex flex-col w-[100%] h-screen px-5">
 
@@ -11,7 +18,7 @@ function DashboardProfile() {
                 {/* width of the gallery */}
                 <div className='flex flex-col bg-red-100 mb-5 h-[40%]'>
                     <h1>top component</h1>
-                    <button onClick={setShowModal(true)}>click</button>
+                    <button onClick={handleShowModal}>click</button>
                 </div>
                     
                 <div className='bg-green-100 flex flex-row justify-between gap-5 mb-5 h-[60%]'>
