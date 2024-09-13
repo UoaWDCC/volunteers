@@ -15,7 +15,7 @@ const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, swit
     const [selectedTab, setSelectedTab] = useState('dashboard');
 
     return ( 
-        <div className="flex flex-col from-[#D6EDFD] to-[#58B6F1] h-[96vh] w-full rounded-[30px]">
+        <div className="flex flex-col from-[#D6EDFD] to-[#58B6F1] h-[100vh] w-full rounded-[30px]">
             <Link className="self-center" to={"/"}>
                 <img className="h-[68px] w-[68px] mt-[8vh] self-center" src='/public/assets/club-logo.svg' alt='club-logo' />
             </Link>
