@@ -88,7 +88,7 @@ function DashboardDiscover() {
                     <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
                     <div className='ml-2 font-light text-sm'>John, and 4 other friends are going</div>
                     </div>
-                    <div className='pl-5 text-primary hover:underline'>More Info</div>
+                    <div className='pl-5 text-primary hover:underline cursor-pointer' onClick={() => setEventDetails(flagshipEvent)}>More Info</div>
                     </div>
                     </div>
                 </div>
