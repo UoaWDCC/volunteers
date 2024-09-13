@@ -26,7 +26,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
     return (
-        <div className="flex flex-col items-center fixed left-[15%] top-[10%] w-[85%] h-[90%] px-5 pt-5 bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
+        <div className="flex flex-col items-center fixed left-[15%] top-[12%] w-[85%] h-[90%] px-5 pt-5 bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
             <div className="self-start ml-6 cursor-pointer" onClick={() => setEventDetails(null)}><IoArrowBackCircle  size="40px" color="#3B87DD" /></div>
 
             <img src={event.image} className=" w-[95%] h-[45vh] rounded-3xl mt-2" />
