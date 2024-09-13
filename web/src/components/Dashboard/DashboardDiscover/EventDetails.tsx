@@ -21,7 +21,7 @@ export default function EventDetails({event}: EventProps) {
     const endDate = new Date(event.end_date_time);
 
     return (
-        <div className="fixed left-[15%] top-[10%] flex flex-col w-[85%] h-[90%] px-5 bg-white"> {/* event-container */}
+        <div className="fixed left-[15%] top-[10%] flex flex-col w-[85%] h-[90%] px-5 bg-[#F7F7FB]"> {/* event-container */}
             <div className="w-3/4 flex items-center">
                 <div className="inline m-5"> {/* image-container */}
                     <img loading="lazy" className="h-24 w-40 object-cover rounded-md" src={event.image} />
