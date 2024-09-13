@@ -35,8 +35,23 @@ export default function EventDetails({event}: EventProps) {
                         <div key={index} className="text-xs pt-[3px] px-3 h-6 text-grey border-grey border-solid border-2 rounded-full ">{tag}</div>
                     ))}
                 </div>
-
             </div>
-        </div>
+
+            <div className="flex flex-col w-full px-10 mt-3">
+                <h3 className="text-heading3 font-semibold">Description</h3>
+                <p className="text-body-heading mt-[-20px]">{event.description}</p>
+            </div>
+
+            <div className="flex flex-col w-full px-10 mt-3">
+                <h3 className="text-heading3 font-semibold">Key Tasks and Responsibilities</h3>
+                <p className="text-body-heading mt-[-20px]">{event.tasks}</p>
+            </div>
+
+            <div className="flex flex-col w-full px-10 mt-3">
+                <h3 className="text-heading3 font-semibold">Important Notes</h3>
+                <p className="text-body-heading mt-[-20px]">{event.notes}</p>
+            </div>
+
+        </div> 
     )
 }
