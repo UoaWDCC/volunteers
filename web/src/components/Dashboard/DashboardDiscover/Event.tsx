@@ -1,3 +1,5 @@
+import { Dispatch, SetStateAction} from "react";
+
 type Event = {
     event_title: string;
     description: string;
@@ -10,13 +12,15 @@ type Event = {
     location: string;
     image: string;
     host: string;
+    coordinates: {longitude: string, latitude: string};
 }
 
 interface EventProps {
     event: Event;
+    setEventDetails: Dispatch<SetStateAction<null|Event>>;
 }
 
-export default function Event({event}: EventProps) {
+export default function Event({event, setEventDetails}: EventProps) {
     const startDate = new Date(event.start_date_time);
 
     const days = ["SUN","MON","TUES","WED","THURS","FRI","SAT"];
@@ -34,7 +38,7 @@ export default function Event({event}: EventProps) {
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
     return (
-        <div className="dashboard bg-white-background hover:bg-white hover:shadow-sm ease-in duration-500 items-center m-4 flex rounded-xl"> {/* event-container */}
+        <div onClick={() => setEventDetails(event)} className="dashboard bg-white-background hover:bg-white hover:shadow-sm ease-in duration-500 items-center m-4 flex rounded-xl"> {/* event-container */}
             <div className="w-3/4 flex items-center">
                 <div className="inline m-5"> {/* image-container */}
                     <img loading="lazy" className="h-24 w-40 object-cover rounded-md" src={event.image} />
