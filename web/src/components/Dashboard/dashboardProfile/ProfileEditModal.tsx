@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import ProfileEditModalContext from '../context/ProfileEditModalContext';
-import ProfileEditModalSideBarTab from './ProfileEditModalSideBarTab';
+import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
+import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
 
 const ProfileEditModal = () => {

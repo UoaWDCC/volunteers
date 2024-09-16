@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import UserDetails from "@components/UserDetails";
+import UserDetails from "@components/legacy/UserDetails";
 import { useUsersContext } from "../Hooks/UseUsersContext";
-import { User } from "../components/UserDetails"
+import { User } from "../components/legacy/UserDetails"
 
 
 

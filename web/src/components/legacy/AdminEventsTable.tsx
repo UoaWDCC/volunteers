@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import AdminHeader from "./AdminHeader";
-import { useEventContext } from "../context/EventContext"; // Import the context
+import { useEventContext } from "../../context/EventContext"; // Import the context
 
 const AdminEventsTable = ({ setIsAdding, handleEdit }: any) => {
   /**

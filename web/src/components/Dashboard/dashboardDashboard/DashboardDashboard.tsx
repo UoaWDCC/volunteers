@@ -1,4 +1,4 @@
-import Leaderboard from "./Leaderboard";
+import Leaderboard from "../Leaderboard";
 import WelcomeStats from "./WelcomeStats";
 import UpcomingEvents from "./UpcomingEvents";
 

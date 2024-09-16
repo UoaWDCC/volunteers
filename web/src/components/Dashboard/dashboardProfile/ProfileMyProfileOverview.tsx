@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
-import ProfileEditModal from "./ProfileEditModal";
-import ProfileEditModalContext from "../context/ProfileEditModalContext";
+import ProfileEditModal from "../dashboardProfile/ProfileEditModal";
+import ProfileEditModalContext from "../../../context/ProfileEditModalContext";
 
 
 const ProfileMyProfileOverview = () => {

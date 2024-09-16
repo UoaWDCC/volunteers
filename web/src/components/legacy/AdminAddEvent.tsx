@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useEventContext } from "../context/EventContext"; 
+import { useEventContext } from "../../context/EventContext"; 
 
 const AdminAddEvent = ({ setIsAdding }: any) => {
   /**

@@ -1,4 +1,5 @@
-import EventsScrollContainer from "./Dashboard/DashboardDiscover/EventsScrollContainer"
+import { SetStateAction } from "react"
+import EventsScrollContainer from "./Dashboard/dashboardDiscover/EventsScrollContainer"
 export default function TestingComponent() {
     return (
         <div> {/*try add className="dashboard" inside the div tag */}
@@ -9,7 +10,9 @@ export default function TestingComponent() {
             <h1 className="bg-secondary-light text-body font-sans">Secondary-light Body Poppins (medium)</h1>
             <h1 className="bg-neutral text-detail ">Neutral Poppins (semibold)</h1>
             <h1 className="bg-grey text-section-header font-serif">Grey Section Header Lora</h1>
-            <EventsScrollContainer/>
+            <EventsScrollContainer events={[]} setEventDetails={function (value: SetStateAction<{ event_title: string; description: string; tasks: string; notes: string; contact: string; tag: string[]; start_date_time: Date; end_date_time: Date; location: string; image: string; host: string; coordinates: { longitude: string; latitude: string } } | null>): void {
+                throw new Error("Function not implemented.")
+            } }/>
         </div>
     )
 }
