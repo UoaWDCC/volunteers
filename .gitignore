@@ -2,3 +2,4 @@
 *.env
 */dist
 credentials.json
+.DS_Store
