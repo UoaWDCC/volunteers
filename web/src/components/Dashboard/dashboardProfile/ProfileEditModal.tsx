@@ -35,7 +35,6 @@ const ProfileEditModal = () => {
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState('Personal Details');
-  const [page, setPage] = useState(1);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;

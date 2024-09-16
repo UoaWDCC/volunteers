@@ -1,5 +1,5 @@
 import { createContext, Dispatch } from "react";
-import { User } from "@components/UserDetails";
+import { User } from "@components/legacy/UserDetails";
 
 export interface Action {
   type: string;

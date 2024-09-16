@@ -1,4 +1,3 @@
-import { SetStateAction } from "react"
 import EventsScrollContainer from "./Dashboard/dashboardDiscover/EventsScrollContainer"
 export default function TestingComponent() {
     return (
@@ -10,7 +9,7 @@ export default function TestingComponent() {
             <h1 className="bg-secondary-light text-body font-sans">Secondary-light Body Poppins (medium)</h1>
             <h1 className="bg-neutral text-detail ">Neutral Poppins (semibold)</h1>
             <h1 className="bg-grey text-section-header font-serif">Grey Section Header Lora</h1>
-            <EventsScrollContainer events={[]} setEventDetails={function (value: SetStateAction<{ event_title: string; description: string; tasks: string; notes: string; contact: string; tag: string[]; start_date_time: Date; end_date_time: Date; location: string; image: string; host: string; coordinates: { longitude: string; latitude: string } } | null>): void {
+            <EventsScrollContainer events={[]} setEventDetails={function (): void {
                 throw new Error("Function not implemented.")
             } }/>
         </div>
