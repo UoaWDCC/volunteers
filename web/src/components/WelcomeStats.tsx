@@ -1,39 +1,45 @@
 // WelcomeStats
-import { Link } from 'react-router-dom';
 
 function WelcomeStats() {
-  // future fetch data from the server. (User, Hours, Shifts, etc.)
-  // =========== TEMPORARY: hard code data ===========
   const Data = {
-    User: '[placeholder]',
+    User: "John Doe",
     Hours: 40,
-    Shifts: 5,
   };
 
-  const { User, Hours, Shifts } = Data;
-  // =========== TEMPORARY: hard code data ===========
+  const { User, Hours } = Data;
 
   return (
-    <div className='theme-dashboard bg-white flex items-center rounded-[50px] px-[4%] py-[2%] w-[45%] gap-[2%]'>
-      <div className='text-gray mr-auto w-[50%] min-h-[0]'>
-        <h1 className='text-3xl'>
-          Welcome Back, <span className='user-on-new-line'>{User}!</span>
+    <div className="bg-white rounded-xl shadow-lg flex items-center space-x-4">
+      <div className="flex-1 p-6 ml-5">
+        <h1 className="text-4xl font-bold text-primary">
+          Welcome back {User}!
         </h1>
-        <h3 className='text-detail mb-[5%]'>Glad to see you're back in action!</h3>
-        <Link className='see-more bg-primary text-white text-[11px] m-0 px-[4%] py-[1.5%] rounded-[100px] hover:bg-primary-dark hover:no-underline' to='/'>
-          See More
-        </Link>
+        <p className="text-black">Glad to see you're back in action!</p>
+
+        <div className="grid grid-cols-2 gap-4">
+          <div className="mt-4 w-[100%]">
+            <div className="flex justify-between text-sm font-semibold text-gray-500">
+              <span>Level 2</span>
+              <span>Level 3</span>
+            </div>
+            <div className="bg-gray-300 rounded-full h-4 mt-2 relative">
+              <div className="bg-primary h-4 rounded-full w-[70%]" />
+            </div>
+            <p className="text-sm text-black mt-2">6 more hours to go!</p>
+          </div>
+          <div className="mt-6">
+            <span className="text-4xl font-bold">{Hours}</span>
+            <span className="text-black pl-1">hours</span>
+          </div>
+        </div>
       </div>
 
-      <div className='text-gray justify-between flex gap-[5px] ml-auto w-[50%]'>
-        <div className='bg-gray-100 flex justify-around flex-col rounded-[30px] px-[15%] py-[5%] text-center items-center'>
-          <h2 className='m-0 mt-[20%]'>{Hours}</h2>
-          <p className='m-0 my-[20%] font-medium'>Hours</p>
-        </div>
-        <div className='bg-gray-100 flex justify-around flex-col rounded-[30px] px-[15%] py-[5%] text-center items-center'>
-          <h2 className='m-0 mt-[20%]'>{Shifts}</h2>
-          <p className='m-0 mb-[20%] font-medium'>Shifts</p>
-        </div>
+      <div className="ml-6">
+        <img
+          src="./public/assets/dashboard/welcomeHandHeart.png"
+          alt="Heart Hands"
+          className="w-[100%] h-[100] rounded-xl"
+        />
       </div>
     </div>
   );

@@ -20,15 +20,17 @@ INFORMATION:
 - Using getGoogleUserByStudentID() will return a user object from the firestore db users collection based on the studentID as
   opposed to the Google user object.
 */
+import axios from 'axios';
 import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
-import { auth, db } from '../firebase/firebase';
+import { auth } from '../firebase/firebase';
 import AuthenticationContext from './AuthenticationContext';
 import { ReactNode } from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
-import { collection, getDocs, query, where, DocumentData } from 'firebase/firestore';
 import TokenContext from './TokenContext';
+import { DocumentData } from 'firebase/firestore';
+
 const googleProvider = new GoogleAuthProvider();
 
 export function useAuth() {
@@ -137,15 +139,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     //   return { exists: false, userDetails: undefined };
     // }
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
-    const colRef = collection(db, 'users');
-    const q = query(colRef, where('uid', '==', uid));
-    const querySnapshot = await getDocs(q);
-
-    if (!querySnapshot.empty) {
-      console.log('user exists');
-      return { exists: !querySnapshot.empty, userDetails: querySnapshot.docs[0].data() };
-    } else {
-      console.error('user does not exist');
+    try {
+      const response = await axios.get("http://localhost:3000/api/users/${uid}");
+  
+      if (response.status === 200) {
+        console.log('user exists in Firestore with UID:', uid);
+        return { exists: true, userDetails: response.data };
+      } else {
+        console.error('User not found with UID:', uid);
+        return { exists: false, userDetails: undefined };
+      }
+    } catch (error) {
+      console.error('Error checking user UID via API:', error);
       return { exists: false, userDetails: undefined };
     }
   };
@@ -188,26 +193,30 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     this function returns a user's JSON data from the firestore user collection based on the studentID
     this does NOT return the user's google user object, only the user's data from the firestore db
   */
-  async function getFirestoreCollectionUserByStudentID(studentID: string): Promise<DocumentData | null> {
-    try {
-      // Reference to the 'users' collection NOT the users document
-      const colRef = collection(db, 'users');
-      const q = query(colRef, where('studentID', '==', studentID));
-      const querySnapshot = await getDocs(q);
-
-      // If a document is found, return the first document's data
-      if (!querySnapshot.empty) {
-        console.log('User with studentID: ', studentID, ' exists in db users collection');
-        return querySnapshot.docs[0].data();
-      } else {
-        console.error('User with studentID: ', studentID, ' does not exist in db users collection');
+    async function getFirestoreCollectionUserByStudentID(studentID: string): Promise<DocumentData | null> {
+      try {
+        const response = await axios.get(`http://localhost:3000/api/users`);
+    
+        if (response.status === 200 && response.data.length > 0) {
+          const users = response.data;
+          const user = users.find((user: any) => user.studentID === studentID);
+    
+          if (user) {
+            console.log('User with studentID:', studentID, 'exists in db users collection');
+            return user;
+          } else {
+            console.error('User with studentID:', studentID, 'does not exist in db users collection');
+            return null;
+          }
+        } else {
+          console.error('No users found in db');
+          return null;
+        }
+      } catch (error) {
+        console.error('Error fetching users via API:', error);
         return null;
       }
-    } catch (error) {
-      console.error('Error fetching user by studentID:', error);
-      return null;
     }
-  }
 
   const contextValue = {
     currentUser,

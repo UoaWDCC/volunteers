@@ -1,16 +1,16 @@
-import { db } from '../config/firebase';
-import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';
-import { Request, Response } from 'express';
-import { error } from 'console';
+import { db } from '../config/firebase';  // Import the Firestore database configuration
+import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';  // Import Firestore functions
+import { Request, Response } from 'express';  // Import types for Express request and response objects
+import { error } from 'console';  // Import console error (though it's not used in the code...)
 
 
 const colRef = collection(db, "users");
 
 async function getUsers(req: Request, res: Response): Promise<void> {
-    const userDocs = await getDocs(colRef);
-    const users = userDocs.docs.map(doc => ({id: doc.id, ...doc.data()}));
+    const userDocs = await getDocs(colRef);  // Fetch all documents from the "users" collection
+    const users = userDocs.docs.map(doc => ({id: doc.id, ...doc.data()}));  // Map documents to their data and include the document ID
     
-    res.json(users);
+    res.json(users);  // Send the users data as JSON response
     
     // Print out the users for testing purposes
     // console.log(users);
@@ -20,7 +20,7 @@ async function addUser(req: Request, res: Response): Promise<void> {
   // Get all users
   const userDocs = await getDocs(colRef);
   const users = userDocs.docs.map(doc => doc.data());
-  const studentID = req.body.studentID;
+  const studentID = req.body.studentID;  // Get studentID from request body
 
   // Check if studentID is already in use
   for (let i = 0; i < users.length; i++) {
@@ -45,69 +45,69 @@ async function addUser(req: Request, res: Response): Promise<void> {
 
 async function deleteUser(req: Request, res: Response): Promise<void> {
 
-  const userRef = doc(db, "users", req.params.id);
-  const docSnapshot = (await getDoc(userRef));
+  const userRef = doc(db, "users", req.params.id);  // Reference to the specific user document
+  const docSnapshot = (await getDoc(userRef));  // Fetch the document snapshot
 
   if (!docSnapshot.exists()) {
-    console.log("Document does not exist")
-    res.status(404).send("Document not found")
+    console.log("Document does not exist");  // Log error message if document does not exist
+    res.status(404).send("Document not found");  // Send 404 response
     return;
   }
 
   const user = { id: docSnapshot.id, ...docSnapshot.data() }
-  await deleteDoc(userRef);
-  res.status(200).json(user);
+  await deleteDoc(userRef);  // Delete the document
+  res.status(200).json(user);  // Send the deleted user data as JSON response
 }
 
 async function getUser(req: Request, res: Response): Promise<void> {
     try {
 
-        const userId = req.params.id;
+        const userId = req.params.id;  // Get user ID from request parameters
 
         if (!userId) {
-            res.status(400).json({error: "User Id is Required"});
+            res.status(400).json({error: "User Id is Required"});  // Send error response if user ID is not provided
             return;
         }
 
 
-        const userRef = doc(db, 'users', userId);
-        const userSnapshot = await getDoc(userRef);
+        const userRef = doc(db, 'users', userId);  // Reference to the specific user document
+        const userSnapshot = await getDoc(userRef);  // Fetch the document snapshot
 
         if (userSnapshot.exists()) {
-            const user = userSnapshot.data();
-            res.json(user);
-            // console.log(user);
+            const user = userSnapshot.data();  // Get user data
+            res.json(user);  // Send the user data as JSON response
+            // console.log(user);  // Uncomment to log user data for debugging
         } else {
-            res.status(404).json({ error: 'User not found' });
+            res.status(404).json({ error: 'User not found' });  // Send 404 response if user does not exist
         }
     } catch (error) {
-        console.error('Error fetching user');
-        res.status(500).json({ error: 'Internal server error' });
+        console.error('Error fetching user');  // Log error if something goes wrong
+        res.status(500).json({ error: 'Internal server error' });  // Send 500 response for internal server error
     }
     
 }
 
 async function updateUser(req: Request, res: Response): Promise<void> {
     try {
-        const userRef = doc(db, "users", req.params.id);
-        const userDoc = await getDoc(userRef);
+        const userRef = doc(db, "users", req.params.id);  // Reference to the specific user document
+        const userDoc = await getDoc(userRef);  // Fetch the document snapshot
 
         if (!userDoc.exists()) {
-            res.status(404).json({ message: 'User not found' });
+            res.status(404).json({ message: 'User not found' });  // Send 404 response if user does not exist
             return;
         }
-        await updateDoc(userRef, req.body);
+        await updateDoc(userRef, req.body);  // Update the document with data from request body
         
         // Fetch the updated user data for testing purposes
         const updatedUserDoc = await getDoc(userRef);
         const updatedUser = updatedUserDoc.data();
 
-        res.status(200).json(updatedUser);
-        console.log(updatedUser);
+        res.status(200).json(updatedUser);  // Send updated user data as JSON response
+        console.log(updatedUser);  // Log updated user data for debugging
     } catch (error) {
-        console.error('Error updating user:', error);
-        res.status(500).json({ message: 'Internal server error' });
+        console.error('Error updating user:', error);  // Log error if something goes wrong
+        res.status(500).json({ message: 'Internal server error' });  // Send 500 response for internal server error
     }
 }
 
-export { getUsers, addUser, deleteUser, getUser, updateUser };
+export { getUsers, addUser, deleteUser, getUser, updateUser };  // Export functions for use in other modules

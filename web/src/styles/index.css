@@ -12,6 +12,11 @@
     -webkit-mask: url(/public/assets/sidebar/link-tab-mask.svg) no-repeat center;
     mask: url(/public/assets/sidebar/link-tab-mask.svg) no-repeat center;
   }
+
+  .mask-profile-tab { /* Tailwind doesnt support masks, so need to use css. This is used in SideBarTab.tsx */
+    -webkit-mask: url(/public/assets/sidebar/link-tab-mask.svg) no-repeat center;
+    mask: url(/public/assets/sidebar/link-tab-mask.svg) no-repeat center;
+  }
 }
 
 img {
