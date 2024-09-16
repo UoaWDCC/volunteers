@@ -28,7 +28,7 @@
     "dotenv": "^16.4.1",
     "express": "^4.18.2",
     "express-cors": "^0.0.3",
-    "firebase": "^10.11.0",
+    "firebase": "^10.13.0",
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.1.1",
     "ts-node": "^10.9.2",

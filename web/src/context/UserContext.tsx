@@ -8,7 +8,8 @@ export interface Action {
 
 export interface UsersContextType {
   users: User[];
-  dispatch: Dispatch<Action>
+  dispatch: Dispatch<Action>;
+  token: string | null;
 }
 
 export const UsersContext = createContext<UsersContextType | undefined>(undefined)

@@ -20,7 +20,6 @@ INFORMATION:
 - Using getGoogleUserByStudentID() will return a user object from the firestore db users collection based on the studentID as
   opposed to the Google user object.
 */
-
 import axios from 'axios';
 import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
 import { auth } from '../firebase/firebase';
@@ -29,12 +28,17 @@ import { ReactNode } from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
+import TokenContext from './TokenContext';
 import { DocumentData } from 'firebase/firestore';
 
 const googleProvider = new GoogleAuthProvider();
 
 export function useAuth() {
   return useContext(AuthenticationContext);
+}
+
+export function useToken() {
+  return useContext(TokenContext);
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
@@ -47,7 +51,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('' ?? '');
   const [uid, setUid] = useState<string>('');
-
+  const [token, setToken] = useState<string>('');
   // checks UID corresponding with email
   interface CheckUidResult {
     exists: boolean;
@@ -77,6 +81,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
       console.log('Google user is logged in as:', user);
+      const token = await user.getIdToken();
+      //console.log('Token:', token);
+      setToken(token);
       // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
       // if (!uidExists) {
       //   console.log('User not found in db, redirecting to register page');
@@ -226,7 +233,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     getFirestoreCollectionUserByStudentID,
   };
 
-  return <AuthenticationContext.Provider value={contextValue as any}>{!loading && children}</AuthenticationContext.Provider>;
+  return (
+  <AuthenticationContext.Provider value={contextValue as any}>
+    <TokenContext.Provider value={token}>
+      {!loading && children}
+    </TokenContext.Provider>
+  </AuthenticationContext.Provider>);
 }
 
 export default AuthProvider;
