@@ -2,6 +2,7 @@ import { UsersContext } from "./UserContext";
 import { User } from "@components/UserDetails";
 import { Action } from "./UserContext";
 import { ReactNode, useReducer } from "react";
+import { useToken } from "./AuthenticationContextProvider";
 
 export const usersReducer = (state: {users: User[]}, action: Action) => {
   switch (action.type) {
@@ -32,8 +33,10 @@ export const UsersContextProvider = ({ children } : {children:ReactNode}) => {
     users: []
   })
 
+  const token = useToken();
+
   return (
-    <UsersContext.Provider value={{ users: state.users, dispatch }}>
+    <UsersContext.Provider value={{ users: state.users, dispatch, token }}>
       { children }
     </UsersContext.Provider>
   )
