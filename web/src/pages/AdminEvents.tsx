@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useEventContext } from "../context/EventContext";
-import AdminEventsTable from "@components/AdminEventsTable";
-import AdminAddEvent from "@components/AdminAddEvent";
-import AdminEditEvent from "@components/AdminEditEvent";
+import AdminEventsTable from "@components/legacy/AdminEventsTable";
+import AdminAddEvent from "@components/legacy/AdminAddEvent";
+import AdminEditEvent from "@components/legacy/AdminEditEvent";
 
 export default function AdminEvents() {
   /**

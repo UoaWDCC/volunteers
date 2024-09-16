@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import ProfileEditModalContext from '../context/ProfileEditModalContext';
-import ProfileEditModalSideBarTab from './ProfileEditModalSideBarTab';
+import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
+import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
 
 const ProfileEditModal = () => {
@@ -35,7 +35,6 @@ const ProfileEditModal = () => {
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState('Personal Details');
-  const [page, setPage] = useState(1);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;

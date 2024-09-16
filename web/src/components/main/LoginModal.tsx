@@ -1,6 +1,6 @@
 import { useContext } from 'react';
-import LoginModalContext from '../context/LoginModalContext';
-import AuthenticationContext from '../context/AuthenticationContext.tsx';
+import LoginModalContext from '../../context/LoginModalContext.tsx';
+import AuthenticationContext from '../../context/AuthenticationContext.tsx';
 
 const LoginModal = () => {
   const { showModal, setShowModal } = useContext(LoginModalContext);

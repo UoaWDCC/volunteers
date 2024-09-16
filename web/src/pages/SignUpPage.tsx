@@ -1,6 +1,6 @@
 import '../styles/pageStyles/MainMenu.css';
 import AuthenticationContextProvider from '../context/AuthenticationContextProvider';
-import Signup from '../components/Signup';
+import Signup from '../components/register/Signup';
 
 function SignUpPage() {
   return (

@@ -1,9 +1,9 @@
 import { useNavigate } from 'react-router-dom';
-import AuthenticationContext from '../context/AuthenticationContext';
-import RegisterModalErrorContext from '../context/RegisterModalErrorContext.tsx';
+import AuthenticationContext from '../../context/AuthenticationContext.tsx';
+import RegisterModalErrorContext from '../../context/RegisterModalErrorContext.tsx';
 import { FormEvent, useContext, useEffect, useState } from 'react';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
-import { db } from '../firebase/firebase';
+import { db } from '../../firebase/firebase.tsx';
 import RegisterErrorModal from './RegisterErrorModal.tsx';
 
 function Signup() {

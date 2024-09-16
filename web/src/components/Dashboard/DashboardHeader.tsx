@@ -1,5 +1,5 @@
 import { IoIosNotifications } from "react-icons/io";
-import NotificationTab from "@components/NotificationTab";
+import NotificationTab from "@components/Dashboard/NotificationTab";
 import { useState } from "react";
 
 const DashboardHeader = () => {

@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import MainPageButtonHeadings from "./MainPageButtonHeadings";
-import LoginModalContext from "../context/LoginModalContext";
+import LoginModalContext from "../../context/LoginModalContext";
 import axios from "axios";
  
 interface OurCommunityData {

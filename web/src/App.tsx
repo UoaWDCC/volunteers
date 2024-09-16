@@ -9,7 +9,7 @@ import TestingComponent from '@components/TestComponent';
 // import SignupEmergency from '@pages/SignupEmergency';
 import SignUpPage from '@pages/SignUpPage';
 import RegisterModalErrorContextProvider from './context/RegisterModalErrorContextProvider';
-import RegisterErrorModal from '@components/RegisterErrorModal';
+import RegisterErrorModal from '@components/register/RegisterErrorModal';
 import Dashboard from '@pages/Dashboard';
 
 

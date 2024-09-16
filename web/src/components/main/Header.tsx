@@ -1,6 +1,6 @@
-import AuthenticationContext from '../context/AuthenticationContext.tsx';
+import AuthenticationContext from '../../context/AuthenticationContext.tsx';
 import { useContext } from 'react';
-import LoginModalContext from '../context/LoginModalContext.tsx';
+import LoginModalContext from '../../context/LoginModalContext.tsx';
 
 function Header() {
   const { setShowModal } = useContext(LoginModalContext);

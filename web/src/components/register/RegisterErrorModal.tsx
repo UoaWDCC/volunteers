@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import RegisterModalErrorContext from '../context/RegisterModalErrorContext';
+import RegisterModalErrorContext from '../../context/RegisterModalErrorContext';
 
 const RegisterErrorModal = () => {
     const { showModal, setShowModal, message, error } = useContext(RegisterModalErrorContext);

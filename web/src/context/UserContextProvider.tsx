@@ -1,5 +1,5 @@
 import { UsersContext } from "./UserContext";
-import { User } from "@components/UserDetails";
+import { User } from "@components/legacy/UserDetails";
 import { Action } from "./UserContext";
 import { ReactNode, useReducer } from "react";
 import { useToken } from "./AuthenticationContextProvider";
