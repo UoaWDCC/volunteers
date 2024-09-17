@@ -9,10 +9,10 @@ type SideBarTabProps = {
 };
 
 const SideBarTab: React.FC<SideBarTabProps> = ({ unselected, selected, tabName, selectedTab, setSelectedTab, switchPage }) => {
-    const baseTabStyle = "flex flex-row gap-2 items-center hover:no-underline w-[190px] h-[84px] transition-all duration-[400] bg-primary mask-tab my-[-5px]"
+    const baseTabStyle = "flex flex-row gap-2 items-center hover:no-underline w-[190px] h-[84px] transition-all duration-[400] mask-tab my-[-3px]"
 
     return (
-        <button className={selectedTab === tabName ? baseTabStyle + " bg-white text-primary" : baseTabStyle + " hover:bg-[#ffffff40] text-white"} onClick={() => {
+        <button className={selectedTab === tabName ? baseTabStyle + " bg-[#F7F7FB] text-primary" : baseTabStyle + " bg-primary hover:bg-[#ffffff40] text-white"} onClick={() => {
             setSelectedTab(tabName)
             switchPage()}}> 
             <div className="w-auto h-auto">
