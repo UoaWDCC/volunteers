@@ -1,10 +1,25 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import CommunityGalleryCard from '../dashboardCommunity/CommunityGalleryCard';
+import CommunityGalleryCard from '../DashboardCommunity/CommunityGalleryCard';
 
-interface GalleryData {
-  title: string;
-  image: string;
+type userData = {
+  profile_picture: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: string;
+  upi: string;
+  birthdate: string;
+  gender: string;
+  yearLevel: string;
+  dietaryRequirements: string;
+  driversLicense: string;
+  hours: number;
+  otherRequirements: string;
+  emergencyContactFirstName: string;
+  emergencyContactLastName: string;
+  emergencyContactMobile: string;
+  emergencyContactRelationship: string;
 }
 
 const CommunityGallery = ({event, location}: {event: string, location: string}) => {
