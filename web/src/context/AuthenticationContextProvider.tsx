@@ -80,10 +80,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setCurrentUser(user);
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
-      console.log('Google user is logged in as:', user);
       const token = await user.getIdToken();
-      //console.log('Token:', token);
       setToken(token);
+
+      window.location.href = 'dashboard';
       // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
       // if (!uidExists) {
       //   console.log('User not found in db, redirecting to register page');
@@ -112,6 +112,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log('user not exists');
       } else {
         console.log('uid found in db, firestore user details:', userDetails);
+        window.location.href = 'dashboard';
         return userDetails;
       }
     } catch (error) {

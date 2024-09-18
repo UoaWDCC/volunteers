@@ -32,6 +32,7 @@ function Dashboard() {
     setTab(5);
   };
 
+
     return (
         <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
             {/* width of the left nav bar */}
