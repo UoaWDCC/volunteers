@@ -30,6 +30,7 @@ const MainGallery = () => {
     },
   ]);
 
+  // TODO: replace this axios call with a utility function within utils/---.ts
   useEffect(() => {
     // Fetch gallery data
     axios

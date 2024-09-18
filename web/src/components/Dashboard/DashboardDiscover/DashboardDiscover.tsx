@@ -54,7 +54,7 @@ function DashboardDiscover() {
   let startDate = new Date();
 
   // Get events from backend
-  // should be dynamic, relative to the current environment
+  // TODO: replace this axios call with a utility function within utils/---.ts
   useEffect(() => {
     axios
       .get("http://localhost:3000/api/events")

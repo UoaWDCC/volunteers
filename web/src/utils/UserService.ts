@@ -1,8 +1,21 @@
 // This file manages get, add, remove, modify user calls from frontend.
 
+/*
+Main idea of this file is to make API calls to the backend to get, add, remove, modify user data.
+
+Currently, this file has both user, and announcement related API calls. This should be separated in the future.
+
+Within frontend, instead of calling axios directly, we should call these functions to make API calls.
+
+This will allow a more organized and clean codebase.  It will also allow for the apiUrl to me more easily managed as it dynamically changes based on the environment.
+*/
+
+
+
+
 import axios from 'axios';
 
-// should be dynamic, relative to the current environment
+// TODO: Should be dynamic, relative to the current environment / proxy
 const apiUrl = 'http://localhost:3000';
 
 // Fetch a user by ID
