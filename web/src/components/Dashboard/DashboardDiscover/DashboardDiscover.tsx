@@ -77,7 +77,7 @@ function DashboardDiscover() {
   return (
     <div className="flex flex-col w-[100%] h-[85vh] px-5">
 
-                <div className='flex flex-col bg-white mb-5 h-[45%] rounded-lg shadow-md'>
+                <div className='flex flex-col bg-white mb-5 h-[45%] rounded-lg shadow-md cursor-pointer'>
                     <div className='flex flex-row p-7'>
                     <img className='h-[190px] w-[680px] rounded-lg' src={flagshipEvent.image} />
                     <div className="flex flex-col">
