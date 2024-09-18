@@ -1,17 +1,15 @@
-import Header from '@components/main/Header';
-import Footer from '../components/main/Footer';
-import '../styles/pageStyles/MainMenu.css';
-import MainGallery from '@components/main/MainGallery';
-import SponsorsList from '@components/main/SponsorsList';
-import EventHighlights from '@components/main/EventHighlights';
-import OurAchievements from '@components/main/OurAchievements';
-import OurCommunity from '@components/main/OurCommunity';
-import AuthenticationContextProvider from '../context/AuthenticationContextProvider';
-
-// import ShowCaseUserAnnouncements from '@components/legacy/ShowCaseUserAnnouncements';
+import Header from "@components/main/Header";
+import Footer from "../components/main/Footer";
+import "../styles/pageStyles/MainMenu.css";
+import MainGallery from "@components/main/MainGallery";
+import SponsorsList from "@components/main/SponsorsList";
+import EventHighlights from "@components/main/EventHighlights";
+import OurAchievements from "@components/main/OurAchievements";
+import OurCommunity from "@components/main/OurCommunity";
+import AuthenticationContextProvider from "../context/AuthenticationContextProvider";
 import LoginModalContextProvider from "../context/LoginModalContextProvider";
 import LoginModal from "@components/main/LoginModal";
-import AboutUs from '@components/main/AboutUs';
+import AboutUs from "@components/main/AboutUs";
 
 function MainMenu() {
   return (

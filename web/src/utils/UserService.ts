@@ -2,6 +2,7 @@
 
 import axios from 'axios';
 
+// should be dynamic, relative to the current environment
 const apiUrl = 'http://localhost:3000';
 
 // Fetch a user by ID
