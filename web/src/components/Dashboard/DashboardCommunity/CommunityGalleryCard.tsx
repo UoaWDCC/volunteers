@@ -30,6 +30,11 @@ const CommunityGalleryCard = ({user}: CommunityGalleryCardProps) => {
         console.log('add friend');
     };
 
+    if (user.profile_picture === "" || user.profile_picture === null || user.profile_picture === undefined) {
+        console.log(user.profile_picture);
+        user.profile_picture = "assets/profile_placeholder.png";
+    }
+
     return (  
         <div className="w-[300px] h-[540px] rounded-2xl relative max-[1887px]:w-[270px] max-[1887px]:h-[510px] max-[1755px]:w-[300px]">
             <div className="bg-primary h-[23%] rounded-t-2xl">
