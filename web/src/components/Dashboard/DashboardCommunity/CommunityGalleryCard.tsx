@@ -1,12 +1,30 @@
 import { BsFillPersonPlusFill } from "react-icons/bs";
 
+type userData = {
+    profile_picture: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    mobile: string;
+    upi: string;
+    birthdate: string;
+    gender: string;
+    yearLevel: string;
+    dietaryRequirements: string;
+    driversLicense: string;
+    hours: number;
+    otherRequirements: string;
+    emergencyContactFirstName: string;
+    emergencyContactLastName: string;
+    emergencyContactMobile: string;
+    emergencyContactRelationship: string;
+  }
+
 interface CommunityGalleryCardProps {
-  name: string;
-  hours: string;
-  profileImgLink: string;
+  user: userData;
 }
 
-const CommunityGalleryCard = ({name, hours, profileImgLink}: CommunityGalleryCardProps) => {
+const CommunityGalleryCard = ({user}: CommunityGalleryCardProps) => {
     
     const handleAddFriend = () => {
         console.log('add friend');
@@ -18,17 +36,17 @@ const CommunityGalleryCard = ({name, hours, profileImgLink}: CommunityGalleryCar
             </div>
 
             <div className="bg-lightGrey absolute w-[150px] top-[7%] right-[25%] rounded-full max-[1887px]:w-[125px] max-[1887px]:right-[26%] max-[1755px]:right-[28%]"> 
-                <img src={profileImgLink} alt="" className="w-[100%] object-cover aspect-square rounded-full"/>
+                <img src={user.profile_picture} alt="profile" className="w-[100%] object-cover aspect-square rounded-full"/>
             </div>
 
             <div className="border-b-[1px] border-x-[1px] rounded-b-2xl border-lightGrey2 h-[70%] flex flex-col items-center">
-                <p className="text-[25px] mt-[5.8rem] mb-0 text-black max-[1887px]:mt-[4rem]">{name}</p>
-                <p className="text-[40px] my-1 text-black">{hours}</p>
+                <p className="text-[25px] mt-[5.8rem] mb-0 text-black max-[1887px]:mt-[4rem]">{user.firstName + " " + user.lastName}</p>
+                <p className="text-[40px] my-1 text-black">{user.hours}</p>
                 <p className="text-body text-m text-lightGrey2 mb-6">hours</p>
 
                 <div className="flex items-center w-[70%] justify-between">
                     <div className="bg-lightGrey w-[40px] rounded-full flex-shrink-0">
-                        <img src={profileImgLink} alt="" className="aspect-square rounded-full"/>
+                        <img src={user.profile_picture} alt="" className="aspect-square rounded-full object-cover"/> {/* this should be the profile picture of the mutual, but for now just uses the user's img */}
                     </div>
                     {/* THIS DOES NOT HANDLE MUTUALS, IDK HOW WE ARE GONNA DO THAT SO I HAVENT MADE PROPS FOR THE BELOW STUFF */}
                     <p className="text-body text-sm text-lightGrey2 ml-4 mb-0 mr-0">jaquallelina and 12 other mutual friends</p>
