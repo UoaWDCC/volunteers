@@ -12,7 +12,6 @@ const SearchBar: React.FC<SearchBarProps> = ({ placeholder = "Search by name" })
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     context.setSearchTerm(value);
-    console.log(context.searchTerm);
   };
 
   return (
