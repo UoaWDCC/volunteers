@@ -4,7 +4,7 @@
 
 import axios from "axios";
 import { useState, useEffect } from "react";
-import CommunityGallery from "../dashboardCommunity/CommunityGallery";
+import CommunityGallery from "../DashboardCommunity/CommunityGallery";
 
 interface EventData {
   title: string;

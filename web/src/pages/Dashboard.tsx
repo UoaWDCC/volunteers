@@ -1,9 +1,9 @@
 import { useState } from "react";
-import DashboardCommunity from "../components/Dashboard/dashboardCommunity/DashboardCommunity";
+import DashboardCommunity from "../components/Dashboard/DashboardCommunity/DashboardCommunity";
 import DashboardProfile from "@components/Dashboard/dashboardProfile/DashboardProfile";
 import DashboardDashboard from "@components/Dashboard/dashboardDashboard/DashboardDashboard";
-import DashboardDiscover from "@components/Dashboard/dashboardDiscover/DashboardDiscover";
-import SearchBar from "@components/Dashboard/dashboardCommunity/SearchBar";
+import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
+import SearchBar from "@components/Dashboard/DashboardCommunity/SearchBar";
 import ProfileEditModalContextProvider from "../context/ProfileEditModalContextProvider";
 import DashboardHeader from "@components/Dashboard/DashboardHeader";
 import SideBar from "@components/Dashboard/SideBar";
