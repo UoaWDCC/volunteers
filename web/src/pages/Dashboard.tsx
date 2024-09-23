@@ -33,7 +33,7 @@ function Dashboard() {
   };
 
     return (
-        <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
+        <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row h-screen">
             {/* width of the left nav bar */}
             {/* place thing component here and remove bg-primary */}
             <div className='bg-primary w-[15%] h-auto'> 
