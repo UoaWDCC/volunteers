@@ -92,42 +92,33 @@ function DashboardDiscover() {
 
   return (
     <div className="flex flex-col w-[100%] h-[85vh] px-5">
-      <div className="flex flex-col bg-white mb-5 h-[45%] rounded-lg shadow-md">
-        <div className="flex flex-row p-7">
-          <img
-            className="h-[190px] w-[680px] rounded-lg"
-            src={flagshipEvent.image}
-          />
-          <div className="flex flex-col">
-            <div className="pl-5 text-2xl font-medium text-primary pt-1">
-              This month's event...
-            </div>
-            <div className="pl-5 pt-3">
-              {days[startDate.getDay()] +
-                ", " +
-                startDate.getDate() +
-                " " +
-                months[startDate.getMonth()]}
-            </div>
-            <div className="pl-5 font-medium">{flagshipEvent.event_title}</div>
-            <div className="pl-5 font-light">{flagshipEvent.location}</div>
-            <div className="flex flex-row pt-2 pb-2">
-              <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
-              <div className="ml-2 font-light text-sm">
-                Eduardo is interested
-              </div>
-              <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
-              <div className="ml-2 font-light text-sm">
-                John, and 4 other friends are going
-              </div>
-            </div>
-            <div
-              className="pl-5 text-primary hover:underline cursor-pointer"
-              onClick={() => setEventDetails(flagshipEvent)}
-            >
-              More Info
-            </div>
-          </div>
+                <div className='flex flex-col bg-white mb-5 h-[45%] rounded-lg shadow-md cursor-pointer'>
+                    <div className='flex flex-row p-7'>
+                    <img className='h-[190px] w-[680px] rounded-lg' src={flagshipEvent.image} />
+                    <div className="flex flex-col">
+                    <div className='pl-5 text-2xl font-medium text-primary pt-1'>This month's event...</div>
+                    <div className='pl-5 pt-3'>{days[startDate.getDay()] + ", " + startDate.getDate() + " " + months[startDate.getMonth()]}</div>
+                    <div className='pl-5 font-medium'>{flagshipEvent.event_title}</div>
+                    <div className='pl-5 font-light'>{flagshipEvent.location}</div>
+                    <div className="flex flex-row pt-2 pb-2">
+                    <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
+                    <div className='ml-2 font-light text-sm'>Eduardo is interested</div>
+                    <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
+                    <div className='ml-2 font-light text-sm'>John, and 4 other friends are going</div>
+                    </div>
+                    <div className='pl-5 text-primary hover:underline cursor-pointer' onClick={() => setEventDetails(flagshipEvent)}>More Info</div>
+                    </div>
+                    </div>
+                </div>
+                    
+                <div className='mb-5 h-[55%]'>
+                    {/* adjust sizes and stuff as needed */}
+                    <EventsScrollContainer events = {events} setEventDetails = {setEventDetails}/>
+                </div>
+
+                {eventDetails && (
+                  <EventDetails event={eventDetails} setEventDetails={setEventDetails} />
+                )}
         </div>
       </div>
 

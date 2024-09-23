@@ -38,7 +38,7 @@ export default function Event({event, setEventDetails}: EventProps) {
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
     return (
-        <div onClick={() => setEventDetails(event)} className="dashboard bg-white-background hover:bg-white hover:shadow-sm ease-in duration-500 items-center m-4 flex rounded-xl"> {/* event-container */}
+        <div onClick={() => setEventDetails(event)} className="dashboard bg-white-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 items-center m-4 flex rounded-xl cursor-pointer"> {/* event-container */}
             <div className="w-3/4 flex items-center">
                 <div className="inline m-5"> {/* image-container */}
                     <img loading="lazy" className="h-24 w-40 object-cover rounded-md" src={event.image} />
