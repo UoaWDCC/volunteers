@@ -2,7 +2,7 @@
 
 function WelcomeStats() {
   const Data = {
-    User: "John Doe",
+    User: "John",
     Hours: 40,
   };
 

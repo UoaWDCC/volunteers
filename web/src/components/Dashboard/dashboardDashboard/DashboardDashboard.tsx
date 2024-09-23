@@ -4,18 +4,18 @@ import UpcomingEvents from "./UpcomingEvents";
 
 function DashboardDashboard() {
   return (
-    <div className="dashboard overflow-y-hidden flex flex-row w-[100%] h-screen px-5 gap-5 mb-10">
+    <div className="dashboard overflow-y-hidden flex flex-row w-full h-full pt-0 p-5 gap-5">
       {/* width of the gallery */}
-      <div className="w-[70%] flex flex-col gap-2">
-        <div className=" w-h-[20%]">
+      <div className="w-[75%] flex flex-col gap-2">
+        <div className="">
           <WelcomeStats />
         </div>
-        <div className="h-[60%]">
+        <div className="h-[62%]">
           <UpcomingEvents />
         </div>
       </div>
 
-      <div className="w-[30%] h-[40vw]">
+      <div className="w-[20%]">
         {/* adjust sizes and stuff as needed */}
         <Leaderboard />
       </div>

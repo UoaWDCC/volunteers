@@ -17,7 +17,7 @@ const DashboardHeader = () => {
   };
 
   return (
-    <div className="h-[15%]">
+    <div className="">
       <div className="flex justify-between items-center w-fit gap-8">
         <div className="flex">
           <span className="p-1 rounded-full bg-primary cursor-pointer shadow-lg transform active:scale-[80%] transition-transform" onClick={toggleNotificationTab}>
