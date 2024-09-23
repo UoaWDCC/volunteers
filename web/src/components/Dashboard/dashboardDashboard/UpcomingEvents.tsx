@@ -50,17 +50,17 @@ const event_test_six = {
 
 const UpcomingEvents = () => {
   return (
-    <div className="flex flex-col bg-white mt-5 rounded-lg shadow-lg h-full font-light">
+    <div className="flex flex-col h-full bg-white font-light">
       <div>
-        <p className="text-black text-[38px] leading-[1.15] pl-8 pt-2 m-0 font-semibold">
+        <p className="text-primary text-[38px] leading-[1.15] pl-8 pt-2 m-0 font-semibold">
           Upcoming Events
         </p>
-        <p className="text-black text-[14px] leading-[1.15] pl-8 pt-4 pb-5 m-0">
+        <p className="text-black text-[14px] leading-[1.15] pl-8 pt-2 pb-5 m-0">
           See what's going on!
         </p>
       </div>
-      <div className="flex-grow overflow-auto ml-5">
-        <div className="grid grid-cols-2 gap-5">
+      <div className="overflow-auto ml-5">
+        <div className="flex flex-row flex-wrap gap-5">
           <UpcomingEvent event={event_test_one} />
           <UpcomingEvent event={event_test_six} />
           <UpcomingEvent event={event_test_three} />

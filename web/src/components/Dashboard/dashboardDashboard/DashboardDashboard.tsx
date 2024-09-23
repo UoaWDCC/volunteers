@@ -1,16 +1,17 @@
 import Leaderboard from "../Leaderboard";
 import WelcomeStats from "./WelcomeStats";
 import UpcomingEvents from "./UpcomingEvents";
+import UpcomingEvent from "./UpcomingEvent";
 
 function DashboardDashboard() {
   return (
-    <div className="dashboard overflow-y-hidden flex flex-row w-full h-full pt-0 p-5 gap-5">
+    <div className="dashboard flex flex-row w-full h-full pt-0 p-5 gap-5">
       {/* width of the gallery */}
-      <div className="w-[75%] flex flex-col gap-2">
-        <div className="">
+      <div className="w-[75%] h-full flex flex-col gap-8">
+        <div className="flex-none">
           <WelcomeStats />
         </div>
-        <div className="h-[62%]">
+        <div className="flex-1 shadow-lg rounded-lg overflow-y-auto">
           <UpcomingEvents />
         </div>
       </div>

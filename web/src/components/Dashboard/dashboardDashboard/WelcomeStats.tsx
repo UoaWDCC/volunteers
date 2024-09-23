@@ -34,11 +34,11 @@ function WelcomeStats() {
         </div>
       </div>
 
-      <div className="ml-6">
+      <div className="">
         <img
           src="./public/assets/dashboard/welcomeHandHeart.png"
           alt="Heart Hands"
-          className="w-[100%] h-[100] rounded-xl"
+          className="w-[100%] rounded-xl"
         />
       </div>
     </div>
