@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import CommunityGalleryCard from '../dashboardCommunity/CommunityGalleryCard';
+import CommunityGalleryCard from './CommunityGalleryCard';
 
 interface GalleryData {
   title: string;
@@ -45,14 +45,14 @@ const hours = '14';
 
   
     return (  
-        <div className='bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg max-[1887px]:px-[6%] max-[1770px]:px-[3%] max-[1510px]:px-[8%]'>
+        <div className='bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg'>
             <p>People you may know from {event} at {location}</p>
-            <div className='flex gap-x-[5px] justify-between gap-y-2 flex-wrap '>
+        <div className='w-full grid grid-cols-3 max-[1280px]:grid-cols-2 min-[2100px]:grid-cols-4 min-[2560px]:grid-cols-5 gap-[2%]'>
                 {/* hardcoded 4 people, this shoulded be mapped with however many people in the event?? */}
-                <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[0].image}/>
-                <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[1].image}/>
-                <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[2].image}/>
-                <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[3].image}/>
+                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[0].image} />
+                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[1].image} />
+                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[2].image} />
+                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[3].image} />
             </div>
         </div>
     );
