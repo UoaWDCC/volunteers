@@ -1,4 +1,4 @@
-import EventsScrollContainer from "./Dashboard/dashboardDiscover/EventsScrollContainer"
+import EventsScrollContainer from "../components/Dashboard/dashboardDiscover/EventsScrollContainer"
 export default function TestingComponent() {
     return (
         <div> {/*try add className="dashboard" inside the div tag */}
