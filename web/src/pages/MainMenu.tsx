@@ -7,8 +7,6 @@ import EventHighlights from '@components/main/EventHighlights';
 import OurAchievements from '@components/main/OurAchievements';
 import OurCommunity from '@components/main/OurCommunity';
 import AuthenticationContextProvider from '../context/AuthenticationContextProvider';
-
-// import ShowCaseUserAnnouncements from '@components/legacy/ShowCaseUserAnnouncements';
 import LoginModalContextProvider from "../context/LoginModalContextProvider";
 import LoginModal from "@components/main/LoginModal";
 import AboutUs from '@components/main/AboutUs';
