@@ -4219,7 +4219,7 @@ vite@^5.0.8:
     typeface-lora "^1.1.13"
     typeface-poppins "^1.1.13"
     universal-cookie "^7.0.2"
-    web "file:../../../../../../AppData/Local/Yarn/Cache/v6/npm-web-0.0.0-d63c2153-992f-4736-a329-bebe752cb1bf-1727169056964/node_modules/web"
+    web "file:"
     zod "^3.22.4"
 
 websocket-driver@>=0.5.1:
