@@ -26,7 +26,8 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "forceConsistentCasingInFileNames": true // added to solve yarn build error
   },
   "include": ["src", "../api/config"],
   "references": [{ "path": "./tsconfig.node.json" }]
