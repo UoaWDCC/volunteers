@@ -1,4 +1,4 @@
-import CommunityGalleryWhole from "./CommunityGalleryWhole";
+import CommunityGalleryWhole from "../dashboardCommunity/CommunityGalleryWhole";
 import Leaderboard from "../Leaderboard";
 
 function DashboardCommunity() {
