@@ -3,12 +3,12 @@ import Leaderboard from "../Leaderboard";
 
 function DashboardCommunity() {
   return (
-    <div className="flex flex-row w-[100%] h-[85vh] px-5 gap-5 overflow-scroll scrollbar-none">
-      <div className="flex flex-col w-[80%]">
+    <div className="flex flex-row w-full h-full gap-5">
+      <div className="flex flex-col w-[75%] h-full overflow-y-auto scrollbar-none">
         <CommunityGalleryWhole />
       </div>
 
-      <div className="sticky top-1 flex justify-end w-[20%] h-[84vh]">
+      <div className="w-[20%]">
         <Leaderboard />
       </div>
     </div>

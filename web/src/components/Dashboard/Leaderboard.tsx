@@ -102,7 +102,7 @@ function Leaderboard() {
     }
 
     return (
-        <div className="w-full h-full pt-7 pb-2 flex flex-col items-center bg-white rounded-xl shadow-lg">
+        <div className="w-full h-full pt-7 pb-2 flex flex-col items-center bg-white rounded-xl shadow-lg ">
             <h2 className="text-primary text-section-header font-semibold">Leaderboard</h2>
 
             <img src={profileImg} alt="profile" className="object-cover w-[90px] h-[90px] rounded-full m-2" />

@@ -24,7 +24,7 @@ interface EventsProps {
 export default function EventsScrollContainer({events, setEventDetails}: EventsProps) {
     
     return (
-        <div className="bg-white-background h-full overflow-y-scroll">
+        <div className="bg-white-background h-full overflow-y-scroll scrollbar-none">
             {events.map((e, index) => (
                 <Event key={index} event={e} setEventDetails={setEventDetails}/>
             ))
