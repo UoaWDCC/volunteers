@@ -13,7 +13,7 @@ const ProfileMyProfileHeading = ({ name }: { name: string }) => {
 
       {/* Profile image placeholder */}
       <div className="absolute bottom-[15%] left-10">
-        <div className="bg-black w-[129px] h-[129px] rounded-full"></div>
+        <div className="bg-black w-[8rem] h-[8rem] rounded-full"></div>
       </div>
     </div>
   );
