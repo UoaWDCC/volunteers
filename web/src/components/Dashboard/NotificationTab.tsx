@@ -28,7 +28,7 @@ function NotificationTab({ toggleNotificationTab }: NotificationTabProps) {
   }, []);
 
   return (
-    <div className="absolute flex flex-row bg-white h-[96vh] w-[400px] shadow-lg top-2 right-4">
+    <div className="absolute flex flex-row bg-white h-[87.5vh] w-[400px] rounded-lg shadow-lg top-6 right-0">
       <div>
         <button className="text-black bg-gray-100 rounded-full text-sm py-1 px-2.5 mt-4 ml-4 mr-4 hover:text-white hover:bg-primary" onClick={toggleNotificationTab}>&gt;</button>
       </div>

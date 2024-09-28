@@ -59,8 +59,8 @@ const UpcomingEvents = () => {
           See what's going on!
         </p>
       </div>
-      <div className="overflow-auto ml-5 scrollbar-none">
-        <div className="flex flex-row flex-wrap gap-5">
+      <div className="overflow-auto mx-5 scrollbar-none">
+        <div className="flex flex-row flex-wrap gap-5 justify-center">
           <UpcomingEvent event={event_test_one} />
           <UpcomingEvent event={event_test_six} />
           <UpcomingEvent event={event_test_three} />

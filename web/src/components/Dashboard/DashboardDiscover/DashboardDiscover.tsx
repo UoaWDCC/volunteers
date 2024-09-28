@@ -95,7 +95,7 @@ function DashboardDiscover() {
         </div>
       </div>
 
-      <div className='flex-1 rounded-xl'>
+      <div className='flex-1 rounded-xl overflow-y-auto'>
         {/* adjust sizes and stuff as needed */}
         <EventsScrollContainer events={events} setEventDetails={setEventDetails} />
       </div>

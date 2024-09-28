@@ -9,9 +9,9 @@ type Event = {
 
 const UpcomingEvent = ({ event }: { event: Event }) => {
   return (
-    <div className="flex flex-col flex-none bg-white text-black rounded-xl border-solid border-2 border-slate-100 border p-5">
+    <div className="flex flex-col bg-white text-black rounded-xl border-solid border-2 border-slate-100 border p-5">
       <img
-        className="w-[32rem] rounded-xl object-cover"
+        className="w-[30rem] rounded-xl object-cover"
         src={event.img || "./public/assets/dashboard/emptyEventImage.png"}
         alt="event image"
       />
