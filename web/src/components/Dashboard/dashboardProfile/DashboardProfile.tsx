@@ -4,20 +4,20 @@ import ProfileMyProfileProgressBar from "./ProfileMyProfileProgressBar";
 
 function DashboardProfile() {
   return (
-    <div className="overflow-hidden flex flex-col w-[100%] h-screen px-5">
+    <div className="overflow-hidden flex flex-col w-[96%]">
 
                 {/* width of the gallery */}
-                <div className='flex flex-col bg-red-100 mb-5 h-[40%]'>
+                <div className='flex flex-col mb-5 h-[16rem]'>
                     <ProfileMyProfileHeading name ="John Doe"></ProfileMyProfileHeading>
                 </div>
                     
-                <div className='bg-green-100 flex flex-row justify-between gap-5 mb-5 h-[60%]'>
+                <div className='flex flex-row gap-5 flex-1 mb-2'>
                     {/* adjust sizes and stuff as needed */}
-                    <div className="bg-orange-100 w-[65%] h-[700px]">
+                    <div className="w-[75%]">
                         <ProfileMyProfileOverview></ProfileMyProfileOverview>
                     </div>
 
-                    <div className="bg-purple-100 w-[35%] h-[500px]">
+                    <div className="w-[25%]">
                         <ProfileMyProfileProgressBar totalHours={20} completedHours={14}></ProfileMyProfileProgressBar>
                     </div>
                 </div>

@@ -1,7 +1,7 @@
 
 const ProfileMyProfileHeading = ({ name }: { name: string }) => {
   return (
-    <div className="dashboard shadow-lg rounded-2xl overflow-hidden w-full h-full flex flex-col relative">
+    <div className="dashboard shadow-lg rounded-xl overflow-hidden w-full h-full flex flex-col relative">
       {/* Blue header section */}
       <div className="dashboard bg-primary h-[62.5%] w-full"></div>
 
@@ -12,7 +12,7 @@ const ProfileMyProfileHeading = ({ name }: { name: string }) => {
       </div>
 
       {/* Profile image placeholder */}
-      <div className="absolute top-[145px] left-10">
+      <div className="absolute bottom-[15%] left-10">
         <div className="bg-black w-[129px] h-[129px] rounded-full"></div>
       </div>
     </div>

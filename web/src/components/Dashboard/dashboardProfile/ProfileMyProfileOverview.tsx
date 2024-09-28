@@ -30,12 +30,12 @@ const ProfileMyProfileOverview = () => {
     <>
       {showModal && (<ProfileEditModal/>)}
       <div
-        className="dashboard bg-white rounded-2xl shadow-md w-full flex flex-col"
+        className="dashboard bg-white w-full flex flex-col rounded-lg shadow-lg"
         style={{
           padding: '30px',  
         }}
       >
-        <div className="flex justify-between mb-6">
+        <div className="flex justify-between mb-4">
           <h2 className="dashboard text-heading2 text-primary">Profile Overview</h2>
           <button className="dashboard text-body-heading text-primary underline bg-transparent" onClick={ handleShowModal }>
             Edit Profile
@@ -43,9 +43,9 @@ const ProfileMyProfileOverview = () => {
         </div>
 
         {/* Personal Details Section */}
-        <div className="mb-8">
-          <h3 className="dashboard text-heading3 mb-4">Personal Details</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-6">
+        <div className="mb-4">
+          <h3 className="dashboard text-heading3 mb-2">Personal Details</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-0">
             {/* Row 1 */}
             <div>
               <label className="dashboard text-detail-regular">First Name</label>
@@ -80,7 +80,7 @@ const ProfileMyProfileOverview = () => {
         </div>
 
         {/* Additional Details Section */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h3 className="dashboard text-heading3 mb-4">Additional Details</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-6">
             {/* Row 1 */}
@@ -100,7 +100,7 @@ const ProfileMyProfileOverview = () => {
         </div>
 
         {/* Emergency Contact Details Section */}
-        <div className="mb-8">
+        <div className="">
           <h3 className="dashboard text-heading3 mb-4">Emergency Contact Details</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-6">
             {/* Row 1 */}

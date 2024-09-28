@@ -11,16 +11,16 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
   const percentage = (completedHours / totalHours) * 100;
 
   return (
-    <div className="w-full h-full bg-white shadow-lg rounded-3xl p-6 flex flex-col justify-between items-center">
+    <div className="w-full bg-white p-6 flex flex-col justify-between items-center rounded-lg shadow-lg">
       {/* Title */}
       
-      <h2 className="dashboard text-heading2 text-primary mb-0 mt-2">
+      <h2 className="dashboard text-heading2 text-primary mb-4 mt-2">
         Volunteering Tracker
       </h2>
       
 
       {/* Circular Progress Bar */}
-      <div className="w-[52.4%] relative">
+      <div className="w-[10rem] relative mb-4">
         <CircularProgressbar
           value={percentage}
           strokeWidth={11}
