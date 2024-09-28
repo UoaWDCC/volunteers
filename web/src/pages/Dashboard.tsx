@@ -42,7 +42,7 @@ function Dashboard() {
 
             {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
             <div className='flex flex-col flex-1'>
-                <div className='flex flex-row justify-end items-center w-[95%] h-[10%] pl-5'>
+                <div className='flex flex-row justify-end items-center w-[95%] h-[6rem] pl-5'>
                     {/* place notifcation stuff in here and remove bg-yellow for henrys thing it'll probably break the styling a bit but it shouldnt be too hard to fix, maybe instead of having a whole nav bar just have the notifcation and pfp component as separate thing or something*/}
                     {tab === 5 &&(
                         <>
