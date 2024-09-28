@@ -30,12 +30,12 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
     return (
-        <div className="flex flex-col items-center fixed left-[17%] top-[10%] w-[85%] h-[90%] px-5 py-5 bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
+        <div className="flex flex-col absolute top-0 left-0 items-center w-full h-full bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
             <div className="self-start ml-6 cursor-pointer" onClick={() => setEventDetails(null)}><IoArrowBackCircle  size="40px" color="#3B87DD" /></div>
 
-            <img src={event.image} className=" w-[95%] h-[45vh] rounded-3xl mt-2 object-cover" />
+            <img src={event.image} className=" w-[95%] h-[24rem] rounded-3xl mt-2 object-cover" />
 
-            <div className="flex flex-col w-full px-10 py-4">
+            <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
                     <button className="h-10 text-body-heading rounded-full">Register for Event</button>
@@ -48,31 +48,31 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                 </div>
             </div>
             
-            <div className="flex flex-row w-full justify-between">
-                <div className="w-[65%]">
-                    <div className="flex flex-col w-full px-10 mt-3">
+            <div className="flex flex-row w-[95%] justify-between">
+                <div className="w-[60%]">
+                    <div className="flex flex-col w-full mt-3">
                         <h3 className="text-heading3 font-semibold">Description</h3>
                         <p className="text-body-heading mt-[-20px]">{event.description}</p>
                     </div>
 
-                    <div className="flex flex-col w-full px-10 mt-3">
+                    <div className="flex flex-col w-full mt-3">
                         <h3 className="text-heading3 font-semibold">Key Tasks and Responsibilities</h3>
                         <p className="text-body-heading mt-[-20px]">{event.tasks}</p>
                     </div>
 
-                    <div className="flex flex-col w-full px-10 mt-3">
+                    <div className="flex flex-col w-full mt-3">
                         <h3 className="text-heading3 font-semibold">Important Notes</h3>
                         <p className="text-body-heading mt-[-20px]">{event.notes}</p>
                     </div>
 
-                    <div className="flex flex-col w-full px-10 mt-3">
+                    <div className="flex flex-col w-full mt-3">
                         <h3 className="text-heading3 font-semibold">Contact Details</h3>
                         <p className="text-body-heading mt-[-20px]">{"Hosted By: " + event.host}</p>
                         <p className="text-body-heading mt-[-20px]">{event.contact}</p>
                     </div>
                 </div>
 
-                <div className="flex flex-col w-[35%] pr-10">
+                <div className="flex flex-col w-[35%]">
                     <div className="w-full h-[35vh] object-cover">
                         <iframe title="map" className="w-full h-full border-lightGrey border-solid border-2 rounded-lg"
                                 src={mapEmbed}

@@ -75,35 +75,34 @@ function DashboardDiscover() {
 
 
   return (
-    <div className="flex flex-col w-[96%]">
-        <div className='flex flex-row bg-white rounded-lg shadow-md h-[18rem] cursor-pointer mb-5 items-center p-7'>
-          <div className="h-[16rem] w-[48rem]">
-            <img className='object-cover w-full h-full rounded-lg' src={flagshipEvent.image} />
-          </div>
-          <div className="flex flex-col">
-            <div className='pl-5 text-2xl font-medium text-primary pt-1'>This month's event...</div>
-            <div className='pl-5 pt-3'>{days[startDate.getDay()] + ", " + startDate.getDate() + " " + months[startDate.getMonth()]}</div>
-            <div className='pl-5 font-medium'>{flagshipEvent.event_title}</div>
-            <div className='pl-5 font-light'>{flagshipEvent.location}</div>
-            <div className="flex flex-row pt-2 pb-2">
-              <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
-              <div className='ml-2 font-light text-sm'>Eduardo is interested</div>
-              <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
-              <div className='ml-2 font-light text-sm'>John, and 4 other friends are going</div>
-            </div>
-            <div className='pl-5 text-primary hover:underline cursor-pointer' onClick={() => setEventDetails(flagshipEvent)}>More Info</div>
-          </div>
+    <div className="flex flex-col w-[96%] relative">
+      <div className='flex flex-row bg-white rounded-lg shadow-md h-[18rem] cursor-pointer mb-5 items-center p-7'>
+        <div className="h-[16rem] w-[48rem]">
+          <img className='object-cover w-full h-full rounded-lg' src={flagshipEvent.image} />
         </div>
+        <div className="flex flex-col">
+          <div className='pl-5 text-2xl font-medium text-primary pt-1'>This month's event...</div>
+          <div className='pl-5 pt-3'>{days[startDate.getDay()] + ", " + startDate.getDate() + " " + months[startDate.getMonth()]}</div>
+          <div className='pl-5 font-medium'>{flagshipEvent.event_title}</div>
+          <div className='pl-5 font-light'>{flagshipEvent.location}</div>
+          <div className="flex flex-row pt-2 pb-2">
+            <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
+            <div className='ml-2 font-light text-sm'>Eduardo is interested</div>
+            <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
+            <div className='ml-2 font-light text-sm'>John, and 4 other friends are going</div>
+          </div>
+          <div className='pl-5 text-primary hover:underline cursor-pointer' onClick={() => setEventDetails(flagshipEvent)}>More Info</div>
+        </div>
+      </div>
 
       <div className='flex-1 rounded-xl'>
         {/* adjust sizes and stuff as needed */}
         <EventsScrollContainer events={events} setEventDetails={setEventDetails} />
       </div>
 
-      {eventDetails && (
-        <EventDetails event={eventDetails} setEventDetails={setEventDetails} />
-      )}
-
+        {eventDetails && (
+          <EventDetails event={eventDetails} setEventDetails={setEventDetails} />
+        )}
     </div>
 
   );
