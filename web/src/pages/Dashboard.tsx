@@ -36,13 +36,13 @@ function Dashboard() {
         <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row h-screen">
             {/* width of the left nav bar */}
             {/* place thing component here and remove bg-primary */}
-            <div className='w-[15%]'> 
+            <div className='w-[20rem]'> 
                 <SideBar switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}/>
             </div>
 
             {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
-            <div className='flex flex-col w-[85%]'>
-                <div className='flex flex-row justify-end items-center w-full h-[10%] pl-5 pr-[5%]'>
+            <div className='flex flex-col flex-1'>
+                <div className='flex flex-row justify-end items-center w-[95%] h-[10%] pl-5'>
                     {/* place notifcation stuff in here and remove bg-yellow for henrys thing it'll probably break the styling a bit but it shouldnt be too hard to fix, maybe instead of having a whole nav bar just have the notifcation and pfp component as separate thing or something*/}
                     {tab === 5 &&(
                         <>
@@ -54,7 +54,7 @@ function Dashboard() {
                 </div>
 
                 {/* whole tabs go in here */}
-                <div className='flex flex-row h-[90%]'>
+                <div className='flex flex-row h-[90%] pt-0 p-5'>
                     {/* <DashboardCommunity /> */}
                     {tab === 1 && <DashboardDashboard />}
                     {tab === 2 && <DashboardDiscover />}

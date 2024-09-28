@@ -5,7 +5,7 @@ import UpcomingEvent from "./UpcomingEvent";
 
 function DashboardDashboard() {
   return (
-    <div className="dashboard flex flex-row w-full h-full pt-0 p-5 gap-5">
+    <div className="flex flex-row w-full h-full gap-5">
       {/* width of the gallery */}
       <div className="w-[75%] h-full flex flex-col gap-8">
         <div className="flex-none">
