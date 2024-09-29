@@ -86,8 +86,8 @@ function Signup() {
     setPage3(true);
   };
 
-  const goToHomePage = () => {
-    navigate('/');
+  const goToDashboard = () => {
+    navigate('/dashboard');
   };
 
   // write to collection not document
@@ -191,7 +191,7 @@ function Signup() {
         }
 
         // Navigate to another page after successful submission
-        goToHomePage();
+        goToDashboard();
       } catch (error) {
         console.error('Error writing document: ', error);
       }
