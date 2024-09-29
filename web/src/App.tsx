@@ -11,6 +11,7 @@ import SignUpPage from '@pages/SignUpPage';
 import RegisterModalErrorContextProvider from './context/RegisterModalErrorContextProvider';
 import RegisterErrorModal from '@components/register/RegisterErrorModal';
 import Dashboard from '@pages/Dashboard';
+import AuthenticationContextProvider from './context/AuthenticationContextProvider';
 
 
 const router = createBrowserRouter([
@@ -44,8 +45,10 @@ const router = createBrowserRouter([
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
   return (
+    <AuthenticationContextProvider>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>
+    </AuthenticationContextProvider>
   );
 }
