@@ -1,4 +1,4 @@
-import EventsScrollContainer from "../components/Dashboard/dashboardDiscover/EventsScrollContainer"
+import EventsScrollContainer from "./Dashboard/DashboardDiscover/EventsScrollContainer"
 export default function TestingComponent() {
   return (
     <div>
