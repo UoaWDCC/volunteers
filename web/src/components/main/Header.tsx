@@ -11,6 +11,10 @@ function Header() {
     return null;
   } 
 
+  const goToDashboard = () => {
+    window.location.href = '/dashboard';
+  }
+
   return (
     <header className='flex justify-between items-center bg-neutral-tan px-24 py-3'>
         <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-auto' />
@@ -27,20 +31,17 @@ function Header() {
                 >
                   Login
                 </li>
-                <li
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                  className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover: cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'
-                >
-                  Register
-                </li>
               </>
             )}
             {isUserLoggedIn && (
+              <>
+              <li onClick={goToDashboard} className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover: cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'>
+                Dashboard
+              </li>
               <li onClick={signOut} className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover: cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'>
                 Sign Out
               </li>
+              </>
             )}
           </ul>
         </div>

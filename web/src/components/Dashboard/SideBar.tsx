@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import SideBarTab from './SideBarTab';
 import { Link } from 'react-router-dom';
+import AuthenticationContext from '../../context/AuthenticationContext';
 
 type SideBarProps = {
     switchDashboard: () => void;
@@ -13,6 +14,9 @@ type SideBarProps = {
 const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, switchProfile, switchCalendar, switchCommunity}) => {
     
     const [selectedTab, setSelectedTab] = useState('dashboard');
+
+    const authContext = useContext(AuthenticationContext);
+    const { signOut } = authContext as unknown as { signOut: () => void };
 
     return ( 
         <div className="flex flex-col from-[#D6EDFD] to-[#58B6F1] h-[100vh] w-full rounded-[30px]">
@@ -28,9 +32,9 @@ const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, swit
                 <SideBarTab unselected='/assets/sidebar/community_icon.svg' selected='/assets/sidebar/community_icon_blue.svg' tabName='community' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchCommunity}/> 
             </div>  
 
-            <button className="flex w-[130px] h-[35px] items-center bg-primary self-center mt-auto transition-all duration-[400] hover:bg-[#0370BEB3] gap-1.5">
-                <img className="h-[18px] w-[18px] m-0" src='/public/assets/sidebar/logout_icon.svg' alt='logout-icon' />
-                <h3 className="text-[13px] font-sans m-0 mt-[2px]" >Logout</h3>
+            <button className="flex w-[130px] h-[35px] items-center bg-primary self-center mt-auto mb-4 rounded-3xl transition-all duration-[400] hover:bg-[#0370BEB3] gap-1.5">
+                <img className="h-[18px] w-[18px]  ml-2" src='/public/assets/sidebar/logout_icon.svg' alt='logout-icon' />
+                <h3 className="text-[13px] font-sans m-0 mt-[2px]" onClick={signOut} >Logout</h3>
             </button>
         </div>
      );
