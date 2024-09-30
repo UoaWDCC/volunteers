@@ -76,14 +76,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function initializeUser(user: User | null) {
     if (user) {
-      console.log('ititalsing');
+      console.log(user)
       setCurrentUser(user);
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
       const token = await user.getIdToken();
       setToken(token);
 
-      window.location.href = 'dashboard';
       // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
       // if (!uidExists) {
       //   console.log('User not found in db, redirecting to register page');
@@ -141,8 +140,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // }
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
     try {
-      const response = await axios.get("http://localhost:3000/api/users/${uid}");
-  
+      const response = await axios.get(`http://localhost:3000/api/users/${uid}`);
+
       if (response.status === 200) {
         console.log('user exists in Firestore with UID:', uid);
         return { exists: true, userDetails: response.data };

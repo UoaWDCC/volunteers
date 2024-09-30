@@ -1,7 +1,8 @@
 import { db } from '../config/firebase';  // Import the Firestore database configuration
-import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';  // Import Firestore functions
+import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, where, query } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 import { error } from 'console';  // Import console error (though it's not used in the code...)
+import { auth } from 'firebase-admin';
 
 
 const colRef = collection(db, "users");
@@ -69,9 +70,12 @@ async function getUser(req: Request, res: Response): Promise<void> {
             return;
         }
 
+        // Check uid field in the user document
+        const q = query(colRef, where("uid", "==", userId));
 
-        const userRef = doc(db, 'users', userId);  // Reference to the specific user document
-        const userSnapshot = await getDoc(userRef);  // Fetch the document snapshot
+        const snapshot = await getDocs(q);  // Fetch the user document snapshot
+
+        const userSnapshot = snapshot.docs[0];  // Get the first document in the snapshot
 
         if (userSnapshot.exists()) {
             const user = userSnapshot.data();  // Get user data
