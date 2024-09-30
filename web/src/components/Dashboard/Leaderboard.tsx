@@ -3,13 +3,6 @@ import { useState, useEffect } from "react";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 
-interface LeaderboardEntryProps {
-  rank: number;
-  img: string;
-  name: string;
-  hours: number;
-}
-
 function Leaderboard() {
   const profileImg = "assets/EventHighlights/Events/BlindLowVision/imgA.png"; // Temporary image for the leaderboard
   const name = "John Doe"; // Temporary name for the leaderboard

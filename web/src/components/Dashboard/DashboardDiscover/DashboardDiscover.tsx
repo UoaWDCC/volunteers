@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import EventsScrollContainer from "../dashboardDiscover/EventsScrollContainer";
+import EventsScrollContainer from "../DashboardDiscover/EventsScrollContainer";
 import axios from "axios";
 import EventDetails from "../DashboardDiscover/EventDetails";
 
