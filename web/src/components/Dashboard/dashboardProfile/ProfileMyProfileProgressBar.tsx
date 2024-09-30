@@ -14,13 +14,13 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
     <div className="w-full bg-white p-6 flex flex-col justify-between items-center rounded-lg shadow-lg">
       {/* Title */}
       
-      <h2 className="dashboard text-heading2 text-primary mb-4 mt-2">
-        Volunteering Tracker
+      <h2 className="dashboard self-start text-heading2 text-primary mb-6 mt-2">
+        Volunteering<br></br>Tracker
       </h2>
       
 
       {/* Circular Progress Bar */}
-      <div className="w-[10rem] relative mb-4">
+      <div className="w-[10rem] relative mb-6">
         <CircularProgressbar
           value={percentage}
           strokeWidth={11}

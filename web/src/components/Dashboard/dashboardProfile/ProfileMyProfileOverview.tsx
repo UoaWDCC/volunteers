@@ -4,7 +4,7 @@ import ProfileEditModalContext from "../../../context/ProfileEditModalContext";
 
 
 const ProfileMyProfileOverview = () => {
-      const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+  const { showModal, setShowModal } = useContext(ProfileEditModalContext);
   const [profile] = useState({
     firstName: 'John',
     lastName: 'Doe',
@@ -23,21 +23,21 @@ const ProfileMyProfileOverview = () => {
   });
 
   function handleShowModal() {
-      setShowModal(true);
+    setShowModal(true);
   }
 
   return (
     <>
-      {showModal && (<ProfileEditModal/>)}
+      {showModal && (<ProfileEditModal />)}
       <div
         className="dashboard bg-white w-full flex flex-col rounded-lg shadow-lg"
         style={{
-          padding: '30px',  
+          padding: '30px',
         }}
       >
         <div className="flex justify-between mb-4">
           <h2 className="dashboard text-heading2 text-primary">Profile Overview</h2>
-          <button className="dashboard text-body-heading text-primary underline bg-transparent" onClick={ handleShowModal }>
+          <button className="dashboard text-body-heading text-primary underline bg-transparent" onClick={handleShowModal}>
             Edit Profile
           </button>
         </div>
@@ -66,7 +66,7 @@ const ProfileMyProfileOverview = () => {
             {/* Row 2 */}
             <div>
               <label className="dashboard text-detail-regular">Preferred Email</label>
-              <p className="text-body">{profile.email}</p>
+              <p className="text-body break-words">{profile.email}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Mobile Number</label>
