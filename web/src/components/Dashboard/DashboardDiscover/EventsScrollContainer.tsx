@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import Event from "./Event.tsx"
+import Event from "../dashboardDiscover/Event.tsx"
 
 type Event = {
     event_title: string;

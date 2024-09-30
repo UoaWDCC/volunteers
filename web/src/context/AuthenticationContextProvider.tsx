@@ -22,14 +22,14 @@ INFORMATION:
 */
 import axios from 'axios';
 import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
+import { auth, db } from '../firebase/firebase';
 import AuthenticationContext from './AuthenticationContext';
 import { ReactNode } from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
 import TokenContext from './TokenContext';
-import { DocumentData } from 'firebase/firestore';
+import { collection, DocumentData, getDocs, query, where } from 'firebase/firestore';
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -52,6 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string>('' ?? '');
   const [uid, setUid] = useState<string>('');
   const [token, setToken] = useState<string>('');
+  const [firestoreUserDetails, setFirestoreUserDetails] = useState<DocumentData | null>(null);
   // checks UID corresponding with email
   interface CheckUidResult {
     exists: boolean;
@@ -88,6 +89,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       //   console.log('User not found in db, redirecting to register page');
       //   signOut();
       // }
+      const { exists, userDetails } = await checkUidExists(user.uid);
+      if (exists && userDetails) {
+        setFirestoreUserDetails(userDetails);
+      }
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
@@ -112,6 +117,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } else {
         console.log('uid found in db, firestore user details:', userDetails);
         window.location.href = 'dashboard';
+        if (userDetails) {
+          setFirestoreUserDetails(userDetails);
+          console.log('Signed in with user email: ', userDetails.email);
+        }
         return userDetails;
       }
     } catch (error) {
@@ -141,6 +150,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
     try {
       const response = await axios.get(`http://localhost:3000/api/users/${uid}`);
+
+      const response = await axios.get(`http://localhost:3000/api/users/uid/${uid}`);
 
       if (response.status === 200) {
         console.log('user exists in Firestore with UID:', uid);
@@ -231,6 +242,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signInUsingGoogle,
     signOut,
     getFirestoreCollectionUserByStudentID,
+    firestoreUserDetails,
   };
 
   return (
