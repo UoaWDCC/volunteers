@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
+import DashboardCommunity from "../components/Dashboard/dashboardCommunity/DashboardCommunity";
 import DashboardProfile from "@components/Dashboard/dashboardProfile/DashboardProfile";
 import DashboardDashboard from "@components/Dashboard/dashboardDashboard/DashboardDashboard";
 import DashboardCalendar from "@components/Dashboard/dashboardCalendar/DashboardCalendar";
@@ -8,6 +9,7 @@ import SideBar from "@components/Dashboard/SideBar";
 import DashboardCommunity from "@components/Dashboard/dashboardCommunity/DashboardCommunity";
 import DashboardDiscover from "@components/Dashboard/dashboardDiscover/DashboardDiscover";
 import SearchBar from "@components/Dashboard/dashboardCommunity/SearchBar";
+import AuthenticationContext from "../context/AuthenticationContext";
 
 function Dashboard() {
   const [tab, setTab] = useState(1);
@@ -31,6 +33,12 @@ function Dashboard() {
   const switchCommunity = () => {
     setTab(5);
   };
+  const authContext = useContext(AuthenticationContext);
+  const { isUserLoggedIn } = authContext as unknown as { isUserLoggedIn: boolean };
+
+  if (!isUserLoggedIn) {
+    window.location.href = '/';
+  }
 
   return (
     <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">

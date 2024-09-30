@@ -1,22 +1,19 @@
 
-type Event = {
-  date: string;
-  time: string;
-  title: string;
-  location: string;
-  img: string;
-};
+const UpcomingEvent = ({ event }: any) => {
+  const startTimestamp = event.start_date_time
+  const startDate = startTimestamp.toDate()
+  const endTimestamp = event.end_date_time
+  const endDate = endTimestamp.toDate()
 
-const UpcomingEvent = ({ event }: { event: Event }) => {
   return (
-    <div className="flex flex-col bg-white text-black rounded-xl pl-10 pt-5 border-solid border-2 border-slate-100 ">
+    <div className="flex flex-col bg-white text-black rounded-xl pl-10 pt-5 border-solid border-2 border-slate-100 mr-[1em]">
       <img
-        className="h-200 w-[80%] rounded-[10px] object-cover"
-        src={event.img || "./public/assets/dashboard/emptyEventImage.png"}
+        className="h-200 w-[90%] rounded-[10px] object-cover mt-[5%]"
+        src={event.image || "./public/assets/dashboard/emptyEventImage.png"}
         alt="event image"
       />
-      <p className="text-sm">{event.date}</p>
-      <h2 className="text-xl font-semibold">{event.title}</h2>
+      <p className="text-sm mt-[1em]">Date: {startDate.toLocaleDateString("en-US")}</p>
+      <h2 className="text-xl font-semibold">{event.event_title}</h2>
       <p className="text-sm">{event.location}</p>
     </div>
   );

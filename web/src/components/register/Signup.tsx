@@ -86,8 +86,8 @@ function Signup() {
     setPage3(true);
   };
 
-  const goToHomePage = () => {
-    navigate('/');
+  const goToDashboard = () => {
+    navigate('/dashboard');
   };
 
   // write to collection not document
@@ -186,12 +186,13 @@ function Signup() {
             emergencyContactLastName,
             emergencyContactMobile,
             emergencyContactRelationship,
+            hours: 0
           });
           console.log('Document successfully written!');
         }
 
         // Navigate to another page after successful submission
-        goToHomePage();
+        goToDashboard();
       } catch (error) {
         console.error('Error writing document: ', error);
       }
