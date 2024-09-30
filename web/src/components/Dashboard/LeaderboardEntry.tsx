@@ -13,7 +13,7 @@ function LeaderboardEntry({rank, img, fname, lname, hours }: any) {
             <img src={img} alt="profile" className="object-cover w-[30px] h-[30px] rounded-full mt-[-15px] mr-2" />
             <p className="text-[9pt] truncate">{fname} {lname}</p>
         </div>
-        <p className="w-[10%] text-[9pt] text-primary text-center">{hours}</p>
+        {hours ? <p className="w-[10%] text-[9pt] text-primary text-center">{hours}</p> : <p className="w-[10%] text-[9pt] text-primary text-center">0</p>}
     </div>
   );
 }
