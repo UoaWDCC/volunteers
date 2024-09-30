@@ -1,4 +1,4 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import ProfileEditModal from "../dashboardProfile/ProfileEditModal";
 import ProfileEditModalContext from "../../../context/ProfileEditModalContext";
 

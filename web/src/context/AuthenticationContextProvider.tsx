@@ -22,14 +22,14 @@ INFORMATION:
 */
 import axios from 'axios';
 import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
-import { auth, db } from '../firebase/firebase';
+import { auth } from '../firebase/firebase';
 import AuthenticationContext from './AuthenticationContext';
 import { ReactNode } from 'react';
 import { useContext, useState, useEffect } from 'react';
 import { onAuthStateChanged } from 'firebase/auth';
 // import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
 import TokenContext from './TokenContext';
-import { collection, DocumentData, getDocs, query, where } from 'firebase/firestore';
+import {  DocumentData } from 'firebase/firestore';
 
 const googleProvider = new GoogleAuthProvider();
 
