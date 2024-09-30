@@ -151,8 +151,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const response = await axios.get(`http://localhost:3000/api/users/${uid}`);
 
-      const response = await axios.get(`http://localhost:3000/api/users/uid/${uid}`);
-
       if (response.status === 200) {
         console.log('user exists in Firestore with UID:', uid);
         return { exists: true, userDetails: response.data };
