@@ -186,6 +186,7 @@ function Signup() {
             emergencyContactLastName,
             emergencyContactMobile,
             emergencyContactRelationship,
+            hours: 0
           });
           console.log('Document successfully written!');
         }

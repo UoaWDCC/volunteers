@@ -1,18 +1,20 @@
 // WelcomeStats
 
-function WelcomeStats() {
-  const Data = {
-    User: "John Doe",
-    Hours: 40,
-  };
+import { useContext } from "react";
+import AuthenticationContext from "../../../context/AuthenticationContext";
 
-  const { User, Hours } = Data;
+function WelcomeStats() {
+  
+  const authContext = useContext(AuthenticationContext);
+  const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
+
+  console.log(firestoreUserDetails);
 
   return (
     <div className="bg-white rounded-xl shadow-lg flex items-center space-x-4">
       <div className="flex-1 p-6 ml-5">
         <h1 className="text-4xl font-bold text-primary">
-          Welcome back {User}!
+          Welcome back {firestoreUserDetails.firstName}!
         </h1>
         <p className="text-black">Glad to see you're back in action!</p>
 
@@ -28,7 +30,7 @@ function WelcomeStats() {
             <p className="text-sm text-black mt-2">6 more hours to go!</p>
           </div>
           <div className="mt-6">
-            <span className="text-4xl font-bold">{Hours}</span>
+            <span className="text-4xl font-bold">{firestoreUserDetails.hours}</span>
             <span className="text-black pl-1">hours</span>
           </div>
         </div>
