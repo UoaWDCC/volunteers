@@ -48,8 +48,10 @@ const router = createBrowserRouter([
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
   return (
+    <AuthenticationContextProvider>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
     </QueryClientProvider>
+    </AuthenticationContextProvider>
   );
 }

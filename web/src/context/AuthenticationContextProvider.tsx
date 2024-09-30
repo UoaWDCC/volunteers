@@ -77,14 +77,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function initializeUser(user: User | null) {
     if (user) {
-      console.log('ititalsing');
+      console.log(user)
       setCurrentUser(user);
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
-      console.log('Google user is logged in as:', user);
       const token = await user.getIdToken();
-      //console.log('Token:', token);
       setToken(token);
+
       // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
       // if (!uidExists) {
       //   console.log('User not found in db, redirecting to register page');
@@ -117,6 +116,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log('user not exists');
       } else {
         console.log('uid found in db, firestore user details:', userDetails);
+        window.location.href = 'dashboard';
         if (userDetails) {
           setFirestoreUserDetails(userDetails);
           console.log('Signed in with user email: ', userDetails.email);
@@ -149,7 +149,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // }
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
     try {
-      const response = await axios.get(`http://localhost:3000/api/users/uid/${uid}`);
+      const response = await axios.get(`http://localhost:3000/api/users/${uid}`);
 
       if (response.status === 200) {
         console.log('user exists in Firestore with UID:', uid);
