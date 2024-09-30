@@ -123,6 +123,7 @@ function Leaderboard() {
             setLeaderboardData(friends);
         }
     }
+    let rank = 1;
 
     return (
         <div className="h-full w-full pt-7 pb-2 flex flex-col items-center bg-white rounded-2xl">
@@ -149,8 +150,9 @@ function Leaderboard() {
             </div>
 
             <div className="w-[90%] h-full flex flex-col pt-4 px-3 scrollbar-none overflow-y-scroll">
-                {renderUsers.map((user:any) => (
-                    <LeaderboardEntry key={user.rank} img={user.profile_picture} fname={user.firstName} lname={user.lastName} hours={user.hours} />
+                {renderUsers.map((user:any, index: number) => (
+                    <LeaderboardEntry key={user.rank} rank={index + 1} img={user.profile_picture} fname={user.firstName} lname={user.lastName} hours={user.hours} />
+                    
                 ))}
             </div>
         </div>
