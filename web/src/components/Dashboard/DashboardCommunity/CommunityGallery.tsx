@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import CommunityGalleryCard from "./CommunityGalleryCard";
+import CommunityGalleryCard from "../dashboardCommunity/CommunityGalleryCard";
 
 interface GalleryData {
   title: string;

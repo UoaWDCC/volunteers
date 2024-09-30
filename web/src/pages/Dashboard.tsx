@@ -6,8 +6,9 @@ import DashboardCalendar from "@components/Dashboard/dashboardCalendar/Dashboard
 import ProfileEditModalContextProvider from "../context/ProfileEditModalContextProvider";
 import DashboardHeader from "@components/Dashboard/DashboardHeader";
 import SideBar from "@components/Dashboard/SideBar";
-import SearchBar from "@components/Dashboard/DashboardCommunity/SearchBar";
-import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
+import DashboardCommunity from "@components/Dashboard/dashboardCommunity/DashboardCommunity";
+import DashboardDiscover from "@components/Dashboard/dashboardDiscover/DashboardDiscover";
+import SearchBar from "@components/Dashboard/dashboardCommunity/SearchBar";
 import AuthenticationContext from "../context/AuthenticationContext";
 
 function Dashboard() {
