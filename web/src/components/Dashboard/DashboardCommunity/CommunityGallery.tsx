@@ -38,8 +38,10 @@ const CommunityGallery = ({
 
   useEffect(() => {
     // Fetch gallery data
+    const appUrl = import.meta.env.VITE_APP_URL;
+    const port = import.meta.env.VITE_APP_PORT;
     axios
-      .get("http://localhost:3000/api/homepage/gallery")
+      .get(`${appUrl}:${port}/api/homepage/gallery`)
       .then((res) => {
         setData(res.data);
       })
@@ -48,18 +50,36 @@ const CommunityGallery = ({
       });
   }, []);
 
-    return (  
-        <div className='bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg'>
-            <p>People you may know from {event} at {location}</p>
-        <div className='w-full grid grid-cols-3 max-[1280px]:grid-cols-2 min-[2100px]:grid-cols-4 min-[2560px]:grid-cols-5 gap-[2%]'>
-                {/* hardcoded 4 people, this shoulded be mapped with however many people in the event?? */}
-                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[0].image} />
-                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[1].image} />
-                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[2].image} />
-                  <CommunityGalleryCard name={name} hours={hours} profileImgLink={data[3].image} />
-            </div>
-        </div>
-    );
-}
- 
+  return (
+    <div className="bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg">
+      <p>
+        People you may know from {event} at {location}
+      </p>
+      <div className="w-full grid grid-cols-3 max-[1280px]:grid-cols-2 min-[2100px]:grid-cols-4 min-[2560px]:grid-cols-5 gap-[2%]">
+        {/* hardcoded 4 people, this shoulded be mapped with however many people in the event?? */}
+        <CommunityGalleryCard
+          name={name}
+          hours={hours}
+          profileImgLink={data[0].image}
+        />
+        <CommunityGalleryCard
+          name={name}
+          hours={hours}
+          profileImgLink={data[1].image}
+        />
+        <CommunityGalleryCard
+          name={name}
+          hours={hours}
+          profileImgLink={data[2].image}
+        />
+        <CommunityGalleryCard
+          name={name}
+          hours={hours}
+          profileImgLink={data[3].image}
+        />
+      </div>
+    </div>
+  );
+};
+
 export default CommunityGallery;

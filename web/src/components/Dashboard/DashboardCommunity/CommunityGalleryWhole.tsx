@@ -34,8 +34,10 @@ const CommunityGalleryWhole = () => {
 
   useEffect(() => {
     // Fetch gallery data
+    const appUrl = import.meta.env.VITE_APP_URL;
+    const port = import.meta.env.VITE_APP_PORT;
     axios
-      .get("http://localhost:3000/api/homepage/highlights")
+      .get(`${appUrl}:${port}/api/homepage/highlights`)
       .then((res) => {
         setData(res.data);
       })
