@@ -8,22 +8,21 @@ function WelcomeStats() {
   const authContext = useContext(AuthenticationContext);
   const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
 
-  const calculateLevel = (hours: number) => {
-    // Use the hours to calculate the level with a exponential function
-    let level = Math.floor(5*Math.log(hours + 1));
-
-    return level;
+  function calculateLevel(hours: number) {
+    return Math.floor(hours / 5) + 1;
   }
 
-  const calculateHoursToNextLevel = (hours: number) => {
-    // Use the hours to calculate the hours remaining to the next level with a exponential function
-    let hoursToNextLevel = Math.ceil(Math.pow(Math.E, (hours/5)) - hours);
+  function calculateHoursToNextLevel(hours: number) {
+    return 5 - (hours % 5);
+  }
 
-    return hoursToNextLevel;
+  function calculatePercentageComplete(hours: number) {
+    return (hours % 5) * 20;
   }
 
   let level = calculateLevel(firestoreUserDetails.hours);
   let hoursToNextLevel = calculateHoursToNextLevel(firestoreUserDetails.hours);
+  let percentageComplete = calculatePercentageComplete(firestoreUserDetails.hours);
 
   return (
     <div className="bg-white rounded-xl shadow-lg flex items-center space-x-4">
@@ -40,7 +39,7 @@ function WelcomeStats() {
               <span>Level {level + 1}</span>
             </div>
             <div className="bg-gray-300 rounded-full h-4 mt-2 relative">
-              <div className="bg-primary h-4 rounded-full w-[70%]" />
+              <div className={`bg-primary h-4 rounded-full w-[${percentageComplete}%]`} />
             </div>
             <p className="text-sm text-black mt-2">{hoursToNextLevel > 1 ? `${hoursToNextLevel} more hours to go!` : `${hoursToNextLevel} more hour to go!`}</p>
           </div>
