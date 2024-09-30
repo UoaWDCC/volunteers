@@ -1,5 +1,7 @@
-import { useState } from "react";
 import LeaderboardEntry from "./LeaderboardEntry";
+import { useState, useEffect } from "react";
+import { db } from "../../firebase/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 interface LeaderboardEntryProps {
     rank: number;
@@ -7,7 +9,7 @@ interface LeaderboardEntryProps {
     name: string;
     hours: number;
 }
-
+ 
 function Leaderboard() {
     const profileImg = "assets/EventHighlights/Events/BlindLowVision/imgA.png"; // Temporary image for the leaderboard
     const name = "John Doe"; // Temporary name for the leaderboard
@@ -89,6 +91,27 @@ function Leaderboard() {
     }
     ]; // Temporary array for the leaderboard
 
+    const colref = collection(db, 'users')
+    const [users, setUsers] = useState<any[]>([]);
+  
+    useEffect(() => {
+        getDocs(colref)
+        .then((snapshot) => {
+            let getUsers: any[] = [];
+            snapshot.docs.forEach((doc) => {
+                getUsers.push({ ...doc.data(), id: doc.id });
+            });
+            console.log(getUsers); 
+            setUsers(getUsers);
+        })
+        .catch((err) => {
+            console.log(err.message);
+        });
+    }, []);
+
+    //sort users by their hours
+    const renderUsers = users.sort((a,b) => b.hours - a.hours).slice(0, 10);
+
     const [leaderboardFilter, setLeaderboardFilter] = useState("all"); // Filter for the leaderboard
     const [leaderboardData, setLeaderboardData] = useState(all); // Data for the leaderboard
 
@@ -126,8 +149,8 @@ function Leaderboard() {
             </div>
 
             <div className="w-[90%] h-full flex flex-col pt-4 px-3 scrollbar-none overflow-y-scroll">
-                {leaderboardData.map((entry: LeaderboardEntryProps) => (
-                    <LeaderboardEntry key={entry.rank} rank={entry.rank} img={entry.img} name={entry.name} hours={entry.hours} />
+                {renderUsers.map((user:any) => (
+                    <LeaderboardEntry key={user.rank} img={user.profile_picture} fname={user.firstName} lname={user.lastName} hours={user.hours} />
                 ))}
             </div>
         </div>
