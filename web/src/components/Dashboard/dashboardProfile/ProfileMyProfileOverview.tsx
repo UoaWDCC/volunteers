@@ -3,24 +3,25 @@ import ProfileEditModal from "../dashboardProfile/ProfileEditModal";
 import ProfileEditModalContext from "../../../context/ProfileEditModalContext";
 
 
-const ProfileMyProfileOverview = () => {
-      const { showModal, setShowModal } = useContext(ProfileEditModalContext);
-  const [profile] = useState({
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'johndoe123@gmail.com',
-    mobile: '123 456 7890',
-    upi: 'jdoe123',
-    dob: '2003-10-12',
-    gender: 'Male',
-    yearLevel: '3rd Year',
-    dietary: 'Vegan',
-    license: 'Full',
-    emergencyFirstName: 'Mary',
-    emergencyLastName: 'Doe',
-    relationship: 'Mother',
-    emergencyMobile: '234 567 8901',
-  });
+interface ProfileProps {
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: string;
+  upi: string
+  dob: string
+  gender: string
+  yearLevel: string
+  dietary: string[];
+  license: string
+  emergencyFirstName: string
+  emergencyLastName: string
+  relationship: string
+  emergencyMobile: string
+}
+
+const ProfileMyProfileOverview = ({ firstName, lastName, email, gender, mobile, upi, dob, yearLevel, dietary, license, emergencyFirstName, emergencyLastName, relationship, emergencyMobile }: ProfileProps) => {
+    const { showModal, setShowModal } = useContext(ProfileEditModalContext);
 
   function handleShowModal() {
       setShowModal(true);
@@ -49,32 +50,32 @@ const ProfileMyProfileOverview = () => {
             {/* Row 1 */}
             <div>
               <label className="dashboard text-detail-regular">First Name</label>
-              <p className="text-body">{profile.firstName}</p>
+              <p className="text-body">{firstName}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Last Name</label>
-              <p className="text-body">{profile.lastName}</p>
+              <p className="text-body">{lastName}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">UPI</label>
-              <p className="text-body">{profile.upi}</p>
+              <p className="text-body">{upi}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Gender</label>
-              <p className="text-body">{profile.gender}</p>
+              <p className="text-body">{gender}</p>
             </div>
             {/* Row 2 */}
             <div>
               <label className="dashboard text-detail-regular">Preferred Email</label>
-              <p className="text-body">{profile.email}</p>
+              <p className="text-body">{email}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Mobile Number</label>
-              <p className="text-body">{profile.mobile}</p>
+              <p className="text-body">{mobile}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Date of Birth</label>
-              <p className="text-body">{profile.dob}</p>
+              <p className="text-body">{dob}</p>
             </div>
           </div>
         </div>
@@ -86,15 +87,15 @@ const ProfileMyProfileOverview = () => {
             {/* Row 1 */}
             <div>
               <label className="dashboard text-detail-regular">Year Level</label>
-              <p className="text-body">{profile.yearLevel}</p>
+              <p className="text-body">{yearLevel}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Dietary Requirements</label>
-              <p className="text-body">{profile.dietary}</p>
+              <p className="text-body">{dietary}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Driver's License</label>
-              <p className="text-body">{profile.license}</p>
+              <p className="text-body">{license}</p>
             </div>
           </div>
         </div>
@@ -106,19 +107,19 @@ const ProfileMyProfileOverview = () => {
             {/* Row 1 */}
             <div>
               <label className="dashboard text-detail-regular">First Name</label>
-              <p className="text-body">{profile.emergencyFirstName}</p>
+              <p className="text-body">{emergencyFirstName}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Last Name</label>
-              <p className="text-body">{profile.emergencyLastName}</p>
+              <p className="text-body">{emergencyLastName}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Relationship</label>
-              <p className="text-body">{profile.relationship}</p>
+              <p className="text-body">{relationship}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">Mobile Number</label>
-              <p className="text-body">{profile.emergencyMobile}</p>
+              <p className="text-body">{emergencyMobile}</p>
             </div>
           </div>
         </div>
