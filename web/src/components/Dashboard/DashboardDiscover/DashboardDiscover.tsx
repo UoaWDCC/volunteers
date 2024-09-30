@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import EventsScrollContainer from "../dashboardDiscover/EventsScrollContainer";
 import axios from "axios";
-import EventDetails from "../dashboardDiscover/EventDetails";
+import EventDetails from "../DashboardDiscover/EventDetails";
 
 type Event = {
   event_title: string;
