@@ -41,7 +41,7 @@ const router = createBrowserRouter([
       </ AuthenticationContextProvider>),
   },
   {
-    path: '/developers', // can probably change this to /dashboard/community or something idk, im not sure how we are handling changing tabs within the dashboard
+    path: '/developers', 
     element: <Developers/>,
   },
 ]);
