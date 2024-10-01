@@ -44,7 +44,7 @@ const CommunityGallery = () => {
     const appUrl = import.meta.env.VITE_APP_URL;
     const port = import.meta.env.VITE_APP_PORT;
     axios
-      .get(`${appUrl}:${port}/api/homepage/gallery`)
+      .get(`${appUrl}:${port}/api/users`)
       .then((res) => {
         setData(res.data);
       })
