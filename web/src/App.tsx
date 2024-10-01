@@ -9,6 +9,7 @@ import RegisterModalErrorContextProvider from "./context/RegisterModalErrorConte
 import RegisterErrorModal from "@components/register/RegisterErrorModal";
 import Dashboard from "@pages/Dashboard";
 import AuthenticationContextProvider from './context/AuthenticationContextProvider';
+import Developers from "@components/main/Developers";
 
 const router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
       <AuthenticationContextProvider>
         <Dashboard />
       </ AuthenticationContextProvider>),
+  },
+  {
+    path: '/developers', // can probably change this to /dashboard/community or something idk, im not sure how we are handling changing tabs within the dashboard
+    element: <Developers/>,
   },
 ]);
 

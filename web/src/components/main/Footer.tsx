@@ -1,4 +1,7 @@
 function Footer() {
+  const goToDevelopers = () => {
+    window.location.href = '/developers';
+  }
   return (
     <footer className="flex flex-col items-center justify-center h-auto bg-neutral p-16">
       <p className="m-0 p-0 font-bold">
@@ -37,6 +40,9 @@ function Footer() {
                 >
                   Facebook
                 </a>
+              </li>
+              <li>
+                <a onClick={goToDevelopers}>Developers </a>
               </li>
             </ul>
           </div>
