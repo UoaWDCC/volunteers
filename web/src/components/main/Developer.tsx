@@ -5,7 +5,7 @@ const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, lin
             z-10
             flex flex-col pt-[1em]
             items-center text-center
-            border-2 rounded-[5%] border-primary-light hover:border-primary-dark
+            border-2 rounded-[5%] border-primary-light hover:border-primary-dark hover:shadow-lg hover:shadow-primary-dark
             m-[0.5em] p-0 w-[15em] h-[19em] font-mono"
             >
             <h6 className="font-bold text-[1.3em]">{role}</h6>
