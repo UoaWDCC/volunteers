@@ -128,22 +128,31 @@ function Leaderboard() {
         Leaderboard
       </h2>
 
-      <img
-        src={profileImg}
-        alt="profile"
-        className="object-cover w-[90px] h-[90px] rounded-full m-2"
-      />
+      {renderUsers.length > 0 ? (
+  <>
+    <img
+      src={renderUsers[0].profile_picture}
+      alt="profile"
+      className="object-cover w-[90px] h-[90px] rounded-full m-2"
+    />
 
-      <h3 className="text-detail mb-1">{name}</h3>
+    <h3 className="text-detail mb-1">
+      {renderUsers[0].firstName} {renderUsers[0].lastName}
+    </h3>
 
-      <div className="flex flex-row items-center justify-center">
-        <p className="text-detail text-[10pt] text-primary-dark">
-          {"Rank: " + ranking}
-        </p>
-        <p className="text-detail text-[10pt] text-primary-dark ml-3">
-          {"Hours: " + hours}
-        </p>
-      </div>
+    <div className="flex flex-row items-center justify-center">
+      <p className="text-detail text-[10pt] text-primary-dark">
+        {"Rank: 1st"}
+      </p>
+      <p className="text-detail text-[10pt] text-primary-dark ml-3">
+        {"Hours: " + renderUsers[0].hours}
+      </p>
+    </div>
+  </>
+) : (
+  <p>No data available</p>
+)}
+
 
       <div className="flex flex-row items-center justify-center">
         <button
