@@ -42,7 +42,7 @@ function Footer() {
                 </a>
               </li>
               <li>
-                <a onClick={goToDevelopers}>Developers </a>
+                <a className="hover:cursor-pointer" onClick={goToDevelopers}>Developers </a>
               </li>
             </ul>
           </div>

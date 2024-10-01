@@ -8,6 +8,10 @@ const Developers = () => {
     const [leads, setLeads] = useState<any[]>([]);
     const [devs, setDevs] = useState<any[]>([]);
 
+    const goToHome = () => {
+        window.location.href = '/';
+      }
+
     useEffect(() => {
         getDocs(colref)
         .then((snapshot) => {
@@ -65,6 +69,21 @@ const Developers = () => {
                         linkedin={developer.linkedin}
                     />
                 ))}
+                {/*Flower*/}
+                <img
+                    loading="lazy"
+                    src="./assets/graphics/trophy.svg"
+                    alt=""
+                    className="absolute w-[20%] h-auto top-[-4%] right-[7%]"
+                />
+                <a onClick={goToHome} className="hover:cursor-pointer">
+                    <img
+                        loading="lazy"
+                        src="./assets/header-logo.svg"
+                        alt=""
+                        className="absolute w-[20%] h-auto top-[7%] left-[7%] hover:shadow-lg z-10 rounded-[100px]"
+                    />
+                </a>
             </div>
         </div>
     )

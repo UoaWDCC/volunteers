@@ -13,8 +13,9 @@ const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, lin
             <h6 className="break-words">{yearLevel}</h6>
             <h6 className="break-words p-[5px] leading-[1.2em]">{major}</h6>
             <div className="mt-auto mt-[0px]">
-                <a href={linkedin} target="_blank" className="">
+                <a href={linkedin} target="_blank" className="relative flex">
                     <img className="w-[2em]" src={linkedinLogo} alt="LinkedIn Logo"/>
+                    <span className="absolute text-[0.8em] bottom-[-10px] right-[-5px]">&trade;</span>
                 </a>
             </div>
         </div>
