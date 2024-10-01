@@ -6,9 +6,11 @@ import DashboardCalendar from "@components/Dashboard/dashboardCalendar/Dashboard
 import ProfileEditModalContextProvider from "../context/ProfileEditModalContextProvider";
 import DashboardHeader from "@components/Dashboard/DashboardHeader";
 import SideBar from "@components/Dashboard/SideBar";
+import { CommunitySearchContextProvider } from "../context/CommunitySearchContextProvider";
 import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
 import SearchBar from "@components/Dashboard/DashboardCommunity/SearchBar";
 import AuthenticationContext from "../context/AuthenticationContext";
+
 
 function Dashboard() {
   const [tab, setTab] = useState(1);
@@ -42,6 +44,7 @@ function Dashboard() {
   }
 
   return (
+    <CommunitySearchContextProvider>
     <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
       {/* width of the left nav bar */}
       {/* place thing component here and remove bg-primary */}
@@ -85,6 +88,7 @@ function Dashboard() {
         </div>
       </div>
     </div>
+    </CommunitySearchContextProvider>
   );
 }
 
