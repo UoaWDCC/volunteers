@@ -1,7 +1,8 @@
 import { db } from '../config/firebase';  // Import the Firestore database configuration
-import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore';  // Import Firestore functions
+import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, query, where } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 import { error } from 'console';  // Import console error (though it's not used in the code...)
+import { auth } from 'firebase-admin';
 
 
 const colRef = collection(db, "users");
@@ -69,9 +70,12 @@ async function getUser(req: Request, res: Response): Promise<void> {
             return;
         }
 
+        // Check uid field in the user document
+        const q = query(colRef, where("uid", "==", userId));
 
-        const userRef = doc(db, 'users', userId);  // Reference to the specific user document
-        const userSnapshot = await getDoc(userRef);  // Fetch the document snapshot
+        const snapshot = await getDocs(q);  // Fetch the user document snapshot
+
+        const userSnapshot = snapshot.docs[0];  // Get the first document in the snapshot
 
         if (userSnapshot.exists()) {
             const user = userSnapshot.data();  // Get user data
@@ -85,6 +89,34 @@ async function getUser(req: Request, res: Response): Promise<void> {
         res.status(500).json({ error: 'Internal server error' });  // Send 500 response for internal server error
     }
     
+}
+
+// maybe remove this later, idk if its bad to have this endpoint
+async function getUserByUid(req: Request, res: Response): Promise<void> {
+    try {
+        const uid = req.params.uid;  // Get uid from request parameters
+
+        if (!uid) {
+            res.status(400).json({ error: "UID is required" });
+            return;
+        }
+
+        // Create a Firestore query to find users where the "uid" field matches the request parameter
+        const userQuery = query(colRef, where("uid", "==", uid));
+        const querySnapshot = await getDocs(userQuery);  // Execute the query
+
+        if (!querySnapshot.empty) {
+            // If the query returns results, send the first document's data
+            const user = querySnapshot.docs[0].data();  // Get the first matching document's data
+            res.status(200).json(user);  // Send the user data as JSON response
+        } else {
+            // If no documents are found, send a 404 error
+            res.status(404).json({ error: "User not found" });
+        }
+    } catch (error) {
+        console.error("Error fetching user:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 }
 
 async function updateUser(req: Request, res: Response): Promise<void> {
@@ -110,4 +142,4 @@ async function updateUser(req: Request, res: Response): Promise<void> {
     }
 }
 
-export { getUsers, addUser, deleteUser, getUser, updateUser };  // Export functions for use in other modules
+export { getUsers, addUser, deleteUser, getUser, updateUser, getUserByUid };  // Export functions for use in other modules

@@ -20,16 +20,16 @@ INFORMATION:
 - Using getGoogleUserByStudentID() will return a user object from the firestore db users collection based on the studentID as
   opposed to the Google user object.
 */
-import axios from 'axios';
-import { signInWithPopup, User, GoogleAuthProvider } from 'firebase/auth';
-import { auth } from '../firebase/firebase';
-import AuthenticationContext from './AuthenticationContext';
-import { ReactNode } from 'react';
-import { useContext, useState, useEffect } from 'react';
-import { onAuthStateChanged } from 'firebase/auth';
+import axios from "axios";
+import { signInWithPopup, User, GoogleAuthProvider } from "firebase/auth";
+import { auth } from "../firebase/firebase";
+import AuthenticationContext from "./AuthenticationContext";
+import { ReactNode } from "react";
+import { useContext, useState, useEffect } from "react";
+import { onAuthStateChanged } from "firebase/auth";
 // import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
-import TokenContext from './TokenContext';
-import { DocumentData } from 'firebase/firestore';
+import TokenContext from "./TokenContext";
+import { DocumentData } from "firebase/firestore";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -46,12 +46,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
   const [error, setError] = useState<Error | null>(null);
   const [loading, setLoading] = useState(true);
-  const [userRole, setUserRole] = useState<string>('');
-  const [firstName, setFirstName] = useState<string>('');
-  const [lastName, setLastName] = useState<string>('');
-  const [email, setEmail] = useState<string>('' ?? '');
-  const [uid, setUid] = useState<string>('');
-  const [token, setToken] = useState<string>('');
+  const [userRole, setUserRole] = useState<string>("");
+  const [firstName, setFirstName] = useState<string>("");
+  const [lastName, setLastName] = useState<string>("");
+  const [email, setEmail] = useState<string>("" ?? "");
+  const [uid, setUid] = useState<string>("");
+  const [token, setToken] = useState<string>("");
+  const [firestoreUserDetails, setFirestoreUserDetails] =
+    useState<DocumentData | null>(null);
   // checks UID corresponding with email
   interface CheckUidResult {
     exists: boolean;
@@ -66,29 +68,32 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // update user role based on email whenever email is changed
   useEffect(() => {
     if (email) {
-      if (email == 'volunteers@projects.wdcc.co.nz') {
-        setUserRole('admin');
+      if (email == "volunteers@projects.wdcc.co.nz") {
+        setUserRole("admin");
       } else {
-        setUserRole('volunteer');
+        setUserRole("volunteer");
       }
     }
   }, [email]);
 
   async function initializeUser(user: User | null) {
     if (user) {
-      console.log('ititalsing');
+      console.log(user);
       setCurrentUser(user);
       setUserLoggedIn(true);
       setUserState(); // refreshing user state after reloading page and user is still logged in.
-      console.log('Google user is logged in as:', user);
       const token = await user.getIdToken();
-      //console.log('Token:', token);
       setToken(token);
+
       // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
       // if (!uidExists) {
       //   console.log('User not found in db, redirecting to register page');
       //   signOut();
       // }
+      const { exists, userDetails } = await checkUidExists(user.uid);
+      if (exists && userDetails) {
+        setFirestoreUserDetails(userDetails);
+      }
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
@@ -105,17 +110,27 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
       const { exists: uidExists, userDetails } = await checkUidExists(user.uid);
-      console.log('uid for user:', user.displayName, 'exists in Firestore:', uidExists);
+      console.log(
+        "uid for user:",
+        user.displayName,
+        "exists in Firestore:",
+        uidExists
+      );
 
       if (!uidExists) {
-        window.location.href = 'register';
-        console.log('user not exists');
+        window.location.href = "register";
+        console.log("user not exists");
       } else {
-        console.log('uid found in db, firestore user details:', userDetails);
+        console.log("uid found in db, firestore user details:", userDetails);
+        window.location.href = "dashboard";
+        if (userDetails) {
+          setFirestoreUserDetails(userDetails);
+          console.log("Signed in with user email: ", userDetails.email);
+        }
         return userDetails;
       }
     } catch (error) {
-      console.error('Error during Google sign-in:', error);
+      console.error("Error during Google sign-in:", error);
     }
   }
 
@@ -140,17 +155,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // }
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
     try {
-      const response = await axios.get("http://localhost:3000/api/users/${uid}");
-  
+      const appUrl = import.meta.env.VITE_APP_URL;
+      const port = import.meta.env.VITE_APP_PORT;
+
+      const response = await axios.get(`${appUrl}:${port}/api/users/${uid}`);
+
       if (response.status === 200) {
-        console.log('user exists in Firestore with UID:', uid);
+        console.log("user exists in Firestore with UID:", uid);
         return { exists: true, userDetails: response.data };
       } else {
-        console.error('User not found with UID:', uid);
+        console.error("User not found with UID:", uid);
         return { exists: false, userDetails: undefined };
       }
     } catch (error) {
-      console.error('Error checking user UID via API:', error);
+      console.error("Error checking user UID via API:", error);
       return { exists: false, userDetails: undefined };
     }
   };
@@ -162,7 +180,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setCurrentUser(null);
     } catch (error) {
       setError(error as Error);
-      console.error('Error signing out:', error);
+      console.error("Error signing out:", error);
     }
   }
 
@@ -175,17 +193,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const user = auth.currentUser;
       if (user) {
         setCurrentUser(user);
-        setEmail(user.email || '');
-        setUid(user.uid || '');
-        const displayName = user.displayName || '';
-        const nameParts = displayName.split(' ');
+        setEmail(user.email || "");
+        setUid(user.uid || "");
+        const displayName = user.displayName || "";
+        const nameParts = displayName.split(" ");
         setFirstName(nameParts[0]);
-        setLastName(nameParts.slice(1).join(' '));
-        console.log('User state set');
+        setLastName(nameParts.slice(1).join(" "));
+        console.log("User state set");
       }
     } catch (error) {
       setError(error as Error);
-      console.error('Error retrieving user info:', error);
+      console.error("Error retrieving user info:", error);
     }
   }
 
@@ -193,30 +211,43 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     this function returns a user's JSON data from the firestore user collection based on the studentID
     this does NOT return the user's google user object, only the user's data from the firestore db
   */
-    async function getFirestoreCollectionUserByStudentID(studentID: string): Promise<DocumentData | null> {
-      try {
-        const response = await axios.get(`http://localhost:3000/api/users`);
-    
-        if (response.status === 200 && response.data.length > 0) {
-          const users = response.data;
-          const user = users.find((user: any) => user.studentID === studentID);
-    
-          if (user) {
-            console.log('User with studentID:', studentID, 'exists in db users collection');
-            return user;
-          } else {
-            console.error('User with studentID:', studentID, 'does not exist in db users collection');
-            return null;
-          }
+  async function getFirestoreCollectionUserByStudentID(
+    studentID: string
+  ): Promise<DocumentData | null> {
+    try {
+      const appUrl = import.meta.env.VITE_APP_URL;
+      const port = import.meta.env.VITE_APP_PORT;
+
+      const response = await axios.get(`${appUrl}:${port}/api/users`);
+
+      if (response.status === 200 && response.data.length > 0) {
+        const users = response.data;
+        const user = users.find((user: any) => user.studentID === studentID);
+
+        if (user) {
+          console.log(
+            "User with studentID:",
+            studentID,
+            "exists in db users collection"
+          );
+          return user;
         } else {
-          console.error('No users found in db');
+          console.error(
+            "User with studentID:",
+            studentID,
+            "does not exist in db users collection"
+          );
           return null;
         }
-      } catch (error) {
-        console.error('Error fetching users via API:', error);
+      } else {
+        console.error("No users found in db");
         return null;
       }
+    } catch (error) {
+      console.error("Error fetching users via API:", error);
+      return null;
     }
+  }
 
   const contextValue = {
     currentUser,
@@ -231,14 +262,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signInUsingGoogle,
     signOut,
     getFirestoreCollectionUserByStudentID,
+    firestoreUserDetails,
   };
 
   return (
-  <AuthenticationContext.Provider value={contextValue as any}>
-    <TokenContext.Provider value={token}>
-      {!loading && children}
-    </TokenContext.Provider>
-  </AuthenticationContext.Provider>);
+    <AuthenticationContext.Provider value={contextValue as any}>
+      <TokenContext.Provider value={token}>
+        {!loading && children}
+      </TokenContext.Provider>
+    </AuthenticationContext.Provider>
+  );
 }
 
 export default AuthProvider;

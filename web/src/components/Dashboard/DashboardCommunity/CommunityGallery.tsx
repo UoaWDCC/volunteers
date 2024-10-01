@@ -1,7 +1,9 @@
+
 import axios from 'axios';
 import { useState, useEffect, useContext } from 'react';
 import CommunityGalleryCard from '../DashboardCommunity/CommunityGalleryCard';
 import CommunitySearchContext from '../../../context/CommunitySearchContext';
+
 
 type userData = {
   profile_picture: string;
@@ -38,16 +40,18 @@ const CommunityGallery = () => {
   };
 
   useEffect(() => {
-  // Fetch gallery data
-  axios.get('http://localhost:3000/api/users')
-    .then((res) => {
-      setData(res.data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-  }
-  , []);
+    // Fetch gallery data
+    const appUrl = import.meta.env.VITE_APP_URL;
+    const port = import.meta.env.VITE_APP_PORT;
+    axios
+      .get(`${appUrl}:${port}/api/homepage/gallery`)
+      .then((res) => {
+        setData(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
 
   useEffect(() => {
     setFilteredData(filterUsers(data));
