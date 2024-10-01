@@ -43,8 +43,8 @@ const Developers = () => {
     }, []);
 
     return (
-        <div>
-            <div className="font-bold text-primary font-serif text-[3em] text-center mt-[1em]">Meet the Team!</div>
+        <div className="height-[100vh]">
+            <div className="font-bold text-primary font-serif text-[3em] text-center pt-[1em]">Meet the Team!</div>
             <h1 className="font-bold text-primary font-serif text-[2em] text-center mt-[1em]">=== 2024 ===</h1>
             <div className="flex justify-center text-[1em] flex flex-wrap ml-[5em] mr-[5em] mb-[5em] max-w-[100vw] flex-wrap">
                     {leads.map((developer:any) => (
@@ -76,6 +76,21 @@ const Developers = () => {
                     alt=""
                     className="absolute w-[20%] h-auto top-[-4%] right-[7%]"
                 />
+                {/*Blue Wheel*/}
+                <img
+                    loading="lazy"
+                    src="./assets/graphics/wheelLBlue.svg"
+                    alt=""
+                    className="absolute w-[20%] h-auto top-[50%] left-[15%]"
+                />
+                {/*Blue Swirl*/}
+                <img
+                    loading="lazy"
+                    src="./assets/graphics/swirlRed.svg"
+                    alt=""
+                    className="absolute w-[20%] h-auto top-[80%] right-[15%]"
+                />
+
                 <a onClick={goToHome} className="hover:cursor-pointer">
                     <img
                         loading="lazy"
