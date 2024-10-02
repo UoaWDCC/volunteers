@@ -1,43 +1,42 @@
-import { UsersContext } from "./UserContext";
-import { User } from "@components/legacy/UserDetails";
-import { Action } from "./UserContext";
+import { UsersContext, Action } from "./UserContext";
 import { ReactNode, useReducer } from "react";
 import { useToken } from "./AuthenticationContextProvider";
 
-export const usersReducer = (state: {users: User[]}, action: Action) => {
+interface User {
+  id: number;
+  name: string;
+}
+
+interface UsersState {
+  users: User[];
+}
+
+const usersReducer = (state: UsersState, action: Action): UsersState => {
   switch (action.type) {
-    case 'SET_USERS':
+    case "ADD_USER":
+      return { ...state, users: [...state.users, action.payload] };
+    case "REMOVE_USER":
       return {
-        users: action.payload
-      }
-    case 'DELETE_USER':
-      return {
-        users: state.users.filter((user) => user.id !== action.payload.id)
-      }
-    case 'UPDATE_USER':
-      return {
-        users: state.users.map((user) => {
-          if (user.id === action.payload.id) {
-            return {...user, ...action.payload}
-          }
-          return user;
-        })
-      }
+        ...state,
+        users: state.users.filter(
+          (user: User) => user.id !== action.payload.id
+        ),
+      };
     default:
       return state;
   }
-}
+};
 
-export const UsersContextProvider = ({ children } : {children:ReactNode}) => {
+export const UsersContextProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(usersReducer, {
-    users: []
-  })
+    users: [],
+  });
 
   const token = useToken();
 
   return (
     <UsersContext.Provider value={{ users: state.users, dispatch, token }}>
-      { children }
+      {children}
     </UsersContext.Provider>
-  )
-}
+  );
+};
