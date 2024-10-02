@@ -44,7 +44,7 @@ const Developers = () => {
 
     return (
         <div className="height-[100vh]">
-            <div className="font-bold text-primary font-serif text-[3em] text-center pt-[1em]">Meet the Developers!</div>
+            <div className="font-bold text-primary font-serif text-[3em] text-center pt-[1em]">Development Team!</div>
             <h1 className="font-bold text-primary font-serif text-[2em] text-center mt-[1em]">=== 2024 ===</h1>
             <div className="flex justify-center text-[1em] flex flex-wrap ml-[5em] mr-[5em] mb-[5em] max-w-[100vw] flex-wrap">
                     {leads.map((developer:any) => (
