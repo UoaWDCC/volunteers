@@ -8,8 +8,16 @@ const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, lin
             border-2 rounded-[5%] border-primary-light hover:border-primary-dark hover:shadow-lg hover:shadow-primary-dark
             m-[0.5em] p-0 w-[15em] h-[19em] font-mono"
             >
-            <h6 className="font-bold text-[1.3em]">{role}</h6>
-            <img className="object-cover w-[5em] h-[5em] rounded-full mb-2 mt-[5px]" src={profilePic} alt="Profile Picture"/>
+            <div className="
+                border-2 rounded-[10px] px-[0.5em] border-white
+                bg-primary
+            ">
+                <h6 className="font-bold text-[1.3em] text-white">{role}</h6>
+            </div>
+            <img className="
+                object-cover w-[5em] h-[5em] rounded-full mb-2 mt-[5px]
+                border-4 border-white
+            " src={profilePic} alt="Profile Picture"/>
             <h6 className="break-words text-primary text-[19px] font-bold">{firstName} {lastName}</h6>
             <h6 className="break-words">{yearLevel}</h6>
             <h6 className="break-words p-[5px] leading-[1.2em]">{major}</h6>
