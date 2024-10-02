@@ -1,13 +1,15 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
+import AuthenticationContext from "../../../context/AuthenticationContext";
 
 const ProfileEditModal = () => {
   //TEMPORARY PROFILE IMAGE
   const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
-
+  const authContext = useContext(AuthenticationContext);
+  const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any};
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
@@ -94,6 +96,32 @@ const ProfileEditModal = () => {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
   }
+
+  useEffect(() => {
+    console.log("User is logged in: ", isUserLoggedIn);
+    if (!isUserLoggedIn) {
+        // redirect to login page
+        // window.location.href = "/login";
+        console.log("User is not logged in");
+    }
+
+    if (firestoreUserDetails) {
+        setFirstName(firestoreUserDetails.firstName);
+        setLastName(firestoreUserDetails.lastName);
+        setEmail(firestoreUserDetails.email);
+        setMobile(firestoreUserDetails.mobile);
+        setBirthdate(firestoreUserDetails.birthdate);
+        setUpi(firestoreUserDetails.upi);
+        setGender(firestoreUserDetails.gender);
+        setYearLevel(firestoreUserDetails.yearLevel);
+        setDietaryRequirements(firestoreUserDetails.dietaryRequirements || []);
+        setDriversLicense(firestoreUserDetails.driversLicense);
+        setEmergencyContactFirstName(firestoreUserDetails.emergencyContactFirstName);
+        setEmergencyContactLastName(firestoreUserDetails.emergencyContactLastName);
+        setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
+        setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
+    }
+}, []);
 
   return (
     <div
