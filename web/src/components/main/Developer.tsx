@@ -9,7 +9,7 @@ const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, lin
             m-[0.5em] p-0 w-[15em] h-[19em] font-mono"
             >
             <div className="
-                border-2 rounded-[10px] px-[0.5em] border-white
+                border-4 rounded-[10px] px-[0.5em] border-white
                 bg-primary
             ">
                 <h6 className="font-bold text-[1.3em] text-white">{role}</h6>
@@ -23,8 +23,8 @@ const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, lin
             <h6 className="break-words p-[5px] leading-[1.2em]">{major}</h6>
             <div className="mt-auto pb-[1em]">
                 <a href={linkedin} target="_blank" className="relative flex">
-                    <img className="w-[2em]" src={linkedinLogo} alt="LinkedIn Logo"/>
-                    <span className="absolute text-[0.8em] bottom-[-10px] right-[-5px]">&trade;</span>
+                    <img className="w-[2.3em] border-2 border-white rounded-[3px]" src={linkedinLogo} alt="LinkedIn Logo"/>
+                    <span className="absolute text-[0.8em] bottom-[-10px] right-[-8px]">&trade;</span>
                 </a>
             </div>
         </div>
