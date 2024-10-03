@@ -43,7 +43,7 @@ const Developers = () => {
     }, []);
 
     return (
-        <div className="height-[100vh]">
+        <div className="height-[100vh] bg-neutral">
             <div className="font-bold text-primary font-serif text-[3em] text-center pt-[1em] flex justify-center">
                 <h1 className="
                     border-4 border-primary w-[10em]
