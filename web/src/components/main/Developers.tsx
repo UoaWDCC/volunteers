@@ -102,7 +102,7 @@ const Developers = () => {
                         loading="lazy"
                         src="./assets/header-logo.svg"
                         alt=""
-                        className="absolute w-[20%] h-auto top-[5%] left-[7%] hover:shadow-lg z-10 rounded-[100px]"
+                        className="absolute w-[20%] h-auto top-[30px] left-[7%] hover:shadow-lg z-10 rounded-[100px]"
                     />
                 </a>
             </div>
