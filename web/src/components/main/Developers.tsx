@@ -51,7 +51,7 @@ const Developers = () => {
                     text-white
                 ">Development Team!</h1>
             </div>
-            <h1 className="font-bold text-primary font-serif text-[2em] text-center mt-[1em]">=== 2024 ===</h1>
+            <h1 className="font-bold text-primary font-serif text-[2.5em] text-center mt-[0em]">2024</h1>
             <div className="flex justify-center text-[1em] flex flex-wrap ml-[5em] mr-[5em] mb-[5em] max-w-[100vw] flex-wrap">
                     {leads.map((developer:any) => (
                     <Developer 
@@ -102,7 +102,7 @@ const Developers = () => {
                         loading="lazy"
                         src="./assets/header-logo.svg"
                         alt=""
-                        className="absolute w-[20%] h-auto top-[7%] left-[7%] hover:shadow-lg z-10 rounded-[100px]"
+                        className="absolute w-[20%] h-auto top-[5%] left-[7%] hover:shadow-lg z-10 rounded-[100px]"
                     />
                 </a>
             </div>
