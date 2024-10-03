@@ -36,7 +36,7 @@ function Dashboard() {
         <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row h-screen">
             {/* width of the left nav bar */}
             {/* place thing component here and remove bg-primary */}
-            <div className='w-[16rem]'> 
+            <div className='w-[16rem] sm:max-2xl:w-[7rem]'> 
                 <SideBar switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}/>
             </div>
 
