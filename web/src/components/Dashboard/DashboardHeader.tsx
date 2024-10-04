@@ -28,12 +28,12 @@ const DashboardHeader = () => {
         <div className="h-12 border border-lightGrey"></div>
 
         <div className="flex items-center justify-center gap-4">
-          <span className="font-medium text-lg">John Doe</span>
+          <span className="font-medium text-lg sm:max-2xl:hidden">John Doe</span>
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" className="rounded-full w-12 h-auto" />
         </div>
       </div>
 
-      <div className={`relative transform transition-transform z-50 ${isNotificationTabOpen ? 'translate-x-0 duration-[400ms]' : 'translate-x-[200%] duration-[800ms]'}`}>
+      <div className={`relative transform transition-transform z-50 ${isNotificationTabOpen ? 'translate-x-0 duration-[400ms]' : 'translate-x-[32rem] duration-[800ms]'}`}>
         {isNotificationTabVisible && <NotificationTab toggleNotificationTab={toggleNotificationTab} />}
       </div>
     </div>
