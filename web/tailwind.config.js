@@ -58,6 +58,10 @@ export default {
           serif: ["Lora", "serif"],
           sans: ["Poppins", "sans-serif"], // sans is the default font if no font family is defined
           mono: ["Roboto Mono", "monospace"],
+        },
+        boxShadow: {
+          'tLInv': '-20px -20px 0 20px #FFFEF9',
+          'bRInv': '20px 20px 0 20px #FFFEF9'
         }
       }
     },
