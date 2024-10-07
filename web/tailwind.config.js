@@ -144,6 +144,5 @@ export default {
     ]
   }),
   require('tailwind-scrollbar'),
-  require('@butterfail/tailwindcss-inverted-radius'),
   ],
 };
