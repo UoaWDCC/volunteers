@@ -109,17 +109,17 @@ const EventHighlights = () => {
         ))}
       </div>
 
-      <ul className="absolute w-[30%] top-[45%] h-auto">
+      <ul className="absolute w-[32rem] min-h-[12rem] top-[45%]">
         {data.map((event, index) => (
           <li
-            className="data-[active=true]:opacity-100 data-[active=true]:delay-0 opacity-0 flex absolute flex-col justify-start items-center transition-opacity duration-[850ms] ease-in-out delay-200"
+            className="data-[active=true]:opacity-100 data-[active=true]:delay-0 opacity-0 flex absolute flex-col items-center transition-opacity duration-[850ms] ease-in-out delay-200 w-full"
             key={index}
             data-active={index == eventIndex ? "true" : null}
           >
-            <h1 className="text-black text-center font-serif text-heading m-0 mb-2">
+            <h1 className="text-black font-serif text-heading m-0 mb-2">
               {event.title}
             </h1>
-            <p className="text-black text-center font-sans text-detail m-0 sm:max-xl:opacity-0">
+            <p className="text-black text-center font-sans text-detail m-0 sm:max-2xl:hidden">
               {event.description}
             </p>
           </li>

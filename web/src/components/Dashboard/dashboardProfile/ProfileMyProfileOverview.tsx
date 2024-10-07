@@ -45,7 +45,7 @@ const ProfileMyProfileOverview = ({
     <>
       {showModal && <ProfileEditModal />}
       <div
-        className="dashboard bg-white rounded-2xl shadow-md w-full flex flex-col"
+        className="dashboard bg-white w-full flex flex-col rounded-lg shadow-lg"
         style={{
           padding: "30px",
         }}
@@ -63,9 +63,9 @@ const ProfileMyProfileOverview = ({
         </div>
 
         {/* Personal Details Section */}
-        <div className="mb-8">
-          <h3 className="dashboard text-heading3 mb-4">Personal Details</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-6">
+        <div className="mb-4">
+          <h3 className="dashboard text-heading3 mb-2">Personal Details</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-0">
             {/* Row 1 */}
             <div>
               <label className="dashboard text-detail-regular">
@@ -90,7 +90,7 @@ const ProfileMyProfileOverview = ({
               <label className="dashboard text-detail-regular">
                 Preferred Email
               </label>
-              <p className="text-body">{email}</p>
+              <p className="text-body break-words">{email}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">
@@ -108,7 +108,7 @@ const ProfileMyProfileOverview = ({
         </div>
 
         {/* Additional Details Section */}
-        <div className="mb-8">
+        <div className="mb-6">
           <h3 className="dashboard text-heading3 mb-4">Additional Details</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-x-12 gap-6">
             {/* Row 1 */}

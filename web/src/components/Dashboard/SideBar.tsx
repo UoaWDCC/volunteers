@@ -19,9 +19,9 @@ const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, swit
     const { signOut } = authContext as unknown as { signOut: () => void };
 
     return ( 
-        <div className="flex flex-col from-[#D6EDFD] to-[#58B6F1] h-[100vh] w-full rounded-[30px]">
+        <div className="flex flex-col bg-primary w-full h-full">
             <Link className="self-center" to={"/"}>
-                <img className="h-[68px] w-[68px] mt-[8vh] self-center" src='/public/assets/club-logo.svg' alt='club-logo' />
+                <img className="h-[68px] w-[68px] mt-[8vh] sm:max-2xl:h-[48px] sm:max-2xl:w-[48px] object-cover" src='/public/assets/club-logo.svg' alt='club-logo' />
             </Link>
 
             <div className="flex flex-col mt-[5vh] items-end"> 
@@ -32,9 +32,9 @@ const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, swit
                 <SideBarTab unselected='/assets/sidebar/community_icon.svg' selected='/assets/sidebar/community_icon_blue.svg' tabName='community' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchPage={switchCommunity}/> 
             </div>  
 
-            <button className="flex w-[130px] h-[35px] items-center bg-primary self-center mt-auto mb-4 rounded-3xl transition-all duration-[400] hover:bg-[#0370BEB3] gap-1.5">
+            <button className="flex h-[35px] justify-center items-center bg-primary self-center mb-4 rounded-3xl transition-all duration-[400] hover:bg-[#0370BEB3] gap-1.5 mt-auto mb-[40px] ml-4 rounded">
                 <img className="h-[18px] w-[18px]  ml-2" src='/public/assets/sidebar/logout_icon.svg' alt='logout-icon' />
-                <h3 className="text-[13px] font-sans m-0 mt-[2px]" onClick={signOut} >Logout</h3>
+                <h3 className="text-[13px] font-sans m-0 mt-[2px] sm:max-2xl:hidden" onClick={signOut} >Logout</h3>
             </button>
         </div>
      );
