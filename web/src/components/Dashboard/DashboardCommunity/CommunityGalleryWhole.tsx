@@ -2,6 +2,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+
 import CommunityGallery from "./CommunityGallery";
 
 interface EventData {
@@ -32,10 +33,9 @@ const CommunityGalleryWhole = () => {
 
   // useEffect(() => {
   //   // Fetch gallery data
-  //   const appUrl = import.meta.env.VITE_APP_URL;
-  //   const port = import.meta.env.VITE_APP_PORT;
+  //   const appUrl = import.meta.env.VITE_API_URL;
   //   axios
-  //     .get(`${appUrl}:${port}/api/homepage/highlights`)
+  //     .get(`${appUrl}/api/homepage/highlights`)
   //     .then((res) => {
   //       setData(res.data);
   //     })
@@ -48,7 +48,7 @@ const CommunityGalleryWhole = () => {
   return (
     <div>
       {/* passing event data into community gallery*/}
-        <CommunityGallery />
+      <CommunityGallery />
     </div>
   );
 };

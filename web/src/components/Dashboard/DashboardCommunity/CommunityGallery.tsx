@@ -41,10 +41,9 @@ const CommunityGallery = () => {
 
   useEffect(() => {
     // Fetch gallery data
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const port = import.meta.env.VITE_APP_PORT;
+    const appUrl = import.meta.env.VITE_API_URL;
     axios
-      .get(`${appUrl}:${port}/api/users`)
+      .get(`${appUrl}/api/users`)
       .then((res) => {
         setData(res.data);
       })

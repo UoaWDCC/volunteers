@@ -55,11 +55,10 @@ function DashboardDiscover() {
 
   // Get events from backend
   useEffect(() => {
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const port = import.meta.env.VITE_APP_PORT;
+    const appUrl = import.meta.env.VITE_API_URL;
 
     axios
-      .get(`${appUrl}:${port}/api/events`)
+      .get(`${appUrl}/api/events`)
       .then((response) => {
         setEvents(response.data);
 

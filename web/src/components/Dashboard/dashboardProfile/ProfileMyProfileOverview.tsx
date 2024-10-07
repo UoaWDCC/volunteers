@@ -134,7 +134,7 @@ const ProfileMyProfileOverview = ({
         </div>
 
         {/* Emergency Contact Details Section */}
-        <div className="">
+        <div className="mb-8">
           <h3 className="dashboard text-heading3 mb-4">
             Emergency Contact Details
           </h3>
