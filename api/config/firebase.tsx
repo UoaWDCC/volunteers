@@ -17,7 +17,18 @@ const firebaseConfig = {
   measurementId: process.env.measurementId,
 };
 
-const credentials = JSON.parse(decode(process.env.credentials_base64 || "{}"));
+const base64Credentials = process.env.credentials_base64 || "{}";
+let credentials = "{}";
+
+if (base64Credentials === "{}") {
+  console.error("credentials_base64 environment variable is not set.");
+} else {
+  try {
+    credentials = JSON.parse(decode(base64Credentials));
+  } catch (error) {
+    console.error("Failed to parse credentials:", error);
+  }
+}
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({

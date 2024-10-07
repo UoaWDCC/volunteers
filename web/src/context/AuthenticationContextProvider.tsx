@@ -155,10 +155,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     // }
     // !!!!!!!!!!!!!!!!!!!!!! CHECKING UID IN FIRESTORE COLLECTION
     try {
-      const appUrl = import.meta.env.VITE_APP_URL;
-      const port = import.meta.env.VITE_APP_PORT;
+      const appUrl = import.meta.env.VITE_API_URL;
 
-      const response = await axios.get(`${appUrl}:${port}/api/users/${uid}`);
+      const response = await axios.get(`${appUrl}/api/users/${uid}`);
 
       if (response.status === 200) {
         console.log("user exists in Firestore with UID:", uid);
@@ -215,10 +214,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     studentID: string
   ): Promise<DocumentData | null> {
     try {
-      const appUrl = import.meta.env.VITE_APP_URL;
-      const port = import.meta.env.VITE_APP_PORT;
+      const appUrl = import.meta.env.VITE_API_URL;
 
-      const response = await axios.get(`${appUrl}:${port}/api/users`);
+      const response = await axios.get(`${appUrl}/api/users`);
 
       if (response.status === 200 && response.data.length > 0) {
         const users = response.data;

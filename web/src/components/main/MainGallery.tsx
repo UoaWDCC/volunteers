@@ -33,11 +33,10 @@ const MainGallery = () => {
 
   // Fetch gallery data
   useEffect(() => {
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const port = import.meta.env.VITE_APP_PORT;
+    const appUrl = import.meta.env.VITE_API_URL;
 
     axios
-      .get(`${appUrl}:${port}/api/homepage/gallery`)
+      .get(`${appUrl}/api/homepage/gallery`)
       .then((res) => {
         setData(res.data);
       })

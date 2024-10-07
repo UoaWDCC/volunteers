@@ -17,11 +17,10 @@ const Sponsors = () => {
 
   useEffect(() => {
     // Fetch sponsor data
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const port = import.meta.env.VITE_APP_PORT;
+    const appUrl = import.meta.env.VITE_API_URL;
 
     axios
-      .get(`${appUrl}:${port}/api/homepage/sponsors`)
+      .get(`${appUrl}/api/homepage/sponsors`)
       .then((res) => {
         setData(res.data);
       })

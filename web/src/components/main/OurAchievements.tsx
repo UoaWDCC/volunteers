@@ -38,11 +38,10 @@ const OurAchievements = () => {
 
   // Fetch achievements data
   useEffect(() => {
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const port = import.meta.env.VITE_APP_PORT;
+    const appUrl = import.meta.env.VITE_API_URL;
 
     axios
-      .get(`${appUrl}:${port}/api/homepage/achievements`)
+      .get(`${appUrl}/api/homepage/achievements`)
       .then((res) => {
         setData(res.data);
       })
