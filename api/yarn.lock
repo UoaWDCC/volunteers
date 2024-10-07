@@ -1538,6 +1538,11 @@ jose@^4.14.6:
   resolved "https://registry.npmjs.org/jose/-/jose-4.15.9.tgz"
   integrity sha512-1vUQX+IdDMVPj4k8kOxgUqlcK518yluMuGZwqlr44FS1ppZB/5GWh4rZG89erpOBOJjU/OBsnCVFfapsRz6nEA==
 
+js-base64@^3.7.7:
+  version "3.7.7"
+  resolved "https://registry.yarnpkg.com/js-base64/-/js-base64-3.7.7.tgz#e51b84bf78fbf5702b9541e2cb7bfcb893b43e79"
+  integrity sha512-7rCnleh0z2CkXhH67J8K1Ytz0b2Y+yxTPL+/KOJoa20hfnVQ/3/T6W/KflYI4bRHRagNeXeU2bkNGI3v1oS/lw==
+
 json-bigint@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmjs.org/json-bigint/-/json-bigint-1.0.0.tgz"
@@ -1893,7 +1898,7 @@ parseurl@~1.3.3:
     firebase-admin "^12.5.0"
     jsonwebtoken "^9.0.2"
     mongoose "^8.1.1"
-    passport-api "file:../../../../AppData/Local/Yarn/Cache/v6/npm-passport-api-0.0.0-f190a652-d57e-4ed0-8cfc-7a2e58f3c619-1727684103303/node_modules/passport-api"
+    passport-api "file:../../../../Library/Caches/Yarn/v6/npm-passport-api-0.0.0-5bf47f4d-9531-4d87-9d88-4ea75b40be00-1728292014342/node_modules/passport-api"
     ts-node "^10.9.2"
     zod "^3.22.4"
 
