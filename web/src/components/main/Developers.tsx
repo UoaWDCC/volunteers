@@ -12,6 +12,7 @@ const Developers = () => {
         window.location.href = '/';
       }
 
+      
     useEffect(() => {
         getDocs(colref)
         .then((snapshot) => {
