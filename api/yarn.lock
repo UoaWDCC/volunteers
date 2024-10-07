@@ -1893,7 +1893,7 @@ parseurl@~1.3.3:
     firebase-admin "^12.5.0"
     jsonwebtoken "^9.0.2"
     mongoose "^8.1.1"
-    passport-api "file:../../../../../AppData/Local/Yarn/Cache/v6/npm-passport-api-0.0.0-331cd9d4-3384-4f90-86b9-e2f45b205f29-1727344185460/node_modules/passport-api"
+    passport-api "file:../../../../AppData/Local/Yarn/Cache/v6/npm-passport-api-0.0.0-f190a652-d57e-4ed0-8cfc-7a2e58f3c619-1727684103303/node_modules/passport-api"
     ts-node "^10.9.2"
     zod "^3.22.4"
 

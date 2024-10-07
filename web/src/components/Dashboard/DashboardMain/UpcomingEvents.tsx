@@ -29,7 +29,7 @@ const UpcomingEvents = () => {
     .slice(0, 4);
 
   return (
-    <div className="flex flex-col bg-white mt-5 rounded-[30px] font-light h-full">
+    <div className="flex flex-col h-full bg-white font-light">
       <div>
         <p className="text-black text-[38px] leading-[1.15] pl-8 pt-2 m-0 font-semibold">
           Upcoming Events
@@ -38,8 +38,8 @@ const UpcomingEvents = () => {
           See what's going on!
         </p>
       </div>
-      <div className="flex-grow overflow-auto ml-5">
-        <div className="grid grid-cols-2 gap-5">
+      <div className="overflow-auto mx-5 scrollbar-none">
+        <div className="grid grid-cols-3 max-[1280px]:grid-cols-2 min-[2100px]:grid-cols-4 min-[2560px]:grid-cols-5 gap-5 justify-center">
           {/*}
           <UpcomingEvent event={event_test_one} />
           <UpcomingEvent event={event_test_six} />

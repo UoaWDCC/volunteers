@@ -1,5 +1,4 @@
 import { createContext, Dispatch } from "react";
-import { User } from "@components/legacy/UserDetails";
 
 export interface Action {
   type: string;
@@ -7,9 +6,11 @@ export interface Action {
 }
 
 export interface UsersContextType {
-  users: User[];
+  users: any; // make sure to change this to the correct type
   dispatch: Dispatch<Action>;
   token: string | null;
 }
 
-export const UsersContext = createContext<UsersContextType | undefined>(undefined)
+export const UsersContext = createContext<UsersContextType | undefined>(
+  undefined
+);
