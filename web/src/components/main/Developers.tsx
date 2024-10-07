@@ -45,22 +45,22 @@ const Developers = () => {
     return (
         <div className="height-[100vh] bg-neutral">
             {/* Club Logo */}
-            <a onClick={goToHome} className="hover:cursor-pointer flex flex-center top-[]">
+            <a onClick={goToHome} className="hover:cursor-pointer flex flex-center">
                 <img
                     loading="lazy"
                     src="./assets/club-logo.svg"
                     alt=""
-                    className="hover:shadow-lg z-10 rounded-[100px] w-[8em] items-center pt-[0.9em]"
+                    className="hover:shadow-lg z-10 rounded-[100px] w-[6em] items-center pt-[0.9em]"
                 />
             </a>
             <div className="font-bold text-primary font-serif text-[3em] text-center pt-[0.3em] flex justify-center">
                 <h1 className="
                     border-4 border-primary w-[11em]
                     bg-primary rounded-[15px]
-                    text-white
+                    text-white text-[35px]
                 ">Development Team 2024</h1>
             </div>
-            <div className="flex justify-center text-[1em] flex flex-wrap ml-[5em] mr-[5em] mb-[5em] max-w-[100vw] flex-wrap">
+            <div className="flex justify-center text-[1em] flex flex-wrap ml-[5em] mr-[5em] max-w-[100vw] flex-wrap">
                     {leads.map((developer:any) => (
                     <Developer 
                         firstName={developer.first_name}
@@ -95,16 +95,10 @@ const Developers = () => {
                     loading="lazy"
                     src="./assets/graphics/wheelLBlue.svg"
                     alt=""
-                    className="absolute w-[20%] h-auto top-[50%] left-[15%]"
-                />
-                {/*Blue Swirl*/}
-                <img
-                    loading="lazy"
-                    src="./assets/graphics/swirlRed.svg"
-                    alt=""
-                    className="absolute w-[20%] h-auto top-[80%] right-[15%]"
+                    className="absolute w-[30%] h-auto top-[-10%] right-[0%]"
                 />
             </div>
+            <h6 className="break-words text-primary text-[15px] mb-[1em] text-center">Click profile to see LinkedIn</h6>
         </div>
     )
 }
