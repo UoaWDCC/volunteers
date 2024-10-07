@@ -70,7 +70,7 @@ const MainGallery = () => {
   }, [imgIndex, data.length]);
 
   return (
-    <div className="flex justify-around py-[4rem] px-[2rem] bg-neutral">
+    <div className="flex justify-around py-[8rem] px-[2rem] bg-neutral">
       <div className='relative w-[100rem] h-[42rem]'>
         <div className='flex overflow-hidden w-full h-full rounded-3xl'>
           {data.map((event, index) => (
