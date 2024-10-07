@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
+import React, { useState } from 'react';
 
 type Event = {
     event_title: string;
@@ -29,6 +30,26 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=18&amp&output=embed"
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
+ 
+    const [buttonText, setButtonText] = useState('Register for Event');
+    const [isPopupVisible, setIsPopupVisible] = useState(false);  // State for popup visibility
+
+    const handleClick = () => {
+        if (buttonText === 'Register for Event') {
+            setButtonText('You are registered!');
+        } else {
+            setIsPopupVisible(true);  // Show the popup if already registered
+        }
+    };
+
+    const handleConfirmUnregister = () => {
+        setButtonText('Register for Event');  // Change button text back to 'Register for Event'
+        setIsPopupVisible(false);  // Close the popup
+    };
+
+    const handleCancelUnregister = () => {
+        setIsPopupVisible(false);  // Close the popup without changing the button text
+    };
     return (
         <div className="flex flex-col absolute top-0 left-0 items-center w-full h-full bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
             <div className="self-start ml-6 cursor-pointer" onClick={() => setEventDetails(null)}><IoArrowBackCircle  size="40px" color="#3B87DD" /></div>
@@ -38,7 +59,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full">Register for Event</button>
+                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -47,6 +68,28 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     ))}
                 </div>
             </div>
+            {/* Popup for confirmation */}
+            {isPopupVisible && (
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50">
+                    <div className="bg-white p-6 rounded-lg w-1/3 text-center">
+                        <h2 className="text-lg font-semibold mb-4">Are you sure you want to unregister?</h2>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                                onClick={handleConfirmUnregister}
+                            >
+                                Yes, I am sure
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                                onClick={handleCancelUnregister}
+                            >
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
             
             <div className="flex flex-row w-[95%] justify-between">
                 <div className="w-[60%]">
