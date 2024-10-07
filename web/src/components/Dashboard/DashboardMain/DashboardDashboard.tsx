@@ -1,21 +1,22 @@
 import Leaderboard from "../Leaderboard";
 import WelcomeStats from "./WelcomeStats";
 import UpcomingEvents from "./UpcomingEvents";
+import UpcomingEvent from "./UpcomingEvent";
 
 function DashboardDashboard() {
   return (
-    <div className="dashboard overflow-y-hidden flex flex-row w-[100%] h-screen px-5 gap-5 mb-10">
+    <div className="flex flex-row w-full h-full gap-5">
       {/* width of the gallery */}
-      <div className="w-[70%] flex flex-col gap-2">
-        <div className=" w-h-[20%]">
+      <div className="w-[75%] h-full flex flex-col gap-8">
+        <div className="flex-none">
           <WelcomeStats />
         </div>
-        <div className="h-[60%]">
+        <div className="flex-1 shadow-lg rounded-lg overflow-y-auto">
           <UpcomingEvents />
         </div>
       </div>
 
-      <div className="w-[30%] h-[40vw]">
+      <div className="w-[20%]">
         {/* adjust sizes and stuff as needed */}
         <Leaderboard />
       </div>

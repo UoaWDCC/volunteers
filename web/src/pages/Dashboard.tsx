@@ -43,50 +43,43 @@ function Dashboard() {
     window.location.href = "/";
   }
 
-  return (
-    <CommunitySearchContextProvider>
-    <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row">
-      {/* width of the left nav bar */}
-      {/* place thing component here and remove bg-primary */}
-      <div className="bg-primary w-[15%] h-auto">
-        <SideBar
-          switchDashboard={switchDashboard}
-          switchCalendar={switchCalendar}
-          switchCommunity={switchCommunity}
-          switchDiscover={switchDiscover}
-          switchProfile={switchProfile}
-        />
-      </div>
+    return (
+        <CommunitySearchContextProvider>
+    <div className="bg-[#F7F7FB] primary-background overflow-hidden flex flex-row h-screen">
+            {/* width of the left nav bar */}
+            {/* place thing component here and remove bg-primary */}
+            <div className='w-[16rem] sm:max-2xl:w-[7rem]'> 
+                <SideBar switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}/>
+            </div>
 
-      {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
-      <div className="flex flex-col w-[85%] marker:p-5">
-        <div className="flex flex-row justify-end p-5">
-          {/* place notifcation stuff in here and remove bg-yellow for henrys thing it'll probably break the styling a bit but it shouldnt be too hard to fix, maybe instead of having a whole nav bar just have the notifcation and pfp component as separate thing or something*/}
-          {tab === 5 && (
-            <>
-              <h1>other thig</h1>
-              <SearchBar />
-            </>
-          )}
-          <DashboardHeader />
-        </div>
+            {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
+            <div className='flex flex-col flex-1'>
+                <div className='flex flex-row justify-end items-center w-[95%] h-[6rem] pl-5'>
+                    {/* place notifcation stuff in here and remove bg-yellow for henrys thing it'll probably break the styling a bit but it shouldnt be too hard to fix, maybe instead of having a whole nav bar just have the notifcation and pfp component as separate thing or something*/}
+                    {tab === 5 &&(
+                        <>
+                            <h1 className="m-0">other thig</h1>
+                            <SearchBar />
+                        </>
+                    )}
+                    <DashboardHeader/>
+                </div>
 
-        {/* whole tabs go in here */}
-        <div className="flex flex-row">
-          {/* <DashboardCommunity /> */}
-          {tab === 1 && <DashboardDashboard />}
-          {tab === 2 && <DashboardDiscover />}
-          {tab === 3 && (
-            <>
-              <ProfileEditModalContextProvider>
-                <DashboardProfile />
-              </ProfileEditModalContextProvider>
-            </>
-          )}
-          {tab === 4 && <DashboardCalendar />}
-          {tab === 5 && <DashboardCommunity />}
-        </div>
-      </div>
+                {/* whole tabs go in here */}
+                <div className='flex flex-row h-[90%] pt-0 p-5'>
+                    {/* <DashboardCommunity /> */}
+                    {tab === 1 && <DashboardDashboard />}
+                    {tab === 2 && <DashboardDiscover />}
+                    {tab === 3 &&
+                        <>
+                            <ProfileEditModalContextProvider>
+                                <DashboardProfile />
+                            </ProfileEditModalContextProvider>
+                        </>}
+                    {tab === 4 && <DashboardCalendar />}
+                    {tab === 5 && <DashboardCommunity />}
+                </div>
+            </div>
     </div>
     </CommunitySearchContextProvider>
   );

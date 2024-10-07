@@ -1,7 +1,9 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
-  plugins: [require('tailwindcss-themer')({
+  plugins: [
+    require('tailwindcss-themer')
+    ({
     defaultTheme: {
       // put the default values of any config you want themed
       // just as if you were to extend tailwind's theme like normal https://tailwindcss.com/docs/theme#extending-the-default-theme
@@ -56,6 +58,10 @@ export default {
           serif: ["Lora", "serif"],
           sans: ["Poppins", "sans-serif"], // sans is the default font if no font family is defined
           mono: ["Roboto Mono", "monospace"],
+        },
+        boxShadow: {
+          'tLInv': '-20px -20px 0 20px #FFFEF9',
+          'bRInv': '20px 20px 0 20px #FFFEF9'
         }
       }
     },
@@ -128,6 +134,10 @@ export default {
             sans: ["Poppins", "sans-serif"],
             serif: ["Poppins", "sans-serif"], // since there is no serif font defined
             mono: ["Roboto Mono", "monospace"],
+          },
+          boxShadow: {
+            'invTR': '0 20px 0 0 #F7F7FB',
+            'invBR': '0 -20px 0 0 #F7F7FB'
           }
         }
       }

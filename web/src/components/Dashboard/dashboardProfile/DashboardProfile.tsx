@@ -49,16 +49,15 @@ function DashboardProfile() {
         }
     }, []);
   return (
-    <div className="overflow-hidden flex flex-col w-[100%] h-screen px-5">
-
+    <div className="flex flex-col gap-6 w-[96%] h-full overflow-auto scrollbar-none">
                 {/* width of the gallery */}
-                <div className='flex flex-col bg-red-100 mb-5 h-[40%]'>
+                <div className='flex min-h-[16rem]'>
               <ProfileMyProfileHeading name={ firstName }></ProfileMyProfileHeading>
                 </div>
                     
-                <div className='bg-green-100 flex flex-row justify-between gap-5 mb-5 h-[60%]'>
+                <div className='flex flex-row flex-1 gap-5'>
                     {/* adjust sizes and stuff as needed */}
-                    <div className="bg-orange-100 w-[65%] h-[700px]">
+                    <div className="flex-[4]">
                         <ProfileMyProfileOverview
                             firstName={firstName}
                             lastName={lastName}
@@ -75,7 +74,7 @@ function DashboardProfile() {
                         ></ProfileMyProfileOverview>
                     </div>
 
-                    <div className="bg-purple-100 w-[35%] h-[500px]">
+                    <div className="flex-1">
                         <ProfileMyProfileProgressBar totalHours={20} completedHours={14}></ProfileMyProfileProgressBar>
                     </div>
                 </div>

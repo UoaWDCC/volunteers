@@ -78,26 +78,19 @@ const MainGallery = () => {
   }, [imgIndex, data.length]);
 
   return (
-    <div className="px-24 py-32 bg-neutral">
-      <div className="relative">
-        <div className="flex overflow-hidden aspect-[8/3]">
+    <div className="flex justify-around pt-[3rem] py-[8rem] px-[2rem] bg-neutral">
+      <div className="relative w-[100rem] h-[42rem]">
+        <div className="flex overflow-hidden w-full h-full rounded-3xl">
           {data.map((event, index) => (
             <img
               loading="lazy"
               src={event.image}
               key={index}
-              className="object-cover w-full h-full shrink-0 grow-0 transition-translate ease-in-out duration-700"
+              className="w-full h-full shrink-0 grow-0 transition-translate ease-in-out duration-700"
               style={{ translate: `${-100 * imgIndex}%` }}
             />
           ))}
         </div>
-
-        <img
-          loading="lazy"
-          className="absolute z-20 right-0 bottom-0 w-full"
-          src="..\public\assets\gallery\borders\GalleryBord.svg"
-          draggable="false"
-        />
 
         <div className="buttons z-50 absolute flex bg-[#ffffff00] text-white top-[47%] w-[100%]">
           <button
@@ -114,21 +107,19 @@ const MainGallery = () => {
           </button>
         </div>
 
-        <h1 className="absolute top-[2%] left-[10%] z-20 text-[3.3vw] font-bold text-primary font-serif">
-          Make a Difference. Be a Volunteer.
-        </h1>
+        <div className="flex justify-center items-center absolute top-0 left-0 bg-neutral w-[80%] h-[128px] rounded-br-3xl before:content-[''] before:absolute before:h-[40px] before:w-[40px] before:bg-transparent before:top-[128px] before:left-0 before:rounded-tl-full before:shadow-tLInv after:content-[''] after:absolute after:h-[40px] after:w-[40px] after:bg-transparent after:top-0 after:right-[-40px] after:rounded-tl-full after:shadow-tLInv">
+          <h1 className='font-bold text-primary text-[3.8rem] font-serif mt-2 z-50'>Make a Difference. Be a Volunteer.</h1>
+        </div>
         <Link to={`/events/${imgIndex + 1}`}>
           <h1 className="absolute bottom-[8%] left-[2%] z-20 text-white bg-[#e9e9e952] px-6 py-3 text-[2.4vw] rounded-3xl backdrop-blur-[4px] font-[600] shadow-lg ">
             {data[imgIndex].title}
           </h1>
         </Link>
-        <button
-          className="see-more absolute bottom-[2%] right-0 z-20 w-[33.1%] h-[13%] text-[1.3vw] rounded-3xl flex justify-center items-center gap-3 bg-primary font-mono hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-1 transition-all ease-in-out duration-100"
-          onClick={() => handleSeeMore}
-        >
-          See other upcoming events!{" "}
-          <FaArrowRight className="inline" size={20} />
-        </button>
+        <div className="see-more flex justify-center items-center absolute bottom-0 right-0 bg-neutral w-[37%] h-[7rem] rounded-tl-[2.6rem] before:content-[''] before:absolute before:h-[40px] before:w-[40px] before:bg-transparent before:bottom-0 before:left-[-40px] before:rounded-br-full before:shadow-bRInv after:content-[''] after:absolute after:h-[40px] after:w-[40px] after:bg-transparent after:top-[-40px] after:right-0 after:rounded-br-full after:shadow-bRInv">
+          <button className='see-more w-[90%] h-[4rem] text-[1.4rem] rounded-3xl flex justify-center items-center gap-3 bg-primary font-mono hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-1 transition-all ease-in-out duration-100 z-50' onClick={() => handleSeeMore}>
+            See other upcoming events! <FaArrowRight className='inline sm:max-2xl:hidden' size={20} />
+          </button>
+        </div>
       </div>
     </div>
   );

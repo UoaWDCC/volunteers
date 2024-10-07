@@ -92,7 +92,7 @@ function DashboardDiscover() {
   console.log(flagshipEvent);
 
   return (
-    <div className="flex flex-col w-[100%] h-[85vh] px-5">
+    <div className="flex flex-col w-[96%] relative">
       <div className="flex flex-row bg-white rounded-lg shadow-md h-[45%] cursor-pointer mb-5 items-center p-7">
         <div className="h-full w-[60%]">
           <img
@@ -130,7 +130,7 @@ function DashboardDiscover() {
         </div>
       </div>
 
-      <div className="mb-5 h-[55%]">
+      <div className="flex-1 rounded-xl overflow-y-auto">
         {/* adjust sizes and stuff as needed */}
         <EventsScrollContainer
           events={events}
@@ -138,10 +138,10 @@ function DashboardDiscover() {
         />
       </div>
 
-      {eventDetails && (
+        {eventDetails && (
         <EventDetails event={eventDetails} setEventDetails={setEventDetails} />
       )}
-    </div>
+      </div>
   );
 }
 
