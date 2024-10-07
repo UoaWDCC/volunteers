@@ -1,10 +1,11 @@
 // Import the functions you need from the SDKs you need
-import * as admin from 'firebase-admin';
-import { getFirestore } from 'firebase/firestore';
-import { initializeApp } from 'firebase/app';
-import { getAuth } from 'firebase/auth';
+import * as admin from "firebase-admin";
+import { getFirestore } from "firebase/firestore";
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { decode } from "js-base64";
 
-require('dotenv').config();
+require("dotenv").config();
 
 const firebaseConfig = {
   apiKey: process.env.apiKey,
@@ -16,7 +17,7 @@ const firebaseConfig = {
   measurementId: process.env.measurementId,
 };
 
-const credentials = JSON.parse(process.env.credentials || '{}');
+const credentials = JSON.parse(decode(process.env.credentials_base64 || "{}"));
 
 // Initialize Firebase Admin SDK
 admin.initializeApp({
