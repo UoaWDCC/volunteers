@@ -1,9 +1,7 @@
-
-import axios from 'axios';
-import { useState, useEffect, useContext } from 'react';
-import CommunityGalleryCard from '../DashboardCommunity/CommunityGalleryCard';
-import CommunitySearchContext from '../../../context/CommunitySearchContext';
-
+import axios from "axios";
+import { useState, useEffect, useContext } from "react";
+import CommunityGalleryCard from "../DashboardCommunity/CommunityGalleryCard";
+import CommunitySearchContext from "../../../context/CommunitySearchContext";
 
 type userData = {
   profile_picture: string;
@@ -23,10 +21,9 @@ type userData = {
   emergencyContactLastName: string;
   emergencyContactMobile: string;
   emergencyContactRelationship: string;
-}
+};
 
 const CommunityGallery = () => {
-
   const [data, setData] = useState<userData[]>([]);
   const [filteredData, setFilteredData] = useState<userData[]>([]);
 
@@ -34,7 +31,7 @@ const CommunityGallery = () => {
 
   const filterUsers = (users: userData[]) => {
     return users.filter((user) => {
-      const fullName = user.firstName + ' ' + user.lastName;
+      const fullName = user.firstName + " " + user.lastName;
       return fullName.toLowerCase().includes(context.searchTerm.toLowerCase());
     });
   };

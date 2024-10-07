@@ -24,11 +24,10 @@ const OurCommunity = () => {
 
   // Fetch gallery data
   useEffect(() => {
-    const appUrl = import.meta.env.VITE_APP_URL;
-    const port = import.meta.env.VITE_APP_PORT;
+    const appUrl = import.meta.env.VITE_API_URL;
 
     axios
-      .get(`${appUrl}:${port}/api/homepage/community`)
+      .get(`${appUrl}/api/homepage/community`)
       .then((res) => {
         setData(res.data);
         console.log(res.data);

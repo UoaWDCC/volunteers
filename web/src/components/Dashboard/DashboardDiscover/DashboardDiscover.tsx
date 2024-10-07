@@ -136,12 +136,12 @@ function DashboardDiscover() {
           events={events}
           setEventDetails={setEventDetails}
         />
+      </div>
 
         {eventDetails && (
         <EventDetails event={eventDetails} setEventDetails={setEventDetails} />
       )}
       </div>
-    </div>
   );
 }
 
