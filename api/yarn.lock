@@ -1136,7 +1136,7 @@ event-target-shim@^5.0.0:
 
 express-cors@^0.0.3:
   version "0.0.3"
-  resolved "https://registry.npmjs.org/express-cors/-/express-cors-0.0.3.tgz"
+  resolved "https://registry.yarnpkg.com/express-cors/-/express-cors-0.0.3.tgz#5c25a78d7be69a4fcb08412cb27c8dfc758896bd"
   integrity sha512-niRr2FV60JnzthAq6fmVsnvIuu6H+SQF5GcoIDMz9z3EF+sT+aGiiyWgeAj8Qj6VIXyX0NmuZQIqqcaQFvKsEg==
 
 express@^4.18.2:
@@ -1297,7 +1297,7 @@ fresh@0.5.2:
 
 fsevents@~2.3.2:
   version "2.3.3"
-  resolved "https://registry.npmjs.org/fsevents/-/fsevents-2.3.3.tgz"
+  resolved "https://registry.yarnpkg.com/fsevents/-/fsevents-2.3.3.tgz#cac6407785d03675a2a5e1a5305c697b347d90d6"
   integrity sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==
 
 function-bind@^1.1.2:
@@ -1893,7 +1893,7 @@ parseurl@~1.3.3:
     firebase-admin "^12.5.0"
     jsonwebtoken "^9.0.2"
     mongoose "^8.1.1"
-    passport-api "file:../../../../AppData/Local/Yarn/Cache/v6/npm-passport-api-0.0.0-f190a652-d57e-4ed0-8cfc-7a2e58f3c619-1727684103303/node_modules/passport-api"
+    passport-api "file:../../../../../../AppData/Local/Yarn/Cache/v6/npm-passport-api-0.0.0-354bbc0f-581e-4da2-aac0-b5c272595d7b-1728290034486/node_modules/passport-api"
     ts-node "^10.9.2"
     zod "^3.22.4"
 
