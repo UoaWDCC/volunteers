@@ -12,7 +12,7 @@ const Developers = () => {
         window.location.href = '/';
       }
 
-      
+
     useEffect(() => {
         getDocs(colref)
         .then((snapshot) => {
@@ -97,6 +97,20 @@ const Developers = () => {
                     src="./assets/graphics/wheelLBlue.svg"
                     alt=""
                     className="absolute w-[30%] h-auto top-[-10%] right-[0%]"
+                />
+                {/*Red Swirl*/}
+                <img
+                    loading="lazy"
+                    src="./assets/graphics/swirlRed.svg"
+                    alt=""
+                    className="absolute w-[20%] h-auto top-[60%] left-[18%]"
+                />
+                {/*Camera*/}
+                <img
+                    loading="lazy"
+                    src="./assets/graphics/camera.svg"
+                    alt=""
+                    className="absolute w-[20%] h-auto top-[60%] right-[13%]"
                 />
             </div>
             <h6 className="break-words text-primary text-[15px] mb-[1em] text-center">Click profile to see LinkedIn</h6>

@@ -6,7 +6,7 @@ const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, lin
             flex flex-col pt-[1em]
             items-center text-center
             border-2 rounded-[15px] border-grey
-            hover:shadow-md hover:shadow-grey hover:bg-neutral hover:cursor-pointer
+            hover:shadow-md hover:shadow-lightGrey hover:bg-neutral hover:cursor-pointer
             m-[0.5em] p-0 w-[15em] h-[18.5em] font-mono"
             onClick={() => window.open(linkedin, "_blank")}
             >
