@@ -1,7 +1,6 @@
 import Leaderboard from "../Leaderboard";
 import WelcomeStats from "./WelcomeStats";
 import UpcomingEvents from "./UpcomingEvents";
-import UpcomingEvent from "./UpcomingEvent";
 
 function DashboardDashboard() {
   return (
