@@ -3,10 +3,10 @@
 
 import CommunityGallery from "./CommunityGallery";
 
-interface EventData {
-  title: string;
-  location: string;
-}
+//interface EventData {
+//  title: string;
+//  location: string;
+//}
 
 const CommunityGalleryWhole = () => {
   // TEMPORARY DATA passing down events into community gallery vvvvvvvvvvvvvvvvvvvvvvvvvvvvv
@@ -43,7 +43,7 @@ const CommunityGalleryWhole = () => {
   // }, []);
   // TEMPORARY ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-  return (
+ return (
     <div>
       {/* passing event data into community gallery*/}
       <CommunityGallery />
