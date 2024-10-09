@@ -1,4 +1,4 @@
-import linkedinLogo from "../../../public/assets/linkedin_logo.png"
+//import linkedinLogo from "../../../public/assets/linkedin_logo.png"
 const Developer = ({firstName, lastName, major, profilePic, role, yearLevel, linkedin}:any) => {
     return (
         <div className="
