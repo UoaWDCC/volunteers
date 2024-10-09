@@ -12,6 +12,25 @@ WORKDIR /app
 ARG YARN_VERSION=1.22.19
 RUN npm install -g yarn@$YARN_VERSION --force
 
+# Define arguments for build time
+ARG apiKey
+ARG authDomai
+ARG projectId
+ARG storageBucket
+ARG messagingSenderId
+ARG appId
+ARG measurementId
+ARG credentials_base64
+
+# Set build time environment variables
+ENV apiKey=${apiKey}
+ENV authDomai=${authDomai}
+ENV projectId=${projectId}
+ENV storageBucket=${storageBucket}
+ENV messagingSenderId=${messagingSenderId}
+ENV appId=${appId}
+ENV measurementId=${measurementId}
+ENV credentials_base64=${credentials_base64}
 
 # Throw-away build stage to reduce size of final image
 FROM base as install 
