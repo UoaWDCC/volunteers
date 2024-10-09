@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { FiSearch } from 'react-icons/fi'; // magnifying glass icon
 import CommunitySearchContext from '../../../context/CommunitySearchContext';
 
