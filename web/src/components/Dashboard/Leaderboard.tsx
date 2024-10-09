@@ -6,7 +6,7 @@ import { collection, getDocs } from "firebase/firestore";
 function Leaderboard() {
   const profileImg = "assets/EventHighlights/Events/BlindLowVision/imgA.png"; // Temporary image for the leaderboard
   const name = "John Doe"; // Temporary name for the leaderboard
-  const ranking = "1st"; // Temporary ranking for the leaderboard
+  //const ranking = "1st"; // Temporary ranking for the leaderboard
   const hours = 14; // Temporary hours for the leaderboard
 
   const all = [
