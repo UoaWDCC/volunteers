@@ -28,18 +28,7 @@ RUN yarn install --frozen-lockfile --production=false
 COPY --link . .
 
 # Set build time environment variables
-ENV VITE_API_URL="https://wdcc-volunteers-api-staging.fly.dev"
-
-ENV apiKey = ${apiKey}
-ENV authDomain = ${authDomain}
-ENV projectId = ${projectId}
-ENV storageBucket = ${storageBucket}
-ENV messagingSenderId = ${messagingSenderId}
-ENV appId = ${appId}
-ENV measurementId = ${measurementId}
-
-ENV credentials_base64 = ${credentials_base64}
-
+ENV VITE_API_URL="https://wdcc-volunteers-api.fly.dev"
 
 # Build application
 RUN yarn run build
