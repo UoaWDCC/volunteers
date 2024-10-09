@@ -1,5 +1,5 @@
-import axios from "axios";
-import { useState, useEffect } from "react";
+//import axios from "axios";
+//import { useState, useEffect } from "react";
 
 import CommunityGallery from "./CommunityGallery";
 
