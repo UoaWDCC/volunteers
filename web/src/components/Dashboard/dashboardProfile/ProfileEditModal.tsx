@@ -3,6 +3,9 @@ import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
+import axios from 'axios';
+import { db } from '../../../firebase/firebase';
+import { collection, getDocs, query, where } from 'firebase/firestore';
 
 const ProfileEditModal = () => {
   //TEMPORARY PROFILE IMAGE
@@ -93,9 +96,51 @@ const ProfileEditModal = () => {
     setShowModal(false);
   };
 
-  function handleSubmit(e: React.FormEvent) {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-  }
+    const updatedDetails = {
+      firstName,
+      lastName,
+      email,
+      mobile,
+      birthdate,
+      upi,
+      gender,
+      yearLevel,
+      dietaryRequirements,
+      driversLicense,
+      emergencyContactFirstName,
+      emergencyContactLastName,
+      emergencyContactMobile,
+    };
+    setFirstName(firstName);
+    setLastName(lastName);
+    setEmail(email);
+    setMobile(mobile);
+    setBirthdate(birthdate);
+    setUpi(upi);
+    setGender(gender);
+    setYearLevel(yearLevel);
+    setDietaryRequirements(dietaryRequirements || []);
+    setDriversLicense(driversLicense);
+    setEmergencyContactFirstName(emergencyContactFirstName);
+    setEmergencyContactLastName(emergencyContactLastName);
+    setEmergencyContactRelationship(emergencyContactRelationship);
+    setEmergencyContactMobile(emergencyContactMobile);
+    try {
+      const appUrl = import.meta.env.VITE_API_URL;
+      const userId = firestoreUserDetails.uid;
+      const q = query(collection(db, 'users'), where('uid', '==', userId));
+      const querySnapshot = await getDocs(q);
+      const userSnapshot = querySnapshot.docs[0];
+      const docId = userSnapshot.id;
+      const response = await axios.patch(`${appUrl}/api/users/${docId}`, updatedDetails);
+      console.log('Profile updated successfully:', response.data);
+      setShowModal(false);
+    } catch (error) {
+      console.error('Error updating profile:', error);
+    }
+  };
 
   useEffect(() => {
     console.log("User is logged in: ", isUserLoggedIn);
