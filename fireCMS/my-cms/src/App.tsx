@@ -28,7 +28,16 @@ import {
 } from "@firecms/firebase";
 import { CenteredView } from "@firecms/ui";
 import { demoCollection } from "./collections/demo";
+import { AchievementsCollection } from "./collections/achievements";
 import { AnnouncementsCollection } from "./collections/announcements";
+import { communityCollection } from "./collections/community";
+import { DevelopersCollection } from "./collections/developers";
+import { EventsCollection } from "./collections/events";
+import { GalleryCollection } from "./collections/gallery";
+import { HighlightsCollection } from "./collections/highlights";
+import { productsCollection } from "./collections/products";
+import { SponsorsCollection } from "./collections/sponsors";
+import { UsersCollection } from "./collections/users";
 
 import { firebaseConfig } from "./firebase_config";
 
@@ -56,7 +65,16 @@ function App() {
 
     const collections = useMemo(() => [
         demoCollection,
-        AnnouncementsCollection
+        AnnouncementsCollection,
+        AchievementsCollection,
+        communityCollection,
+        DevelopersCollection,
+        EventsCollection,
+        GalleryCollection,
+        HighlightsCollection,
+        productsCollection,
+        SponsorsCollection,
+        UsersCollection
     ], []);
 
     const {
