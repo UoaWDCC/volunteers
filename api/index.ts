@@ -13,6 +13,7 @@ app.use(json());
 app.use(cors());
 
 app.use(express.static('public'));
+app.use('/admin', express.static('public/admin/build'));
 
 // Routes
 app.use('/api', routes);
