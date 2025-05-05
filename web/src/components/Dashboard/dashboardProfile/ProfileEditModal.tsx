@@ -92,10 +92,12 @@ const ProfileEditModal = () => {
   const closeModal = () => {
     setShowModal(false);
   };
-
-  function handleSubmit(e: React.FormEvent) {
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // When update button clicked, all data at time of
+    // click, is stored within newData.
     const newData = {
       firstName,
       lastName,
@@ -114,14 +116,21 @@ const ProfileEditModal = () => {
       otherRequirements
     }
 
+    // Check if userId is available
     const userId = firestoreUserDetails?.uid;
 
+    // If userId is not available, alert the user
     if (!userId) {
       alert('User ID not found. Try logging in again.');
       return;
     }
 
     console.log(newData);
+
+    const response = await fetch(`api/users/:id${userId}`, {
+      method: 'PATCH',
+    }
+    );
   }
 
   useEffect(() => {
