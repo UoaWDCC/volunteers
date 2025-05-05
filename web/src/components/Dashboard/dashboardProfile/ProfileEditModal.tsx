@@ -95,6 +95,33 @@ const ProfileEditModal = () => {
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+
+    const newData = {
+      firstName,
+      lastName,
+      email,
+      mobile,
+      birthdate,
+      upi,
+      gender,
+      yearLevel,
+      dietaryRequirements,
+      driversLicense,
+      emergencyContactFirstName,
+      emergencyContactLastName,
+      emergencyContactRelationship,
+      emergencyContactMobile,
+      otherRequirements
+    }
+
+    const userId = firestoreUserDetails?.uid;
+
+    if (!userId) {
+      alert('User ID not found. Try logging in again.');
+      return;
+    }
+
+    console.log(newData);
   }
 
   useEffect(() => {
