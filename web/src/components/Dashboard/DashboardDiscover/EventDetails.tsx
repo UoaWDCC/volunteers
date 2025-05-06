@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 type Event = {
     event_title: string;
