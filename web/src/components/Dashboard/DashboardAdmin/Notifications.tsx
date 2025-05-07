@@ -1,4 +1,5 @@
 import { useState } from "react";
+import NotificationCard from "./NotificationCard";
 
 const Notifications: React.FC = () => {
     const [notificaitonsFilter, setNotificationsFilter] = useState("all"); // Filter for the notifications view
@@ -63,7 +64,7 @@ const Notifications: React.FC = () => {
             </div>
 
             {/* Notification cards */}
-            
+            <NotificationCard notification={notifications[0]} />
         </div>
     )
 };
