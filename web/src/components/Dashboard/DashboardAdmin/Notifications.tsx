@@ -25,7 +25,7 @@ const Notifications: React.FC = () => {
     ]
 
     return (
-        <div className="flex flex-col bg-white w-full h-full shadow-lg rounded-xl p-6">
+        <div className="flex flex-col bg-white w-full shadow-lg rounded-xl p-6">
             {/* Header */}
             <div className="flex items-center self-start justify-between mb-4">
                 <h2 className="dashboard text-heading2 text-[#D2242490]">
