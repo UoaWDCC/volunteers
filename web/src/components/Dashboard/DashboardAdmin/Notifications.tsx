@@ -1,7 +1,53 @@
-const Notifications: React.FC = () => {
-    return (
-        <div className="bg-white w-full h-full shadow-lg rounded-xl">
+import { useState } from "react";
 
+const Notifications: React.FC = () => {
+    const [notificaitonsFilter, setNotificaitonsFilter] = useState("all"); // Filter for the leaderboard
+
+    function changeLeaderboardFilter(filter: string) {
+        setNotificaitonsFilter(filter);
+    }
+
+    return (
+        <div className="flex flex-col bg-white w-full h-full shadow-lg rounded-xl p-6">
+            {/* Header */}
+            <div className="flex items-center self-start justify-between mb-4">
+                <h2 className="dashboard text-heading2 text-[#D2242490]">
+                    Notifications
+                </h2>
+                <button
+                    className="dashboard self-start text-body-heading text-primary underline bg-transparent"
+                // onClick={show notifications modal or something}
+                >
+                    View All
+                </button>
+            </div>
+
+            {/* Filter buttons */}
+            <div className="flex items-center">
+                <button
+                    className={
+                        notificaitonsFilter == "all"
+                            ? "bg-white text-black px-0 after:block after:h-1 after:rounded-lg after:bg-primary-dark"
+                            : "bg-white text-grey px-0 after:block after:h-1"
+                    }
+                    onClick={() => changeLeaderboardFilter("all")}
+                >
+                    Inbox
+                </button>
+                <button
+                    className={
+                        notificaitonsFilter == "unread"
+                            ? "bg-white text-black after:block after:h-1 after:rounded-lg after:bg-primary-dark"
+                            : "bg-white text-grey after:block after:h-1"
+                    }
+                    onClick={() => changeLeaderboardFilter("unread")}
+                >
+                    Unread
+                </button>
+            </div>
+
+            {/* Notification cards */}
+            
         </div>
     )
 };
