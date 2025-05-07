@@ -1,11 +1,27 @@
 import { useState } from "react";
 
 const Notifications: React.FC = () => {
-    const [notificaitonsFilter, setNotificaitonsFilter] = useState("all"); // Filter for the leaderboard
+    const [notificaitonsFilter, setNotificationsFilter] = useState("all"); // Filter for the notifications view
 
     function changeLeaderboardFilter(filter: string) {
-        setNotificaitonsFilter(filter);
+        setNotificationsFilter(filter);
     }
+
+    // Test data for notifications
+    const notifications = [
+        {
+            title:'Launch Night',
+            date: 'Monday 8th April 2024',
+            time: '6:00pm - 8:00pm',
+            type: 'Club Event'
+        },
+        {
+            title:'Another notification',
+            date: 'Monday 8th April 2024',
+            time: '6:00pm - 8:00pm',
+            type: 'Club Event'
+        }
+    ]
 
     return (
         <div className="flex flex-col bg-white w-full h-full shadow-lg rounded-xl p-6">
