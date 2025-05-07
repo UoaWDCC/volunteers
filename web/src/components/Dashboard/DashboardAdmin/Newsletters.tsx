@@ -33,7 +33,7 @@ const Newsletters: React.FC = () => {
                 </button>
             </div>
 
-            <hr></hr>
+            <hr className="border-t-2 border-gray-300 rounded-full my-2" />
 
             {/* Notification cards*/}
             {newsletters.map((newsletter) => (
