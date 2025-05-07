@@ -30,7 +30,7 @@ const NotificationCard: React.FC<NotificationProps> = ({notification}: Notificat
 
 
             <button className="p-2 rounded-full">
-                <BsChevronRight size={12}  />
+                <BsChevronRight size={12} strokeWidth={1} />
             </button>
         </div>
     )
