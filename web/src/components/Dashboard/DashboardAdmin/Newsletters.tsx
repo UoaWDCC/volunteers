@@ -1,9 +1,9 @@
-import NotificationCard from "./NotificationCard";
+import NewsletterCard from "./NewsletterCard";
 
 const Newsletters: React.FC = () => {
 
     // Test data for notifications
-    const notifications = [
+    const newsletters = [
         {
             title:'Launch Night',
             date: 'Monday 8th April 2024',
@@ -33,11 +33,11 @@ const Newsletters: React.FC = () => {
                 </button>
             </div>
 
-            <div className="block h-1 rounded-xl bg-primary-dark"></div>
+            <hr></hr>
 
             {/* Notification cards*/}
-            {notifications.map((notification) => (
-                <NotificationCard notification={notification} />
+            {newsletters.map((newsletter) => (
+                <NewsletterCard newsletter={newsletter} />
             ))}
         </div>
     )
