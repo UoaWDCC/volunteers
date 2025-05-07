@@ -21,7 +21,7 @@ const Newsletters: React.FC = () => {
     return (
         <div className="flex flex-col bg-white w-full shadow-lg rounded-xl p-6">
             {/* Header */}
-            <div className="flex items-center self-start justify-between mb-4">
+            <div className="flex items-center self-start justify-between">
                 <h2 className="dashboard text-heading2 text-primary">
                     Newsletters
                 </h2>
@@ -36,9 +36,11 @@ const Newsletters: React.FC = () => {
             <hr className="border-t-2 border-gray-300 rounded-full my-2" />
 
             {/* Notification cards*/}
-            {newsletters.map((newsletter) => (
-                <NewsletterCard newsletter={newsletter} />
-            ))}
+            <div className="h-[25vh] overflow-y-scroll">
+                {newsletters.map((newsletter) => (
+                    <NewsletterCard newsletter={newsletter} />
+                ))}
+            </div>
         </div>
     )
 };

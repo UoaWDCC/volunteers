@@ -21,13 +21,25 @@ const Notifications: React.FC = () => {
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
             type: 'Club Event'
+        },
+        {
+            title:'Another notification',
+            date: 'Monday 8th April 2024',
+            time: '6:00pm - 8:00pm',
+            type: 'Club Event'
+        },
+        {
+            title:'Another notification',
+            date: 'Monday 8th April 2024',
+            time: '6:00pm - 8:00pm',
+            type: 'Club Event'
         }
     ]
 
     return (
         <div className="flex flex-col bg-white w-full shadow-lg rounded-xl p-6">
             {/* Header */}
-            <div className="flex items-center self-start justify-between mb-4">
+            <div className="flex items-center self-start justify-between">
                 <h2 className="dashboard text-heading2 text-[#D2242490]">
                     Notifications
                 </h2>
@@ -64,9 +76,11 @@ const Notifications: React.FC = () => {
             </div>
 
             {/* Notification cards*/}
-            {notifications.map((notification) => (
-                <NotificationCard notification={notification} />
-            ))}
+            <div className="h-[25vh] overflow-y-scroll">
+                {notifications.map((notification) => (
+                    <NotificationCard notification={notification} />
+                ))}
+            </div>
         </div>
     )
 };
