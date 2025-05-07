@@ -11,24 +11,28 @@ const Notifications: React.FC = () => {
     // Test data for notifications
     const notifications = [
         {
+            id: 1,
             title:'Launch Night',
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
             type: 'Club Event'
         },
         {
+            id: 2,
             title:'Another notification',
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
             type: 'Club Event'
         },
         {
+            id: 3,
             title:'Another notification',
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
             type: 'Club Event'
         },
         {
+            id: 4,
             title:'Another notification',
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
@@ -78,7 +82,7 @@ const Notifications: React.FC = () => {
             {/* Notification cards*/}
             <div className="h-[25vh] overflow-y-scroll">
                 {notifications.map((notification) => (
-                    <NotificationCard notification={notification} />
+                    <NotificationCard notification={notification} key={notification.id} />
                 ))}
             </div>
         </div>

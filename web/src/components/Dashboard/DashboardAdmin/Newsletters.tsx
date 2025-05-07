@@ -5,12 +5,14 @@ const Newsletters: React.FC = () => {
     // Test data for notifications
     const newsletters = [
         {
+            id: 1,
             title:'Launch Night',
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
             type: 'Club Event'
         },
         {
+            id: 2,
             title:'Another notification',
             date: 'Monday 8th April 2024',
             time: '6:00pm - 8:00pm',
@@ -43,7 +45,7 @@ const Newsletters: React.FC = () => {
             {/* Notification cards*/}
             <div className="h-[25vh] overflow-y-scroll">
                 {newsletters.map((newsletter) => (
-                    <NewsletterCard newsletter={newsletter} />
+                    <NewsletterCard newsletter={newsletter} key={newsletter.id} />
                 ))}
             </div>
 
