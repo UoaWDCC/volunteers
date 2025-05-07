@@ -63,8 +63,10 @@ const Notifications: React.FC = () => {
                 </button>
             </div>
 
-            {/* Notification cards */}
-            <NotificationCard notification={notifications[0]} />
+            {/* Notification cards*/}
+            {notifications.map((notification) => (
+                <NotificationCard notification={notification} />
+            ))}
         </div>
     )
 };
