@@ -117,7 +117,8 @@ const ProfileEditModal = () => {
     }
 
     // Check if userId is available
-    const userId = firestoreUserDetails?.uid;
+    let userId = firestoreUserDetails?.uid;
+    userId = '7Yq5KNOf3ciT3SRVlTKI';
 
     // If userId is not available, alert the user
     if (!userId) {
@@ -127,7 +128,7 @@ const ProfileEditModal = () => {
 
     console.log(newData);
 
-    const response = await fetch(`api/users/:id${userId}`, {
+    const response = await fetch(`api/users/${userId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(newData),
@@ -135,9 +136,11 @@ const ProfileEditModal = () => {
 
     if (!response.ok) {
       console.error('Error updating user data.');
-      closeModal();
       alert('Error updating user data. Please try again.');
     }
+
+    const result = await response.json();
+    console.log('User data updated successfully:', result);
   }
 
   useEffect(() => {
