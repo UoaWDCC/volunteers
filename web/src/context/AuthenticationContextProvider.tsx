@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [userRole, setUserRole] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("" ?? "");
+  const [email, setEmail] = useState<string>("");
   const [uid, setUid] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [firestoreUserDetails, setFirestoreUserDetails] =
@@ -109,6 +109,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
+      console.log(user);
       const { exists: uidExists, userDetails } = await checkUidExists(user.uid);
       console.log(
         "uid for user:",
@@ -118,6 +119,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       );
 
       if (!uidExists) {
+        console.log("user not exists");
         window.location.href = "register";
         console.log("user not exists");
       } else {
@@ -158,7 +160,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const appUrl = import.meta.env.VITE_API_URL;
 
       const response = await axios.get(`${appUrl}/api/users/${uid}`);
-
+      
       if (response.status === 200) {
         console.log("user exists in Firestore with UID:", uid);
         return { exists: true, userDetails: response.data };
@@ -168,6 +170,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error("Error checking user UID via API:", error);
+      setUserLoggedIn(false);
+      setCurrentUser(null);
       return { exists: false, userDetails: undefined };
     }
   };
