@@ -96,7 +96,8 @@ const ProfileEditModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // When update button clicked, all data at time of
+    try {
+      // When update button clicked, all data at time of
     // click, is stored within newData.
     const newData = {
       firstName,
@@ -137,10 +138,17 @@ const ProfileEditModal = () => {
     if (!response.ok) {
       console.error('Error updating user data.');
       alert('Error updating user data. Please try again.');
+      // closeModal();
     }
 
     const result = await response.json();
     console.log('User data updated successfully:', result);
+    // closeModal();
+    }
+    catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    }
   }
 
   useEffect(() => {
