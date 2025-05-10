@@ -129,8 +129,15 @@ const ProfileEditModal = () => {
 
     const response = await fetch(`api/users/:id${userId}`, {
       method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newData),
+    });
+
+    if (!response.ok) {
+      console.error('Error updating user data.');
+      closeModal();
+      alert('Error updating user data. Please try again.');
     }
-    );
   }
 
   useEffect(() => {
