@@ -41,6 +41,26 @@ export function useToken() {
   return useContext(TokenContext);
 }
 
+// ============================= Inline type definition ============================= //
+// This type defines the shape of the authentication context value
+// so TypeScript knows what properties are available when calling useAuth().
+// It enables autocomplete and prevents errors like 'property does not exist on type null'.
+export type AuthContext = {
+  currentUser: User | null;
+  firstName: string;
+  lastName: string;
+  email: string;
+  uid: string;
+  userRole: string;
+  isUserLoggedIn: boolean;
+  loading: boolean;
+  error: Error | null;
+  signInUsingGoogle: () => void;
+  signOut: () => void;
+  getFirestoreCollectionUserByStudentID: (studentID: string) => Promise<DocumentData | null>;
+  firestoreUserDetails: DocumentData | null;
+};
+
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
@@ -268,7 +288,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   };
 
   return (
-    <AuthenticationContext.Provider value={contextValue as any}>
+    <AuthenticationContext.Provider value={contextValue}>
       <TokenContext.Provider value={token}>
         {!loading && children}
       </TokenContext.Provider>
