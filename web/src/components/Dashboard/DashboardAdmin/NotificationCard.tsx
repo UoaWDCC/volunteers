@@ -27,13 +27,13 @@ const NotificationCard: React.FC<NotificationProps> = ({ notification }: Notific
                         {getTimeString(notification.start_date_time)} - {getTimeString(notification.end_date_time)}
                     </p>
                 </div>
-                {/* <div className=" ml-2">
+                <div>
                     {notification.tags?.map(tag =>
                         <p key={1} className="text-[9px] m-1 leading-[1.2] bg-gray-100 px-2 py-1 rounded-xl font-light">
                             {tag}
                         </p>
                     )}
-                </div> */}
+                </div>
             </div>
 
 

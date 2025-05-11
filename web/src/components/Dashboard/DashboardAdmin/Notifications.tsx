@@ -68,7 +68,7 @@ const Notifications: React.FC = () => {
             </div>
 
             {/* Notification cards */}
-            <div className="h-[25vh] overflow-y-scroll">
+            <div className="flex flex-col gap-6 h-[25vh] overflow-y-scroll">
                 {announcements.map((announcement) => (
                     <NotificationCard notification={announcement} key={announcement.id} />
                 ))}

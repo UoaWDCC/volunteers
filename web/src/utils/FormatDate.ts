@@ -4,7 +4,7 @@ export function getDateString(timestamp: Timestamp) {
     const date = timestamp.toDate();
     const day = date.getDate();
     
-    const weekday = date.toLocaleDateString("en-US", { weekday: "long" });
+    const weekday = date.toLocaleDateString("en-US", { weekday: "short" });
     const month = date.toLocaleDateString("en-US", { month: "long" });
     const year = date.getFullYear();
     const suffix =
