@@ -1,3 +1,4 @@
+import { getDateString, getTimeString } from "@utils/FormatDate";
 import { Timestamp } from "firebase/firestore";
 import { BsChevronRight } from "react-icons/bs";
 
@@ -21,8 +22,10 @@ const NotificationCard: React.FC<NotificationProps> = ({ notification }: Notific
             <div className="flex flex-row">
                 <div>
                     <p className="text-heading1 mb-0 font-[450]">{notification.title}</p>
-                    <p className="text-[12px] font-light m-0 leading-[1.2]">{notification.start_date_time.toDate().toLocaleDateString()}</p>
-                    <p className="text-[12px] font-light m-0 leading-[1.2]">{notification.end_date_time.toDate().toLocaleDateString()}</p>
+                    <p className="text-[12px] font-light m-0 leading-[1.2]">{getDateString(notification.start_date_time)}</p>
+                    <p className="text-[12px] font-light m-0 leading-[1.2]">
+                        {getTimeString(notification.start_date_time)} - {getTimeString(notification.end_date_time)}
+                    </p>
                 </div>
                 {/* <div className=" ml-2">
                     {notification.tags?.map(tag =>
