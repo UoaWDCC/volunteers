@@ -1,44 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import NotificationCard from "./NotificationCard";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
 
 const Notifications: React.FC = () => {
     const [notificaitonsFilter, setNotificationsFilter] = useState("all"); // Filter for the notifications view
+    const [announcements, setAnnouncements] = useState<any[]>([]);
+
+    const colRef = collection(db, "Announcements");
+
+    useEffect(() => {
+        getDocs(colRef)
+            .then(snapshot => {
+                let getAnnouncements: any[] = [];
+                snapshot.docs.forEach(doc => {
+                    getAnnouncements.push({ ...doc.data(), id: doc.id});
+                })
+                console.log(getAnnouncements)
+                setAnnouncements(getAnnouncements)
+            })
+            .catch(err => {
+                console.error(err.message)
+            })
+    }, [])
 
     function changeLeaderboardFilter(filter: string) {
         setNotificationsFilter(filter);
     }
-
-    // Test data for notifications
-    const notifications = [
-        {
-            id: 1,
-            title:'Launch Night',
-            date: 'Monday 8th April 2024',
-            time: '6:00pm - 8:00pm',
-            type: 'Club Event'
-        },
-        {
-            id: 2,
-            title:'Another notification',
-            date: 'Monday 8th April 2024',
-            time: '6:00pm - 8:00pm',
-            type: 'Club Event'
-        },
-        {
-            id: 3,
-            title:'Another notification',
-            date: 'Monday 8th April 2024',
-            time: '6:00pm - 8:00pm',
-            type: 'Club Event'
-        },
-        {
-            id: 4,
-            title:'Another notification',
-            date: 'Monday 8th April 2024',
-            time: '6:00pm - 8:00pm',
-            type: 'Club Event'
-        }
-    ]
 
     return (
         <div className="flex flex-col bg-white w-full shadow-lg rounded-xl p-6">
@@ -79,10 +67,10 @@ const Notifications: React.FC = () => {
                 </button>
             </div>
 
-            {/* Notification cards*/}
+            {/* Notification cards */}
             <div className="h-[25vh] overflow-y-scroll">
-                {notifications.map((notification) => (
-                    <NotificationCard notification={notification} key={notification.id} />
+                {announcements.map((announcement) => (
+                    <NotificationCard notification={announcement} key={announcement.id} />
                 ))}
             </div>
         </div>
