@@ -25,6 +25,20 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
                 }
             }
         }
+        
+        // Format newsletter using the existing helper function
+        const formattedNewsletter = formatNewsLetter(newsletterTitle, newsletterDescription, eventDetails);
+        
+        // Log the formatted output (for testing purposes)
+        console.log('Formatted Newsletter:');
+        console.log(formattedNewsletter);
+        
+        // Send success response with the formatted text
+        res.status(200).json({
+            success: true,
+            message: "Newsletter formatted successfully",
+            formattedNewsletter
+        });
 
     } catch (error) {
         res.status(500).json({
@@ -33,3 +47,14 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
         });
     }
 }
+
+function formatNewsLetter(title: string, description: string, events: any[]): string {
+    let result = `
+    Title: ${title}
+    Description: ${description}
+    Number of Events: ${events.length}
+    `;
+    return result;
+}
+
+export { createNewsletter };
