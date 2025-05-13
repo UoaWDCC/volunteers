@@ -10,8 +10,10 @@ interface Newsletter {
 
 async function createNewsletter(req: Request, res: Response): Promise<void> {
     try {
+        console.log('Request body:', req.body);
         const {newsletterTitle, newsletterDescription, newsletterEventIds} = req.body as Newsletter;
         const eventDetails = [];
+        // Loop through each event ID and fetch the corresponding event data
         for (const eventId of newsletterEventIds) {
             const eventRef = doc(db, "events", eventId);
             const eventSnapshot = await getDoc(eventRef);
@@ -19,8 +21,9 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
                 const eventData = eventSnapshot.data();
                 if (eventData) {
                     eventDetails.push({
-                        id: eventSnapshot.id,
-                        ...eventData
+                        // Push each document's data and its ID into the events array
+                        ...eventData,
+                        id: eventSnapshot.id
                     });
                 }
             }
