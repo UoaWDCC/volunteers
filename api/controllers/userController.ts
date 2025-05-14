@@ -30,7 +30,7 @@ async function addUser(req: Request, res: Response): Promise<void> {
       res.status(400).send("Student ID must be unique");
 
       // Print out error message for testing purposes
-      console.log("Student ID must be unique");
+      //console.log("Student ID must be unique");
       return;
     }
   }
@@ -41,7 +41,7 @@ async function addUser(req: Request, res: Response): Promise<void> {
   res.json(newUser.id);
 
   // Print out the new user id for testing purposes
-  console.log(newUser.id)
+  //console.log(newUser.id)
 }
 
 async function deleteUser(req: Request, res: Response): Promise<void> {
@@ -50,7 +50,7 @@ async function deleteUser(req: Request, res: Response): Promise<void> {
   const docSnapshot = (await getDoc(userRef));  // Fetch the document snapshot
 
   if (!docSnapshot.exists()) {
-    console.log("Document does not exist");  // Log error message if document does not exist
+    //console.log("Document does not exist");  // Log error message if document does not exist
     res.status(404).send("Document not found");  // Send 404 response
     return;
   }
@@ -138,7 +138,7 @@ async function updateUser(req: Request, res: Response): Promise<void> {
         const updatedUser = updatedUserDoc.data();
 
         res.status(200).json(updatedUser);  // Send updated user data as JSON response
-        console.log(updatedUser);  // Log updated user data for debugging
+        //console.log(updatedUser);  // Log updated user data for debugging
     } catch (error) {
         console.error('Error updating user:', error);  // Log error if something goes wrong
         res.status(500).json({ message: 'Internal server error' });  // Send 500 response for internal server error

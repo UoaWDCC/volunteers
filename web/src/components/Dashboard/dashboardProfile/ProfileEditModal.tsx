@@ -135,8 +135,6 @@ const ProfileEditModal = () => {
       otherRequirements
     }
 
-    console.log(newData);
-
     await axios.patch(`${appUrl}/api/users/${docId}`, newData);   
     const { data: updatedDetails } = await axios.get(
       `${appUrl}/api/users/uid/${uid}`
