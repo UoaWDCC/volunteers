@@ -10,7 +10,7 @@ const ProfileEditModal = () => {
   const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
   const authContext = useContext(AuthenticationContext);
-  const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any};
+  const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
   const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
@@ -147,6 +147,10 @@ const ProfileEditModal = () => {
     
     const data = await response.json();
     console.log(data);
+
+    const refreshed = await fetch(`/api/users/uid/${uid}`);
+    const updatedDetails = await refreshed.json();
+    setFirestoreUserDetails(updatedDetails);
 
     // Check if response is ok.
     /*if (!response.ok) {
