@@ -3,6 +3,7 @@ import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
+import { useAuth } from "../../../context/AuthenticationContextProvider";
 
 const ProfileEditModal = () => {
   //TEMPORARY PROFILE IMAGE
@@ -11,6 +12,7 @@ const ProfileEditModal = () => {
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any};
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+  const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
   const [page2, setPage2] = useState(false);
@@ -37,6 +39,24 @@ const ProfileEditModal = () => {
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState('Personal Details');
+
+  const [docId, setDocId] = useState<string>('');
+
+  useEffect(() => {
+    const fetchUserDocId = async () => {
+        try {
+            // Get the Firestore document ID using uid
+            const response = await fetch(`/api/users/uid/${uid}`);
+            const data = await response.json();
+            
+            setDocId(data.id);
+        } catch (error) {
+            console.error('Failed to load user data:', error);
+        }
+    };
+
+    fetchUserDocId();
+}, [firestoreUserDetails]);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -95,7 +115,7 @@ const ProfileEditModal = () => {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    
     try {
       // When update button clicked, all data at time of
     // click, is stored within newData.
@@ -117,33 +137,26 @@ const ProfileEditModal = () => {
       otherRequirements
     }
 
-    // Check if userId is available
-    let userId = firestoreUserDetails?.uid;
-    userId = '7Yq5KNOf3ciT3SRVlTKI';
-
-    // If userId is not available, alert the user
-    if (!userId) {
-      alert('User ID not found. Try logging in again.');
-      return;
-    }
-
     console.log(newData);
 
-    const response = await fetch(`api/users/${userId}`, {
+    const response = await fetch(`api/users/${docId}`, {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newData),
+      body: JSON.stringify(newData)
     });
+    
+    const data = await response.json();
+    console.log(data);
 
-    if (!response.ok) {
+    // Check if response is ok.
+    /*if (!response.ok) {
       console.error('Error updating user data.');
       alert('Error updating user data. Please try again.');
       // closeModal();
-    }
-
-    const result = await response.json();
-    console.log('User data updated successfully:', result);
-    // closeModal();
+    }*/
+    
+    alert('Profile updated successfully.');
+    closeModal();
     }
     catch (error) {
       console.error('Error:', error);

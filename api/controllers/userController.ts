@@ -108,7 +108,10 @@ async function getUserByUid(req: Request, res: Response): Promise<void> {
         if (!querySnapshot.empty) {
             // If the query returns results, send the first document's data
             const user = querySnapshot.docs[0].data();  // Get the first matching document's data
-            res.status(200).json(user);  // Send the user data as JSON response
+            res.status(200).json({
+                id: querySnapshot.docs[0].id,  // Include the document ID
+                ...user,  // Spread the user data
+            });  // Send the user data as JSON response
         } else {
             // If no documents are found, send a 404 error
             res.status(404).json({ error: "User not found" });
