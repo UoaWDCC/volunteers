@@ -24,7 +24,6 @@ interface EventDetail {
 
 async function createNewsletter(req: Request, res: Response): Promise<void> {
     try {
-        console.log('Request body:', req.body);
         const {newsletterTitle, newsletterDescription, newsletterEventIds} = req.body as Newsletter;
         const eventDetails: EventDetail[] = []; // Use the new interface
         // Loop through each event ID and fetch the corresponding event data
@@ -51,9 +50,6 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
         }
         
         const formattedNewsletter = formatNewsLetter(newsletterTitle, newsletterDescription, eventDetails);
-        
-        console.log('Formatted Newsletter:');
-        console.log(formattedNewsletter);
         
         // Send success response with the formatted text
         res.status(200).json({
