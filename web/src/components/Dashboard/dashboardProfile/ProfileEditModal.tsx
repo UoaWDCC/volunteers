@@ -4,8 +4,10 @@ import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSide
 import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
+import axios from 'axios';
 
 const ProfileEditModal = () => {
+  const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
   const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
@@ -44,19 +46,15 @@ const ProfileEditModal = () => {
 
   useEffect(() => {
     const fetchUserDocId = async () => {
-        try {
-            // Get the Firestore document ID using uid
-            const response = await fetch(`/api/users/uid/${uid}`);
-            const data = await response.json();
-            
-            setDocId(data.id);
-        } catch (error) {
-            console.error('Failed to load user data:', error);
-        }
+      try {
+        const { data } = await axios.get(`${appUrl}/api/users/uid/${uid}`);
+        setDocId(data.id);
+      } catch (err) {
+        console.error('Error fetching user document ID:', err);
+      }
     };
-
-    fetchUserDocId();
-}, [firestoreUserDetails]);
+    if (uid) fetchUserDocId();
+}, [uid]);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -139,17 +137,10 @@ const ProfileEditModal = () => {
 
     console.log(newData);
 
-    const response = await fetch(`api/users/${docId}`, {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(newData)
-    });
-    
-    const data = await response.json();
-    console.log(data);
-
-    const refreshed = await fetch(`/api/users/uid/${uid}`);
-    const updatedDetails = await refreshed.json();
+    await axios.patch(`${appUrl}/api/users/${docId}`, newData);   
+    const { data: updatedDetails } = await axios.get(
+      `${appUrl}/api/users/uid/${uid}`
+    );
     setFirestoreUserDetails(updatedDetails);
 
     // Check if response is ok.

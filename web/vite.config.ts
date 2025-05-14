@@ -13,12 +13,4 @@ export default defineConfig({
       '@layouts': '/src/layouts',
     },
   },
-  server: {
-  proxy: {
-    '/api': {
-      target: 'http://localhost:3000',
-      changeOrigin: true
-    }
-  }
-}
 });
