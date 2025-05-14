@@ -2,12 +2,14 @@ import { Request, Response } from 'express';
 import { db } from '../config/firebase';
 import { doc, getDoc } from 'firebase/firestore';
 
+// Define the Newsletter interface to match the structure of the request body
 interface Newsletter {
     newsletterTitle: string;
     newsletterDescription: string;
     newsletterEventIds: string[];
 }
 
+// Define the EventDetail interface to match the structure of the event data
 interface EventDetail {
     id: string;
     event_title?: string;
@@ -16,9 +18,8 @@ interface EventDetail {
     tasks?: string;
     notes?: string;
     contact?: string;
-    start_date_time?: any; // Or a more specific Date type if you parse it
-    end_date_time?: any;   // Or a more specific Date type if you parse it
-    // Add any other fields you expect from eventData
+    start_date_time?: any;
+    end_date_time?: any;  
 }
 
 async function createNewsletter(req: Request, res: Response): Promise<void> {
@@ -44,16 +45,13 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
                         contact: eventData.contact,
                         start_date_time: eventData.start_date_time,
                         end_date_time: eventData.end_date_time
-                        // Add other mappings as needed
                     });
                 }
             }
         }
         
-        // Format newsletter using the existing helper function
         const formattedNewsletter = formatNewsLetter(newsletterTitle, newsletterDescription, eventDetails);
         
-        // Log the formatted output (for testing purposes)
         console.log('Formatted Newsletter:');
         console.log(formattedNewsletter);
         
@@ -77,7 +75,6 @@ function formatNewsLetter(title: string, description: string, events: EventDetai
     let result = `
     Newsletter Title: ${title}
     Newsletter Description: ${description}
-    Number of Events: ${events.length}
     ------------------------------------
     `;
 
