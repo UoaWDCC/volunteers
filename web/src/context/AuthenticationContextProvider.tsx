@@ -285,6 +285,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signOut,
     getFirestoreCollectionUserByStudentID,
     firestoreUserDetails,
+    setFirestoreUserDetails,
   };
 
   return (
