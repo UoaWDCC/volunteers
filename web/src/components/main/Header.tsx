@@ -22,16 +22,10 @@ function Header() {
         <div>
           <ul className='flex flex-row text-sm text-white font-mono m-0 gap-6'>
             {!isUserLoggedIn && (
-              <>
-                <li
-                  onClick={() => {
-                    setShowModal(true);
-                  }}
-                  className='px-[30px] py-[10px] rounded-[2rem] bg-primary font-mono cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'
-                >
-                  Login
-                </li>
-              </>
+              <li
+                onClick={() => { setShowModal(true); }}
+                className='px-[30px] py-[10px] rounded-[2rem] bg-primary font-mono cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'
+              >Login</li>
             )}
             {isUserLoggedIn && (
               <>

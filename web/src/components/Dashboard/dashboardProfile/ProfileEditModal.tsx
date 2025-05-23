@@ -3,14 +3,19 @@ import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
+import { useAuth } from "../../../context/AuthenticationContextProvider";
+import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
+import axios from 'axios';
 
 const ProfileEditModal = () => {
+  const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
   const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
   const authContext = useContext(AuthenticationContext);
-  const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any};
+  const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+  const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
   const [page2, setPage2] = useState(false);
@@ -37,6 +42,20 @@ const ProfileEditModal = () => {
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
   const [selectedTab, setSelectedTab] = useState('Personal Details');
+
+  const [docId, setDocId] = useState<string>('');
+
+  useEffect(() => {
+    const fetchUserDocId = async () => {
+      try {
+        const { data } = await axios.get(`${appUrl}/api/users/uid/${uid}`);
+        setDocId(data.id);
+      } catch (err) {
+        console.error('Error fetching user document ID:', err);
+      }
+    };
+    if (uid) fetchUserDocId();
+  }, [uid]);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -93,9 +112,63 @@ const ProfileEditModal = () => {
     setShowModal(false);
   };
 
-  function handleSubmit(e: React.FormEvent) {
+  const [showThumbsUpSuccessPopup, setThumbsUpSuccessPopup] = useState(false);
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    try {
+      // When update button clicked, all data at time of
+    // click, is stored within newData.
+    const newData = {
+      firstName,
+      lastName,
+      email,
+      mobile,
+      birthdate,
+      upi,
+      gender,
+      yearLevel,
+      dietaryRequirements,
+      driversLicense,
+      emergencyContactFirstName,
+      emergencyContactLastName,
+      emergencyContactRelationship,
+      emergencyContactMobile,
+      otherRequirements
+    }
+
+    await axios.patch(`${appUrl}/api/users/${docId}`, newData);   
+    const { data: updatedDetails } = await axios.get(
+      `${appUrl}/api/users/uid/${uid}`
+    );
+    setFirestoreUserDetails(updatedDetails);
+
+    // Check if response is ok.
+    /*if (!response.ok) {
+      console.error('Error updating user data.');
+      alert('Error updating user data. Please try again.');
+      // closeModal();
+    }*/
+    
+    // alert('Profile updated successfully.');
+    setThumbsUpSuccessPopup(true);
+    
+    }
+    catch (error) {
+      console.error('Error:', error);
+      alert('An error occurred. Please try again.');
+    }
   }
+
+  useEffect(() => {
+    if (showThumbsUpSuccessPopup) {
+      const timer = setTimeout(() => {
+        setThumbsUpSuccessPopup(false); // auto close
+      }, 2000);
+      return () => clearTimeout(timer); // clear timeout on unmount
+    }
+  }, [showThumbsUpSuccessPopup]);
 
   useEffect(() => {
     console.log("User is logged in: ", isUserLoggedIn);
@@ -121,9 +194,10 @@ const ProfileEditModal = () => {
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
         setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
     }
-}, []);
+  }, []);
 
   return (
+    <>
     <div
       id='modalBackground'
       className={showModal ? baseBackgroundStyle + 'opacity-100 visible' : baseBackgroundStyle + 'opacity-0 invisible'}
@@ -490,6 +564,12 @@ const ProfileEditModal = () => {
         </div>
       </div>
     </div>
+
+    {showThumbsUpSuccessPopup && <CloseThumbsUpSuccessPopup onClose={() => {
+      setThumbsUpSuccessPopup(false);
+      closeModal();
+    }} />}
+    </>
   );
 }
 
