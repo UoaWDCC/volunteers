@@ -36,10 +36,20 @@ function Dashboard() {
     setTab(5);
   };
   const authContext = useContext(AuthenticationContext);
+
   const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {
     isUserLoggedIn: boolean,
     firestoreUserDetails: any
   };
+
+  if (!isUserLoggedIn) {
+    window.location.href = '/';
+    return null;               // stop rendering until redirect happens
+  }
+
+  if (!firestoreUserDetails) {  // Firestore call still in flight
+    return <div>Loading…</div>; // TODO: Add a loading spinner or similar
+  }
 
   // Test condition for rendering admin specific content
   // Will need to be changed later when user type column/identifier is implemented
