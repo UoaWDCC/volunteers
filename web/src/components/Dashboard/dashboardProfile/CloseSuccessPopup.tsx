@@ -8,45 +8,37 @@ const CloseSuccessPopup: React.FC<CloseSuccessPopupProps> = ({ onClose }) => {
 
     return (
         <div
-            style={{
-                position: 'fixed',
-                top: '50%',
-                left: '50%',
-                transform: 'translate(-50%, -50%)',
-                width: '238px',
-                height: '46px',
-                backgroundColor: '#ffffff',
-                boxShadow: '0px 4px 11.2px rgba(0, 0, 0, 0.25)',
-                borderRadius: '11px',
-                display: 'flex',
-                alignItems: 'center',
-                paddingRight: '12px',
-                zIndex: 1000,
-            }}
+            className="
+                fixed top-1/2 left-1/2 
+                transform -translate-x-1/2 -translate-y-1/2 
+                w-[238px] h-[46px] 
+                bg-white shadow-[0px_4px_11.2px_rgba(0,0,0,0.25)] 
+                rounded-[11px] flex items-center pr-3 
+                z-[1000]
+            "
         >
 
             <div
-                style={{
-                    width: '10px',
-                    height: '100%',
-                    borderRadius: '8px 0px 0px 8px',
-                    background: 'linear-gradient(180deg, #F3F5F7 0%, #5F7FC3 100%)',
-                    marginRight: '12px',
-                    }}
-            ></div>
+                className="
+                    w-[10px] h-full 
+                    rounded-l-[8px] 
+                    bg-gradient-to-b from-[#F3F5F7] to-[#5F7FC3] 
+                    mr-3
+                "
+            />
 
-            <div style={{ display: 'flex', flexDirection: 'column', flex: 1, paddingTop: '1px' }}>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <img
-                        src="/assets/dashboard/successIcon.png"
-                        alt="success"
-                        style={{ width: '15px', height: '15px', marginRight: '5px' }}
-                    />
-                    <span style={{ fontWeight: 600, fontSize: '13px', color: '#0034A1' }}>
-                        Success!
-                    </span>
+            <div className="flex flex-col flex-1 pt-[1px]">
+                <div className="flex items-center">
+                <img
+                    src="/assets/dashboard/successIcon.png"
+                    alt="success"
+                    className="w-[15px] h-[15px] mr-[5px]"
+                />
+                <span className="font-semibold text-[13px] text-[#0034A1]">
+                    Success!
+                </span>
                 </div>
-                <div style={{ fontSize: '10px', color: 'rgba(0, 52, 161, 0.63)', marginTop: '-2px' }}>
+                <div className="text-[10px] text-[#0034A1]/60 mt-[-2px]">
                     Submitted successfully.
                 </div>
             </div>
@@ -54,8 +46,12 @@ const CloseSuccessPopup: React.FC<CloseSuccessPopupProps> = ({ onClose }) => {
             <img
                 src="/assets/dashboard/closeButton.png"
                 alt="close"
-                style={{ position: 'absolute', top: '10px', right: '13px', width: '11px', height: '11px', cursor: 'pointer', marginLeft: '8px'}}
                 onClick={onClose}
+                className="
+                    absolute top-[10px] right-[13px] 
+                    w-[11px] h-[11px] cursor-pointer 
+                    ml-2
+                "
             />
         </div>
     );
