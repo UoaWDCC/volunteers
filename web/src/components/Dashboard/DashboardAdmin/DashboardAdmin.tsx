@@ -1,4 +1,5 @@
-import Notifications from "./Notifications";
+import Newsletters from "./Newsletters";
+import Announcements from "./Announcements";
 import VolunteerEvents from "./VolunteerEvents";
 
 const DashboardAdmin: React.FC = () => {
@@ -10,8 +11,9 @@ const DashboardAdmin: React.FC = () => {
             </div>
 
             {/* Notifications and Newsletter section */}
-            <div className="flex flex-col w-[25%] h-full gap-8">
-                <Notifications />
+            <div className="flex flex-col w-[22%] gap-8">
+                <Announcements />
+                <Newsletters />
             </div>
         </div>
     );
