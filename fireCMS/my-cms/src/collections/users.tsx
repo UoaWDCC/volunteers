@@ -239,6 +239,20 @@ export const UsersCollection:EntityCollection = {
 			dataType: 'string',
 			name: 'Emergency Contact Relationship',
 		},
+		role : {
+			enumValues: [
+				{
+					id: 'admin',
+					label: 'Admin'
+				},
+				{
+					id: 'member',
+					label: 'Member'
+				}
+			],
+			name: 'Role',
+			dataType: 'string',
+		}
 	},
 	subcollections: [],
 }
