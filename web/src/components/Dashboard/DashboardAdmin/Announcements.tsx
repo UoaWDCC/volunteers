@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import NotificationCard from "./NotificationCard";
+import AnnouncementsCard from "./AnnouncementsCard";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../../firebase/firebase";
 
-const Notifications: React.FC = () => {
+const Announcements: React.FC = () => {
     const [announcements, setAnnouncements] = useState<any[]>([]);
 
     const colRef = collection(db, "Announcements");
@@ -32,7 +32,7 @@ const Notifications: React.FC = () => {
                 </h2>
                 <button
                     className="dashboard self-start text-body-heading text-primary underline bg-transparent"
-                // onClick={show notifications modal or something}
+                // onClick={show announcements modal or something}
                 >
                     View All
                 </button>
@@ -43,11 +43,11 @@ const Notifications: React.FC = () => {
             {/* Notification cards */}
             <div className="flex flex-col gap-6 h-[25vh] overflow-y-scroll">
                 {announcements.map((announcement) => (
-                    <NotificationCard notification={announcement} key={announcement.id} />
+                    <AnnouncementsCard announcement={announcement} key={announcement.id} />
                 ))}
             </div>
         </div>
     )
 };
 
-export default Notifications;
+export default Announcements;

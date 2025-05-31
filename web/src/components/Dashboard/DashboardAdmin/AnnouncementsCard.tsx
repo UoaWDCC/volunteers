@@ -2,7 +2,7 @@ import { getDateString, getTimeString } from "@utils/FormatDate";
 import { Timestamp } from "firebase/firestore";
 import { BsChevronRight } from "react-icons/bs";
 
-type notification = {
+type announcement = {
     id: number,
     title: string,
     message: string,
@@ -11,24 +11,24 @@ type notification = {
     end_date_time: Timestamp,
 }
 
-interface NotificationProps {
-    notification: notification;
+interface AnnouncementsProps {
+    announcement: announcement;
 }
 
-const NotificationCard: React.FC<NotificationProps> = ({ notification }: NotificationProps) => {
+const AnnouncementsCard: React.FC<AnnouncementsProps> = ({ announcement }: AnnouncementsProps) => {
 
     return (
         <div className="flex w-full h-20 bg-white flex flex-row items-center justify-between">
             <div className="flex flex-row">
                 <div>
-                    <p className="text-heading1 mb-0 font-[450]">{notification.title}</p>
-                    <p className="text-[12px] font-light m-0 leading-[1.2]">{getDateString(notification.start_date_time)}</p>
+                    <p className="text-heading1 mb-0 font-[450]">{announcement.title}</p>
+                    <p className="text-[12px] font-light m-0 leading-[1.2]">{getDateString(announcement.start_date_time)}</p>
                     <p className="text-[12px] font-light m-0 leading-[1.2]">
-                        {getTimeString(notification.start_date_time)} - {getTimeString(notification.end_date_time)}
+                        {getTimeString(announcement.start_date_time)} - {getTimeString(announcement.end_date_time)}
                     </p>
                 </div>
                 <div>
-                    {notification.tags?.map(tag =>
+                    {announcement.tags?.map(tag =>
                         <p key={1} className="text-[9px] m-1 leading-[1.2] bg-gray-100 px-2 py-1 rounded-xl font-light">
                             {tag}
                         </p>
@@ -44,4 +44,4 @@ const NotificationCard: React.FC<NotificationProps> = ({ notification }: Notific
     )
 }
 
-export default NotificationCard;
+export default AnnouncementsCard;
