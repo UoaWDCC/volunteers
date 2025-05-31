@@ -187,7 +187,16 @@ const ProfileEditModal = () => {
     if (!window.confirm("Are you sure you want to permanently delete your account? This cannot be undone.")) {
       return;
     }
-    // Add account deletion logic here if needed
+    try {
+      await axios.delete(`${appUrl}/api/users/${docId}`);
+      alert('Account deleted successfully.');
+      setShowModal(false);
+      // Redirect to home page or login page
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      alert('An error occurred while deleting your account. Please try again.');
+    }
   }
 
   return (
