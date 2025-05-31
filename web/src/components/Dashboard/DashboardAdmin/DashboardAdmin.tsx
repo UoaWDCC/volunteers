@@ -10,7 +10,7 @@ const DashboardAdmin: React.FC = () => {
             </div>
 
             {/* Notifications and Newsletter section */}
-            <div className="flex flex-col w-[20%] gap-8">
+            <div className="flex flex-col w-[22%] gap-8">
                 <Notifications />
                 <Newsletters />
             </div>
