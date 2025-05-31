@@ -5,7 +5,7 @@ const VolunteerEvents: React.FC = () => {
   const { events } = useEventContext();
 
   return (
-    <div className="p-6 flex flex-col bg-white shadow-lg rounded-xl gap-6 h-full">
+    <div className="p-8 flex flex-col bg-white shadow-lg rounded-xl gap-2 h-full">
       {/* Header */}
       <div className="flex justify-between items-center">
         <div className="flex items-baseline gap-3">
@@ -40,7 +40,8 @@ const VolunteerEvents: React.FC = () => {
       </div>
 
       {/* Event List */}
-      <div className="flex flex-col overflow-y-auto max-h-[70vh] overflow-hidden">
+      <div className="flex flex-col max-h-[70vh] mx-2 overflow-y-auto overflow-hidden scrollbar-none
+        border-t-2 border-gray-200">
         {events.length > 0 ? (
           events.map((event) => (
             <EventCard key={event.id} event={event} />
