@@ -43,7 +43,7 @@ const Newsletters: React.FC = () => {
             <hr className="border-t-2 border-gray-300 rounded-full my-2" />
 
             {/* Notification cards*/}
-            <div className="h-[25vh] overflow-y-scroll">
+            <div className="flex flex-col gap-6 h-[25vh] overflow-y-scroll">
                 {newsletters.map((newsletter) => (
                     <NewsletterCard newsletter={newsletter} key={newsletter.id} />
                 ))}
