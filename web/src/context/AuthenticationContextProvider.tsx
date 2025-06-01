@@ -81,16 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      initializeUser(user);
-      if (user) {
-        setCurrentUser(user);
-        setUid(user.uid);
-      } else {
-        setCurrentUser(null);
-        setUid('');
-      }
-    });
+    const unsubscribe = onAuthStateChanged(auth, initializeUser);
     return unsubscribe;
   }, []);
 
