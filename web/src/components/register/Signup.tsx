@@ -94,6 +94,15 @@ function Signup() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setShowModal(true);
+
+    if (!currentUser) {
+      console.error('No authenticated user found');
+      setError('Authentication error');
+      setMessage('Please sign in with Google first');
+      setShowModal(true);
+      return;
+    }
+    
     console.log('Validating info');
     if(!firstName || !lastName || !email || !mobile || !upi || !gender || !yearLevel || !emergencyContactFirstName || !emergencyContactLastName || !emergencyContactMobile || !emergencyContactRelationship) {
       setError('Missing Fields.');
@@ -159,45 +168,42 @@ function Signup() {
       return;
     }
     setShowModal(false);
-    if (currentUser) {
-      try {
-        // Reference to the 'users' collection
-        const colRef = collection(db, 'users');
-        const q = query(colRef, where('uid', '==', uid));
-        const querySnapshot = await getDocs(q);
+    try {
+      // Reference to the 'users' collection
+      const colRef = collection(db, 'users');
+      const q = query(colRef, where('uid', '==', uid));
+      const querySnapshot = await getDocs(q);
 
-        if (querySnapshot.empty) {
+      if (querySnapshot.empty) {
 
-          // If the user does not exist, add a new document to the collection
-          await addDoc(colRef, {
-            uid,
-            firstName,
-            lastName,
-            email,
-            mobile,
-            birthdate,
-            upi,
-            gender,
-            yearLevel,
-            dietaryRequirements,
-            driversLicense,
-            otherRequirements,
-            emergencyContactFirstName,
-            emergencyContactLastName,
-            emergencyContactMobile,
-            emergencyContactRelationship,
-            hours: 0
-          });
-          console.log('Document successfully written!');
-        }
-
-        // Navigate to another page after successful submission
+        // If the user does not exist, add a new document to the collection
+        await addDoc(colRef, {
+          uid,
+          firstName,
+          lastName,
+          email,
+          mobile,
+          birthdate,
+          upi,
+          gender,
+          yearLevel,
+          dietaryRequirements,
+          driversLicense,
+          otherRequirements,
+          emergencyContactFirstName,
+          emergencyContactLastName,
+          emergencyContactMobile,
+          emergencyContactRelationship,
+          hours: 0
+        });
+        console.log('Document successfully written!');
         goToDashboard();
-      } catch (error) {
-        console.error('Error writing document: ', error);
       }
-    } else {
-      console.log('No user logged in', currentUser);
+    } catch (error) {
+      console.error('Error writing document: ', error);
+      setError('Registration failed');
+      setMessage('There was an error saving your information');
+      setShowModal(true);
     }
   };
 
