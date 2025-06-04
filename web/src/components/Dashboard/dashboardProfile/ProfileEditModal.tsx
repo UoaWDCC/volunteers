@@ -4,6 +4,7 @@ import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSide
 import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
+import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
 import axios from 'axios';
 
 const ProfileEditModal = () => {
@@ -54,7 +55,7 @@ const ProfileEditModal = () => {
       }
     };
     if (uid) fetchUserDocId();
-}, [uid]);
+  }, [uid]);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -110,6 +111,8 @@ const ProfileEditModal = () => {
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const [showThumbsUpSuccessPopup, setThumbsUpSuccessPopup] = useState(false);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -148,14 +151,24 @@ const ProfileEditModal = () => {
       // closeModal();
     }*/
     
-    alert('Profile updated successfully.');
-    closeModal();
+    // alert('Profile updated successfully.');
+    setThumbsUpSuccessPopup(true);
+    
     }
     catch (error) {
       console.error('Error:', error);
       alert('An error occurred. Please try again.');
     }
   }
+
+  useEffect(() => {
+    if (showThumbsUpSuccessPopup) {
+      const timer = setTimeout(() => {
+        setThumbsUpSuccessPopup(false); // auto close
+      }, 2000);
+      return () => clearTimeout(timer); // clear timeout on unmount
+    }
+  }, [showThumbsUpSuccessPopup]);
 
   useEffect(() => {
     console.log("User is logged in: ", isUserLoggedIn);
@@ -181,9 +194,10 @@ const ProfileEditModal = () => {
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
         setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
     }
-}, []);
+  }, []);
 
   return (
+    <>
     <div
       id='modalBackground'
       className={showModal ? baseBackgroundStyle + 'opacity-100 visible' : baseBackgroundStyle + 'opacity-0 invisible'}
@@ -550,6 +564,12 @@ const ProfileEditModal = () => {
         </div>
       </div>
     </div>
+
+    {showThumbsUpSuccessPopup && <CloseThumbsUpSuccessPopup onClose={() => {
+      setThumbsUpSuccessPopup(false);
+      closeModal();
+    }} />}
+    </>
   );
 }
 
