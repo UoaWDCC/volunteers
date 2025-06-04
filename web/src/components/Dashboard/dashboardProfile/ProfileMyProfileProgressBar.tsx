@@ -8,7 +8,7 @@ interface ProfileMyProfileProgressBarProps {
 }
 
 const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = ({ totalHours, completedHours }) => {
-  const percentage = (completedHours / totalHours) * 100;
+  const percentage = ((completedHours / totalHours) / totalHours) * 100;
 
   return (
     <div className="w-full bg-white p-6 flex flex-col justify-between items-center rounded-lg shadow-lg">
@@ -33,7 +33,7 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
         {/* Custom Text Inside Progress Bar */}
         <div className="absolute inset-0 flex flex-col justify-center items-center">
           {/* Number (Hours) */}
-          <span className="dashboard text-heading1 font-bold text-black">{completedHours}</span>
+          <span className="dashboard text-heading1 font-bold text-black">{completedHours % 5}</span>
           {/* Label (hours) */}
           <span className="dashboard text-heading3 font-semibold text-black">hours</span>
         </div>
@@ -41,7 +41,7 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
 
       {/* Bottom Text */}
       <p className="dashboard text-body-heading text-center mt-4 ">
-        {totalHours - completedHours} more hours to reach Level 3!
+        {totalHours % completedHours} more hours to reach Level {Math.floor(completedHours / 5) + 2}!
       </p>
     </div>
   );
