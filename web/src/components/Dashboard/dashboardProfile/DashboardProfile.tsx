@@ -21,7 +21,7 @@ function DashboardProfile() {
     const [emergencyLastName, setEmergencyLastName] = useState("");
     const [relationship, setRelationship] = useState("");
     const [emergencyMobile, setEmergencyMobile] = useState("");
-    
+
     useEffect(() => {
         console.log("User is logged in: ", isUserLoggedIn);
         if (!isUserLoggedIn) {
@@ -75,7 +75,7 @@ function DashboardProfile() {
                     </div>
 
                     <div className="flex-1">
-                        <ProfileMyProfileProgressBar totalHours={20} completedHours={14}></ProfileMyProfileProgressBar>
+                        <ProfileMyProfileProgressBar totalHours={5} completedHours={firestoreUserDetails.hours}></ProfileMyProfileProgressBar>
                     </div>
                 </div>
             

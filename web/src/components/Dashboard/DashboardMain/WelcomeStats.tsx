@@ -17,7 +17,7 @@ function WelcomeStats() {
   }
 
   function calculatePercentageComplete(hours: number) {
-    return (hours % 5) * 20;
+    return ((hours % 5)/ 5) * 100;
   }
 
   let level = calculateLevel(firestoreUserDetails.hours);
@@ -39,7 +39,7 @@ function WelcomeStats() {
               <span>Level {level + 1}</span>
             </div>
             <div className="bg-gray-300 rounded-full h-4 mt-2 relative">
-              <div className={`bg-primary h-4 rounded-full w-[${percentageComplete}%]`} />
+              <div className="bg-primary h-4 rounded-full" style={{ width: `${percentageComplete}%` }} />
             </div>
             <p className="text-sm text-black mt-2">{hoursToNextLevel > 1 ? `${hoursToNextLevel} more hours to go!` : `${hoursToNextLevel} more hour to go!`}</p>
           </div>
