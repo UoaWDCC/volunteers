@@ -41,6 +41,8 @@ function DashboardProfile() {
             setYearLevel(firestoreUserDetails.yearLevel);
             setDietary(firestoreUserDetails.dietaryRequirements || []);
             setLicense(firestoreUserDetails.driversLicense);
+            console.log(firestoreUserDetails.driversLicense);
+            console.log("dashboardprofile");
             setEmergencyFirstName(firestoreUserDetails.emergencyContactFirstName);
             setEmergencyLastName(firestoreUserDetails.emergencyContactLastName);
             setRelationship(firestoreUserDetails.emergencyContactRelationship);

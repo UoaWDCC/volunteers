@@ -116,6 +116,8 @@ const ProfileEditModal = () => {
         setYearLevel(firestoreUserDetails.yearLevel);
         setDietaryRequirements(firestoreUserDetails.dietaryRequirements || []);
         setDriversLicense(firestoreUserDetails.driversLicense);
+        console.log(firestoreUserDetails.driversLicense);
+        console.log("profileeditmodal");
         setEmergencyContactFirstName(firestoreUserDetails.emergencyContactFirstName);
         setEmergencyContactLastName(firestoreUserDetails.emergencyContactLastName);
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
