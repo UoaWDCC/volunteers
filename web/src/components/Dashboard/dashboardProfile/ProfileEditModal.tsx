@@ -183,6 +183,22 @@ const ProfileEditModal = () => {
     }
 }, []);
 
+  const deleteAccount = async () => {
+    if (!window.confirm("Are you sure you want to permanently delete your account? This cannot be undone.")) {
+      return;
+    }
+    try {
+      await axios.delete(`${appUrl}/api/users/${docId}`);
+      alert('Account deleted successfully.');
+      setShowModal(false);
+      // Redirect to home page or login page
+      window.location.href = '/';
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      alert('An error occurred while deleting your account. Please try again.');
+    }
+  }
+
   return (
     <div
       id='modalBackground'
@@ -537,7 +553,7 @@ const ProfileEditModal = () => {
                 Cancel
               </button>
               {page4 ? (
-                <button type='button' onClick={handleSubmit} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+                <button type='button' onClick={deleteAccount} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                   Delete Account
                 </button>
               ) : (
