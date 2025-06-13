@@ -5,12 +5,11 @@ import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
 import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
+import PlaceholderPFP from "@components/Dashboard/placeholderPfp";
 import axios from 'axios';
 
 const ProfileEditModal = () => {
   const appUrl = import.meta.env.VITE_API_URL;
-  //TEMPORARY PROFILE IMAGE
-  const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
@@ -209,16 +208,22 @@ const ProfileEditModal = () => {
     >
       <div className='bg-white flex rounded-3xl'>
         <div className='bg-primary rounded-l-3xl flex flex-col w-[230px] h-auto'>
-          <div className="bg-black w-[130px] rounded-full mt-16 mb-8 mx-auto relative">
-            {/* IMPLEMENT ON CLICK */}
-            <div className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'>
-              <AiFillCamera size={40}/>
+          <div className="bg-black w-[130px] rounded-full mt-16 mb-8 mx-auto relative overflow-hidden flex items-center justify-center">
+            {/* Overlay */}
+            <div className='absolute text-white inset-0 bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-150 flex flex-col justify-center items-center'>
+              <AiFillCamera size={40} />
               <div className='font-light mt-2 text-center' style={{ userSelect: 'none' }}>
-                <p style={{ fontSize: '10px', lineHeight: '0px' }} >Click to change</p>
+                <p style={{ fontSize: '10px', lineHeight: '0px' }}>Click to change</p>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }}>your photo</p>
               </div>
             </div>
-            <img src={profileImgLink} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
+
+            {/* Image */}
+            <PlaceholderPFP
+              size="w-full aspect-square"s
+              name={`${firstName} ${lastName}`}
+              imageSource={firestoreUserDetails?.profile_picture}
+            />
           </div>
           <div className="flex flex-col items-end mt-6 pl-5">
             <ProfileEditModalSideBarTab tabName='Personal Details' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchTab={goToRegisterPage} />

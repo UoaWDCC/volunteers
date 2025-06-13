@@ -24,6 +24,8 @@ function DashboardProfile() {
 
     const getFullName = (user?: { firstName?: string; lastName?: string }) =>
     [user?.firstName, user?.lastName].filter(Boolean).join(" ");
+
+    const pfp = firestoreUserDetails?.profile_picture || ""; 
     
     useEffect(() => {
         console.log("User is logged in: ", isUserLoggedIn);
@@ -55,7 +57,7 @@ function DashboardProfile() {
     <div className="flex flex-col gap-6 w-[96%] h-full overflow-auto scrollbar-none">
                 {/* width of the gallery */}
                 <div className='flex min-h-[16rem]'>
-                    <ProfileMyProfileHeading name={getFullName({ firstName, lastName })} />
+                    <ProfileMyProfileHeading name={getFullName({ firstName, lastName })} img= {pfp} />
                 </div>
                 
                 {/* Main Content */}
