@@ -2,6 +2,7 @@ import { IoIosNotifications } from "react-icons/io";
 import NotificationTab from "@components/Dashboard/NotificationTab";
 import { useState } from "react";
 import { useAuth } from '../../context/AuthenticationContextProvider'; 
+import PlaceholderPFP from "@components/Dashboard/placeholderPfp";
 
 
 const DashboardHeader = () => {
@@ -41,7 +42,7 @@ const DashboardHeader = () => {
 
         <div className="flex items-center justify-center gap-4">
           <span className="font-medium text-lg">{displayName}</span> 
-          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" className="rounded-full w-12 h-auto" />
+            <PlaceholderPFP size="w-12 h-12" name={displayName} />
         </div>
       </div>
 
