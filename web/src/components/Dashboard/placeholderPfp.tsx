@@ -13,21 +13,30 @@ const getInitials = (name?: string): string => {
   return initials || "??";
 };
 
+const getFontSizeFromSize = (size: string): string => {
+  const match = size.match(/w-(\d+)/);
+  if (!match) return "1rem";
+  const sizeNum = parseInt(match[1], 10);
+  return `${sizeNum * 0.1}rem`; // 0.5x of width
+};
+
 const PlaceholderPFP: React.FC<PlaceholderPFPProps> = ({
-  size = "w-12 h-12",
+  size = "w-12 aspect-square",
   name,
   imageSource,
 }) => {
   return (
-    <div className={`${size}rounded-full bg-gray-200 flex items-center justify-center font-semibold text-sm tracking-wider`}>
+    <div className={`rounded-full bg-gray-200 flex items-center justify-center font-semibold text-sm tracking-wider ${size}`}>
       {
         imageSource ? (
           <img
             src={imageSource}
-            className="object-contain rounded-full"
+            className="object-cover w-full h-full rounded-full"
           />
         ) : (
-          <span className="text-[2rem] text-black">{getInitials(name)}</span>
+          <span style={{ fontSize: getFontSizeFromSize(size) }} className="text-black">
+            {getInitials(name)}
+          </span>
         )
       }
     </div>

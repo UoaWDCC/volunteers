@@ -135,9 +135,9 @@ function Leaderboard() {
 
       {renderUsers.length > 0 ? (
         <>
-          <PlaceholderPFP size="w-1/3 aspect-square" name= {getFullName(renderUsers[0])}  />
+          <PlaceholderPFP size="w-20 aspect-square" name= {getFullName(renderUsers[0])} imageSource= {renderUsers[0].profile_picture}/>
 
-          <h3 className="text-detail mb-1">
+          <h3 className="text-detail my-2">
             {getFullName(renderUsers[0])}
           </h3>
 
