@@ -1,4 +1,5 @@
 import { BsFillPersonPlusFill } from "react-icons/bs";
+import PlaceholderPFP from "../placeholderPfp";
 
 type userData = {
     profile_picture: string;
@@ -30,28 +31,40 @@ const CommunityGalleryCard = ({user}: CommunityGalleryCardProps) => {
         console.log('add friend');
     };
 
-    if (user.profile_picture === "" || user.profile_picture === null || user.profile_picture === undefined) {
-        console.log(user.profile_picture);
-        user.profile_picture = "assets/profile_placeholder.png";
-    }
+    // This function will handle hours, if it recieves 0 or null then it will return 0
+    const formatHours = (hours: number | null) => {
+        if (hours === null || hours === 0|| hours === undefined) {
+            return "0";
+        }
+        return hours;
+    };
 
     return (  
-        <div className="w-full h-[540px] rounded-2xl relative max-[1536px]:h-[520px]">
-            <div className="bg-primary h-[23%] rounded-t-2xl">
-            </div>
+        <div className="w-full h-[540px] rounded-2xl relative max-[1536px]:h-[520px] flex flex-col justify-center">
+            {/* Top background bar */}
+            <div className="bg-primary h-[23%] w-full rounded-t-2xl"></div>
 
-            <div className="bg-lightGrey absolute w-[150px] top-[7%] left-1/2 transform -translate-x-1/2 rounded-full max-[1536px]:w-[130px] max-[1536px]:top-[9%] max-[1280px]:w-[150px] max-[1280px]:top-[7%]"> 
-                <img src={user.profile_picture} alt="profile" className="w-[100%] object-cover aspect-square rounded-full"/>
+            {/* Profile picture container – overlapping */}
+           <div className="w-40 rounded-full absolute top-[10%] left-1/2 transform -translate-x-1/2">
+                <PlaceholderPFP
+                    size="w-40 aspect-square"
+                    name={user.firstName + " " + user.lastName}
+                    imageSource={user.profile_picture}
+                />
             </div>
 
             <div className="border-b-[1px] border-x-[1px] rounded-b-2xl border-lightGrey2 h-[70%] flex flex-col items-center">
                 <p className="text-[25px] mt-[5.8rem] mb-0 text-black max-[1536px]:mt-[4.8rem] max-[1536px]:text-[22px]">{user.firstName + " " + user.lastName}</p>
-                <p className="text-[40px] my-1 text-black max-[1536px]:text-[37px]">{user.hours}</p>
+                <p className="text-[40px] my-1 text-black max-[1536px]:text-[37px]">{formatHours(user.hours)}</p>
                 <p className="text-body text-md text-lightGrey2 mb-6 max-[1536px]:text-[1.3rem]">hours</p>
 
                 <div className="flex items-center w-[70%] justify-between">
                     <div className="bg-lightGrey w-[40px] rounded-full flex-shrink-0">
-                        <img src={user.profile_picture} alt="" className="aspect-square rounded-full"/> {/* this should be the profile picture of the mutual, but for now just uses the user's img */}
+                        <PlaceholderPFP
+                            size="w-10 aspect-square"
+                            name={user.firstName + " " + user.lastName}
+                            imageSource={user.profile_picture}
+                        />
                     </div>
                     {/* THIS DOES NOT HANDLE MUTUALS, IDK HOW WE ARE GONNA DO THAT SO I HAVENT MADE PROPS FOR THE BELOW STUFF */}
                     <p className="text-body text-sm text-lightGrey2 ml-4 mb-0 mr-0 max-[1536px]:text-[0.81rem] max-[1280px]:text-sm">jaquallelina and 12 other mutual friends</p>

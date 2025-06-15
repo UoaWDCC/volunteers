@@ -11,7 +11,7 @@ interface LeaderboardEntryProps {
 function LeaderboardEntry({ rank, img, fname, lname, hours }: LeaderboardEntryProps) {
   return (
     <div className="w-full mb-5 bg-white flex flex-row items-center">
-      <p className="w-[10%] text-detail text-primary-dark text-center">{rank}</p>
+      <p className="w-[10%] text-detail text-primary-dark justify-center text-center ">{rank}</p>
 
       <div className="w-[80%] flex flex-row items-center justify-start pl-[12%] gap-2">
         <PlaceholderPFP
