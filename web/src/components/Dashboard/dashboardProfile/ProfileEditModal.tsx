@@ -433,7 +433,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                           id='birthday' 
                           className={`border ${
                             birthdateError ? 'border-red-500' : 'border-slate-300'
-                          } border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20 w-full`} 
+                          } border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20`} 
                           placeholder='DD/MM/YYYY' 
                           pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}'
                           value={birthdate} 
@@ -457,7 +457,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                         />
                         <button
                           type="button"
-                          className="absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 bg-white rounded-md p-1"
+                          className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 bg-white rounded-md p-1"
                           onClick={() => setShowDatePicker(!showDatePicker)}
                         >
                           <BsCalendar size={20} />
