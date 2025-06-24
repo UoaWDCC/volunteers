@@ -132,6 +132,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     if (uid) fetchUserDocId();
   }, [uid]);
 
+  // Handle user profile picture change.
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
