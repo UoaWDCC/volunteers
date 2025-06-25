@@ -166,8 +166,4 @@ async function updateUser(req: Request, res: Response): Promise<void> {
     }
 }
 
-async function updateUserImage(req: Request, res: Response): Promise<void> {
-
-}
-
-export { getUsers, addUser, deleteUser, getUser, updateUser, updateUserImage ,getUserByUid };  // Export functions for use in other modules
+export { getUsers, addUser, deleteUser, getUser, updateUser, getUserByUid };  // Export functions for use in other modules

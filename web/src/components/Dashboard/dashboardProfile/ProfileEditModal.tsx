@@ -157,7 +157,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         const appUrl = import.meta.env.VITE_API_URL;
 
         // Example: Sending to an API endpoint
-        const response = await axios.post(`${appUrl}/api/upload-profile-picture/${uid}`, formData, {
+        const response = await axios.patch(`${appUrl}/api/users/${uid}/image`, formData, {
           headers: {
             'Content-Type': 'multipart/form-data',
           },
