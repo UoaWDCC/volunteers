@@ -23,13 +23,13 @@ type FormValues = {
   emergencyContactLastName: string;
   emergencyContactMobile: string;
   emergencyContactRelationship: string;
-  profileImage?: string; // Optional field for profile image
+  profile_picture?: string; // Optional field for profile image
 };
 
 const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) => {
   const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
-  const [profileImgSrc, setProfileImgSrc] = useState<string>('/assets/EventHighlights/Events/RelayForLife/imgB.png'); // Use state for the image URL
+  const [profileImgSrc, setProfileImgSrc] = useState<string>('/assets/profile_placeholder.png'); // Use state for the image URL
   const fileInputRef = useRef<HTMLInputElement>(null);
   // ######################
   const authContext = useContext(AuthenticationContext);
@@ -77,7 +77,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     emergencyContactLastName: "",
     emergencyContactMobile: "",
     emergencyContactRelationship: "",
-    profileImage: "" // Optional field for profile image
+    profile_picture: "" // Optional field for profile image
   });
 
 
@@ -151,7 +151,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       // ** IMPORTANT: Send the file to your server here **
       try {
         const formData = new FormData();
-        formData.append('profilePicture', file); // 'profilePicture' should match your backend's expected field name
+        formData.append('profile_picture', file); // 'profilePicture' should match your backend's expected field name
 
         // Example: Sending to an API endpoint
         const response = await axios.post(`${appUrl}/api/upload-profile-picture/${uid}`, formData, {
