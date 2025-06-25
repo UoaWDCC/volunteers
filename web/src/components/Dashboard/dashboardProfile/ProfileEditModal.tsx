@@ -719,7 +719,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                 Cancel
               </button>
               {page4 ? (
-                <button type='button' onClick={deleteAccount} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+                <button type='button' onClick={deleteAccount} className='inline-block text-white bg-red-600 hover:bg-red-700 active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                   Delete Account
                 </button>
               ) : (
