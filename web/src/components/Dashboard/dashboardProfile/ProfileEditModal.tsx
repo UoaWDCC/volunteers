@@ -5,6 +5,8 @@ import { AiFillCamera } from "react-icons/ai";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
 import axios from 'axios';
+import { doc, updateDoc } from 'firebase/firestore'; // Import updateDoc
+import { db } from '../../firebase/firebase.tsx'; // Ensure your db instance is imported
 
 // Add type definition for form values
 type FormValues = {
@@ -29,11 +31,11 @@ type FormValues = {
 const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) => {
   const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
-  const [profileImgSrc, setProfileImgSrc] = useState<string>('/assets/profile_placeholder.png'); // Use state for the image URL
   const fileInputRef = useRef<HTMLInputElement>(null);
   // ######################
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
+  const [profileImgSrc, setProfileImgSrc] = useState<string>(firestoreUserDetails?.profile_picture || '/assets/profile-placeholder.png'); // Use state for the image URL
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
   const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
@@ -138,7 +140,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   // Handle user profile picture change.
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('Image change event triggered');
-    const file = event.target.files?.[0]; // Get the selected file
+    const file = event.target.files?.[0];
     if (file) {
       const reader = new FileReader();
 
@@ -148,10 +150,11 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       };
       reader.readAsDataURL(file); // Read the file as a data URL (base64)
 
-      // ** IMPORTANT: Send the file to your server here **
       try {
         const formData = new FormData();
-        formData.append('profile_picture', file); // 'profilePicture' should match your backend's expected field name
+        formData.append('profile_picture', file);
+
+        const appUrl = import.meta.env.VITE_API_URL;
 
         // Example: Sending to an API endpoint
         const response = await axios.post(`${appUrl}/api/upload-profile-picture/${uid}`, formData, {
