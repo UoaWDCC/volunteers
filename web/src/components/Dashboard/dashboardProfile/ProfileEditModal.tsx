@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
@@ -23,12 +23,14 @@ type FormValues = {
   emergencyContactLastName: string;
   emergencyContactMobile: string;
   emergencyContactRelationship: string;
+  profileImage?: string; // Optional field for profile image
 };
 
 const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) => {
   const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
-  let profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
+  const [profileImgSrc, setProfileImgSrc] = useState<string>('/assets/EventHighlights/Events/RelayForLife/imgB.png'); // Use state for the image URL
+  const fileInputRef = useRef<HTMLInputElement>(null);
   // ######################
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
@@ -75,6 +77,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     emergencyContactLastName: "",
     emergencyContactMobile: "",
     emergencyContactRelationship: "",
+    profileImage: "" // Optional field for profile image
   });
 
 
@@ -133,14 +136,49 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   }, [uid]);
 
   // Handle user profile picture change.
-  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Image change event triggered');
+    const file = event.target.files?.[0]; // Get the selected file
     if (file) {
       const reader = new FileReader();
+
       reader.onloadend = () => {
-        profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png';
+        // Set the state to the base64 URL for immediate preview
+        setProfileImgSrc(reader.result as string);
       };
-      reader.readAsDataURL(file);
+      reader.readAsDataURL(file); // Read the file as a data URL (base64)
+
+      // ** IMPORTANT: Send the file to your server here **
+      try {
+        const formData = new FormData();
+        formData.append('profilePicture', file); // 'profilePicture' should match your backend's expected field name
+
+        // Example: Sending to an API endpoint
+        const response = await axios.post(`${appUrl}/api/upload-profile-picture/${uid}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        if (response.data && response.data.profileImgUrl) {
+          // If the server returns the new public URL, update your state and firestoreUserDetails
+          setProfileImgSrc(response.data.profileImgUrl);
+          // Also update the firestoreUserDetails to reflect the new image URL
+          setFirestoreUserDetails((prevDetails: any) => ({
+            ...prevDetails,
+            profileImgUrl: response.data.profileImgUrl,
+          }));
+          console.log('Profile picture uploaded and updated:', response.data.profileImgUrl);
+        } else {
+          console.error('Server did not return a profile image URL.');
+        }
+
+      } catch (error) {
+        console.error('Error uploading profile picture:', error);
+        alert('Failed to upload profile picture. Please try again.');
+        setShowModal(false);
+        // Optionally revert to previous image or show error state
+      }
     }
   };
 
@@ -362,16 +400,16 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         <div className='bg-primary rounded-l-3xl flex flex-col w-[230px] h-auto'>
           <div className="bg-black w-[130px] rounded-full mt-16 mb-8 mx-auto relative">
             {/* IMPLEMENT ON CLICK */}
-            <div className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'>
-              <AiFillCamera size={40}/>
-              <div className='font-light mt-2 text-center' style={{ userSelect: 'none' }} onClick={() => {
-                console.log('Change photo clicked');
+            <div className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50' onClick={() => {
+                handleImageChange({ target: { files: [new File([], '')] } } as unknown as React.ChangeEvent<HTMLInputElement>); // Simulate file input change
               }}>
+              <AiFillCamera size={40}/>
+              <div className='font-light mt-2 text-center' style={{ userSelect: 'none' }}>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }} >Click to change</p>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }}>your photo</p>
               </div>
             </div>
-            <img src={profileImgLink} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
+            <img src={profileImgSrc} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
           </div>
           <div className="flex flex-col items-end mt-6 pl-5">
             <ProfileEditModalSideBarTab tabName='Personal Details' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchTab={goToRegisterPage} />
