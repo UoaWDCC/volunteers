@@ -25,6 +25,8 @@ const PlaceholderPFP: React.FC<PlaceholderPFPProps> = ({
   name,
   imageSource,
 }) => {
+  console.log("Image source:", imageSource); // ✅ Logs the image URL (or undefined)
+
   return (
     <div className={`rounded-full bg-gray-200 flex items-center justify-center font-semibold text-sm tracking-wider ${size}`}>
       {

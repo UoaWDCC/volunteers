@@ -220,7 +220,7 @@ const ProfileEditModal = () => {
 
             {/* Image */}
             <PlaceholderPFP
-              size="w-full aspect-square"s
+              size="w-full aspect-square"
               name={`${firstName} ${lastName}`}
               imageSource={firestoreUserDetails?.profile_picture}
             />
