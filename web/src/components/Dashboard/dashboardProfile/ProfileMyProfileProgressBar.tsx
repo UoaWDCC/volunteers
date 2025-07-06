@@ -50,8 +50,8 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
       </div>
 
       {/* Bottom Text */}
-      <p className="dashboard text-body-heading text-center mt-4 ">
-        {leftHours} more hours to reach Level {nextLevel}!
+      <p className="dashboard text-body-heading text-center mt-4">
+        {leftHours} more {leftHours === 1 ? 'hour' : 'hours'} to reach Level {nextLevel}!
       </p>
     </div>
   );
