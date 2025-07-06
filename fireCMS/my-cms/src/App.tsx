@@ -1,4 +1,5 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useEffect, useRef } from "react";
+import { onAuthStateChanged, getAuth } from "firebase/auth";
 
 import {
     AppBar,
@@ -40,6 +41,7 @@ import { SponsorsCollection } from "./collections/sponsors";
 import { UsersCollection } from "./collections/users";
 
 import { firebaseConfig } from "./firebase_config";
+import { isAdminEmail } from "./utils/admin-config";
 
 function App() {
 
@@ -49,17 +51,14 @@ function App() {
                                                                                        authController
                                                                                    }) => {
 
-        if (user?.email?.includes("flanders")) {
-            // You can throw an error to prevent access
-            throw Error("Stupid Flanders!");
+        if (!user?.email) {
+            throw Error("No email found. You are not authorized to access this admin panel.");
+        }
+        
+        if (!isAdminEmail(user.email)) {
+            throw Error(`Email ${user.email} is not authorized to access this admin panel.`);
         }
 
-        const idTokenResult = await user?.firebaseUser?.getIdTokenResult();
-        const userIsAdmin = idTokenResult?.claims.admin || user?.email?.endsWith("@firecms.co");
-
-        console.log("Allowing access to", user);
-
-        // we allow access to every user in this case
         return true;
     }, []);
 
@@ -126,6 +125,27 @@ function App() {
         authController,
         dataSourceDelegate: firestoreDelegate
     });
+
+    // Listen for Firebase Auth user changes only after firebaseApp is initialized
+    const lastUidRef = useRef<string | undefined>(undefined);
+    useEffect(() => {
+        if (!firebaseApp) return; // Only run when firebaseApp is ready
+        const auth = getAuth(firebaseApp);
+        lastUidRef.current = auth.currentUser?.uid;
+        const unsubscribe = onAuthStateChanged(auth, (user) => {
+            // Only reload if switching from a non-admin to an admin user while in 'not allowed' state
+            if (
+                user?.uid &&
+                user.uid !== lastUidRef.current &&
+                notAllowedError && // Only when currently in 'not allowed' state
+                user.email && isAdminEmail(user.email) // Only if new user is admin
+            ) {
+                window.location.reload();
+            }
+            lastUidRef.current = user?.uid;
+        });
+        return () => unsubscribe();
+    }, [firebaseApp, notAllowedError]);
 
     if (firebaseConfigLoading || !firebaseApp) {
         return <>
