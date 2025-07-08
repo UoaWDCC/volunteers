@@ -49,7 +49,7 @@ function DashboardProfile() {
             setEmergencyMobile(firestoreUserDetails.emergencyContactMobile);
             
         }
-    }, []);
+    }, [firestoreUserDetails]);
   return (
     <div className="flex flex-col gap-6 w-[96%] h-full overflow-auto scrollbar-none">
                 {/* width of the gallery */}
