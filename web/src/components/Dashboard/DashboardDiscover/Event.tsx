@@ -50,7 +50,6 @@ export default function Event({event, setEventDetails}: EventProps) {
                     <p className="mb-0 text-sm">{event.location}</p>
                 </div>
             </div>
-            
             <div className="ml-auto p-6">
                 <p className="text-right block text-xs font-semibold">{event.host}</p>
                 <div className="">  
