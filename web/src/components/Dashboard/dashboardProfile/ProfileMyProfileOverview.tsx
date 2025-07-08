@@ -1,6 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ProfileEditModal from "../dashboardProfile/ProfileEditModal";
 import ProfileEditModalContext from "../../../context/ProfileEditModalContext";
+import CloseThumbsUpSuccessPopup from "./CloseThumbsUpSuccessPopup";
 
 interface ProfileProps {
   firstName: string;
@@ -36,6 +37,7 @@ const ProfileMyProfileOverview = ({
   emergencyMobile,
 }: ProfileProps) => {
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+  const [showSuccessPopup, setShowSuccessPopup] = useState(false);
 
   function handleShowModal() {
     setShowModal(true);
@@ -43,7 +45,27 @@ const ProfileMyProfileOverview = ({
 
   return (
     <>
-      {showModal && <ProfileEditModal />}
+      {showModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-50 flex justify-center items-center">
+          <ProfileEditModal
+            onUpdateSuccess={() => {
+              setShowSuccessPopup(true);
+
+              // Automatically close the success popup after 2 seconds
+              setTimeout(() => {
+                setShowSuccessPopup(false);
+              }, 2000);
+            }}
+          />
+        </div>
+      )}
+
+      {showSuccessPopup && (
+        <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm z-50 flex justify-center items-center">
+          <CloseThumbsUpSuccessPopup onClose={() => setShowSuccessPopup(false)} />
+        </div>
+      )}
+  
       <div
         className="dashboard bg-white w-full flex flex-col rounded-lg shadow-lg"
         style={{
