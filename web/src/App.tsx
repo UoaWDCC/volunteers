@@ -10,6 +10,7 @@ import RegisterErrorModal from "@components/register/RegisterErrorModal";
 import Dashboard from "@pages/Dashboard";
 import AuthenticationContextProvider from './context/AuthenticationContextProvider';
 import Developers from "@components/main/Developers";
+import EventContextProvider from "./context/EventContextProvider";
 
 const router = createBrowserRouter([
   {
@@ -34,25 +35,29 @@ const router = createBrowserRouter([
     element: <TestingComponent />,
   },
   {
-    path: '/dashboard', // can probably change this to /dashboard/community or something idk, im not sure how we are handling changing tabs within the dashboard
+    path: "/dashboard",
     element: (
       <AuthenticationContextProvider>
-        <Dashboard />
-      </ AuthenticationContextProvider>),
+        <EventContextProvider>
+          <Dashboard />
+        </EventContextProvider>
+      </AuthenticationContextProvider>
+    ),
   },
   {
-    path: '/developers', 
-    element: <Developers/>,
+    path: "/developers",
+    element: <Developers />,
   },
 ]);
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
+
   return (
     <AuthenticationContextProvider>
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
     </AuthenticationContextProvider>
   );
 }

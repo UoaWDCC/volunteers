@@ -41,13 +41,15 @@ function DashboardProfile() {
             setYearLevel(firestoreUserDetails.yearLevel);
             setDietary(firestoreUserDetails.dietaryRequirements || []);
             setLicense(firestoreUserDetails.driversLicense);
+            console.log(firestoreUserDetails.driversLicense);
+            console.log("dashboardprofile");
             setEmergencyFirstName(firestoreUserDetails.emergencyContactFirstName);
             setEmergencyLastName(firestoreUserDetails.emergencyContactLastName);
             setRelationship(firestoreUserDetails.emergencyContactRelationship);
             setEmergencyMobile(firestoreUserDetails.emergencyContactMobile);
             
         }
-    }, [firestoreUserDetails]);
+    }, []);
   return (
     <div className="flex flex-col gap-6 w-[96%] h-full overflow-auto scrollbar-none">
                 {/* width of the gallery */}
