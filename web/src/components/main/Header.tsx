@@ -5,19 +5,11 @@ import LoginModalContext from '../../context/LoginModalContext.tsx';
 function Header() {
   const { setShowModal } = useContext(LoginModalContext);
   const authContext = useContext(AuthenticationContext);
-  const { signOut, isUserLoggedIn, currentUser, firestoreUserDetails } = 
-    authContext as unknown as { 
-      signOut: () => void; 
-      isUserLoggedIn: boolean;
-      currentUser: any;
-      firestoreUserDetails: any;
-    };
+  const { signOut, isUserLoggedIn } = authContext as unknown as { signOut: () => void; isUserLoggedIn: boolean };
 
   if (!authContext) {
     return null;
   } 
-
-  const isFullyLoggedIn = isUserLoggedIn && firestoreUserDetails;
 
   const goToDashboard = () => {
     window.location.href = '/dashboard';
@@ -29,7 +21,7 @@ function Header() {
 
         <div>
           <ul className='flex flex-row text-sm text-white font-mono m-0 gap-6'>
-            {!isFullyLoggedIn && (
+            {!isUserLoggedIn && (
               <>
                 <li
                   onClick={() => {
@@ -41,7 +33,7 @@ function Header() {
                 </li>
               </>
             )}
-            {isFullyLoggedIn && (
+            {isUserLoggedIn && (
               <>
               <li onClick={goToDashboard} className='px-[30px] py-[10px] bg-primary rounded-[2rem] hover: cursor-pointer hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100'>
                 Dashboard

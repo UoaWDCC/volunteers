@@ -34,9 +34,8 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
   const authContext = useContext(AuthenticationContext);
-  const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
+  const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any};
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
-  const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
   const [page2, setPage2] = useState(false);
@@ -154,7 +153,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     };
     if (uid) fetchUserDocId();
   }, [uid]);
-
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
     setGender(id);
@@ -291,7 +289,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
 
     setFormChanged(hasChanged);
   };
-
   useEffect(() => {
     console.log("User is logged in: ", isUserLoggedIn);
     if (!isUserLoggedIn) {

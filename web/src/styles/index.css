@@ -87,6 +87,18 @@ button {
   background-color: #0056b3;
 } */
 
+button.stroked {
+  cursor: pointer;
+  background-color: white;
+  color: #007bff;
+  border: 2px solid #007bff;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button.stroked:hover {
+  background-color: #f0f0f0; /* Optional subtle hover effect */
+}
+
 /* Containers */
 .container {
   max-width: 1200px;
