@@ -34,6 +34,8 @@ function Dashboard() {
   const switchCommunity = () => {
     setTab(5);
   };
+
+  // Check if the user is logged in
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn } = authContext as unknown as {
     isUserLoggedIn: boolean;
