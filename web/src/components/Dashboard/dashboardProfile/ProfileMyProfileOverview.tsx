@@ -20,6 +20,17 @@ interface ProfileProps {
   emergencyMobile: string;
 }
 
+// Shit house solution for now, ideally the ids of the options should be nice and neat to reduce code 
+const dietaryLabels: Record<string, string> = {
+  vegan: "Vegan",
+  vegetarian: "Vegetarian",
+  dairyfree: "Dairy-Free",
+  glutenfree: "Gluten-Free",
+  halal: "Halal",
+  other: "Other",
+  otherrequirements: "Other",
+};
+
 const ProfileMyProfileOverview = ({
   firstName,
   lastName,
@@ -41,6 +52,19 @@ const ProfileMyProfileOverview = ({
 
   function handleShowModal() {
     setShowModal(true);
+  }
+
+  function formatDietaryList(dietary: string[] = [], maxLength: number = 20): string {
+    const displayNames = dietary.map((id) => dietaryLabels[id] || id);
+      let result = "";
+      for (let i = 0; i < displayNames.length; i++) {
+        const next = (result ? ", " : "") + displayNames[i];
+          if ((result + next).length > maxLength) {
+            return result + "...";
+          }
+          result += next;
+      }
+    return result;
   }
 
   return (
@@ -144,7 +168,7 @@ const ProfileMyProfileOverview = ({
               <label className="dashboard text-detail-regular">
                 Dietary Requirements
               </label>
-              <p className="text-body">{dietary}</p>
+              <p className="text-body">{formatDietaryList(dietary)}</p>
             </div>
             <div>
               <label className="dashboard text-detail-regular">
