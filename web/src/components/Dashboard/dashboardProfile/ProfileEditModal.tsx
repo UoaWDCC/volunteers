@@ -2,12 +2,34 @@ import { useContext, useState, useEffect } from 'react';
 import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
+import { BsCalendar } from "react-icons/bs";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
 import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
 import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
-const ProfileEditModal = () => {
+// Add type definition for form values
+type FormValues = {
+  firstName: string;
+  lastName: string;
+  email: string;
+  mobile: string;
+  birthdate: string;
+  upi: string;
+  gender: string;
+  yearLevel: string;
+  dietaryRequirements: string[];
+  driversLicense: string;
+  otherRequirements: string;
+  emergencyContactFirstName: string;
+  emergencyContactLastName: string;
+  emergencyContactMobile: string;
+  emergencyContactRelationship: string;
+};
+
+const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) => {
   const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
   const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
@@ -41,9 +63,86 @@ const ProfileEditModal = () => {
   const [emergencyContactMobile, setEmergencyContactMobile] = useState<string>('');
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
+  const [initialValues, setInitialValues] = useState<FormValues>({
+    firstName: "",
+    lastName: "",
+    email: "",
+    mobile: "",
+    birthdate: "",
+    upi: "",
+    gender: "",
+    yearLevel: "",
+    dietaryRequirements: [],
+    driversLicense: "",
+    otherRequirements: "",
+    emergencyContactFirstName: "",
+    emergencyContactLastName: "",
+    emergencyContactMobile: "",
+    emergencyContactRelationship: "",
+  });
+
+
   const [selectedTab, setSelectedTab] = useState('Personal Details');
 
   const [docId, setDocId] = useState<string>('');
+
+  const [formChanged, setFormChanged] = useState(false);
+
+  // Add validation state
+  const [birthdateError, setBirthdateError] = useState<string>('');
+
+  // Add date picker state
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Add function to format date for display
+  const formatDateForDisplay = (date: Date | null): string => {
+    if (!date) return '';
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  // Add function to parse date string to Date object
+  const parseDateString = (dateStr: string): Date | null => {
+    if (!dateStr) return null;
+    const [day, month, year] = dateStr.split('/').map(Number);
+    const date = new Date(year, month - 1, day);
+    return isNaN(date.getTime()) ? null : date;
+  };
+
+  // Add validation function
+  const validateBirthdate = (date: string): boolean => {
+    // Check if date is in DD/MM/YYYY format
+    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
+    if (!dateRegex.test(date)) {
+      setBirthdateError('Please enter date in DD/MM/YYYY format');
+      return false;
+    }
+
+    // Check if date is valid
+    const [day, month, year] = date.split('/').map(Number);
+    const dateObj = new Date(year, month - 1, day);
+    
+    if (
+      dateObj.getDate() !== day ||
+      dateObj.getMonth() !== month - 1 ||
+      dateObj.getFullYear() !== year
+    ) {
+      setBirthdateError('Please enter a valid date');
+      return false;
+    }
+
+    // Check if date is not in the future
+    const today = new Date();
+    if (dateObj > today) {
+      setBirthdateError('Birth date cannot be in the future');
+      return false;
+    }
+
+    setBirthdateError('');
+    return true;
+  };
 
   useEffect(() => {
     const fetchUserDocId = async () => {
@@ -117,6 +216,11 @@ const ProfileEditModal = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Validate birthdate before submission
+    if (!validateBirthdate(birthdate)) {
+      return;
+    }
+    
     try {
       // When update button clicked, all data at time of
     // click, is stored within newData.
@@ -152,7 +256,8 @@ const ProfileEditModal = () => {
     }*/
     
     // alert('Profile updated successfully.');
-    setThumbsUpSuccessPopup(true);
+    setShowModal(false); // Close the modal after successful update
+    onUpdateSuccess(); // Call the onUpdateSuccess callback to show the thumbs up popup
     
     }
     catch (error) {
@@ -160,6 +265,35 @@ const ProfileEditModal = () => {
       alert('An error occurred. Please try again.');
     }
   }
+
+  const checkFormChanged = () => {
+    const currentValues: FormValues = {
+      firstName,
+      lastName,
+      email,
+      mobile,
+      birthdate,
+      upi,
+      gender,
+      yearLevel,
+      dietaryRequirements,
+      driversLicense,
+      otherRequirements,
+      emergencyContactFirstName,
+      emergencyContactLastName,
+      emergencyContactMobile,
+      emergencyContactRelationship,
+    };
+
+    const hasChanged = (Object.keys(currentValues) as Array<keyof FormValues>).some(key => {
+      if (Array.isArray(currentValues[key])) {
+        return JSON.stringify(currentValues[key]) !== JSON.stringify(initialValues[key]);
+      }
+      return currentValues[key] !== initialValues[key];
+    });
+
+    setFormChanged(hasChanged);
+  };
 
   useEffect(() => {
     if (showThumbsUpSuccessPopup) {
@@ -179,6 +313,26 @@ const ProfileEditModal = () => {
     }
 
     if (firestoreUserDetails) {
+        const initialData: FormValues = {
+          firstName: firestoreUserDetails.firstName,
+          lastName: firestoreUserDetails.lastName,
+          email: firestoreUserDetails.email,
+          mobile: firestoreUserDetails.mobile,
+          birthdate: firestoreUserDetails.birthdate,
+          upi: firestoreUserDetails.upi,
+          gender: firestoreUserDetails.gender,
+          yearLevel: firestoreUserDetails.yearLevel,
+          dietaryRequirements: firestoreUserDetails.dietaryRequirements || [],
+          driversLicense: firestoreUserDetails.driversLicense,
+          otherRequirements: firestoreUserDetails.otherRequirements || "",
+          emergencyContactFirstName: firestoreUserDetails.emergencyContactFirstName,
+          emergencyContactLastName: firestoreUserDetails.emergencyContactLastName,
+          emergencyContactRelationship: firestoreUserDetails.emergencyContactRelationship,
+          emergencyContactMobile: firestoreUserDetails.emergencyContactMobile,
+        };
+        setInitialValues(initialData);
+        
+        // Set current values
         setFirstName(firestoreUserDetails.firstName);
         setLastName(firestoreUserDetails.lastName);
         setEmail(firestoreUserDetails.email);
@@ -189,12 +343,17 @@ const ProfileEditModal = () => {
         setYearLevel(firestoreUserDetails.yearLevel);
         setDietaryRequirements(firestoreUserDetails.dietaryRequirements || []);
         setDriversLicense(firestoreUserDetails.driversLicense);
+        setOtherRequirements(firestoreUserDetails.otherRequirements || "");
         setEmergencyContactFirstName(firestoreUserDetails.emergencyContactFirstName);
         setEmergencyContactLastName(firestoreUserDetails.emergencyContactLastName);
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
         setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
     }
-  }, []);
+  }, [firestoreUserDetails]);
+
+  useEffect(() => {
+    checkFormChanged();
+  }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship]);
 
   return (
     <>
@@ -277,11 +436,72 @@ const ProfileEditModal = () => {
                       <input type='text' id='upi' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='jye583' required value={upi} onChange={(e) => setUpi(e.target.value)} />
                     </div>
                     <div>
-                      <label htmlFor='birthday' className='inline-blocktext-sm text-sm font-medium text-black'>
+                      <label htmlFor='birthday' className='inline-block text-sm font-medium text-black'>
                         Date of Birth
                       </label>
-                      <p className='inline-block text-white'>*</p>
-                      <input type='text' id='birthday' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='01/01/2000' pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}' value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
+                      <p className='inline-block text-red-600'>*</p>
+                      <div className="relative">
+                        <input 
+                          type='text' 
+                          id='birthday' 
+                          className={`border ${
+                            birthdateError ? 'border-red-500' : 'border-slate-300'
+                          } border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20`} 
+                          placeholder='DD/MM/YYYY' 
+                          pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}'
+                          value={birthdate} 
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // Only allow numbers and forward slashes
+                            if (/^[0-9/]*$/.test(value)) {
+                              setBirthdate(value);
+                              if (value.length === 10) {
+                                validateBirthdate(value);
+                              } else {
+                                setBirthdateError('');
+                              }
+                            }
+                          }}
+                          onBlur={() => {
+                            if (birthdate) {
+                              validateBirthdate(birthdate);
+                            }
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 bg-white rounded-md p-1"
+                          onClick={() => setShowDatePicker(!showDatePicker)}
+                        >
+                          <BsCalendar size={20} />
+                        </button>
+                        {showDatePicker && (
+                          <div className="absolute z-10 mt-1">
+                            <DatePicker
+                              selected={parseDateString(birthdate)}
+                              onChange={(date: Date | null) => {
+                                if (date) {
+                                  const formattedDate = formatDateForDisplay(date);
+                                  setBirthdate(formattedDate);
+                                  validateBirthdate(formattedDate);
+                                  setShowDatePicker(false);
+                                }
+                              }}
+                              dateFormat="dd/MM/yyyy"
+                              maxDate={new Date()}
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                              scrollableYearDropdown
+                              yearDropdownItemNumber={100}
+                              inline
+                            />
+                          </div>
+                        )}
+                      </div>
+                      {birthdateError && (
+                        <p className="text-red-500 text-xs mt-1">{birthdateError}</p>
+                      )}
                     </div>
                   </div>
                   <div className='mb-6'>
@@ -555,7 +775,16 @@ const ProfileEditModal = () => {
                   Delete Account
                 </button>
               ) : (
-                  <button type='button' onClick={handleSubmit} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+                  <button 
+                    type='button' 
+                    onClick={handleSubmit} 
+                    disabled={!formChanged}
+                    className={`inline-block text-white font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center transition-all ease-in-out duration-100 ${
+                      formChanged 
+                        ? 'bg-primary hover:bg-primary-dark active:translate-y-0.5' 
+                        : 'bg-gray-400 cursor-not-allowed'
+                    }`}
+                  >
                     Update
                   </button>
               )}
