@@ -30,6 +30,7 @@ import { onAuthStateChanged } from "firebase/auth";
 // import { collection, getDocs, getDoc, query, where, doc, DocumentData } from 'firebase/firestore';
 import TokenContext from "./TokenContext";
 import { DocumentData } from "firebase/firestore";
+import { isAdminEmail } from "../utils/admin-config";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -88,7 +89,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   // update user role based on email whenever email is changed
   useEffect(() => {
     if (email) {
-      if (email == "volunteers@projects.wdcc.co.nz") {
+      if (isAdminEmail(email)) {
         setUserRole("admin");
       } else {
         setUserRole("volunteer");
@@ -98,26 +99,31 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   async function initializeUser(user: User | null) {
     if (user) {
-      console.log(user);
+      console.log("initializeUser called for user:", user);
+      setCurrentUser(user); // Set current user here
+      setUid(user.uid);
       const token = await user.getIdToken();
       setToken(token);
 
       const { exists, userDetails } = await checkUidExists(user.uid);
+      setFirestoreUserDetails(userDetails || null); // Set user details regardless of existence
+
+      // Set user state and login status based on Firestore existence
       if (exists && userDetails) {
-        setCurrentUser(user);
-        setUserLoggedIn(true);
-        setUserState();
-        setFirestoreUserDetails(userDetails); // Now TypeScript knows userDetails is DocumentData
+        setUserState(); // Update basic user info
+        setUserLoggedIn(true); // Set to true if user exists in Firestore
+        console.log("User exists in Firestore, setting login state to true");
       } else {
         // User is authenticated with Google but hasn't completed registration
-        setCurrentUser(user);
-        setUserLoggedIn(false);
-        setUserState();
-        setFirestoreUserDetails(null); // Explicitly set to null when no details exist
+        setUserState(); // Still update basic user info
+        setUserLoggedIn(false); // Set to false if user not in Firestore
+        console.log("User not in Firestore, setting login state to false");
       }
     } else {
       setCurrentUser(null);
-      setUserLoggedIn(false);
+      setUid('');
+      setToken(''); // Clear token
+      setUserLoggedIn(false); // Explicitly set to false when user is null
       setFirestoreUserDetails(null);
     }
     setLoading(false);
@@ -127,26 +133,53 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log(user);
+      console.log("Google sign-in successful:", user);
+
+      // Send ID token to backend to set session cookie
+      const token = await user.getIdToken();
+      const appUrl = import.meta.env.VITE_API_URL;
+      const sessionLoginResponse = await fetch(`${appUrl}/api/auth/sessionLogin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ token }),
+        credentials: 'include'
+      });
+
+      if (!sessionLoginResponse.ok) {
+        alert('Login authentication failed. Please try again or contact administrator.');
+        // If session cookie setup failed, do not proceed with login flow
+        setCurrentUser(null); // Clear user state
+        setUserLoggedIn(false);
+        setFirestoreUserDetails(null);
+        return; 
+      }
+
+      // If session cookie setup was successful, proceed to check user in Firestore
       const { exists: uidExists, userDetails } = await checkUidExists(user.uid);
       
-      setCurrentUser(user);
-      await setUserState();
-
-      if (!uidExists || !userDetails) { // Check for both exists and userDetails
-        console.log("User not registered, redirecting to register");
+      if (!uidExists || !userDetails) {
+        console.log("User not registered in Firestore, redirecting to register.");
         setUserLoggedIn(false);
-        setFirestoreUserDetails(null); // Explicitly set to null
+        setFirestoreUserDetails(null);
         window.location.href = "register";
       } else {
-        console.log("User found in db, proceeding to dashboard");
-        setUserLoggedIn(true);
+        console.log("User found in Firestore, proceeding to dashboard.");
         setFirestoreUserDetails(userDetails);
         window.location.href = "dashboard";
         return userDetails;
       }
-    } catch (error) {
+
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'code' in error && (error as { code?: string }).code === 'auth/popup-closed-by-user') {
+        // User closed the Google login popup, do not show error
+        return;
+      }
       console.error("Error during Google sign-in:", error);
+      setError(error as Error); // Capture and set error state
+      setCurrentUser(null);
+      setUserLoggedIn(false);
+      setFirestoreUserDetails(null);
+      alert('An unexpected error occurred during login. Please try again.'); // Generic error message
     }
   }
 
@@ -190,8 +223,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   };
 
-  function signOut() {
+  async function signOut() {
     try {
+      // Clear session cookie from backend
+      await fetch('/api/auth/sessionLogout', {
+        method: 'POST',
+        credentials: 'include'
+      });
       auth.signOut();
       setUserLoggedIn(false);
       setCurrentUser(null);
