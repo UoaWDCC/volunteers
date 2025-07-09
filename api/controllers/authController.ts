@@ -7,10 +7,10 @@ export const sessionLogin = async (req: Request, res: Response) => {
   const expiresIn = 60 * 60 * 24 * 5 * 1000; // 5 days
 
   try {
-    console.log("Received ID Token for sessionLogin:", idToken);
+    // console.log("Received ID Token for sessionLogin:", idToken);
     const sessionCookie = await admin.auth().createSessionCookie(idToken, { expiresIn });
 
-    console.log("Session cookie created:", sessionCookie);
+    // console.log("Session cookie created:", sessionCookie);
 
     res.cookie("session", sessionCookie, {
       maxAge: expiresIn,

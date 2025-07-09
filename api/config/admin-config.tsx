@@ -2,10 +2,7 @@
 // Centralized management of admin email addresses
 
 const adminEmailString = process.env.ADMIN_EMAILS || "";
-console.log('Loaded ADMIN_EMAILS emails from env:', process.env.ADMIN_EMAILS);
 export const ADMIN_EMAILS = adminEmailString.split(",").map(email => email.trim());
-
-console.log('Loaded admin emails:', ADMIN_EMAILS);
 
 export const ADMIN_EMAILS_SET = new Set(ADMIN_EMAILS);
 
