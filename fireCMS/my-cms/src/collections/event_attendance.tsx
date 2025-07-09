@@ -28,6 +28,13 @@ export const EventAttendanceCollection: EntityCollection = {
         required: true,
       },
     },
+    timestamp: {
+      dataType: "date",
+      name: "RSVP Time",
+      description: "Time when the user RSVP'd",
+      autoValue: "on_create",
+      mode: "date_time",
+    },
   },
   subcollections: [],
 };
