@@ -254,20 +254,5 @@ export const UsersCollection:EntityCollection = {
 			dataType: 'string',
 		}
 	},
-	subcollections: [
-		{
-			name: "Friends",
-			path: "friends",
-			singularName: "Friend",
-			id: "friends",
-			properties: {
-				addedAt: { dataType: "date", name: "Added At" },
-				friendRef: {
-					dataType: "reference",
-					name: "Friend",
-					path: "users"
-				}
-			}
-		}
-	],
+	subcollections: [],
 }
