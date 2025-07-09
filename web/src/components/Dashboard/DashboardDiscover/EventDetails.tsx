@@ -56,7 +56,6 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                 const userSnapshot = await getDocs(userQuery);
                 
                 if (userSnapshot.empty) {
-                    console.error('User document not found');
                     return;
                 }
                 
@@ -104,6 +103,8 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const handleConfirmUnregister = () => {
         if (attendanceId) {
             unregisterUserFromEvent(attendanceId);
+        } else {
+            console.error("No attendanceId found for unregister");
         }
         setButtonText('Register for Event');
         setIsPopupVisible(false);
@@ -121,21 +122,32 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             const userSnapshot = await getDocs(userQuery);
             
             if (userSnapshot.empty) {
-                console.error('User document not found');
                 return;
             }
             
             const userDocId = userSnapshot.docs[0].id;
             
-            await addDoc(collection(db, "event_attendance"), {
+            const docRef = await addDoc(collection(db, "event_attendance"), {
                 eventId: doc(db, "events", eventId), // Reference to events collection
                 uid: doc(db, "users", userDocId),    // Reference to users collection using actual document ID
                 timestamp: serverTimestamp(),
             });
+            
             setIsRegistered(true);
-            console.log("Successfully registered for event:", eventId);
+            setAttendanceId(docRef.id); // Set the attendance document ID
         } catch (error) {
             console.error("Error registering for event:", error);
+        }
+    }
+
+    async function unregisterUserFromEvent(attendanceDocId: string) {
+        try {
+            const attendanceDoc = doc(db, "event_attendance", attendanceDocId);
+            await deleteDoc(attendanceDoc);
+            setIsRegistered(false);
+            setAttendanceId(null);
+        } catch (error) {
+            console.error("Error unregistering from event:", error);
         }
     }
     
