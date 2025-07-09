@@ -178,7 +178,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         return userDetails;
       }
 
-    } catch (error) {
+    } catch (error: unknown) {
+      if (typeof error === 'object' && error && 'code' in error && (error as { code?: string }).code === 'auth/popup-closed-by-user') {
+        // User closed the Google login popup, do not show error
+        return;
+      }
       console.error("Error during Google sign-in:", error);
       setError(error as Error); // Capture and set error state
       setCurrentUser(null);

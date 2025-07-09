@@ -1,16 +1,15 @@
 // Admin configuration file for frontend
 // Centralized management of admin email addresses
 
-export const ADMIN_EMAILS: string[] = [
-  "volunteers@projects.wdcc.co.nz"
-];
+const adminEmailString = import.meta.env.VITE_ADMIN_EMAILS || "";
+export const ADMIN_EMAILS = adminEmailString.split(",").map((email: string) => email.trim());
 
 export const ADMIN_EMAILS_SET = new Set(ADMIN_EMAILS);
 
 // Helper function to check if an email is admin
-export function isAdminEmail(email: string): boolean {
-  return ADMIN_EMAILS_SET.has(email);
-}
+export const isAdminEmail = (email: string): boolean => {
+  return ADMIN_EMAILS.includes(email);
+};
 
 // Helper function to get all admin emails
 export function getAdminEmails(): string[] {

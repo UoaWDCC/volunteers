@@ -1,16 +1,18 @@
 // Admin configuration file
 // Centralized management of admin email addresses
 
-export const ADMIN_EMAILS: string[] = [
-  "volunteers@projects.wdcc.co.nz"
-];
+const adminEmailString = process.env.ADMIN_EMAILS || "";
+console.log('Loaded ADMIN_EMAILS emails from env:', process.env.ADMIN_EMAILS);
+export const ADMIN_EMAILS = adminEmailString.split(",").map(email => email.trim());
+
+console.log('Loaded admin emails:', ADMIN_EMAILS);
 
 export const ADMIN_EMAILS_SET = new Set(ADMIN_EMAILS);
 
 // Helper function to check if an email is admin
-export function isAdminEmail(email: string): boolean {
-  return ADMIN_EMAILS_SET.has(email);
-}
+export const isAdminEmail = (email: string): boolean => {
+  return ADMIN_EMAILS.includes(email);
+};
 
 // Helper function to get all admin emails
 export function getAdminEmails(): string[] {

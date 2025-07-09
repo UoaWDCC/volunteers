@@ -2,6 +2,8 @@ import express, { json } from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import { config } from 'dotenv';
+config();
+console.log('process.env.ADMIN_EMAILS:', process.env.ADMIN_EMAILS);
 import { authMiddleware } from './middleware/authMiddleware';
 import path from 'path';
 
@@ -15,7 +17,7 @@ config();
 app.use(json());
 app.use(cors({
   origin: process.env.NODE_ENV === 'production' 
-    ? ['https://your-production-domain.com']  // TODO: change to production domain
+    ? process.env.PRODUCTION_DOMAIN
     : ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true
 }));

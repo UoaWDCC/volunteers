@@ -1,7 +1,6 @@
-export const ADMIN_EMAILS = [
-  "volunteers@projects.wdcc.co.nz"
-];
+const adminEmailString = import.meta.env.VITE_ADMIN_EMAILS || "";
+export const ADMIN_EMAILS = adminEmailString.split(",").map((email: string) => email.trim());
 
-export function isAdminEmail(email: string): boolean {
+export const isAdminEmail = (email: string): boolean => {
   return ADMIN_EMAILS.includes(email);
-} 
+};
