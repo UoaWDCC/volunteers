@@ -221,6 +221,52 @@ function Signup() {
     return emailPattern.test(email);
   }
 
+  // Add per-page validation for required fields
+  const validatePage1 = () => {
+    const missingFieldsList = [];
+    if (!firstName) missingFieldsList.push('First Name');
+    if (!lastName) missingFieldsList.push('Last Name');
+    if (!email) missingFieldsList.push('Email');
+    if (!mobile) missingFieldsList.push('Mobile Number');
+    if (!upi) missingFieldsList.push('UPI');
+    if (!gender) missingFieldsList.push('Gender');
+    if (missingFieldsList.length > 0) {
+      setError('Missing Fields.');
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setShowModal(true);
+      return false;
+    }
+    return true;
+  };
+
+  const validatePage2 = () => {
+    const missingFieldsList = [];
+    if (!yearLevel) missingFieldsList.push('Year Level');
+    // Add more required fields here if needed
+    if (missingFieldsList.length > 0) {
+      setError('Missing Fields.');
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setShowModal(true);
+      return false;
+    }
+    return true;
+  };
+
+  // Update navigation handlers to use validation
+  const handleNextFromPage1 = () => {
+    if (validatePage1()) {
+      goToAdditionalPage();
+    }
+  };
+
+  const handleNextFromPage2 = () => {
+    if (validatePage2()) {
+      goToEmergencyPage();
+    }
+  };
+
   return (
     <div>
       {showModal && (<RegisterErrorModal/>)}
@@ -340,7 +386,7 @@ function Signup() {
                     <button type='button' className='select-none cursor-default ml-[717.5px] inline-block border border-slate-100 border-solid text-slate-100 bg-slate-100 hover:bg-slate-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center active:translate-y-0.5 transition-all ease-in-out duration-100'>
                       Back
                     </button>
-                    <button type='button' onClick={goToAdditionalPage} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+                    <button type='button' onClick={handleNextFromPage1} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                       Next
                     </button>
                   </div>
@@ -539,7 +585,7 @@ function Signup() {
                     <button type='button' onClick={goToRegisterPage} className='ml-[717.5px] inline-block border border-primary border-solid text-primary bg-white hover:bg-slate-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center active:translate-y-0.5 transition-all ease-in-out duration-100'>
                       Back
                     </button>
-                    <button type='button' onClick={goToEmergencyPage} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100  font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+                    <button type='button' onClick={handleNextFromPage2} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100  font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                       Next
                     </button>
                   </div>
