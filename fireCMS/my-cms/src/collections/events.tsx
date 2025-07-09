@@ -139,8 +139,12 @@ export const EventsCollection:EntityCollection = {
 			singularName: "participant",
 			id: "participants",
 			properties: {
-				addedAt: { dataType: "date", name: "Added At" },
-				participantRef: {
+				added_at: { 
+					name: "Added At",
+					dataType: "date", 
+					autoValue: "on_create"
+				},
+				participant_ref: {
 					dataType: "reference",
 					name: "Participant",
 					path: "users"

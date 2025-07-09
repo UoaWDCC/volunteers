@@ -7,7 +7,7 @@ export const FriendshipsCollection = buildCollection({
     singularName: "Friendship",
     id: "friendships",
     properties: {
-        addedAt: { 
+        added_at: { 
             name: "Added At",
             dataType: "date", 
             autoValue: "on_create"
