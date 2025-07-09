@@ -132,5 +132,20 @@ export const EventsCollection:EntityCollection = {
 			description: 'The coordinates of the location on maps. Get this by right clicking in Google Maps and selecting the first option',
 		},
 	},
-	subcollections: [],
+	subcollections: [
+		{
+			name: "Participants",
+			path: "participants",
+			singularName: "participant",
+			id: "participants",
+			properties: {
+				addedAt: { dataType: "date", name: "Added At" },
+				participantRef: {
+					dataType: "reference",
+					name: "Participant",
+					path: "users"
+				}
+			}
+		}
+	],
 }
