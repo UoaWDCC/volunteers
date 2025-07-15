@@ -33,6 +33,9 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   //TEMPORARY PROFILE IMAGE
   const fileInputRef = useRef<HTMLInputElement>(null);
   // ######################
+  const openFileDialog = () => {
+    fileInputRef.current?.click();
+  }
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
   const [profileImgSrc, setProfileImgSrc] = useState<string>(firestoreUserDetails?.profile_picture || '/assets/profile-placeholder.png'); // Use state for the image URL
@@ -169,7 +172,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
           // Also update the firestoreUserDetails to reflect the new image URL
           setFirestoreUserDetails((prevDetails: any) => ({
             ...prevDetails,
-            profileImgUrl: response.data.profileImgUrl,
+            profile_picture: response.data.profileImgUrl,
           }));
           console.log('Profile picture uploaded and updated:', response.data.profileImgUrl);
         } else {
@@ -402,10 +405,17 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       <div className='bg-white flex rounded-3xl'>
         <div className='bg-primary rounded-l-3xl flex flex-col w-[230px] h-auto'>
           <div className="bg-black w-[130px] rounded-full mt-16 mb-8 mx-auto relative">
-            {/* IMPLEMENT ON CLICK */}
-            <div className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50' onClick={() => {
-                handleImageChange({ target: { files: [new File([], '')] } } as unknown as React.ChangeEvent<HTMLInputElement>); // Simulate file input change
-              }}>
+            <input
+              type="file"
+              accept="image/*" // Restricts file selection to image types
+              ref={fileInputRef} // Associates this input with the useRef hook
+              onChange={handleImageChange} // When a file is selected, this function will be called
+              style={{ display: 'none' }} // Hides the actual input element from view
+            />
+            <div
+              className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'
+              onClick={openFileDialog} // When the div is clicked, it opens the file dialog
+            >
               <AiFillCamera size={40}/>
               <div className='font-light mt-2 text-center' style={{ userSelect: 'none' }}>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }} >Click to change</p>
