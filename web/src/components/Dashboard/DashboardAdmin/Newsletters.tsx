@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import NewsletterCard from "./NewsletterCard";
-import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -23,8 +23,7 @@ const Newsletters: React.FC = () => {
     const [isLoadingEvents, setIsLoadingEvents] = useState(false);
     const [eventsError, setEventsError] = useState('');
     const [showEvents, setShowEvents] = useState(false);
-    const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
-    const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+    const [draggedIndex] = useState<number | null>(null);
 
     useEffect(() => {
         const loadEvents = async () => {
@@ -260,47 +259,6 @@ const Newsletters: React.FC = () => {
             !selectedEvents.includes(event.name) || 
             selectedEvents[currentIndex] === event.name
         );
-    };
-
-    const handleDragStart = (index: number) => {
-        setDraggedIndex(index);
-        const element = document.getElementById(`event-${index}`);
-        if (element) {
-            element.style.opacity = '0.5';
-        }
-    };
-
-    const handleDragEnd = () => {
-        setDraggedIndex(null);
-        setHoveredIndex(null);
-        document.querySelectorAll('[id^="event-"]').forEach(el => {
-            (el as HTMLElement).style.opacity = '1';
-        });
-    };
-
-    const handleDragEvent = (index: number) => {
-        if (draggedIndex === null || draggedIndex === index) return;
-        setHoveredIndex(index);
-    };
-
-    const handleDropEvent = () => {
-        if (draggedIndex === null || hoveredIndex === null) return;
-        
-        // reorder events
-        const newSelectedEvents = [...selectedEvents];
-        const newDropdownOpenStates = [...dropdownOpenStates];
-        
-        // swap events
-        const [movedEvent] = newSelectedEvents.splice(draggedIndex, 1);
-        const [movedState] = newDropdownOpenStates.splice(draggedIndex, 1);
-        
-        newSelectedEvents.splice(hoveredIndex, 0, movedEvent);
-        newDropdownOpenStates.splice(hoveredIndex, 0, movedState);
-        
-        setSelectedEvents(newSelectedEvents);
-        setDropdownOpenStates(newDropdownOpenStates);
-        setDraggedIndex(null);
-        setHoveredIndex(null);
     };
 
     return (
