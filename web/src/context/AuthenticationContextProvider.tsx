@@ -46,6 +46,7 @@ export function useToken() {
 // so TypeScript knows what properties are available when calling useAuth().
 // It enables autocomplete and prevents errors like 'property does not exist on type null'.
 export type AuthContext = {
+  profile_picture: string;
   currentUser: User | null;
   firstName: string;
   lastName: string;
@@ -59,9 +60,11 @@ export type AuthContext = {
   signOut: () => void;
   getFirestoreCollectionUserByStudentID: (studentID: string) => Promise<DocumentData | null>;
   firestoreUserDetails: DocumentData | null;
+  setProfilePicture: (url: string) => void;
 };
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const [profile_picture, setProfilePicture] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
   const [error, setError] = useState<Error | null>(null);
@@ -117,6 +120,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         setUserLoggedIn(true);
         setUserState();
         setFirestoreUserDetails(userDetails); // Now TypeScript knows userDetails is DocumentData
+        setProfilePicture(userDetails.profile_picture);
       } else {
         // User is authenticated with Google but hasn't completed registration
         setCurrentUser(user);
@@ -151,6 +155,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log("User found in db, proceeding to dashboard");
         setUserLoggedIn(true);
         setFirestoreUserDetails(userDetails);
+        setProfilePicture(userDetails.profile_picture);
         window.location.href = "dashboard";
         return userDetails;
       }
@@ -289,6 +294,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     getFirestoreCollectionUserByStudentID,
     firestoreUserDetails,
     setFirestoreUserDetails,
+    profile_picture,
+    setProfilePicture,
   };
 
   return (
