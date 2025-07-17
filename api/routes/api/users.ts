@@ -1,5 +1,5 @@
 const express = require("express");
-import { getUsers, addUser, deleteUser, getUser, updateUser, getUserByUid } from '../../controllers/userController';
+import { getUsers, addUser, deleteUser, getUser, updateUser, getUserByUid, uploadProfilePicture } from '../../controllers/userController';
 import multer from 'multer';
 
 const router = express.Router();
@@ -16,7 +16,7 @@ router.post("/", addUser);
 router.delete("/:id", deleteUser);
 router.get("/:id", getUser)
 router.patch("/:id", updateUser)
-router.patch("/:id/image", upload.single('profile_picture'),updateUser);
+router.patch("/:id/image", upload.single('profile_picture'), uploadProfilePicture);
 
 // maybe this route is bad but it checks for a user by their uid in firestore instead of document id
 router.get("/uid/:uid", getUserByUid);

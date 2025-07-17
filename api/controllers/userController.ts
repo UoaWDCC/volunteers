@@ -1,11 +1,11 @@
-import { db } from '../config/firebase';  // Import the Firestore database configuration
+import { db, app } from '../config/firebase';  // Import the Firestore database configuration
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, query, where } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 import { error } from 'console';  // Import console error (though it's not used in the code...)
 import { auth } from 'firebase-admin';
 import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
-const storage = getStorage();  // Initialize Firebase Storage
+const storage = getStorage(app);  // Initialize Firebase Storage
 const colRef = collection(db, "users");
 
 async function getUsers(req: Request, res: Response): Promise<void> {
@@ -166,4 +166,45 @@ async function updateUser(req: Request, res: Response): Promise<void> {
     }
 }
 
-export { getUsers, addUser, deleteUser, getUser, updateUser, getUserByUid };  // Export functions for use in other modules
+async function uploadProfilePicture(req: Request, res: Response): Promise<void> {
+    try {
+        const userAuthUid = req.params.id; // This is the UID from the URL
+
+        const file = req.file;
+
+        if (!file) {
+            res.status(400).json({ error: "No file uploaded" });
+            return;
+        }
+ 
+        // Query Firestore to find the document with this UID
+        const q = query(collection(db, "users"), where("uid", "==", userAuthUid));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            // No user document found for this UID
+            res.status(404).json({ error: "User document not found for the provided UID." });
+            return;
+        }
+
+        const userDocId = querySnapshot.docs[0].id;
+
+        const storagePath = `profile_pictures/${userDocId}/${Date.now()}_${file.originalname}`;  // Define storage path for the file
+        const storageRef = ref(storage, storagePath);  // Create a reference to the storage location
+
+        const uploadResult = await uploadBytes(storageRef, file.buffer, { contentType: file.mimetype });  // Upload the file to Firebase Storage
+
+        const publicImageUrl = await getDownloadURL(uploadResult.ref);  // Get the public URL of the uploaded image
+
+        // Update the user's profile picture URL in Firestore
+        const userRef = doc(db, "users", userDocId);
+        await updateDoc(userRef, { profile_picture: publicImageUrl });  // Update the user's document with the new profile picture URL
+
+        res.status(200).json({ message: "Profile picture uploaded successfully", profileImgUrl: publicImageUrl });  // Send success response with the image URL
+    } catch (error) {
+        console.error('Error uploading profile picture:', error);  // Log error if something goes wrong
+        res.status(500).json({ error: 'Internal server error' });  // Send 500 response for internal server error
+    }
+}
+
+export { getUsers, addUser, deleteUser, getUser, updateUser, getUserByUid, uploadProfilePicture };  // Export functions for use in other modules
