@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import NewsletterCard from "./NewsletterCard";
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';;
 import { Editor } from 'react-draft-wysiwyg';
+import draftToHtml from 'draftjs-to-html';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 const Newsletters: React.FC = () => {
@@ -24,6 +25,10 @@ const Newsletters: React.FC = () => {
     const [eventsError, setEventsError] = useState('');
     const [showEvents, setShowEvents] = useState(false);
     const [draggedIndex] = useState<number | null>(null);
+
+    const [showReview, setShowReview] = useState(false);
+    const [showSubmit, setShowSubmit] = useState(false);
+    const [emailPreview, setEmailPreview] = useState<string>('');
 
     useEffect(() => {
         const loadEvents = async () => {
@@ -60,11 +65,17 @@ const Newsletters: React.FC = () => {
         }
     }, [isPopupOpen, currentStage]);
 
+    useEffect(() => {
+        if (showReview) {
+            const rawContent = convertToRaw(editorState.getCurrentContent());
+            const htmlContent = draftToHtml(rawContent);
+            setEmailPreview(htmlContent);
+        }
+    }, [showReview, editorState]);
+
     const allEventsSelected = () => {
         return dropdownCount >= events.length || events.length === 0;
     };
-    const [showReview, setShowReview] = useState(false);
-    const [showSubmit, setShowSubmit] = useState(false);
 
     const resetEventsSection = () => {
         setSelectedEvents([]);
@@ -784,14 +795,38 @@ const Newsletters: React.FC = () => {
 
                                 {showReview && (
                                     <>
-                                        <div className="space-y-6">
-                                            <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
-                                                Review form before submitting
-                                            </div>
-                                            <div className="absolute left-[48px] top-[160px] w-[353px] p-4 border border-gray-200 rounded-lg">
-                                                <p>Hello World!</p>
-                                            </div>
+                                        <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
+                                            Review form before submitting
                                         </div>
+                                    
+                                        <div 
+                                            className="absolute left-[74px] top-[180px] w-[305px] h-[360px] rounded-[11px] border-[3px] border-[#3B87DD] border-inset overflow-hidden"
+                                            style={{ 
+                                                boxSizing: 'border-box',
+                                                borderStyle: 'inset',
+                                            }}
+                                        >
+                                            {/* html content preview */}
+                                            <div 
+                                                className="w-full h-full overflow-y-autoemail-preview-reset"
+                                                dangerouslySetInnerHTML={{ __html: emailPreview }}
+                                            />
+                                        </div>
+                                        
+                                        <div 
+                                            className="absolute left-[172px] top-[549px] w-[121px] h-[20px] font-poppins italic text-[11px] leading-[150%] text-[#33342E]"
+                                        >
+                                            Preview of Newsletter
+                                        </div>
+                                        
+                                        {/* scrollbar */}
+                                        <div 
+                                            className="absolute left-[392px] top-[191px] w-[5px] h-[360px]"
+                                            style={{
+                                                background: '#D9D9D9',
+                                                borderRadius: '5px',
+                                            }}
+                                        />
                                     </>
                                 )}
                                 

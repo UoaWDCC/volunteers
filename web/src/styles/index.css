@@ -185,3 +185,15 @@ button.stroked:hover {
 .editor-class::-webkit-scrollbar-thumb:hover {
   background: #555;
 }
+
+/* reset for email preview content */
+.email-preview-reset {
+  all: initial;
+  * {
+    all: unset;
+  }
+}
+
+.email-preview-reset div {
+  display: block;
+}
