@@ -39,3 +39,24 @@ export const sendEmail = async (req: Request, res: Response): Promise<void> => {
   }
 
 };
+
+//preview email on newsletter form
+export const previewEmail = async (req: Request, res: Response): Promise<void> => {
+  const { htmlContent } = req.body;
+
+  // validate input
+  if (!htmlContent) {
+    res.status(400).json({ error: 'Missing required field: htmlContent' });
+    return;
+  }
+
+  try {
+    // return html content
+    res.status(200).json({ 
+      preview: htmlContent 
+    });
+  } catch (error) {
+    console.error('Error generating preview:', error);
+    res.status(500).json({ error: 'Failed to generate preview' });
+  }
+};
