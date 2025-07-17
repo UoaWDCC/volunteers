@@ -40,6 +40,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
   const [profileImgSrc, setProfileImgSrc] = useState<string>(firestoreUserDetails?.profile_picture || '/assets/profile-placeholder.png'); // Use state for the image URL
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+  const { setProfilePicture } = useAuth();
   const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
@@ -169,6 +170,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         if (response.data && response.data.profileImgUrl) {
           // If the server returns the new public URL, update your state and firestoreUserDetails
           setProfileImgSrc(response.data.profileImgUrl);
+          setProfilePicture(response.data.profileImgUrl);
           // Also update the firestoreUserDetails to reflect the new image URL
           setFirestoreUserDetails((prevDetails: any) => ({
             ...prevDetails,
@@ -269,7 +271,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       emergencyContactLastName,
       emergencyContactRelationship,
       emergencyContactMobile,
-      otherRequirements
+      otherRequirements,
     }
 
     await axios.patch(`${appUrl}/api/users/${docId}`, newData);   
@@ -313,6 +315,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       emergencyContactLastName,
       emergencyContactMobile,
       emergencyContactRelationship,
+      profile_picture: profileImgSrc, // Include the profile picture in the comparison
     };
 
     const hasChanged = (Object.keys(currentValues) as Array<keyof FormValues>).some(key => {
@@ -350,6 +353,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
           emergencyContactLastName: firestoreUserDetails.emergencyContactLastName,
           emergencyContactRelationship: firestoreUserDetails.emergencyContactRelationship,
           emergencyContactMobile: firestoreUserDetails.emergencyContactMobile,
+          profile_picture: firestoreUserDetails.profile_picture || "", // Ensure this is set
         };
         setInitialValues(initialData);
         
@@ -369,12 +373,13 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         setEmergencyContactLastName(firestoreUserDetails.emergencyContactLastName);
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
         setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
+        setProfileImgSrc(firestoreUserDetails.profile_picture || '/assets/profile-placeholder.png'); // Set initial profile image source
     }
   }, [firestoreUserDetails]);
 
   useEffect(() => {
     checkFormChanged();
-  }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship]);
+  }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship, profileImgSrc]);
 
   const deleteAccount = async () => {
     if (!window.confirm("Are you sure you want to permanently delete your account? This cannot be undone.")) {
