@@ -142,9 +142,20 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   }, [uid]);
 
   // Handle user profile picture change.
+    const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
     const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log('Image change event triggered');
     const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert('Profile picture must be less than 2MB.');
+      return;
+    }
+
     if (file) {
       const reader = new FileReader();
 
