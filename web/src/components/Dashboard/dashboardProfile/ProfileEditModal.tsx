@@ -2,9 +2,13 @@ import { useContext, useState, useEffect, useRef } from 'react';
 import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
+import { BsCalendar } from "react-icons/bs";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
 import axios from 'axios';
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+
 import { doc, updateDoc } from 'firebase/firestore'; // Import updateDoc
 import { db } from '../../firebase/firebase.tsx'; // Ensure your db instance is imported
 
@@ -95,6 +99,26 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
 
   // Add validation state
   const [birthdateError, setBirthdateError] = useState<string>('');
+
+  // Add date picker state
+  const [showDatePicker, setShowDatePicker] = useState(false);
+
+  // Add function to format date for display
+  const formatDateForDisplay = (date: Date | null): string => {
+    if (!date) return '';
+    const day = String(date.getDate()).padStart(2, '0');
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  // Add function to parse date string to Date object
+  const parseDateString = (dateStr: string): Date | null => {
+    if (!dateStr) return null;
+    const [day, month, year] = dateStr.split('/').map(Number);
+    const date = new Date(year, month - 1, day);
+    return isNaN(date.getTime()) ? null : date;
+  };
 
   // Add validation function
   const validateBirthdate = (date: string): boolean => {
@@ -392,22 +416,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     checkFormChanged();
   }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship, profileImgSrc]);
 
-  const deleteAccount = async () => {
-    if (!window.confirm("Are you sure you want to permanently delete your account? This cannot be undone.")) {
-      return;
-    }
-    try {
-      await axios.delete(`${appUrl}/api/users/${docId}`);
-      alert('Account deleted successfully.');
-      setShowModal(false);
-      // Redirect to home page or login page
-      window.location.href = '/';
-    } catch (error) {
-      console.error('Error deleting account:', error);
-      alert('An error occurred while deleting your account. Please try again.');
-    }
-  }
-
   return (
     <div
       id='modalBackground'
@@ -501,33 +509,65 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                         Date of Birth
                       </label>
                       <p className='inline-block text-red-600'>*</p>
-                      <input 
-                        type='text' 
-                        id='birthday' 
-                        className={`border ${
-                          birthdateError ? 'border-red-500' : 'border-slate-300'
-                        } border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20`} 
-                        placeholder='DD/MM/YYYY' 
-                        pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}'
-                        value={birthdate} 
-                        onChange={(e) => {
-                          const value = e.target.value;
-                          // Only allow numbers and forward slashes
-                          if (/^[0-9/]*$/.test(value)) {
-                            setBirthdate(value);
-                            if (value.length === 10) {
-                              validateBirthdate(value);
-                            } else {
-                              setBirthdateError('');
+                      <div className="relative">
+                        <input 
+                          type='text' 
+                          id='birthday' 
+                          className={`border ${
+                            birthdateError ? 'border-red-500' : 'border-slate-300'
+                          } border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20`} 
+                          placeholder='DD/MM/YYYY' 
+                          pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}'
+                          value={birthdate} 
+                          onChange={(e) => {
+                            const value = e.target.value;
+                            // Only allow numbers and forward slashes
+                            if (/^[0-9/]*$/.test(value)) {
+                              setBirthdate(value);
+                              if (value.length === 10) {
+                                validateBirthdate(value);
+                              } else {
+                                setBirthdateError('');
+                              }
                             }
-                          }
-                        }}
-                        onBlur={() => {
-                          if (birthdate) {
-                            validateBirthdate(birthdate);
-                          }
-                        }}
-                      />
+                          }}
+                          onBlur={() => {
+                            if (birthdate) {
+                              validateBirthdate(birthdate);
+                            }
+                          }}
+                        />
+                        <button
+                          type="button"
+                          className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 bg-white rounded-md p-1"
+                          onClick={() => setShowDatePicker(!showDatePicker)}
+                        >
+                          <BsCalendar size={20} />
+                        </button>
+                        {showDatePicker && (
+                          <div className="absolute z-10 mt-1">
+                            <DatePicker
+                              selected={parseDateString(birthdate)}
+                              onChange={(date: Date | null) => {
+                                if (date) {
+                                  const formattedDate = formatDateForDisplay(date);
+                                  setBirthdate(formattedDate);
+                                  validateBirthdate(formattedDate);
+                                  setShowDatePicker(false);
+                                }
+                              }}
+                              dateFormat="dd/MM/yyyy"
+                              maxDate={new Date()}
+                              showMonthDropdown
+                              showYearDropdown
+                              dropdownMode="select"
+                              scrollableYearDropdown
+                              yearDropdownItemNumber={100}
+                              inline
+                            />
+                          </div>
+                        )}
+                      </div>
                       {birthdateError && (
                         <p className="text-red-500 text-xs mt-1">{birthdateError}</p>
                       )}
@@ -800,7 +840,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                 Cancel
               </button>
               {page4 ? (
-                <button type='button' onClick={deleteAccount} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
+                <button type='button' onClick={handleSubmit} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                   Delete Account
                 </button>
               ) : (
