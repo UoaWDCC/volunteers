@@ -153,10 +153,6 @@ const Newsletters: React.FC = () => {
     };
 
     const handleNextClick = () => {
-        if (currentStage === 1 && !title) {
-            alert("Please fill in the newsletter title");
-            return;
-        }
         if (currentStage === 1) {
             if (!title) {
                 alert("Please fill in the newsletter title");
@@ -171,6 +167,15 @@ const Newsletters: React.FC = () => {
                 alert("Please fill in the body text");
                 return;
             }
+        }
+
+        if (currentStage === 2) {
+            const hasSelectedEvent = selectedEvents.some(event => event && event.trim() !== '');
+            if (!hasSelectedEvent) {
+                alert("Please select at least one event");
+                return;
+            }
+            setEventsError('');
         }
 
         switch(currentStage) {
@@ -255,6 +260,8 @@ const Newsletters: React.FC = () => {
             newEvents[index] = newEvents[index] === eventName ? '' : eventName;
             return newEvents;
         });
+        //clear error when event selected
+        setEventsError('');
     };
 
     const toggleDropdown = (index: number) => {
@@ -533,7 +540,6 @@ const Newsletters: React.FC = () => {
                                         <div className="absolute left-[52px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
                                             <span className="text-[#F93232]">*</span> Indicates required field
                                         </div>
-
 
                                         {isLoadingEvents ? (
                                             <div className="absolute left-[53px] top-[170px] w-[calc(100%-70px)] flex items-center justify-center">
