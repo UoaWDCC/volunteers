@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
 import AuthenticationContext from '../../context/AuthenticationContext.tsx';
 import RegisterModalErrorContext from '../../context/RegisterModalErrorContext.tsx';
-import { FormEvent, useContext, useEffect, useState } from 'react';
+import { FormEvent, useContext, useEffect, useState, useRef } from 'react';
 import { collection, query, where, getDocs, addDoc } from 'firebase/firestore';
 import { db } from '../../firebase/firebase.tsx';
 import RegisterErrorModal from './RegisterErrorModal.tsx';
+import InputMask from 'react-input-mask';
 
 function Signup() {
   const navigate = useNavigate();
@@ -38,6 +39,9 @@ function Signup() {
   const [emergencyContactLastName, setEmergencyContactLastName] = useState<string>('');
   const [emergencyContactMobile, setEmergencyContactMobile] = useState<string>('');
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
+
+  // Ref for the form element
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -141,7 +145,7 @@ function Signup() {
         missingFieldsList.push('Emergency Contact Relationship');
       }
       setMissingFields(missingFieldsList);
-      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setMessage(`Required Field: ${missingFieldsList.join(', ')}.`);
       setShowModal(true);
       return;
     }
@@ -221,56 +225,28 @@ function Signup() {
     return emailPattern.test(email);
   }
 
-  // Add per-page validation for required fields
-  const validatePage1 = () => {
-    const missingFieldsList = [];
-    if (!firstName) missingFieldsList.push('First Name');
-    if (!lastName) missingFieldsList.push('Last Name');
-    if (!email) missingFieldsList.push('Email');
-    if (!mobile) missingFieldsList.push('Mobile Number');
-    if (!upi) missingFieldsList.push('UPI');
-    if (!gender) missingFieldsList.push('Gender');
-    if (missingFieldsList.length > 0) {
-      setError('Missing Fields.');
-      setMissingFields(missingFieldsList);
-      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
-      setShowModal(true);
-      return false;
-    }
-    return true;
-  };
-
-  const validatePage2 = () => {
-    const missingFieldsList = [];
-    if (!yearLevel) missingFieldsList.push('Year Level');
-    // Add more required fields here if needed
-    if (missingFieldsList.length > 0) {
-      setError('Missing Fields.');
-      setMissingFields(missingFieldsList);
-      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
-      setShowModal(true);
-      return false;
-    }
-    return true;
-  };
-
-  // Update navigation handlers to use validation
+  // Update navigation handlers to use browser validation
   const handleNextFromPage1 = () => {
-    if (validatePage1()) {
+    if (formRef.current && formRef.current.reportValidity()) {
       goToAdditionalPage();
     }
   };
 
   const handleNextFromPage2 = () => {
-    if (validatePage2()) {
-      goToEmergencyPage();
+    if (!yearLevel) {
+      setError('Missing Fields.');
+      setMissingFields(['Year Level']);
+      setMessage('Required Field: Year Level.');
+      setShowModal(true);
+      return;
     }
+    goToEmergencyPage();
   };
 
   return (
     <div>
       {showModal && (<RegisterErrorModal/>)}
-      <form onSubmit={handleSubmit}>
+      <form ref={formRef} onSubmit={handleSubmit}>
         {page1 && (
           // REGISTER PAGE !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
           <>
@@ -305,42 +281,80 @@ function Signup() {
                           First name
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='first_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='John' required value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+                        <input type='text' id='first_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='John' required value={firstName} onChange={(e) => setFirstName(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='last_name' className='inline-block text-sm font-medium text-black'>
                           Last name
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='last_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='Doe' required value={lastName} onChange={(e) => setLastName(e.target.value)} />
+                        <input type='text' id='last_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='Doe' required value={lastName} onChange={(e) => setLastName(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='email' className='inline-block text-sm font-medium text-black'>
                           Email
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='email' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='johndoe@gmail.com' required value={email} onChange={(e) => setEmail(e.target.value)} />
+                        <input type='text' id='email' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='johndoe@gmail.com' required value={email} onChange={(e) => setEmail(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='phone' className='inline-block text-sm font-medium text-black'>
                           Mobile Number
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={mobile} onChange={(e) => setMobile(e.target.value)} />
+                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={mobile} onChange={(e) => setMobile(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='upi' className='inline-block text-sm font-medium text-black'>
                           UPI
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='upi' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='jye583' required value={upi} onChange={(e) => setUpi(e.target.value)} />
+                        <InputMask
+                          mask='aaa999'
+                          maskChar=''
+                          value={upi}
+                          onChange={(e) => setUpi(e.target.value)}
+                        >
+                          {(inputProps: any) => (
+                            <input
+                              {...inputProps}
+                              type='text'
+                              id='upi'
+                              className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20'
+                              placeholder='jye583'
+                              required
+                              title='Required field'
+                              onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')}
+                              onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
+                            />
+                          )}
+                        </InputMask>
                       </div>
                       <div>
                         <label htmlFor='birthday' className='inline-blocktext-sm text-sm font-medium text-black'>
                           Date of Birth
                         </label>
                         <p className='inline-block text-white'>*</p>
-                        <input type='text' id='birthday' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='01/01/2000' pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}' value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
+                        <InputMask
+                          mask='99/99/9999'
+                          maskChar=''
+                          value={birthdate}
+                          onChange={(e) => setBirthdate(e.target.value)}
+                        >
+                          {(inputProps: any) => (
+                            <input
+                              {...inputProps}
+                              type='text'
+                              id='birthday'
+                              className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20'
+                              placeholder='DD/MM/YYYY'
+                              pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}'
+                              title='Required field'
+                              onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')}
+                              onInput={e => (e.target as HTMLInputElement).setCustomValidity('')}
+                            />
+                          )}
+                        </InputMask>
                       </div>
                     </div>
                     <div className='mb-6'>
@@ -350,7 +364,7 @@ function Signup() {
                       <p className='inline-block text-red-600'>*</p>
                       <div className='flex space-x-3'>
                         <div>
-                          <input type='radio' id='male' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'male'} />
+                          <input type='radio' id='male' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'male'} required title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='male' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Male
                           </label>
@@ -425,59 +439,54 @@ function Signup() {
                     </div>
 
                     <div>
-                      <label htmlFor='gender' className='inline-block text-sm font-medium text-gray-900 text-black'>
+                      <label htmlFor='yearlevel' className='inline-block text-sm font-medium text-gray-900 text-black'>
                         Year Level
                       </label>
                       <p className='inline-block text-red-600'>*</p>
                       <ul className='flex space-x-3'>
                         <li>
                           <div>
-                            <input type='radio' id='first' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('first')} />
+                            <input type='radio' id='first' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('first')} required title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='first' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               1st Year
                             </label>
                           </div>
                         </li>
-
                         <li>
                           <div>
-                            <input type='radio' id='second' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('second')} />
+                            <input type='radio' id='second' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('second')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='second' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               2nd Year
                             </label>
                           </div>
                         </li>
-
                         <li>
                           <div>
-                            <input type='radio' id='third' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('third')} />
+                            <input type='radio' id='third' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('third')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='third' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               3rd Year
                             </label>
                           </div>
                         </li>
-
                         <li>
                           <div>
-                            <input type='radio' id='fourth' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('fourth')} />
+                            <input type='radio' id='fourth' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('fourth')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='fourth' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               4th Year
                             </label>
                           </div>
                         </li>
-
                         <li>
                           <div>
-                            <input type='radio' id='postgraduate' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('postgraduate')} />
+                            <input type='radio' id='postgraduate' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('postgraduate')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='postgraduate' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               Postgraduate
                             </label>
                           </div>
                         </li>
-
                         <li>
                           <div>
-                            <input type='radio' id='otheryear' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('otheryear')} />
+                            <input type='radio' id='otheryear' className='peer hidden' name='yearlevel' onChange={handleYearLevelChange} checked={yearLevel.includes('otheryear')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='otheryear' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 hover:bg-slate-300 hover:shadow-light-2'>
                               Other
                             </label>
@@ -494,37 +503,37 @@ function Signup() {
                       <p className='inline-block text-sm font-medium text-black'>(If Other, please specify below)</p>
                       <div className='flex space-x-3'>
                         <div>
-                          <input type='checkbox' id='vegan' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegan')} required value={dietaryRequirements}/>
+                          <input type='checkbox' id='vegan' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegan')} value={dietaryRequirements} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='vegan' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Vegan
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='vegetarian' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegetarian')} required value={dietaryRequirements}/>
+                          <input type='checkbox' id='vegetarian' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('vegetarian')} value={dietaryRequirements} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='vegetarian' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Vegetarian
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='dairyfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('dairyfree')} required value={dietaryRequirements}/>
+                          <input type='checkbox' id='dairyfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('dairyfree')} value={dietaryRequirements} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='dairyfree' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Dairy-free
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='glutenfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('glutenfree')} required value={dietaryRequirements}/>
+                          <input type='checkbox' id='glutenfree' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('glutenfree')} value={dietaryRequirements} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='glutenfree' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Gluten-free
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='halal' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('halal')} required value={dietaryRequirements}/>
+                          <input type='checkbox' id='halal' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('halal')} value={dietaryRequirements} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='halal' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Halal
                           </label>
                         </div>
                         <div>
-                          <input type='checkbox' id='otherrequirements' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('otherrequirements')} required value={dietaryRequirements}/>
+                          <input type='checkbox' id='otherrequirements' className='peer hidden' onChange={handleDietaryChange} checked={dietaryRequirements.includes('otherrequirements')} value={dietaryRequirements} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                           <label htmlFor='otherrequirements' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Other
                           </label>
@@ -540,7 +549,7 @@ function Signup() {
                       <ul className='flex space-x-3'>
                         <li>
                           <div>
-                            <input type='radio' id='none' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('none')} />
+                            <input type='radio' id='none' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('none')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='none' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               None
                             </label>
@@ -548,7 +557,7 @@ function Signup() {
                         </li>
                         <li>
                           <div>
-                            <input type='radio' id='learners' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('learners')} />
+                            <input type='radio' id='learners' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('learners')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='learners' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               Learners
                             </label>
@@ -556,7 +565,7 @@ function Signup() {
                         </li>
                         <li>
                           <div>
-                            <input type='radio' id='restricted' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('restricted')} />
+                            <input type='radio' id='restricted' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('restricted')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='restricted' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               Restricted
                             </label>
@@ -564,7 +573,7 @@ function Signup() {
                         </li>
                         <li>
                           <div>
-                            <input type='radio' id='full' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('full')} />
+                            <input type='radio' id='full' className='peer hidden' name='license' onChange={handleDriversLicenseChange} checked={driversLicense.includes('full')} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                             <label htmlFor='full' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                               Full
                             </label>
@@ -578,7 +587,7 @@ function Signup() {
                         Accessibility/Other Dietary Needs
                       </label>
                       <p className='inline-block text-white'>*</p>
-                      <input type='text' id='other_needs' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg block p-2.5 pr-20' placeholder='Wheelchair access, seafood allergy' value={otherRequirements} onChange={(e) => setOtherRequirements(e.target.value)} />
+                      <input type='text' id='other_needs' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg block p-2.5 pr-20' placeholder='Wheelchair access, seafood allergy' value={otherRequirements} onChange={(e) => setOtherRequirements(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                     </div>
                   </div>
                   <div className='bg-slate-100 py-5 rounded-b-[1rem] flex space-x-2 -mt-[6.3px]'>
@@ -629,28 +638,28 @@ function Signup() {
                           First name
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='first_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='John' required value={emergencyContactFirstName} onChange={(e) => setEmergencyContactFirstName(e.target.value)} />
+                        <input type='text' id='first_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='John' required value={emergencyContactFirstName} onChange={(e) => setEmergencyContactFirstName(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='last_name' className='inline-block text-sm font-medium text-black'>
                           Last name
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='last_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='Doe' required value={emergencyContactLastName} onChange={(e) => setEmergencyContactLastName(e.target.value)} />
+                        <input type='text' id='last_name' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='Doe' required value={emergencyContactLastName} onChange={(e) => setEmergencyContactLastName(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='phone' className='inline-block text-sm font-medium text-black'>
                           Mobile Number
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={emergencyContactMobile} onChange={(e) => setEmergencyContactMobile(e.target.value)} />
+                        <input type='tel' id='phone' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='123 456 7890' required value={emergencyContactMobile} onChange={(e) => setEmergencyContactMobile(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                       <div>
                         <label htmlFor='relationship' className='inline-block text-sm font-medium text-black'>
                           Relationship
                         </label>
                         <p className='inline-block text-red-600'>*</p>
-                        <input type='text' id='relationship' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='Mother' required value={emergencyContactRelationship} onChange={(e) => setEmergencyContactRelationship(e.target.value)} />
+                        <input type='text' id='relationship' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='Mother' required value={emergencyContactRelationship} onChange={(e) => setEmergencyContactRelationship(e.target.value)} title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
                       </div>
                     </div>
                   </div>
