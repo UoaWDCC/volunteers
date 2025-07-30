@@ -1,51 +1,20 @@
-import { useContext, useState, useEffect, useRef } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
-import { BsCalendar } from "react-icons/bs";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
 import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
 import axios from 'axios';
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 
-import { doc, updateDoc } from 'firebase/firestore'; // Import updateDoc
-import { db } from '../../firebase/firebase.tsx'; // Ensure your db instance is imported
-
-// Add type definition for form values
-type FormValues = {
-  firstName: string;
-  lastName: string;
-  email: string;
-  mobile: string;
-  birthdate: string;
-  upi: string;
-  gender: string;
-  yearLevel: string;
-  dietaryRequirements: string[];
-  driversLicense: string;
-  otherRequirements: string;
-  emergencyContactFirstName: string;
-  emergencyContactLastName: string;
-  emergencyContactMobile: string;
-  emergencyContactRelationship: string;
-  profile_picture?: string; // Optional field for profile image
-};
-
-const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) => {
+const ProfileEditModal = () => {
   const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
-  const fileInputRef = useRef<HTMLInputElement>(null);
+  const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
   // ######################
-  const openFileDialog = () => {
-    fileInputRef.current?.click();
-  }
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
-  const [profileImgSrc, setProfileImgSrc] = useState<string>(firestoreUserDetails?.profile_picture || '/assets/profile-placeholder.png'); // Use state for the image URL
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
-  const { setProfilePicture } = useAuth();
   const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
@@ -72,87 +41,9 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   const [emergencyContactMobile, setEmergencyContactMobile] = useState<string>('');
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
-  const [initialValues, setInitialValues] = useState<FormValues>({
-    firstName: "",
-    lastName: "",
-    email: "",
-    mobile: "",
-    birthdate: "",
-    upi: "",
-    gender: "",
-    yearLevel: "",
-    dietaryRequirements: [],
-    driversLicense: "",
-    otherRequirements: "",
-    emergencyContactFirstName: "",
-    emergencyContactLastName: "",
-    emergencyContactMobile: "",
-    emergencyContactRelationship: "",
-    profile_picture: "" // Optional field for profile image
-  });
-
-
   const [selectedTab, setSelectedTab] = useState('Personal Details');
 
   const [docId, setDocId] = useState<string>('');
-
-  const [formChanged, setFormChanged] = useState(false);
-
-  // Add validation state
-  const [birthdateError, setBirthdateError] = useState<string>('');
-
-  // Add date picker state
-  const [showDatePicker, setShowDatePicker] = useState(false);
-
-  // Add function to format date for display
-  const formatDateForDisplay = (date: Date | null): string => {
-    if (!date) return '';
-    const day = String(date.getDate()).padStart(2, '0');
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const year = date.getFullYear();
-    return `${day}/${month}/${year}`;
-  };
-
-  // Add function to parse date string to Date object
-  const parseDateString = (dateStr: string): Date | null => {
-    if (!dateStr) return null;
-    const [day, month, year] = dateStr.split('/').map(Number);
-    const date = new Date(year, month - 1, day);
-    return isNaN(date.getTime()) ? null : date;
-  };
-
-  // Add validation function
-  const validateBirthdate = (date: string): boolean => {
-    // Check if date is in DD/MM/YYYY format
-    const dateRegex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/\d{4}$/;
-    if (!dateRegex.test(date)) {
-      setBirthdateError('Please enter date in DD/MM/YYYY format');
-      return false;
-    }
-
-    // Check if date is valid
-    const [day, month, year] = date.split('/').map(Number);
-    const dateObj = new Date(year, month - 1, day);
-    
-    if (
-      dateObj.getDate() !== day ||
-      dateObj.getMonth() !== month - 1 ||
-      dateObj.getFullYear() !== year
-    ) {
-      setBirthdateError('Please enter a valid date');
-      return false;
-    }
-
-    // Check if date is not in the future
-    const today = new Date();
-    if (dateObj > today) {
-      setBirthdateError('Birth date cannot be in the future');
-      return false;
-    }
-
-    setBirthdateError('');
-    return true;
-  };
 
   useEffect(() => {
     const fetchUserDocId = async () => {
@@ -165,66 +56,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     };
     if (uid) fetchUserDocId();
   }, [uid]);
-
-  // Handle user profile picture change.
-    const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
-    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log('Image change event triggered');
-    const file = event.target.files?.[0];
-
-    if (!file) {
-      return;
-    }
-
-    if (file.size > MAX_FILE_SIZE) {
-      alert('Profile picture must be less than 2MB.');
-      return;
-    }
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        // Set the state to the base64 URL for immediate preview
-        setProfileImgSrc(reader.result as string);
-      };
-      reader.readAsDataURL(file); // Read the file as a data URL (base64)
-
-      try {
-        const formData = new FormData();
-        formData.append('profile_picture', file);
-
-        const appUrl = import.meta.env.VITE_API_URL;
-
-        // Example: Sending to an API endpoint
-        const response = await axios.patch(`${appUrl}/api/users/${uid}/image`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        });
-
-        if (response.data && response.data.profileImgUrl) {
-          // If the server returns the new public URL, update your state and firestoreUserDetails
-          setProfileImgSrc(response.data.profileImgUrl);
-          setProfilePicture(response.data.profileImgUrl);
-          // Also update the firestoreUserDetails to reflect the new image URL
-          setFirestoreUserDetails((prevDetails: any) => ({
-            ...prevDetails,
-            profile_picture: response.data.profileImgUrl,
-          }));
-          console.log('Profile picture uploaded and updated:', response.data.profileImgUrl);
-        } else {
-          console.error('Server did not return a profile image URL.');
-        }
-
-      } catch (error) {
-        console.error('Error uploading profile picture:', error);
-        alert('Failed to upload profile picture. Please try again.');
-        setShowModal(false);
-        // Optionally revert to previous image or show error state
-      }
-    }
-  };
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -286,11 +117,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate birthdate before submission
-    if (!validateBirthdate(birthdate)) {
-      return;
-    }
-    
     try {
       // When update button clicked, all data at time of
     // click, is stored within newData.
@@ -309,7 +135,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       emergencyContactLastName,
       emergencyContactRelationship,
       emergencyContactMobile,
-      otherRequirements,
+      otherRequirements
     }
 
     await axios.patch(`${appUrl}/api/users/${docId}`, newData);   
@@ -326,8 +152,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     }*/
     
     // alert('Profile updated successfully.');
-    setShowModal(false); // Close the modal after successful update
-    onUpdateSuccess(); // Call the onUpdateSuccess callback to show the thumbs up popup
+    setThumbsUpSuccessPopup(true);
     
     }
     catch (error) {
@@ -335,45 +160,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       alert('An error occurred. Please try again.');
     }
   }
-
-  const checkFormChanged = () => {
-    const currentValues: FormValues = {
-      firstName,
-      lastName,
-      email,
-      mobile,
-      birthdate,
-      upi,
-      gender,
-      yearLevel,
-      dietaryRequirements,
-      driversLicense,
-      otherRequirements,
-      emergencyContactFirstName,
-      emergencyContactLastName,
-      emergencyContactMobile,
-      emergencyContactRelationship,
-      profile_picture: profileImgSrc, // Include the profile picture in the comparison
-    };
-
-    const hasChanged = (Object.keys(currentValues) as Array<keyof FormValues>).some(key => {
-      if (Array.isArray(currentValues[key])) {
-        return JSON.stringify(currentValues[key]) !== JSON.stringify(initialValues[key]);
-      }
-      return currentValues[key] !== initialValues[key];
-    });
-
-    setFormChanged(hasChanged);
-  };
-
-  useEffect(() => {
-    if (showThumbsUpSuccessPopup) {
-      const timer = setTimeout(() => {
-        setThumbsUpSuccessPopup(false); // auto close
-      }, 2000);
-      return () => clearTimeout(timer); // clear timeout on unmount
-    }
-  }, [showThumbsUpSuccessPopup]);
 
   useEffect(() => {
     if (showThumbsUpSuccessPopup) {
@@ -393,27 +179,6 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     }
 
     if (firestoreUserDetails) {
-        const initialData: FormValues = {
-          firstName: firestoreUserDetails.firstName,
-          lastName: firestoreUserDetails.lastName,
-          email: firestoreUserDetails.email,
-          mobile: firestoreUserDetails.mobile,
-          birthdate: firestoreUserDetails.birthdate,
-          upi: firestoreUserDetails.upi,
-          gender: firestoreUserDetails.gender,
-          yearLevel: firestoreUserDetails.yearLevel,
-          dietaryRequirements: firestoreUserDetails.dietaryRequirements || [],
-          driversLicense: firestoreUserDetails.driversLicense,
-          otherRequirements: firestoreUserDetails.otherRequirements || "",
-          emergencyContactFirstName: firestoreUserDetails.emergencyContactFirstName,
-          emergencyContactLastName: firestoreUserDetails.emergencyContactLastName,
-          emergencyContactRelationship: firestoreUserDetails.emergencyContactRelationship,
-          emergencyContactMobile: firestoreUserDetails.emergencyContactMobile,
-          profile_picture: firestoreUserDetails.profile_picture || "", // Ensure this is set
-        };
-        setInitialValues(initialData);
-        
-        // Set current values
         setFirstName(firestoreUserDetails.firstName);
         setLastName(firestoreUserDetails.lastName);
         setEmail(firestoreUserDetails.email);
@@ -424,18 +189,12 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         setYearLevel(firestoreUserDetails.yearLevel);
         setDietaryRequirements(firestoreUserDetails.dietaryRequirements || []);
         setDriversLicense(firestoreUserDetails.driversLicense);
-        setOtherRequirements(firestoreUserDetails.otherRequirements || "");
         setEmergencyContactFirstName(firestoreUserDetails.emergencyContactFirstName);
         setEmergencyContactLastName(firestoreUserDetails.emergencyContactLastName);
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
         setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
-        setProfileImgSrc(firestoreUserDetails.profile_picture || '/assets/profile-placeholder.png'); // Set initial profile image source
     }
-  }, [firestoreUserDetails]);
-
-  useEffect(() => {
-    checkFormChanged();
-  }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship, profileImgSrc]);
+  }, []);
 
   return (
     <>
@@ -451,24 +210,15 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       <div className='bg-white flex rounded-3xl'>
         <div className='bg-primary rounded-l-3xl flex flex-col w-[230px] h-auto'>
           <div className="bg-black w-[130px] rounded-full mt-16 mb-8 mx-auto relative">
-            <input
-              type="file"
-              accept="image/*" // Restricts file selection to image types
-              ref={fileInputRef} // Associates this input with the useRef hook
-              onChange={handleImageChange} // When a file is selected, this function will be called
-              style={{ display: 'none' }} // Hides the actual input element from view
-            />
-            <div
-              className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'
-              onClick={openFileDialog} // When the div is clicked, it opens the file dialog
-            >
+            {/* IMPLEMENT ON CLICK */}
+            <div className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'>
               <AiFillCamera size={40}/>
               <div className='font-light mt-2 text-center' style={{ userSelect: 'none' }}>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }} >Click to change</p>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }}>your photo</p>
               </div>
             </div>
-            <img src={profileImgSrc} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
+            <img src={profileImgLink} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
           </div>
           <div className="flex flex-col items-end mt-6 pl-5">
             <ProfileEditModalSideBarTab tabName='Personal Details' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchTab={goToRegisterPage} />
@@ -527,72 +277,11 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                       <input type='text' id='upi' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='jye583' required value={upi} onChange={(e) => setUpi(e.target.value)} />
                     </div>
                     <div>
-                      <label htmlFor='birthday' className='inline-block text-sm font-medium text-black'>
+                      <label htmlFor='birthday' className='inline-blocktext-sm text-sm font-medium text-black'>
                         Date of Birth
                       </label>
-                      <p className='inline-block text-red-600'>*</p>
-                      <div className="relative">
-                        <input 
-                          type='text' 
-                          id='birthday' 
-                          className={`border ${
-                            birthdateError ? 'border-red-500' : 'border-slate-300'
-                          } border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20`} 
-                          placeholder='DD/MM/YYYY' 
-                          pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}'
-                          value={birthdate} 
-                          onChange={(e) => {
-                            const value = e.target.value;
-                            // Only allow numbers and forward slashes
-                            if (/^[0-9/]*$/.test(value)) {
-                              setBirthdate(value);
-                              if (value.length === 10) {
-                                validateBirthdate(value);
-                              } else {
-                                setBirthdateError('');
-                              }
-                            }
-                          }}
-                          onBlur={() => {
-                            if (birthdate) {
-                              validateBirthdate(birthdate);
-                            }
-                          }}
-                        />
-                        <button
-                          type="button"
-                          className="absolute right-10 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 bg-white rounded-md p-1"
-                          onClick={() => setShowDatePicker(!showDatePicker)}
-                        >
-                          <BsCalendar size={20} />
-                        </button>
-                        {showDatePicker && (
-                          <div className="absolute z-10 mt-1">
-                            <DatePicker
-                              selected={parseDateString(birthdate)}
-                              onChange={(date: Date | null) => {
-                                if (date) {
-                                  const formattedDate = formatDateForDisplay(date);
-                                  setBirthdate(formattedDate);
-                                  validateBirthdate(formattedDate);
-                                  setShowDatePicker(false);
-                                }
-                              }}
-                              dateFormat="dd/MM/yyyy"
-                              maxDate={new Date()}
-                              showMonthDropdown
-                              showYearDropdown
-                              dropdownMode="select"
-                              scrollableYearDropdown
-                              yearDropdownItemNumber={100}
-                              inline
-                            />
-                          </div>
-                        )}
-                      </div>
-                      {birthdateError && (
-                        <p className="text-red-500 text-xs mt-1">{birthdateError}</p>
-                      )}
+                      <p className='inline-block text-white'>*</p>
+                      <input type='text' id='birthday' className='border border-slate-300 border-solid text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 pr-20' placeholder='01/01/2000' pattern='[0-9]{2}/[0-9]{2}/[0-9]{4}' value={birthdate} onChange={(e) => setBirthdate(e.target.value)} />
                     </div>
                   </div>
                   <div className='mb-6'>
@@ -866,16 +555,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
                   Delete Account
                 </button>
               ) : (
-                  <button 
-                    type='button' 
-                    onClick={handleSubmit} 
-                    disabled={!formChanged}
-                    className={`inline-block text-white font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center transition-all ease-in-out duration-100 ${
-                      formChanged 
-                        ? 'bg-primary hover:bg-primary-dark active:translate-y-0.5' 
-                        : 'bg-gray-400 cursor-not-allowed'
-                    }`}
-                  >
+                  <button type='button' onClick={handleSubmit} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center'>
                     Update
                   </button>
               )}

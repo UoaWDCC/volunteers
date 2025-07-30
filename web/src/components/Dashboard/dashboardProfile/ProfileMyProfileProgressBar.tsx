@@ -45,9 +45,7 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
           {/* Number (Hours) */}
           <span className="dashboard text-heading1 font-bold text-black">{completedHours}</span>
           {/* Label (hours) */}
-          <span className="dashboard text-heading3 font-semibold text-black">
-            {completedHours === 1 ? 'hour' : 'hours'}
-          </span>
+          <span className="dashboard text-heading3 font-semibold text-black">hours</span>
         </div>
       </div>
 

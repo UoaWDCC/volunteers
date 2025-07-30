@@ -3,6 +3,7 @@ import NotificationTab from "@components/Dashboard/NotificationTab";
 import { useState } from "react";
 import { useAuth } from '../../context/AuthenticationContextProvider'; 
 
+
 const DashboardHeader = () => {
   const [isNotificationTabOpen, setNotificationTabOpen] = useState(false);
   const [isNotificationTabVisible, setNotificationTabVisible] = useState(false);
@@ -16,8 +17,6 @@ const DashboardHeader = () => {
     auth.firstName && auth.lastName
       ? `${auth.firstName} ${auth.lastName}`
       : "";
-
-  const profileImage = auth.profile_picture;
 
   const toggleNotificationTab = () => {
     if (isNotificationTabOpen) {
@@ -42,7 +41,7 @@ const DashboardHeader = () => {
 
         <div className="flex items-center justify-center gap-4">
           <span className="font-medium text-lg">{displayName}</span> 
-          <img src={profileImage} alt="Profile Picture" className="rounded-full w-12 h-auto"/>
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" className="rounded-full w-12 h-auto" />
         </div>
       </div>
 
