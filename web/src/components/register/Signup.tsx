@@ -40,12 +40,16 @@ function Signup() {
   const [emergencyContactMobile, setEmergencyContactMobile] = useState<string>('');
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
+  // Add genderError state
+  const [genderError, setGenderError] = useState(false);
+
   // Ref for the form element
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
       setGender(id);
+      setGenderError(false);
   };
 
   const handleYearLevelChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +110,28 @@ function Signup() {
       setShowModal(true);
       return;
     }
-    
+
+    // Validate all required fields from all pages
+    const missingFieldsList = [];
+    if (!firstName) missingFieldsList.push('First Name');
+    if (!lastName) missingFieldsList.push('Last Name');
+    if (!email) missingFieldsList.push('Email');
+    if (!mobile) missingFieldsList.push('Mobile Number');
+    if (!upi) missingFieldsList.push('UPI');
+    if (!gender) missingFieldsList.push('Gender');
+    if (!yearLevel) missingFieldsList.push('Year Level');
+    if (!emergencyContactFirstName) missingFieldsList.push('Emergency Contact First Name');
+    if (!emergencyContactLastName) missingFieldsList.push('Emergency Contact Last Name');
+    if (!emergencyContactMobile) missingFieldsList.push('Emergency Contact Mobile Number');
+    if (!emergencyContactRelationship) missingFieldsList.push('Emergency Contact Relationship');
+    if (missingFieldsList.length > 0) {
+      setError('Missing Fields.');
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setShowModal(true);
+      return;
+    }
+
     console.log('Validating info');
     if(!firstName || !lastName || !email || !mobile || !upi || !gender || !yearLevel || !emergencyContactFirstName || !emergencyContactLastName || !emergencyContactMobile || !emergencyContactRelationship) {
       setError('Missing Fields.');
@@ -171,6 +196,14 @@ function Signup() {
       setShowModal(true);
       return;
     }
+
+    if (!gender) {
+      setGenderError(true);
+      // Optionally, focus the first gender radio
+      const firstGenderRadio = document.getElementById('male');
+      if (firstGenderRadio) (firstGenderRadio as HTMLInputElement).focus();
+    }
+
     setShowModal(false);
     try {
       // Reference to the 'users' collection
@@ -227,16 +260,33 @@ function Signup() {
 
   // Update navigation handlers to use browser validation
   const handleNextFromPage1 = () => {
+    const missingFieldsList = [];
+    if (!firstName) missingFieldsList.push('First Name');
+    if (!lastName) missingFieldsList.push('Last Name');
+    if (!email) missingFieldsList.push('Email');
+    if (!mobile) missingFieldsList.push('Mobile Number');
+    if (!upi) missingFieldsList.push('UPI');
+    if (!gender) missingFieldsList.push('Gender');
+    if (missingFieldsList.length > 0) {
+      setError('Missing Fields.');
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setShowModal(true);
+      return;
+    }
     if (formRef.current && formRef.current.reportValidity()) {
       goToAdditionalPage();
     }
   };
 
   const handleNextFromPage2 = () => {
-    if (!yearLevel) {
+    const missingFieldsList = [];
+    if (!yearLevel) missingFieldsList.push('Year Level');
+    // Add any other required fields for page 2 here if needed
+    if (missingFieldsList.length > 0) {
       setError('Missing Fields.');
-      setMissingFields(['Year Level']);
-      setMessage('Required Field: Year Level.');
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
       setShowModal(true);
       return;
     }
@@ -364,36 +414,39 @@ function Signup() {
                       <p className='inline-block text-red-600'>*</p>
                       <div className='flex space-x-3'>
                         <div>
-                          <input type='radio' id='male' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'male'} required title='Required field' onInvalid={e => (e.target as HTMLInputElement).setCustomValidity('Required Field')} onInput={e => (e.target as HTMLInputElement).setCustomValidity('')} />
+                          <input type='radio' id='male' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'male'} title='Required field' />
                           <label htmlFor='male' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Male
                           </label>
                         </div>
                         <div>
-                          <input type='radio' id='female' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'female'} />
+                          <input type='radio' id='female' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender === 'female'} title='Required field' />
                           <label htmlFor='female' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Female
                           </label>
                         </div>
                         <div>
-                          <input type='radio' id='non-binary' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('non-binary')} />
+                          <input type='radio' id='non-binary' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('non-binary')} title='Required field' />
                           <label htmlFor='non-binary' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Non-binary
                           </label>
                         </div>
                         <div>
-                          <input type='radio' id='other' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('other')} />
+                          <input type='radio' id='other' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('other')} title='Required field' />
                           <label htmlFor='other' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Other
                           </label>
                         </div>
                         <div>
-                          <input type='radio' id='prefernottosay' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('prefernottosay')} />
+                          <input type='radio' id='prefernottosay' className='peer hidden' name='gender' onChange={handleGenderChange} checked={gender.includes('prefernottosay')} title='Required field' />
                           <label htmlFor='prefernottosay' className='select-none cursor-pointer peer-checked:bg-primary peer-checked:text-white border border-slate-300 border-solid inline-block rounded-full bg-white px-6 pb-2 pt-2.5 text-xs font-medium leading-normal text-black shadow-light-3 transition duration-150 ease-in-out hover:bg-slate-300 hover:shadow-light-2 focus:bg-slate-300 focus:shadow-light-2 focus:outline-none focus:ring-0 active:bg-neutral-200 active:shadow-light-2 motion-reduce:transition-none'>
                             Prefer not to say
                           </label>
                         </div>
                       </div>
+                      {genderError && (
+                        <div className='text-red-600 text-xs mt-1'>Required Field</div>
+                      )}
                     </div>
                   </div>
                   <div className='bg-slate-100 py-5 rounded-b-[1rem] flex space-x-2 -mt-[36px]'>
