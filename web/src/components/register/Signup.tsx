@@ -293,6 +293,29 @@ function Signup() {
     goToEmergencyPage();
   };
 
+  const handleFinishFromPage3 = (event: React.FormEvent) => {
+    event.preventDefault();
+    
+    const missingFieldsList = [];
+    if (!emergencyContactFirstName) missingFieldsList.push('First Name');
+    if (!emergencyContactLastName) missingFieldsList.push('Last Name');
+    if (!emergencyContactMobile) missingFieldsList.push('Mobile Number');
+    if (!emergencyContactRelationship) missingFieldsList.push('Relationship');
+    
+    if (missingFieldsList.length > 0) {
+      setError('Missing Fields.');
+      setMissingFields(missingFieldsList);
+      setMessage(`Please enter values for: ${missingFieldsList.join(', ')}.`);
+      setShowModal(true);
+      return;
+    }
+    
+    // If all emergency contact fields are filled, proceed with form submission
+    if (formRef.current) {
+      formRef.current.requestSubmit();
+    }
+  };
+
   return (
     <div>
       {showModal && (<RegisterErrorModal/>)}
@@ -720,7 +743,7 @@ function Signup() {
                     <button type='button' onClick={goToAdditionalPage} className='ml-[717.5px] inline-block border border-primary border-solid text-primary bg-white hover:bg-slate-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center active:translate-y-0.5 transition-all ease-in-out duration-100'>
                       Back
                     </button>
-                    <button type='submit' className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center' /*disabled={!isValid}*/>
+                    <button type='button' onClick={handleFinishFromPage3} className='inline-block text-white bg-primary hover:bg-primary-dark active:translate-y-0.5 transition-all ease-in-out duration-100 font-medium rounded-full text-sm w-full sm:w-auto px-5 py-2.5 text-center' /*disabled={!isValid}*/>
                       Finish
                     </button>
                   </div>
