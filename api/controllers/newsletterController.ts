@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { db } from '../config/firebase';
-import { doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc, collection, getDocs, addDoc } from 'firebase/firestore';
 
 // Define the Newsletter interface to match the structure of the request body
 interface Newsletter {
@@ -90,4 +90,59 @@ function formatNewsLetter(title: string, description: string, events: EventDetai
     return result;
 }
 
-export { createNewsletter };
+async function getAllNewsletters(req: Request, res: Response): Promise<void> {
+    try {
+        const newslettersRef = collection(db, "newsletters");
+        const snapshot = await getDocs(newslettersRef);
+        const newsletters = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data()
+        }));
+
+        res.status(200).json({
+            success: true,
+            message: "Newsletters fetched successfully",
+            newsletters
+        });
+    } catch (error) {
+        console.error("Error fetching newsletters:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to fetch newsletters"
+        });
+    }
+}
+
+async function saveNewsletterTitle(req: Request, res: Response): Promise<void> {
+    try {
+        const { title } = req.body;
+
+        if (!title) {
+            res.status(400).json({
+                success: false,
+                message: "Newsletter title is required"
+            });
+            return;
+        }
+
+        const newslettersRef = collection(db, "newsletters");
+        const docRef = await addDoc(newslettersRef, {
+            title: title,
+            createdAt: new Date()
+        });
+
+        res.status(201).json({
+            success: true,
+            message: "Newsletter title saved successfully",
+            id: docRef.id
+        });
+    } catch (error) {
+        console.error("Error saving newsletter title:", error);
+        res.status(500).json({
+            success: false,
+            message: "Failed to save newsletter title"
+        });
+    }
+}
+
+export { createNewsletter, getAllNewsletters, saveNewsletterTitle };
