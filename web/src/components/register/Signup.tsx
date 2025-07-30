@@ -328,15 +328,15 @@ function Signup() {
                 <div className='bg-white shadow-2xl rounded-t-[1rem] w-[940px] h-[560px] mx-[280px] items-center'>
                   <div className='px-[50px] py-[30px]'>
                     <div className='flex space-x-5'>
-                      <div className='inline-block mb-5'>
+                      <div className='inline-block mb-5 cursor-pointer' onClick={goToRegisterPage}>
                         <div className='text-xs text-primary'>1. Personal Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-primary'></div>
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block cursor-pointer' onClick={goToAdditionalPage}>
                         <div className='text-xs text-slate-300'>2. Additional Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-slate-300'></div>
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block cursor-pointer' onClick={goToEmergencyPage}>
                         <div className='text-xs text-slate-300'>3. Emergency Contact Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-slate-300'></div>
                       </div>
@@ -494,15 +494,15 @@ function Signup() {
                 <div className='bg-white shadow-2xl rounded-t-[1rem] w-[940px] h-[560px] mx-[280px]'>
                   <div className='px-[50px] py-[30px]'>
                     <div className='flex space-x-5'>
-                      <div className='inline-block mb-5'>
+                      <div className='inline-block mb-5 cursor-pointer' onClick={goToRegisterPage}>
                         <div className='text-xs text-primary'>1. Personal Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-primary'></div>
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block cursor-pointer' onClick={goToAdditionalPage}>
                         <div className='text-xs text-primary'>2. Additional Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-primary'></div>
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block cursor-pointer' onClick={goToEmergencyPage}>
                         <div className='text-xs text-slate-300'>3. Emergency Contact Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-slate-300'></div>
                       </div>
@@ -688,15 +688,15 @@ function Signup() {
                 <div className='bg-white shadow-2xl rounded-t-[1rem] w-[940px] h-[560px] mx-[280px]'>
                   <div className='px-[50px] py-[30px]'>
                     <div className='flex space-x-5'>
-                      <div className='inline-block mb-5'>
+                      <div className='inline-block mb-5 cursor-pointer' onClick={goToRegisterPage}>
                         <div className='text-xs text-primary'>1. Personal Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-primary'></div>
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block cursor-pointer' onClick={goToAdditionalPage}>
                         <div className='text-xs text-primary'>2. Additional Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-primary'></div>
                       </div>
-                      <div className='inline-block'>
+                      <div className='inline-block cursor-pointer' onClick={goToEmergencyPage}>
                         <div className='text-xs text-primary'>3. Emergency Contact Details</div>
                         <div className='rounded-full w-[260px] h-[5px] bg-primary'></div>
                       </div>
