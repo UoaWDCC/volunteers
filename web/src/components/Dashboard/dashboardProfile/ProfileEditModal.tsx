@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import ProfileEditModalContext from '../../../context/ProfileEditModalContext';
 import ProfileEditModalSideBarTab from '../dashboardProfile/ProfileEditModalSideBarTab';
 import { AiFillCamera } from "react-icons/ai";
@@ -9,6 +9,9 @@ import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+
+import { doc, updateDoc } from 'firebase/firestore'; // Import updateDoc
+import { db } from '../../firebase/firebase.tsx'; // Ensure your db instance is imported
 
 // Add type definition for form values
 type FormValues = {
@@ -27,16 +30,22 @@ type FormValues = {
   emergencyContactLastName: string;
   emergencyContactMobile: string;
   emergencyContactRelationship: string;
+  profile_picture?: string; // Optional field for profile image
 };
 
 const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) => {
   const appUrl = import.meta.env.VITE_API_URL;
   //TEMPORARY PROFILE IMAGE
-  const profileImgLink = '/assets/EventHighlights/Events/RelayForLife/imgB.png'
+  const fileInputRef = useRef<HTMLInputElement>(null);
   // ######################
+  const openFileDialog = () => {
+    fileInputRef.current?.click();
+  }
   const authContext = useContext(AuthenticationContext);
   const { isUserLoggedIn, firestoreUserDetails, setFirestoreUserDetails } = authContext as unknown as {isUserLoggedIn: boolean, firestoreUserDetails: any, setFirestoreUserDetails: any};
+  const [profileImgSrc, setProfileImgSrc] = useState<string>(firestoreUserDetails?.profile_picture || '/assets/profile-placeholder.png'); // Use state for the image URL
   const { showModal, setShowModal } = useContext(ProfileEditModalContext);
+  const { setProfilePicture } = useAuth();
   const { uid } = useAuth()!;
   const baseBackgroundStyle = 'fixed z-[500] top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center transition-all duration-200 ';
   const [page1, setPage1] = useState(true);
@@ -79,6 +88,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     emergencyContactLastName: "",
     emergencyContactMobile: "",
     emergencyContactRelationship: "",
+    profile_picture: "" // Optional field for profile image
   });
 
 
@@ -155,6 +165,66 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
     };
     if (uid) fetchUserDocId();
   }, [uid]);
+
+  // Handle user profile picture change.
+    const MAX_FILE_SIZE = 2 * 1024 * 1024; // 2MB
+    const handleImageChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('Image change event triggered');
+    const file = event.target.files?.[0];
+
+    if (!file) {
+      return;
+    }
+
+    if (file.size > MAX_FILE_SIZE) {
+      alert('Profile picture must be less than 2MB.');
+      return;
+    }
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        // Set the state to the base64 URL for immediate preview
+        setProfileImgSrc(reader.result as string);
+      };
+      reader.readAsDataURL(file); // Read the file as a data URL (base64)
+
+      try {
+        const formData = new FormData();
+        formData.append('profile_picture', file);
+
+        const appUrl = import.meta.env.VITE_API_URL;
+
+        // Example: Sending to an API endpoint
+        const response = await axios.patch(`${appUrl}/api/users/${uid}/image`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+
+        if (response.data && response.data.profileImgUrl) {
+          // If the server returns the new public URL, update your state and firestoreUserDetails
+          setProfileImgSrc(response.data.profileImgUrl);
+          setProfilePicture(response.data.profileImgUrl);
+          // Also update the firestoreUserDetails to reflect the new image URL
+          setFirestoreUserDetails((prevDetails: any) => ({
+            ...prevDetails,
+            profile_picture: response.data.profileImgUrl,
+          }));
+          console.log('Profile picture uploaded and updated:', response.data.profileImgUrl);
+        } else {
+          console.error('Server did not return a profile image URL.');
+        }
+
+      } catch (error) {
+        console.error('Error uploading profile picture:', error);
+        alert('Failed to upload profile picture. Please try again.');
+        setShowModal(false);
+        // Optionally revert to previous image or show error state
+      }
+    }
+  };
 
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
@@ -239,7 +309,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       emergencyContactLastName,
       emergencyContactRelationship,
       emergencyContactMobile,
-      otherRequirements
+      otherRequirements,
     }
 
     await axios.patch(`${appUrl}/api/users/${docId}`, newData);   
@@ -283,6 +353,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       emergencyContactLastName,
       emergencyContactMobile,
       emergencyContactRelationship,
+      profile_picture: profileImgSrc, // Include the profile picture in the comparison
     };
 
     const hasChanged = (Object.keys(currentValues) as Array<keyof FormValues>).some(key => {
@@ -329,6 +400,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
           emergencyContactLastName: firestoreUserDetails.emergencyContactLastName,
           emergencyContactRelationship: firestoreUserDetails.emergencyContactRelationship,
           emergencyContactMobile: firestoreUserDetails.emergencyContactMobile,
+          profile_picture: firestoreUserDetails.profile_picture || "", // Ensure this is set
         };
         setInitialValues(initialData);
         
@@ -348,12 +420,13 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         setEmergencyContactLastName(firestoreUserDetails.emergencyContactLastName);
         setEmergencyContactRelationship(firestoreUserDetails.emergencyContactRelationship);
         setEmergencyContactMobile(firestoreUserDetails.emergencyContactMobile);
+        setProfileImgSrc(firestoreUserDetails.profile_picture || '/assets/profile-placeholder.png'); // Set initial profile image source
     }
   }, [firestoreUserDetails]);
 
   useEffect(() => {
     checkFormChanged();
-  }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship]);
+  }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship, profileImgSrc]);
 
   return (
     <>
@@ -369,15 +442,24 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
       <div className='bg-white flex rounded-3xl'>
         <div className='bg-primary rounded-l-3xl flex flex-col w-[230px] h-auto'>
           <div className="bg-black w-[130px] rounded-full mt-16 mb-8 mx-auto relative">
-            {/* IMPLEMENT ON CLICK */}
-            <div className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'>
+            <input
+              type="file"
+              accept="image/*" // Restricts file selection to image types
+              ref={fileInputRef} // Associates this input with the useRef hook
+              onChange={handleImageChange} // When a file is selected, this function will be called
+              style={{ display: 'none' }} // Hides the actual input element from view
+            />
+            <div
+              className='absolute text-white top-[0%] right-[0%] flex flex-col justify-center items-center w-[100%] h-[100%] bg-[#00000094] rounded-full opacity-0 hover:opacity-100 hover:cursor-pointer transition-opacity duration-50'
+              onClick={openFileDialog} // When the div is clicked, it opens the file dialog
+            >
               <AiFillCamera size={40}/>
               <div className='font-light mt-2 text-center' style={{ userSelect: 'none' }}>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }} >Click to change</p>
                 <p style={{ fontSize: '10px', lineHeight: '0px' }}>your photo</p>
               </div>
             </div>
-            <img src={profileImgLink} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
+            <img src={profileImgSrc} alt="" className="w-[100%] object-cover aspect-square rounded-full" />
           </div>
           <div className="flex flex-col items-end mt-6 pl-5">
             <ProfileEditModalSideBarTab tabName='Personal Details' selectedTab={selectedTab} setSelectedTab={setSelectedTab} switchTab={goToRegisterPage} />

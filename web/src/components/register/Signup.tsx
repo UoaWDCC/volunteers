@@ -39,6 +39,8 @@ function Signup() {
   const [emergencyContactMobile, setEmergencyContactMobile] = useState<string>('');
   const [emergencyContactRelationship, setEmergencyContactRelationship] = useState<string>('');
 
+  const [profile_picture] = useState<string>('/assets/profile_placeholder.png');
+
   const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { id } = event.target;
       setGender(id);
@@ -194,7 +196,8 @@ function Signup() {
           emergencyContactLastName,
           emergencyContactMobile,
           emergencyContactRelationship,
-          hours: 0
+          hours: 0,
+          profile_picture
         });
         console.log('Document successfully written!');
         goToDashboard();

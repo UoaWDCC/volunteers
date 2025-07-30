@@ -15,7 +15,7 @@ const SideBarTab: React.FC<SideBarTabProps> = ({ unselected, selected, tabName, 
 
   return (
     <button className={selectedTab === tabName ? baseTabStyle + " bg-[#F7F7FB] text-primary": baseTabStyle + " bg-primary hover:bg-[#ffffff40] text-white rounded-r-lg after:opacity-0 before:opacity-0 before:transition-none after:transition-none"} onClick={() => {
-      setSelectedTab(tabName)
+      setSelectedTab(tabName);
       switchPage()
     }}>
       <div className="flex flex-row gap-2 items-center ml-4">
