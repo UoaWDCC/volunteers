@@ -5,6 +5,7 @@ import { AiFillCamera } from "react-icons/ai";
 import { BsCalendar } from "react-icons/bs";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 import { useAuth } from "../../../context/AuthenticationContextProvider";
+import CloseThumbsUpSuccessPopup from './CloseThumbsUpSuccessPopup';
 import axios from 'axios';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -279,6 +280,8 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const [showThumbsUpSuccessPopup, setThumbsUpSuccessPopup] = useState(false);
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -364,6 +367,15 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   };
 
   useEffect(() => {
+    if (showThumbsUpSuccessPopup) {
+      const timer = setTimeout(() => {
+        setThumbsUpSuccessPopup(false); // auto close
+      }, 2000);
+      return () => clearTimeout(timer); // clear timeout on unmount
+    }
+  }, [showThumbsUpSuccessPopup]);
+
+  useEffect(() => {
     console.log("User is logged in: ", isUserLoggedIn);
     if (!isUserLoggedIn) {
         // redirect to login page
@@ -417,6 +429,7 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
   }, [firstName, lastName, email, mobile, birthdate, upi, gender, yearLevel, dietaryRequirements, driversLicense, otherRequirements, emergencyContactFirstName, emergencyContactLastName, emergencyContactMobile, emergencyContactRelationship, profileImgSrc]);
 
   return (
+    <>
     <div
       id='modalBackground'
       className={showModal ? baseBackgroundStyle + 'opacity-100 visible' : baseBackgroundStyle + 'opacity-0 invisible'}
@@ -862,6 +875,12 @@ const ProfileEditModal = ({ onUpdateSuccess }: { onUpdateSuccess: () => void }) 
         </div>
       </div>
     </div>
+
+    {showThumbsUpSuccessPopup && <CloseThumbsUpSuccessPopup onClose={() => {
+      setThumbsUpSuccessPopup(false);
+      closeModal();
+    }} />}
+    </>
   );
 }
 
