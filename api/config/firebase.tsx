@@ -37,7 +37,7 @@ admin.initializeApp({
 });
 
 // Initialize Firebase App
-export const app = initializeApp(firebaseConfig);
+const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore
 export const db = getFirestore(app);

@@ -1,6 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useAuth } from '../../../context/AuthenticationContextProvider';
+import { addDoc, collection, doc, getFirestore, serverTimestamp, query, where, getDocs, deleteDoc } from "firebase/firestore";
 
 type Event = {
     event_title: string;
@@ -15,6 +17,7 @@ type Event = {
     image: string;
     host: string;
     coordinates: {longitude: string, latitude: string};
+    id?: string; // Add document ID
 }
 
 interface EventProps {
@@ -32,10 +35,65 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
  
     const [buttonText, setButtonText] = useState('Register for Event');
-    const [isPopupVisible, setIsPopupVisible] = useState(false);  // State for popup visibility
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [attendanceId, setAttendanceId] = useState<string | null>(null);
+
+    const db = getFirestore();
+
+    const auth = useAuth();
+    const user = auth?.currentUser;
+
+    // Check if user is already registered for this event
+    useEffect(() => {
+        const checkRegistration = async () => {
+            if (!user?.uid || !event.id) return;
+            
+            try {
+                // First, find the user's document ID in the users collection
+                const usersRef = collection(db, 'users');
+                const userQuery = query(usersRef, where('uid', '==', user.uid));
+                const userSnapshot = await getDocs(userQuery);
+                
+                if (userSnapshot.empty) {
+                    return;
+                }
+                
+                const userDocId = userSnapshot.docs[0].id;
+                
+                const attendanceRef = collection(db, 'event_attendance');
+                const q = query(
+                    attendanceRef, 
+                    where('eventId', '==', doc(db, 'events', event.id)),
+                    where('uid', '==', doc(db, 'users', userDocId))
+                );
+                const querySnapshot = await getDocs(q);
+                
+                if (!querySnapshot.empty) {
+                    const doc = querySnapshot.docs[0];
+                    setIsRegistered(true);
+                    setButtonText('You are registered!');
+                    setAttendanceId(doc.id);
+                } else {
+                    setIsRegistered(false);
+                    setButtonText('Register for Event');
+                    setAttendanceId(null);
+                }
+            } catch (error) {
+                console.error('Error checking registration:', error);
+            }
+        };
+
+        checkRegistration();
+    }, [user?.uid, event.id]);
 
     const handleClick = () => {
-        if (buttonText === 'Register for Event') {
+        if (!isRegistered) {
+            if(user?.uid && event.id) {
+                registerUserToEvent(event.id, user.uid);
+            } else {
+                return;
+            }
             setButtonText('You are registered!');
         } else {
             setIsPopupVisible(true);  // Show the popup if already registered
@@ -43,13 +101,56 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     };
 
     const handleConfirmUnregister = () => {
-        setButtonText('Register for Event');  // Change button text back to 'Register for Event'
-        setIsPopupVisible(false);  // Close the popup
+        if (attendanceId) {
+            unregisterUserFromEvent(attendanceId);
+        } else {
+            console.error("No attendanceId found for unregister");
+        }
+        setButtonText('Register for Event');
+        setIsPopupVisible(false);
     };
 
     const handleCancelUnregister = () => {
         setIsPopupVisible(false);  // Close the popup without changing the button text
     };
+
+    async function registerUserToEvent(eventId: string, userId: string) {
+        try {
+            // First, find the user's document ID in the users collection
+            const usersRef = collection(db, 'users');
+            const userQuery = query(usersRef, where('uid', '==', userId));
+            const userSnapshot = await getDocs(userQuery);
+            
+            if (userSnapshot.empty) {
+                return;
+            }
+            
+            const userDocId = userSnapshot.docs[0].id;
+            
+            const docRef = await addDoc(collection(db, "event_attendance"), {
+                eventId: doc(db, "events", eventId), // Reference to events collection
+                uid: doc(db, "users", userDocId),    // Reference to users collection using actual document ID
+                timestamp: serverTimestamp(),
+            });
+            
+            setIsRegistered(true);
+            setAttendanceId(docRef.id); // Set the attendance document ID
+        } catch (error) {
+            console.error("Error registering for event:", error);
+        }
+    }
+
+    async function unregisterUserFromEvent(attendanceDocId: string) {
+        try {
+            const attendanceDoc = doc(db, "event_attendance", attendanceDocId);
+            await deleteDoc(attendanceDoc);
+            setIsRegistered(false);
+            setAttendanceId(null);
+        } catch (error) {
+            console.error("Error unregistering from event:", error);
+        }
+    }
+    
     return (
         <div className="flex flex-col absolute top-0 left-0 items-center w-full h-full bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
             <div className="self-start ml-6 cursor-pointer" onClick={() => setEventDetails(null)}><IoArrowBackCircle  size="40px" color="#3B87DD" /></div>
