@@ -45,7 +45,7 @@ function WelcomeStats() {
           </div>
           <div className="mt-6">
             <span className="text-4xl font-bold">{firestoreUserDetails.hours}</span>
-            <span className="text-black pl-1">hours</span>
+            <span className="text-black pl-1">{firestoreUserDetails.hours === 1 ? 'hour' : 'hours'}</span>
           </div>
         </div>
       </div>
