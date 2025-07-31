@@ -5,11 +5,10 @@ import LoginModalContext from '../../context/LoginModalContext.tsx';
 function Header() {
   const { setShowModal } = useContext(LoginModalContext);
   const authContext = useContext(AuthenticationContext);
-  const { signOut, isUserLoggedIn, currentUser, firestoreUserDetails } = 
+  const { signOut, isUserLoggedIn, firestoreUserDetails } = 
     authContext as unknown as { 
       signOut: () => void; 
       isUserLoggedIn: boolean;
-      currentUser: any;
       firestoreUserDetails: any;
     };
 
