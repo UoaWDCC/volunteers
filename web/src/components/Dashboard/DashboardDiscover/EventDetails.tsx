@@ -1,8 +1,12 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useContext, useEffect, useCallback } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { useState } from 'react';
+import axios from 'axios';
+import AuthenticationContext from "../../../context/AuthenticationContext";
+import CloseThumbsUpSuccessPopup from "../dashboardProfile/CloseThumbsUpSuccessPopup";
 
 type Event = {
+    id?: string;
     event_title: string;
     description: string;
     tasks: string;
@@ -31,20 +35,137 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
  
-    const [buttonText, setButtonText] = useState('Register for Event');
-    const [isPopupVisible, setIsPopupVisible] = useState(false);  // State for popup visibility
+    const [buttonText, setButtonText] = useState('Checking...');
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isRegistered, setIsRegistered] = useState(false);
+    const [showSuccessPopup, setShowSuccessPopup] = useState(false);
+    const [isCheckingStatus, setIsCheckingStatus] = useState(true);
 
-    const handleClick = () => {
-        if (buttonText === 'Register for Event') {
-            setButtonText('You are registered!');
-        } else {
-            setIsPopupVisible(true);  // Show the popup if already registered
+    // Get user context
+    const authContext = useContext(AuthenticationContext);
+    const { uid, email, firestoreUserDetails } = authContext as unknown as {
+        uid: string;
+        email: string;
+        firestoreUserDetails: Record<string, unknown> | null;
+    };
+
+    const appUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+    const checkRegistrationStatus = useCallback(async () => {
+        try {
+            setIsCheckingStatus(true);
+            console.log('Checking registration status for event:', event.id);
+            console.log('Current user UID:', uid);
+            console.log('Firestore user details:', firestoreUserDetails);
+            
+            // Use the UID from firestoreUserDetails if available, otherwise use the current uid
+            const userIdentifier = firestoreUserDetails?.uid || uid;
+            console.log('Using user identifier:', userIdentifier);
+            
+            const response = await axios.get(`${appUrl}/api/userEventRegistrations/user/${userIdentifier}`);
+            const userRegistrations = response.data;
+            console.log('User registrations:', userRegistrations);
+            
+            // Check if user is registered for this specific event
+            const isUserRegistered = userRegistrations.some((reg: { eventId: string; status: string }) => {
+                console.log('Comparing:', reg.eventId, 'with', event.id, 'status:', reg.status);
+                // Only consider as registered if status is 'registered', not 'cancelled'
+                return reg.eventId === event.id && reg.status === 'registered';
+            });
+            
+            console.log('Is user registered:', isUserRegistered);
+            setIsRegistered(isUserRegistered);
+            setButtonText(isUserRegistered ? 'You are registered!' : 'Register for Event');
+        } catch (error) {
+            console.error('Error checking registration status:', error);
+            setButtonText('Register for Event');
+        } finally {
+            setIsCheckingStatus(false);
+        }
+    }, [event.id, uid, firestoreUserDetails, appUrl]);
+
+    // Check if user is registered for this event on component mount
+    useEffect(() => {
+        if (uid && event.id) {
+            checkRegistrationStatus();
+        }
+    }, [uid, event.id, checkRegistrationStatus]);
+
+    const handleClick = async () => {
+        if (!uid) {
+            alert('Please log in to register for events');
+            return;
+        }
+
+        if (!event.id) {
+            alert('Event ID not found');
+            return;
+        }
+
+        setIsLoading(true);
+
+        try {
+            if (!isRegistered) {
+                // Register for event
+                console.log('Attempting to register for event:', event.id);
+                
+                // Use the UID from firestoreUserDetails if available, otherwise use the current uid
+                const userIdentifier = firestoreUserDetails?.uid || uid;
+                console.log('Using user identifier for registration:', userIdentifier);
+                
+                const registrationData = {
+                    userId: userIdentifier,
+                    eventId: event.id,
+                    userEmail: email,
+                    eventTitle: event.event_title
+                };
+                console.log('Registration data:', registrationData);
+                
+                await axios.post(`${appUrl}/api/userEventRegistrations/register`, registrationData);
+                
+                console.log('Registration successful');
+                // Re-check registration status after registration
+                await checkRegistrationStatus();
+                setShowSuccessPopup(true);
+            } else {
+                // Show unregister popup
+                setIsPopupVisible(true);
+            }
+        } catch (error: unknown) {
+            console.error('Error registering for event:', error);
+            if (error && typeof error === 'object' && 'response' in error && error.response && typeof error.response === 'object' && 'status' in error.response && error.response.status === 409) {
+                // User is already registered, re-check status
+                await checkRegistrationStatus();
+                setShowSuccessPopup(true);
+            } else {
+                alert('Failed to register for event. Please try again.');
+            }
+        } finally {
+            setIsLoading(false);
         }
     };
 
-    const handleConfirmUnregister = () => {
-        setButtonText('Register for Event');  // Change button text back to 'Register for Event'
-        setIsPopupVisible(false);  // Close the popup
+    const handleConfirmUnregister = async () => {
+        if (!uid || !event.id) return;
+
+        setIsLoading(true);
+        try {
+            // Use the UID from firestoreUserDetails if available, otherwise use the current uid
+            const userIdentifier = firestoreUserDetails?.uid || uid;
+            console.log('Using user identifier for unregistration:', userIdentifier);
+            
+            await axios.put(`${appUrl}/api/userEventRegistrations/cancel/${userIdentifier}/${event.id}`);
+            // Re-check registration status after cancellation
+            await checkRegistrationStatus();
+            setIsPopupVisible(false);
+            setShowSuccessPopup(true);
+        } catch (error) {
+            console.error('Error unregistering from event:', error);
+            alert('Failed to unregister from event. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     const handleCancelUnregister = () => {
@@ -59,7 +180,13 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                    <button 
+                        className={`h-10 text-body-heading rounded-full ${(isLoading || isCheckingStatus) ? 'opacity-50 cursor-not-allowed' : ''}`} 
+                        onClick={handleClick}
+                        disabled={isLoading || isCheckingStatus}
+                    >
+                        {isLoading ? 'Loading...' : isCheckingStatus ? 'Checking...' : buttonText}
+                    </button>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -138,6 +265,13 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     </div>
                 </div>
             </div>
+
+            {/* Success Popup */}
+            {showSuccessPopup && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm z-[1000]">
+                    <CloseThumbsUpSuccessPopup onClose={() => setShowSuccessPopup(false)} />
+                </div>
+            )}
 
         </div> 
     )

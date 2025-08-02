@@ -4,6 +4,7 @@ import axios from "axios";
 import EventDetails from "../DashboardDiscover/EventDetails";
 
 type Event = {
+  id?: string;
   event_title: string;
   description: string;
   tasks: string;
