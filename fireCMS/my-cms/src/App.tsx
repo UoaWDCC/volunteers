@@ -40,7 +40,7 @@ import { SponsorsCollection } from "./collections/sponsors";
 import { UsersCollection } from "./collections/users";
 
 import { firebaseConfig } from "./firebase_config";
-import { FriendshipsCollection } from "./collections/friendships";
+import { FriendsCollection } from "./collections/friends";
 
 function App() {
 
@@ -76,7 +76,7 @@ function App() {
         productsCollection,
         SponsorsCollection,
         UsersCollection,
-        FriendshipsCollection,
+        FriendsCollection,
     ], []);
 
     const {
