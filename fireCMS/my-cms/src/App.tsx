@@ -38,9 +38,10 @@ import { HighlightsCollection } from "./collections/highlights";
 import { productsCollection } from "./collections/products";
 import { SponsorsCollection } from "./collections/sponsors";
 import { UsersCollection } from "./collections/users";
+import { FriendsCollection } from "./collections/friends";
+import { FriendRequestsCollection } from "./collections/friendRequests";
 
 import { firebaseConfig } from "./firebase_config";
-import { FriendsCollection } from "./collections/friends";
 
 function App() {
 
@@ -77,6 +78,7 @@ function App() {
         SponsorsCollection,
         UsersCollection,
         FriendsCollection,
+        FriendRequestsCollection,
     ], []);
 
     const {
