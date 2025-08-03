@@ -38,8 +38,8 @@ import { HighlightsCollection } from "./collections/highlights";
 import { productsCollection } from "./collections/products";
 import { SponsorsCollection } from "./collections/sponsors";
 import { UsersCollection } from "./collections/users";
-import { FriendsCollection } from "./collections/friends";
-import { FriendRequestsCollection } from "./collections/friendRequests";
+import { FriendshipsCollection } from "./collections/friendships";
+import { FriendRequestsCollection } from "./collections/friendrequests";
 
 import { firebaseConfig } from "./firebase_config";
 
@@ -77,7 +77,7 @@ function App() {
         productsCollection,
         SponsorsCollection,
         UsersCollection,
-        FriendsCollection,
+        FriendshipsCollection,
         FriendRequestsCollection,
     ], []);
 
