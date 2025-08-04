@@ -14,7 +14,7 @@ interface NewsletterProps {
 const NewsletterCard: React.FC<NewsletterProps> = ({newsletter}: NewsletterProps) => {
     
     return (
-        <div className="flex w-full bg-white flex flex-row items-center justify-between">
+        <div className="flex w-full bg-white flex-row items-center justify-between">
             <div className="flex flex-row">
                 <div>
                     <p className="text-heading1 mb-0 font-[450]">{newsletter.title}</p>
