@@ -24,11 +24,11 @@ function Header() {
     window.location.href = '/dashboard';
   }
 
-  const getCurrentSection = () => {
-    const path = location.pathname;
+    const getCurrentSection = () => {
+    const path = location.hash;
+    if (path.includes('gallery')) return 'gallery';
     if (path.includes('about')) return 'about';
     if (path.includes('events')) return 'events';
-    if (path.includes('community')) return 'community';
     return '';
   }
 
@@ -43,21 +43,21 @@ function Header() {
       <div className="flex-1 flex justify-center">
         <div className="relative bg-neutral-tan rounded-full px-8 py-3">
           <nav className="flex gap-16">
-            <a href="/about" className="relative">
+            <a href="#gallery" className="relative">
+              <span className="text-gray-700 font-medium hover:text-primary transition-colors">Gallery</span>
+              {getCurrentSection() === 'gallery' && (
+                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
+              )}
+            </a>
+            <a href="#about" className="relative">
               <span className="text-gray-700 font-medium hover:text-primary transition-colors">About</span>
               {getCurrentSection() === 'about' && (
                 <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
               )}
             </a>
-            <a href="/events" className="relative">
+            <a href="#events" className="relative">
               <span className="text-gray-700 font-medium hover:text-primary transition-colors">Events</span>
               {getCurrentSection() === 'events' && (
-                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
-              )}
-            </a>
-            <a href="/community" className="relative">
-              <span className="text-gray-700 font-medium hover:text-primary transition-colors">Community</span>
-              {getCurrentSection() === 'community' && (
                 <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
               )}
             </a>

@@ -17,9 +17,15 @@ function MainMenu() {
         <LoginModal />
         <Header />
         <main className="flex-1">
-          <MainGallery />
-          <AboutUs />
-          <EventHighlights />
+          <div id="gallery">
+            <MainGallery />
+          </div>
+          <div id="about">
+            <AboutUs />
+          </div>
+          <div id="events">
+            <EventHighlights />
+          </div>
           <OurAchievements />
           <OurCommunity />
           <SponsorsList />

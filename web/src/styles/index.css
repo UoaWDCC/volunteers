@@ -6,6 +6,12 @@
 /* global.css */
 
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Adjusts scroll position to account for fixed header */
+  }
+}
 
 @layer utilities {
   .mask-tab { /* Tailwind doesnt support masks, so need to use css. This is used in SideBarTab.tsx */
