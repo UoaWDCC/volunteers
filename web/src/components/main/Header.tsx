@@ -1,5 +1,5 @@
 import AuthenticationContext from '../../context/AuthenticationContext.tsx';
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import LoginModalContext from '../../context/LoginModalContext.tsx';
 import { useLocation } from 'react-router-dom';
 
@@ -7,12 +7,40 @@ function Header() {
   const { setShowModal } = useContext(LoginModalContext);
   const authContext = useContext(AuthenticationContext);
   const location = useLocation();
+  const [activeSection, setActiveSection] = useState('');
+
   const { signOut, isUserLoggedIn, firestoreUserDetails } = 
     authContext as unknown as { 
       signOut: () => void; 
       isUserLoggedIn: boolean;
       firestoreUserDetails: any;
     };
+
+  useEffect(() => {
+    // Create an observer instance
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-50% 0px -50% 0px', // Triggers when section is in middle of viewport
+        threshold: 0
+      }
+    );
+
+    // Observe all sections
+    const sections = ['gallery', 'about', 'events'];
+    sections.forEach((section) => {
+      const element = document.getElementById(section);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
 
   if (!authContext) {
     return null;
@@ -22,14 +50,6 @@ function Header() {
 
   const goToDashboard = () => {
     window.location.href = '/dashboard';
-  }
-
-    const getCurrentSection = () => {
-    const path = location.hash;
-    if (path.includes('gallery')) return 'gallery';
-    if (path.includes('about')) return 'about';
-    if (path.includes('events')) return 'events';
-    return '';
   }
 
   return (
@@ -45,20 +65,20 @@ function Header() {
           <nav className="flex gap-16">
             <a href="#gallery" className="relative">
               <span className="text-gray-700 font-medium hover:text-primary transition-colors">Gallery</span>
-              {getCurrentSection() === 'gallery' && (
-                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
+              {activeSection === 'gallery' && (
+                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px] transition-all duration-300" />
               )}
             </a>
             <a href="#about" className="relative">
               <span className="text-gray-700 font-medium hover:text-primary transition-colors">About</span>
-              {getCurrentSection() === 'about' && (
-                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
+              {activeSection === 'about' && (
+                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px] transition-all duration-300" />
               )}
             </a>
             <a href="#events" className="relative">
               <span className="text-gray-700 font-medium hover:text-primary transition-colors">Events</span>
-              {getCurrentSection() === 'events' && (
-                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px]" />
+              {activeSection === 'events' && (
+                <div className="absolute w-full h-1 bg-primary rounded-full bottom-[-12px] transition-all duration-300" />
               )}
             </a>
           </nav>
