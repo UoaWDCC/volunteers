@@ -45,7 +45,7 @@ const Newsletters: React.FC = () => {
                 <div className="flex-grow" />
 
                 {/* Create button */}
-                <div className="rounded-full ml-4 self-center" onClick={handleCreateNewsletter}>
+                <div className="rounded-full ml-4 -mt-4 self-center" onClick={handleCreateNewsletter}>
                     <img src="/assets/dashboard/admin/plus.svg" alt="Create Newsletter" className="w-6 h-6" />
                 </div>
             </div>
