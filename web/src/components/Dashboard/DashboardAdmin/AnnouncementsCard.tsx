@@ -18,7 +18,7 @@ interface AnnouncementsProps {
 const AnnouncementsCard: React.FC<AnnouncementsProps> = ({ announcement }: AnnouncementsProps) => {
 
     return (
-        <div className="flex w-full bg-white flex flex-row items-center justify-between">
+        <div className="flex w-full bg-white flex-row items-center justify-between">
             <div className="flex flex-row">
                 <div>
                     <p className="text-heading1 mb-0 font-[450]">{announcement.title}</p>
@@ -26,13 +26,6 @@ const AnnouncementsCard: React.FC<AnnouncementsProps> = ({ announcement }: Annou
                     <p className="text-[12px] font-light m-0 leading-[1.2]">
                         {getTimeString(announcement.start_date_time)} - {getTimeString(announcement.end_date_time)}
                     </p>
-                </div>
-                <div>
-                    {announcement.tags?.map(tag =>
-                        <p key={1} className="text-[9px] m-1 leading-[1.2] bg-gray-100 px-2 py-1 rounded-xl font-light text-nowrap">
-                            {tag}
-                        </p>
-                    )}
                 </div>
             </div>
 
