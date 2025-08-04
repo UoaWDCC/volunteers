@@ -33,7 +33,7 @@ function Header() {
   }
 
   return (
-    <header className='sticky top-0 z-40 flex justify-between items-center bg-white/95 backdrop-blur-sm px-24 py-6 shadow-md'>
+    <header className='sticky top-0 z-[100] flex justify-between items-center bg-white/95 backdrop-blur-sm px-24 py-6 shadow-md'>
       {/* Left - Logo */}
       <div className="flex-none">
         <img src='/public/assets/header-logo.svg' alt='Volunteers Club Logo' className='h-12' />
