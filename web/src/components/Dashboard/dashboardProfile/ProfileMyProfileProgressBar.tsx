@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { CircularProgressbar, buildStyles } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 
@@ -8,7 +8,17 @@ interface ProfileMyProfileProgressBarProps {
 }
 
 const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = ({ totalHours, completedHours }) => {
-  const percentage = (completedHours / totalHours) * 100;
+  // If I have completed 7 hours in total, 
+  // completedHours = 7, totalHours = 5 (+1 level in every 5 hours)
+  // percentage = (7 % 5) / 5 * 100 = 2 / 5 * 100 = 40;
+  const percentage = ((completedHours % totalHours) / totalHours) * 100;
+  const [nextLevel, setNextLevel] = useState<number>();
+  const [leftHours, setLeftHours] = useState<number>();
+
+  useEffect(() => {
+    setNextLevel(Math.floor(completedHours / 5) + 2);
+    setLeftHours(totalHours - (completedHours % totalHours));
+  },[completedHours])
 
   return (
     <div className="w-full bg-white p-6 flex flex-col justify-between items-center rounded-lg shadow-lg">
@@ -40,8 +50,8 @@ const ProfileMyProfileProgressBar: React.FC<ProfileMyProfileProgressBarProps> = 
       </div>
 
       {/* Bottom Text */}
-      <p className="dashboard text-body-heading text-center mt-4 ">
-        {totalHours - completedHours} more hours to reach Level 3!
+      <p className="dashboard text-body-heading text-center mt-4">
+        {leftHours} more {leftHours === 1 ? 'hour' : 'hours'} to reach Level {nextLevel}!
       </p>
     </div>
   );
