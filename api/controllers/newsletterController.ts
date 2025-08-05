@@ -5,6 +5,7 @@ import { doc, getDoc, collection, getDocs, addDoc } from 'firebase/firestore';
 // Define the Newsletter interface to match the structure of the request body
 interface Newsletter {
     newsletterTitle: string;
+    newsletterSubheader: string;
     newsletterDescription: string;
     newsletterEventIds: string[];
 }
@@ -24,7 +25,7 @@ interface EventDetail {
 
 async function createNewsletter(req: Request, res: Response): Promise<void> {
     try {
-        const {newsletterTitle, newsletterDescription, newsletterEventIds} = req.body as Newsletter;
+        const {newsletterTitle, newsletterSubheader, newsletterDescription, newsletterEventIds} = req.body as Newsletter;
         const eventDetails: EventDetail[] = []; // Use the new interface
         // Loop through each event ID and fetch the corresponding event data
         for (const eventId of newsletterEventIds) {
@@ -49,7 +50,7 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
             }
         }
         
-        const formattedNewsletter = formatNewsLetter(newsletterTitle, newsletterDescription, eventDetails);
+        const formattedNewsletter = formatNewsLetter(newsletterTitle, newsletterSubheader, newsletterDescription, eventDetails);
         
         // Send success response with the formatted text
         res.status(200).json({
@@ -67,7 +68,7 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
     }
 }
 
-function formatNewsLetter(title: string, description: string, events: EventDetail[]): string {
+function formatNewsLetter(title: string, subheader: string, description: string, events: EventDetail[]): string {
     let eventsHtml = '';
     for (const event of events) {
         const startDate = event.start_date_time ? new Date(event.start_date_time.seconds * 1000).toLocaleString() : 'N/A';
@@ -259,7 +260,7 @@ function formatNewsLetter(title: string, description: string, events: EventDetai
         </div>
              
         <div class="welcome-section">
-            <div class="welcome-title">💙 WELCOME VOLLIES 💙</div>
+            <div class="welcome-title">${subheader}</div>
         </div>
         
         <div class="description">
