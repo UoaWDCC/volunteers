@@ -9,7 +9,6 @@ const colRef = collection(db, "friendships");
 async function getFriendsByUid(req: Request, res: Response): Promise<void> {
     try {
         const uid = req.params.uid;  // Get uid from request parameters
-        const userRef = doc(db, "users", uid); // Get reference object for specific uid
 
         if (!uid) {
             res.status(400).json({ error: "UID is required" });
@@ -17,7 +16,7 @@ async function getFriendsByUid(req: Request, res: Response): Promise<void> {
         }
 
         // Create a Firestore query to find users where the "user_ref" field matches the request parameter
-        const userQuery = query(colRef, where("user_ref", "==", userRef));
+        const userQuery = query(colRef, where("user_id", "==", uid));
         const querySnapshot = await getDocs(userQuery)  // Execute the query
 
         if (!querySnapshot.empty) {

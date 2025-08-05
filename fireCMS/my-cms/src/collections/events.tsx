@@ -1,6 +1,6 @@
 import { EntityCollection } from "@firecms/core";
 
-export const EventsCollection:EntityCollection = {
+export const EventsCollection: EntityCollection = {
 	id: 'events',
 	name: 'Events',
 	singularName: 'Event',
@@ -139,15 +139,15 @@ export const EventsCollection:EntityCollection = {
 			singularName: "participant",
 			id: "participants",
 			properties: {
-				added_at: { 
+				added_at: {
 					name: "Added At",
-					dataType: "date", 
+					dataType: "date",
 					autoValue: "on_create"
 				},
-				participant_ref: {
-					dataType: "reference",
-					name: "Participant",
-					path: "users"
+				participant_id: {
+					dataType: 'string',
+					description: 'ID of the participant in the users collection',
+					name: 'Participant ID',
 				}
 			}
 		}
