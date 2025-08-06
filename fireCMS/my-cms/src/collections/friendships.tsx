@@ -7,30 +7,13 @@ export const FriendshipsCollection = buildCollection({
 	singularName: "Friendships",
 	id: "friendships",
 	properties: {
-		user_id: {
-			dataType: 'string',
+		friend_ids: {
+			dataType: 'array',
+			of: {
+				dataType: 'string'
+			},
 			description: 'ID of the user in the users collection',
-			name: 'User ID',
+			name: 'Friend IDs',
 		},
 	},
-	subcollections: [
-		{
-			name: "Friends",
-			path: "friends",
-			singularName: "Friend",
-			id: "friends",
-			properties: {
-				added_at: {
-					name: "Added At",
-					dataType: "date",
-					autoValue: "on_create"
-				},
-				friend_id: {
-					dataType: 'string',
-					description: 'ID of the friend in the users collection',
-					name: 'Friend ID',
-				}
-			}
-		}
-	],
 });
