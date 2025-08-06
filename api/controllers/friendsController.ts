@@ -2,11 +2,11 @@ import { db } from '../config/firebase';  // Import the Firestore database confi
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, query, where } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 
-// Collection reference
-const colRef = collection(db, "friendships");
-
 // Get all friends by uid
 async function getFriendsByUid(req: Request, res: Response): Promise<void> {
+
+    // Collection reference
+    const colRef = collection(db, "friendships");
     try {
         const uid = req.params.uid;
 
@@ -15,21 +15,23 @@ async function getFriendsByUid(req: Request, res: Response): Promise<void> {
             return;
         }
 
+        // Fetch user's document from the friendship collection
         const friendshipQuery = query(colRef, where("user_id", "==", uid));
         const friendshipSnapshot = await getDocs(friendshipQuery);
-
-        if (friendshipSnapshot.empty) {
-            res.status(404).json({ error: "Record for user in friends collection not found" });
-            return;
-        }
+        if (friendshipSnapshot.empty) res.json(null);
 
         const friendshipDoc = friendshipSnapshot.docs[0];
         const friendshipId = friendshipDoc.id;
 
+
+        // Fetch their 'friends' subcollection (stores ids of their friends)
         const friendsColRef = collection(db, "friendships", friendshipId, "friends");
         const friendsSnapshot = await getDocs(friendsColRef);
+        if (friendsSnapshot.empty) res.json(null);
 
-        const promises = friendsSnapshot.docs.map(async (friendsDoc) => {
+        // Fetch each friends details form the user collection
+        // And return them as promises
+        const friendsPromises = friendsSnapshot.docs.map(async (friendsDoc) => {
             const data = friendsDoc.data();
             const friendId = data.friend_id;
 
@@ -44,7 +46,8 @@ async function getFriendsByUid(req: Request, res: Response): Promise<void> {
             return null;
         });
 
-        const friends = (await Promise.all(promises)).filter(Boolean);
+        // Once promises fufilled, assign them as a 'friends' constant
+        const friends = (await Promise.all(friendsPromises)).filter(Boolean);
         res.json(friends);
 
     } catch (error) {
