@@ -1,5 +1,5 @@
 import { db } from '../config/firebase';  // Import the Firestore database configuration
-import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, query, where, setDoc, arrayUnion } from 'firebase/firestore';  // Import Firestore functions
+import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, query, where, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 
 // Get all friends by uid
@@ -86,10 +86,42 @@ async function addFriend(req: Request, res: Response): Promise<void> {
         console.error("Error adding friend:", error);
         res.status(500).json({ error: "Internal server error" });
     }
-
 }
 
 async function deleteFriend(req: Request, res: Response): Promise<void> {
+    const uid = req.params.uid;
+    const { friend_id } = req.body;
+
+    if (!uid) {
+        res.status(400).json({ error: "uid is required" });
+        return;
+    } else if (!friend_id) {
+        res.status(400).json({ error: "friend_id is required" });
+        return;
+    }
+
+    try {
+        // Use user id as document id in friendships collection
+        const docRef = doc(db, "friendships", uid);
+
+        // Check if the document exists
+        const docSnap = await getDoc(docRef);
+
+        if (!docSnap.exists()) {
+            res.status(200).json({ message: "friend_id not found. Operation successful" });
+        } else {
+            // Update the existing document by appending new friend_id
+            await updateDoc(docRef, {
+                friend_ids: arrayRemove(friend_id) // 'arrayUnion' handles duplicates which absolutely lovely
+            });
+        }
+
+        res.status(200).json({ message: "Friend removed successfully" });
+
+    } catch (error) {
+        console.error("Error removing friend:", error);
+        res.status(500).json({ error: "Internal server error" });
+    }
 }
 
 async function getFriendRequests(req: Request, res: Response): Promise<void> {
@@ -102,4 +134,4 @@ async function deleteFriendRequest(req: Request, res: Response): Promise<void> {
 }
 
 
-export { getFriendsByUid, addFriend};  // Export functions for use in other modules
+export { getFriendsByUid, addFriend, deleteFriend };  // Export functions for use in other modules
