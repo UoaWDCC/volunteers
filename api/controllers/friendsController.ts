@@ -8,45 +8,51 @@ const colRef = collection(db, "friendships");
 // Get all friends by uid
 async function getFriendsByUid(req: Request, res: Response): Promise<void> {
     try {
-        const uid = req.params.uid;  // Get uid from request parameters
+        const uid = req.params.uid;
 
         if (!uid) {
             res.status(400).json({ error: "UID is required" });
             return;
         }
 
-        // Create a Firestore query to find users where the "user_ref" field matches the request parameter
-        const userQuery = query(colRef, where("user_id", "==", uid));
-        const querySnapshot = await getDocs(userQuery)  // Execute the query
+        const friendshipQuery = query(colRef, where("user_id", "==", uid));
+        const friendshipSnapshot = await getDocs(friendshipQuery);
 
-        if (!querySnapshot.empty) {
-            // Get first matching document from top-level frienships collection
-            let friendshipDoc = querySnapshot.docs[0];
-            let friendshipId = friendshipDoc.id;
-
-            // Get the friends subcollection for that friendship
-            const friendsColRef = collection(db, "friendships", friendshipId, "friends");
-            const friendsSnapshot = await getDocs(friendsColRef);
-
-            let friends: any = []; 
-            
-            friendsSnapshot.docs.forEach(doc => {
-                let data = doc.data();
-
-                friends.push({ id: doc.id, ...data }); // Push each document's data and its ID into the friends array
-            });
-
-            res.json(friends);  // Send the events data as JSON response
-        } else {
-            // If no documents are found, send a 404 error
+        if (friendshipSnapshot.empty) {
             res.status(404).json({ error: "Record for user in friends collection not found" });
+            return;
         }
+
+        const friendshipDoc = friendshipSnapshot.docs[0];
+        const friendshipId = friendshipDoc.id;
+
+        const friendsColRef = collection(db, "friendships", friendshipId, "friends");
+        const friendsSnapshot = await getDocs(friendsColRef);
+
+        const promises = friendsSnapshot.docs.map(async (friendsDoc) => {
+            const data = friendsDoc.data();
+            const friendId = data.friend_id;
+
+            const userDocRef = doc(db, "users", friendId);
+            const userDoc = await getDoc(userDocRef);
+
+            if (userDoc.exists()) {
+                const friendDetails = userDoc.data();
+                return { id: friendsDoc.id, ...friendDetails };
+            }
+
+            return null;
+        });
+
+        const friends = (await Promise.all(promises)).filter(Boolean);
+        res.json(friends);
 
     } catch (error) {
         console.error("Error fetching user:", error);
         res.status(500).json({ error: "Internal server error" });
     }
 }
+
 
 async function updateFriends(req: Request, res: Response): Promise<void> {
 }
