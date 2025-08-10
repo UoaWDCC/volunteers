@@ -1,5 +1,7 @@
 import LeaderboardEntry from "./LeaderboardEntry";
 import { useState, useEffect, useContext } from "react";
+import { db } from "../../firebase/firebase";
+import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
 import axios from "axios";
 import AuthenticationContext from "../../context/AuthenticationContext";
 
@@ -11,16 +13,24 @@ function Leaderboard() {
   const [friends, setFriends] = useState<any[]>([]);
 
   useEffect(() => {
-    const appUrl = import.meta.env.VITE_API_URL;
-    axios
-      .get(`${appUrl}/api/users`)
-      .then((res) => {
-        setUsers(res.data);
+    const q = query(
+      collection(db, "users"),
+      orderBy("hours", "desc"),
+      limit(10)
+    )
+    getDocs(q)
+      .then((snapshot) => {
+        let getUsers: any[] = [];
+        snapshot.docs.forEach((doc) => {
+          getUsers.push({ ...doc.data(), id: doc.id });
+        });
+        setUsers(getUsers);
       })
       .catch((err) => {
-        console.error(err);
+        console.error(err.message);
       });
     
+    const appUrl = import.meta.env.VITE_API_URL;
     axios
       .get(`${appUrl}/api/friends/${firestoreUserDetails.uid}`)
       .then((res) => {
@@ -40,7 +50,7 @@ function Leaderboard() {
   
   const leaderboardData = leaderboardFilter === "all" ? users : friends;
   //sort users by their hours
-  const renderUsers = leaderboardData.sort((a, b) => b.hours - a.hours).slice(0, 10);
+  const renderUsers = leaderboardData.sort((a, b) => b.hours - a.hours);
 
   return (
     <div className="w-full h-full pt-7 pb-2 flex flex-col items-center bg-white rounded-xl shadow-lg ">
