@@ -1,19 +1,23 @@
 import Newsletters from "./Newsletters";
-import Notifications from "./Notifications";
+import Announcements from "./Announcements";
 import VolunteerEvents from "./VolunteerEvents";
 
 const DashboardAdmin: React.FC = () => {
     return (
-        <div className="flex flex-row w-full h-full gap-5">
+        <div className="flex flex-row w-full h-[88vh] gap-6 p-6">
             {/* Volunteer Events section */}
-            <div className="w-[75%]">
+            <div className="w-[70%] h-full gap-6 ">
                 <VolunteerEvents />
             </div>
 
             {/* Notifications and Newsletter section */}
-            <div className="flex flex-col w-[20%] gap-8">
-                <Notifications />
-                <Newsletters />
+            <div className="flex flex-col w-[28%] h-full gap-6">
+                <div className="flex flex-col flex-1">
+                    <Announcements />
+                </div>
+                <div className="flex flex-col flex-1">
+                    <Newsletters />
+                </div>
             </div>
         </div>
     );

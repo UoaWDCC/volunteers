@@ -12,17 +12,24 @@ import AboutUs from "@components/main/AboutUs";
 
 function MainMenu() {
   return (
-    <div className="overflow-hidden">
-      {/* <p className='font-serif text-font-primary text-lg px-h-md py-v-md'>font-serif for poppins,  font-lora for lora,  sans for Work Sans ::font-serif text-font-primary text-lg px-h-md py-v-md::</p> */}
+    <div className="min-h-screen flex flex-col">
       <LoginModalContextProvider>
         <LoginModal />
         <Header />
-        <MainGallery />
-        <AboutUs />
-        <EventHighlights />
-        <OurAchievements />
-        <OurCommunity />
-        <SponsorsList />
+        <main className="flex-1">
+          <div id="gallery">
+            <MainGallery />
+          </div>
+          <div id="about">
+            <AboutUs />
+          </div>
+          <div id="events">
+            <EventHighlights />
+          </div>
+          <OurAchievements />
+          <OurCommunity />
+          <SponsorsList />
+        </main>
         <Footer />
       </LoginModalContextProvider>
     </div>

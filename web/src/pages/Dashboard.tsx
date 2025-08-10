@@ -43,7 +43,7 @@ function Dashboard() {
 
   // Test condition for rendering admin specific content
   // Will need to be changed later when user type column/identifier is implemented
-  const isAdmin = firestoreUserDetails.driversLicense === 'full';
+  const isAdmin = firestoreUserDetails.role === 'admin';
 
   if (!isUserLoggedIn) {
     window.location.href = "/";
