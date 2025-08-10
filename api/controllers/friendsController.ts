@@ -1,5 +1,5 @@
 import { db } from '../config/firebase';  // Import the Firestore database configuration
-import { doc, getDoc, updateDoc, arrayRemove } from 'firebase/firestore';  // Import Firestore functions
+import { doc, getDoc, updateDoc, arrayRemove, where, collection, query, getDocs } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 
 // Get all friends by uid
@@ -25,16 +25,16 @@ async function getFriends(req: Request, res: Response): Promise<void> {
         // And return them as promises
         const friendsPromises = friendshipsData?.friend_ids.map(async (friend_id: string) => {
 
-            const userDocRef = doc(db, "users", friend_id);
-            const userDoc = await getDoc(userDocRef);
-            const userData = userDoc.data();
+            const usersQuery = query(
+                collection(db, "users"),
+                where("uid", "==", friend_id),
+            );
+            const userDocs = await getDocs(usersQuery);
+            const userData = userDocs.docs[0].data();
 
-            if (userDoc.exists()) {
-                // const friendDetails = userDoc.data();
-                return { id: friend_id, ...userData };
-            }
 
-            return null;
+            // const friendDetails = userDoc.data();
+            return { ...userData };
         });
 
         // Once promises fufilled, assign them as a 'friends' constant
