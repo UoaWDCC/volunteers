@@ -1,10 +1,11 @@
 const express = require("express");
-import { addFriend, deleteFriend, getFriendsByUid, } from '../../controllers/friendsController';
+import { getFriends, deleteFriend, } from '../../controllers/friendsController';
 
 const router = express.Router();
 
-router.get("/:uid", getFriendsByUid);
-router.post("/:uid", addFriend);
+// Add target friend id in request body (i.e. friend you want to remove etc.)
+
+router.get("/:uid", getFriends);
 router.delete("/:uid", deleteFriend);
 
 export default router;
