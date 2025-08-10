@@ -75,7 +75,7 @@ a:hover {
 /* Buttons */
 button {
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #3B87DD;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -86,6 +86,18 @@ button {
 /* button:hover {
   background-color: #0056b3;
 } */
+
+button.stroked {
+  cursor: pointer;
+  background-color: white;
+  color: #3B87DD;
+  border: 2px solid #3B87DD;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+button.stroked:hover {
+  background-color: #f0f0f0; /* Optional subtle hover effect */
+}
 
 /* Containers */
 .container {
