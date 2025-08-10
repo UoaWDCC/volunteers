@@ -6,6 +6,12 @@
 /* global.css */
 
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Adjusts scroll position to account for fixed header */
+  }
+}
 
 @layer utilities {
   .mask-tab { /* Tailwind doesnt support masks, so need to use css. This is used in SideBarTab.tsx */
@@ -75,7 +81,7 @@ a:hover {
 /* Buttons */
 button {
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #3B87DD;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -90,8 +96,8 @@ button {
 button.stroked {
   cursor: pointer;
   background-color: white;
-  color: #007bff;
-  border: 2px solid #007bff;
+  color: #3B87DD;
+  border: 2px solid #3B87DD;
   transition: background-color 0.2s ease, color 0.2s ease;
 }
 

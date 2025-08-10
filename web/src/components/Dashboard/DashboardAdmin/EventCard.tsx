@@ -37,7 +37,7 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
     return (
-        <div className="relative dashboard w-fullitems-center m-2 p-4 flex rounded-xl cursor-pointer bg-white-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 ">
+        <div className="relative dashboard w-fullitems-center my-2 p-4 flex rounded-xl cursor-pointer bg-grey-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 ">
             {/* Edit Icon - Top Right */}
             <div className="absolute bg-white top-5 right-5 rounded-full shadow-md">
                 <div className="w-10 h-10 rounded-full flex justify-center items-center transition duration-150 hover:border hover:border-blue-500 cursor-pointer"
