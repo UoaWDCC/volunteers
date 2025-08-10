@@ -4,11 +4,9 @@ const express = require("express");
 
 const router = express.Router();
 
-// Add target friend id in request body (i.e. friend you want to add, remove etc.)
-
-router.get("/:uid", getFriendRequests);
-router.post("/", createFriendRequest);
-router.post("/:id/accept", acceptFriendRequest);
-router.delete("/:id/reject", rejectFriendRequest);
+router.get("/:uid", getFriendRequests); // uid as in the user's id in the users collection
+router.post("/", createFriendRequest); // Requires a request body with the following arguments: { requester_id, reciever_id }
+router.post("/:id/accept", acceptFriendRequest); // Requires the id of the friend request document (returned with the getFriendRequests controller)
+router.delete("/:id/reject", rejectFriendRequest); // Same parameters as acceptFriendRequest ^^
 
 export default router;
