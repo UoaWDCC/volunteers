@@ -1,126 +1,46 @@
 import LeaderboardEntry from "./LeaderboardEntry";
-import { useState, useEffect } from "react";
-import { db } from "../../firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import AuthenticationContext from "../../context/AuthenticationContext";
 
 function Leaderboard() {
-  const profileImg = "assets/EventHighlights/Events/BlindLowVision/imgA.png"; // Temporary image for the leaderboard
-  const name = "John Doe"; // Temporary name for the leaderboard
-  //const ranking = "1st"; // Temporary ranking for the leaderboard
-  const hours = 14; // Temporary hours for the leaderboard
+  const authContext = useContext(AuthenticationContext);
+  const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
 
-  const all = [
-    {
-      rank: 1,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 2,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 3,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 4,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 5,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 6,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 7,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 8,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-    {
-      rank: 9,
-      img: profileImg,
-      name: name,
-      hours: hours,
-    },
-  ]; // Temporary array for the leaderboard
-
-  const friends = [
-    {
-      rank: 1,
-      img: profileImg,
-      name: "Jane Doe",
-      hours: 12,
-    },
-    {
-      rank: 2,
-      img: profileImg,
-      name: "Jane Doe",
-      hours: 12,
-    },
-    {
-      rank: 3,
-      img: profileImg,
-      name: "Jane Doe",
-      hours: 12,
-    },
-  ]; // Temporary array for the leaderboard
-
-  const colref = collection(db, "users");
   const [users, setUsers] = useState<any[]>([]);
+  const [friends, setFriends] = useState<any[]>([]);
 
   useEffect(() => {
-    getDocs(colref)
-      .then((snapshot) => {
-        let getUsers: any[] = [];
-        snapshot.docs.forEach((doc) => {
-          getUsers.push({ ...doc.data(), id: doc.id });
-        });
-        console.log(getUsers);
-        setUsers(getUsers);
+    const appUrl = import.meta.env.VITE_API_URL;
+    axios
+      .get(`${appUrl}/api/users`)
+      .then((res) => {
+        setUsers(res.data);
       })
       .catch((err) => {
-        console.log(err.message);
+        console.error(err);
+      });
+    
+    axios
+      .get(`${appUrl}/api/friends/${firestoreUserDetails.uid}`)
+      .then((res) => {
+        setFriends(res.data);
+      })
+      .catch((err) => {
+        console.error(err);
       });
   }, []);
 
-  //sort users by their hours
-  const renderUsers = users.sort((a, b) => b.hours - a.hours).slice(0, 10);
-
+  
   const [leaderboardFilter, setLeaderboardFilter] = useState("all"); // Filter for the leaderboard
-  const [leaderboardData, setLeaderboardData] = useState(all); // Data for the leaderboard
-  console.log(leaderboardData); // to satify the linter
 
   function changeLeaderboardFilter(filter: string) {
     setLeaderboardFilter(filter);
-    if (filter == "all") {
-      setLeaderboardData(all);
-    } else {
-      setLeaderboardData(friends);
-    }
   }
-  //   let rank = 1; // never used?
+  
+  const leaderboardData = leaderboardFilter === "all" ? users : friends;
+  //sort users by their hours
+  const renderUsers = leaderboardData.sort((a, b) => b.hours - a.hours).slice(0, 10);
 
   return (
     <div className="w-full h-full pt-7 pb-2 flex flex-col items-center bg-white rounded-xl shadow-lg ">
