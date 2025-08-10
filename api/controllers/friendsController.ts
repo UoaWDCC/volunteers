@@ -42,8 +42,7 @@ async function getFriends(req: Request, res: Response): Promise<void> {
         res.json(friends);
 
     } catch (error) {
-        console.error("Error fetching user:", error);
-        res.status(500).json({ error: `Internal server error ${JSON.stringify(error)}` });
+        res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
     }
 }
 
@@ -93,8 +92,7 @@ async function deleteFriend(req: Request, res: Response): Promise<void> {
         res.status(200).json({ message: "Friend removed successfully" });
 
     } catch (error) {
-        console.error("Error removing friend:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
     }
 }
 

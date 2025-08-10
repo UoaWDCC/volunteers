@@ -28,8 +28,7 @@ async function getFriendRequests(req: Request, res: Response): Promise<void> {
 
 
     } catch (error) {
-        console.error("Error fetching friend requests:", error);
-        res.status(500).json({ error: `Internal server error ${JSON.stringify(error)}` });
+        res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
     }
 }
 
@@ -73,7 +72,7 @@ async function createFriendRequest(req: Request, res: Response): Promise<void> {
 
     } catch (error) {
         console.error("Error adding friend:", error);
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
     }
 }
 
@@ -110,7 +109,7 @@ async function acceptFriendRequest(req: Request, res: Response): Promise<void> {
         res.status(200).json({ error: "Friend request accepted succesfully" });
         
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
     }
 }
 
@@ -137,7 +136,7 @@ async function rejectFriendRequest(req: Request, res: Response): Promise<void> {
         res.status(200).json({ message: "Friend request rejected successfully" });
 
     } catch (error) {
-        res.status(500).json({ error: "Internal server error" });
+        res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
     }
 }
 
