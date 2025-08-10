@@ -19,7 +19,7 @@ async function getFriends(req: Request, res: Response): Promise<void> {
         const friendshipsDoc = await getDoc(friendshipsRef);
         const friendshipsData = friendshipsDoc.data();
 
-        if (!friendshipsDoc.exists() || !friendshipsData) res.json(null);
+        if (!friendshipsDoc.exists() || !friendshipsData) res.json([]);
 
         // Fetch each friends details form the user collection
         // And return them as promises
@@ -61,19 +61,34 @@ async function deleteFriend(req: Request, res: Response): Promise<void> {
 
     try {
         // Use user id as document id in friendships collection
-        const docRef = doc(db, "friendships", uid);
+        const userDocRef = doc(db, "friendships", uid);
+        const friendDocRef = doc(db, "friendships", friend_id);
 
         // Check if the document exists
-        const docSnap = await getDoc(docRef);
+        const userDocSnap = await getDoc(userDocRef);
+        const friendDocSnap = await getDoc(userDocRef);
 
-        if (!docSnap.exists()) {
-            res.status(200).json({ message: "friend_id not found. Operation successful" });
-        } else {
-            // Update the existing document by appending new friend_id
-            await updateDoc(docRef, {
-                friend_ids: arrayRemove(friend_id) // 'arrayUnion' handles duplicates which absolutely lovely
+
+        const missingDocs: string[] = [];
+        if (!userDocSnap.exists()) missingDocs.push(uid);
+        if (!friendDocSnap.exists()) missingDocs.push(friend_id);
+        if (missingDocs.length > 0) {
+            res.status(200).json({
+                message: `Document${missingDocs.length > 1 ? "s" : ""} for ${missingDocs.join(", ")} not found in friendships collection. Deletion not required.`
             });
+            return;
         }
+
+        await Promise.all([
+            // Delete friend from user's friends list
+            updateDoc(userDocRef, {
+                friend_ids: arrayRemove(friend_id)
+            }),
+            // Delete user from friend's friends list
+            updateDoc(friendDocRef, {
+                friend_ids: arrayRemove(uid)
+            })
+        ])
 
         res.status(200).json({ message: "Friend removed successfully" });
 
