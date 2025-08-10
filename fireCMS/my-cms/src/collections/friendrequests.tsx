@@ -4,24 +4,28 @@ import { buildCollection } from "@firecms/core";
 export const FriendRequestsCollection = buildCollection({
     name: "FriendRequests",
     path: "friendrequests",
-    singularName: "FriendRequests",
+    singularName: "FriendRequest",
     id: "friendrequests",
     properties: {
         added_at: { 
             name: "Added At",
+            validation: {
+				required: true,
+			},
+			mode: 'date_time',
             dataType: "date", 
             autoValue: "on_create"
         },
-        requester: {
-            name: "Requester",
-            dataType: "reference",
-            path: "users"
+        requester_id: {
+            name: 'Requester',
+            dataType: 'string',
+            description: 'User id of the requesting user',
         },
-        reciever: {
-            name: "Receiver",
-            dataType: "reference",
-            path: "users"
-        },
+        reciever_id: {
+            name: 'Reciever',
+            dataType: 'string',
+            description: 'User id of the recieving user',
+        }
     },
     subcollections: [],
 });
