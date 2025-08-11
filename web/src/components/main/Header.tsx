@@ -1,12 +1,12 @@
 import AuthenticationContext from '../../context/AuthenticationContext.tsx';
 import { useContext, useState, useEffect } from 'react';
 import LoginModalContext from '../../context/LoginModalContext.tsx';
-import { useLocation } from 'react-router-dom';
+//import { useLocation } from 'react-router-dom';
 
 function Header() {
   const { setShowModal } = useContext(LoginModalContext);
   const authContext = useContext(AuthenticationContext);
-  const location = useLocation();
+  //const location = useLocation();
   const [activeSection, setActiveSection] = useState('');
 
   const { signOut, isUserLoggedIn, firestoreUserDetails } = 

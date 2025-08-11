@@ -11,6 +11,8 @@ type Event = {
     image: string;
     host: string;
     coordinates: { longitude: string; latitude: string };
+    is_external?: boolean;               
+    external_registration_url?: string;
 };
 
 interface EventCardProps {
@@ -36,6 +38,25 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
 
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
+    const handleRegistration = () => {
+        if (event.is_external && event.external_registration_url) {
+            // Open external URL in new tab
+            window.open(event.external_registration_url, '_blank', 'noopener,noreferrer');
+            
+            // Show confirmation when user returns to tab
+            const confirmation = confirm(
+                "Have you completed registration on the external site?"
+            );
+            if (confirmation) {
+                // Track successful redirects
+                console.log("External registration completed for", event.event_title);
+            }
+        } else {
+            // Internal event registration logic would go here
+            console.log("Internal registration flow for", event.event_title);
+        }
+    };
+
     return (
         <div className="relative dashboard w-fullitems-center my-2 p-4 flex rounded-xl cursor-pointer bg-grey-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 ">
             {/* Edit Icon - Top Right */}
@@ -56,6 +77,16 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
                 <p className="mb-0 text-sm">{dateInfo}</p>
                 <h2 className="inline font-semibold text-base mb-1 text-xl">{event.event_title}</h2>
                 <p className="mb-0 text-sm">{event.location}</p>
+            </div>
+
+            {/* Add Registration Button */}
+            <div className="absolute bottom-5 right-5">
+                <button 
+                    onClick={handleRegistration}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                >
+                    {event.is_external ? "Register (External)" : "Register"}
+                </button>
             </div>
         </div>
     );

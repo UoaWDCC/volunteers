@@ -1,7 +1,8 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { useState, useEffect } from 'react';
-import { useAuth } from '../../../context/AuthenticationContextProvider';
+//import { useAuth } from '../../../context/AuthenticationContextProvider';
+import { getAuth, User } from "firebase/auth";
 import { addDoc, collection, doc, getFirestore, serverTimestamp, query, where, getDocs, deleteDoc } from "firebase/firestore";
 
 type Event = {
@@ -18,6 +19,8 @@ type Event = {
     host: string;
     coordinates: {longitude: string, latitude: string};
     id?: string; // Add document ID
+    is_external?: boolean;               
+    external_registration_url?: string;
 }
 
 interface EventProps {
@@ -41,11 +44,15 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
 
     const db = getFirestore();
 
-    const auth = useAuth();
-    const user = auth?.currentUser;
+    const auth = getAuth();
+    const user: User | null = auth.currentUser;
 
     // Check if user is already registered for this event
     useEffect(() => {
+        if (event.is_external) {
+            setButtonText('Register (External)');
+            return;
+        }
         const checkRegistration = async () => {
             if (!user?.uid || !event.id) return;
             
@@ -85,18 +92,29 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
         };
 
         checkRegistration();
-    }, [user?.uid, event.id]);
+    }, [user?.uid, event.id, event.is_external]);
 
     const handleClick = () => {
-        if (!isRegistered) {
-            if(user?.uid && event.id) {
-                registerUserToEvent(event.id, user.uid);
-            } else {
-                return;
+         if (event.is_external && event.external_registration_url) {
+            // External event flow
+            window.open(event.external_registration_url, '_blank', 'noopener,noreferrer');
+            const confirmation = confirm(
+                "Have you completed registration on the external site?"
+            );
+            if (confirmation) {
+                console.log("External registration completed");
             }
-            setButtonText('You are registered!');
         } else {
-            setIsPopupVisible(true);  // Show the popup if already registered
+            if (!user || !event.id) return; //null check
+            // Existing internal registration flow
+            if (!isRegistered) {
+                if(user?.uid && event.id) {
+                    registerUserToEvent(event.id, user.uid);
+                }
+                setButtonText('You are registered!');
+            } else {
+                setIsPopupVisible(true); // Show the popup if already registered
+            }
         }
     };
 

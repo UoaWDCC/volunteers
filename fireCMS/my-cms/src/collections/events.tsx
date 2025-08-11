@@ -1,6 +1,6 @@
 import { EntityCollection } from "@firecms/core";
 
-export const EventsCollection:EntityCollection = {
+export const EventsCollection:EntityCollection= {
 	id: 'events',
 	name: 'Events',
 	singularName: 'Event',
@@ -76,6 +76,10 @@ export const EventsCollection:EntityCollection = {
 						id: 'Other',
 						label: 'Other',
 					},
+					{
+						id: 'External Event',
+						label: 'External Event',
+					}
 				],
 				dataType: 'string',
 			},
@@ -131,6 +135,40 @@ export const EventsCollection:EntityCollection = {
 			},
 			description: 'The coordinates of the location on maps. Get this by right clicking in Google Maps and selecting the first option',
 		},
+		is_external: {
+            dataType: 'boolean',
+            name: 'External Event',
+            description: 'Check if registration happens on an external site',
+            defaultValue: false,
+            columnWidth: 120,
+			config: {
+				previewAsTag: true,
+				tagValues: {
+					true: {
+						label: "External",
+						color: "#FF5722"
+					},
+					false: {
+						label: "Internal",
+						color: "#4CAF50"
+					}
+				}
+			}
+        },
+        external_registration_url: {
+            dataType: 'string',
+            name: 'Registration URL',
+            description: 'The external registration link (required for external events)',
+            validation: {
+                url: true,
+                required: (values: { is_external?: boolean }) => values.is_external ? true : false
+            },
+            disabled: ({ values }: { values: { is_external?: boolean } }) => !values.is_external,
+            clearOnDisabled: true,
+            config: {
+                url: true // Makes the URL clickable in the table
+            }
+        }
 	},
 	subcollections: [],
 }
