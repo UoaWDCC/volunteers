@@ -841,7 +841,7 @@ const Newsletters: React.FC = () => {
                                         </div>
                                     
                                         <div 
-                                            className="absolute left-[74px] top-[180px] w-[305px] h-[360px] rounded-[11px] border-[3px] border-[#3B87DD] border-inset overflow-hidden"
+                                            className="absolute left-[74px] top-[180px] w-[305px] h-[360px] rounded-[11px] border-[3px] border-[#3B87DD] border-inset"
                                             style={{ 
                                                 boxSizing: 'border-box',
                                                 borderStyle: 'inset',
@@ -849,7 +849,7 @@ const Newsletters: React.FC = () => {
                                         >
                                             {/* html content preview */}
                                             <div 
-                                                className="w-full h-full overflow-y-autoemail-preview-reset"
+                                                className="w-full h-full overflow-y-auto min-h-[350px]"
                                                 dangerouslySetInnerHTML={{ __html: emailPreview }}
                                             />
                                         </div>
@@ -859,15 +859,6 @@ const Newsletters: React.FC = () => {
                                         >
                                             Preview of Newsletter
                                         </div>
-                                        
-                                        {/* scrollbar */}
-                                        <div 
-                                            className="absolute left-[392px] top-[191px] w-[5px] h-[360px]"
-                                            style={{
-                                                background: '#D9D9D9',
-                                                borderRadius: '5px',
-                                            }}
-                                        />
                                     </>
                                 )}
                                 
