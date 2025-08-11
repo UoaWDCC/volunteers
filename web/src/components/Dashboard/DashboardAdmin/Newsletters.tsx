@@ -243,7 +243,7 @@ const Newsletters: React.FC = () => {
                 newsletterTitle: title,
                 newsletterSubheader: date,
                 newsletterDescription: htmlContent,
-                newsletterEventIds: selectedEvents
+                newsletterEventIds: selectedEvents.filter(id => id) // Send only truthy IDs
             });
 
             if (response.data) {
@@ -279,10 +279,10 @@ const Newsletters: React.FC = () => {
         }
     };
 
-    const handleEventSelect = (eventName: string, index: number) => {
+    const handleEventSelect = (eventId: string, index: number) => {
         setSelectedEvents(prev => {
             const newEvents = [...prev];
-            newEvents[index] = newEvents[index] === eventName ? '' : eventName;
+            newEvents[index] = newEvents[index] === eventId ? '' : eventId;
             return newEvents;
         });
         //clear error when event selected
@@ -299,8 +299,8 @@ const Newsletters: React.FC = () => {
 
     const getAvailableEvents = (currentIndex: number) => {
         return events.filter(event => 
-            !selectedEvents.includes(event.name) || 
-            selectedEvents[currentIndex] === event.name
+            !selectedEvents.includes(event.id) || 
+            selectedEvents[currentIndex] === event.id
         );
     };
 
@@ -682,9 +682,7 @@ const Newsletters: React.FC = () => {
                                                                                 <div className="relative flex items-center">
                                                                                     <div className="text-[10px] text-[#C7C9D9] w-[190px] h-[29px] bg-[#FBFBFB] border-[0.65px] border-[#DDE5E9] rounded-[11px] px-3 py-2 flex items-center justify-center overflow-hidden">
                                                                                         <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                                                                            {selectedEvents[index].length > 20 
-                                                                                                ? `${selectedEvents[index].substring(0, 17)}...`
-                                                                                                : selectedEvents[index]}
+                                                                                            {events.find(e => e.id === selectedEvents[index])?.name || ''}
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -757,7 +755,7 @@ const Newsletters: React.FC = () => {
                                                                                                 }}
                                                                                                 onClick={(e) => {
                                                                                                     e.stopPropagation();
-                                                                                                    handleEventSelect(event.name, index);
+                                                                                                    handleEventSelect(event.id, index);
                                                                                                     toggleDropdown(index);
                                                                                                 }}
                                                                                             >
