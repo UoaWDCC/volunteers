@@ -835,21 +835,22 @@ const Newsletters: React.FC = () => {
                                 {showReview && (
                                     <>
                                         <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
-                                            Review form before submitting
+                                        Review form before submitting
                                         </div>
                                     
                                         <div 
-                                            className="absolute left-[74px] top-[180px] w-[305px] h-[360px] rounded-[11px] border-[3px] border-[#3B87DD] border-inset"
+                                            className="absolute left-[74px] top-[180px] w-[305px] h-[360px] rounded-[11px] border-[3px] border-[#3B87DD] border-inset overflow-hidden"
                                             style={{ 
                                                 boxSizing: 'border-box',
                                                 borderStyle: 'inset',
                                             }}
                                         >
-                                            {/* html content preview */}
-                                            <div 
-                                                className="w-full h-full overflow-y-auto min-h-[350px]"
-                                                dangerouslySetInnerHTML={{ __html: emailPreview }}
-                                            />
+                                        {/* Use iframe to isolate preview */}
+                                        <iframe 
+                                            srcDoc={emailPreview}
+                                            className="w-full h-full bg-white"
+                                            frameBorder="0"
+                                        />
                                         </div>
                                         
                                         <div 
@@ -859,7 +860,6 @@ const Newsletters: React.FC = () => {
                                         </div>
                                     </>
                                 )}
-                                
                                 {showSubmit && (
                                     <>
                                         <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
