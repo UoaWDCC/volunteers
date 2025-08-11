@@ -9,6 +9,7 @@ import eventEndpoints from './api/events';
 import announcementEndpoints from './api/announcements';
 import homepageEndpoints from './api/homepage';
 import emailEndpoints from './api/email';
+import newsletterEndpoints from './api/newsletter';
 
 import { db } from "../config/firebase";
 import {
@@ -41,6 +42,7 @@ router.use("/events", eventEndpoints);
 router.use("/announcements", announcementEndpoints);
 router.use("/homepage", homepageEndpoints); 
 router.use('/email', emailEndpoints);
+router.use('/newsletter', newsletterEndpoints);
 
 export default router;
 

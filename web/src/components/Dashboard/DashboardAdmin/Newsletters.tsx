@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import NewsletterCard from "./NewsletterCard";
 import { EditorState, convertToRaw } from 'draft-js';;
@@ -101,6 +102,7 @@ const Newsletters: React.FC = () => {
     };
 
     const goToReview = () => {
+        generatePreview(); // Generate preview when entering review stage
         setShowIntro(false);
         setShowEvents(false);
         setShowReview(true);
@@ -228,6 +230,29 @@ const Newsletters: React.FC = () => {
             const selectedFiles = Array.from(e.target.files);
             const imageFiles = selectedFiles.filter(file => file.type.startsWith('image/'));
             setFiles(prev => [...prev, ...imageFiles]);
+        }
+    };
+
+    const generatePreview = async () => {
+        try {
+            const rawContent = convertToRaw(editorState.getCurrentContent());
+            const htmlContent = draftToHtml(rawContent);
+            const appUrl = import.meta.env.VITE_API_URL;
+
+            const response = await axios.post(`${appUrl}/api/newsletter/preview`, {
+                newsletterTitle: title,
+                newsletterSubheader: date,
+                newsletterDescription: htmlContent,
+                newsletterEventIds: selectedEvents
+            });
+
+            if (response.data) {
+                setEmailPreview(response.data);
+            } else {
+                throw new Error('No preview data received');
+            }
+        } catch (error) {
+            console.error('Error generating preview:', error);
         }
     };
 
