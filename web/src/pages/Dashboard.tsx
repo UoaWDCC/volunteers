@@ -8,10 +8,8 @@ import DashboardHeader from "@components/Dashboard/DashboardHeader";
 import SideBar from "@components/Dashboard/SideBar";
 import { CommunitySearchContextProvider } from "../context/CommunitySearchContextProvider";
 import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
-import SearchBar from "@components/Dashboard/DashboardCommunity/SearchBar";
 import AuthenticationContext from "../context/AuthenticationContext";
 import DashboardAdmin from "@components/Dashboard/DashboardAdmin/DashboardAdmin";
-
 
 function Dashboard() {
   const [tab, setTab] = useState(1);
@@ -59,8 +57,8 @@ function Dashboard() {
             </div>
 
             <div className='flex flex-col flex-1 '>
-                <div className='flex flex-row justify-end items-center w-full'>
-                    <DashboardHeader/>
+                <div className='flex flex-row justify-end items-center w-full mb-4'>
+                    <DashboardHeader tab = {tab}/>
                 </div>
 
                 {/* whole tabs go in here */}
