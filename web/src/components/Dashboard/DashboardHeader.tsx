@@ -17,7 +17,7 @@ const DashboardHeader = () => {
   };
 
   return (
-    <div className="">
+    <div className="bg-white w-full shadow-sm flex justify-end py-2 px-8 sticky top-0 z-40">
       <div className="flex justify-between items-center w-fit gap-8">
         <div className="flex">
           <span className="p-1 rounded-full bg-primary cursor-pointer shadow-lg transform active:scale-[80%] transition-transform" onClick={toggleNotificationTab}>
@@ -29,15 +29,19 @@ const DashboardHeader = () => {
 
         <div className="flex items-center justify-center gap-4">
           <span className="font-medium text-lg sm:max-2xl:hidden">John Doe</span>
-          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" className="rounded-full w-12 h-auto" />
+          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png" alt="Profile Picture" className="rounded-full w-10 h-auto" />
         </div>
       </div>
 
       <div className={`relative transform transition-transform z-50 ${isNotificationTabOpen ? 'translate-x-0 duration-[400ms]' : 'translate-x-[32rem] duration-[800ms]'}`}>
         {isNotificationTabVisible && <NotificationTab toggleNotificationTab={toggleNotificationTab} />}
       </div>
+
     </div>
+    
   );
 }
 
 export default DashboardHeader;
+
+                        
