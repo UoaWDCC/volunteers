@@ -1,5 +1,11 @@
+import PlaceholderPFP from "@components/Dashboard/placeholderPfp";
 
-const ProfileMyProfileHeading = ({ name }: { name: string }) => {
+interface ProfileHeadingProps {
+  img?: string;
+  name?: string;
+}
+
+const ProfileMyProfileHeading = ({ img, name}: ProfileHeadingProps) => {
   return (
     <div className="dashboard shadow-lg rounded-xl overflow-hidden w-full h-full flex flex-col relative">
       {/* Blue header section */}
@@ -10,10 +16,9 @@ const ProfileMyProfileHeading = ({ name }: { name: string }) => {
         {/* Profile name */}
         <span className="text-heading1 font-bold text-black ml-[180px]">{name}</span>
       </div>
-
-      {/* Profile image placeholder */}
+    
       <div className="absolute bottom-[15%] left-10">
-        <div className="bg-black w-[8rem] h-[8rem] rounded-full"></div>
+        <PlaceholderPFP size="w-28 aspect-square" name={`${name}`} imageSource={img}/>
       </div>
     </div>
   );
