@@ -62,7 +62,7 @@ function Dashboard() {
                 </div>
 
                 {/* whole tabs go in here */}
-                <div className='flex flex-row h-[90%] pt-0 p-5'>
+                <div className='flex flex-row h-[90%] py-6 px-8'>
                     {/* <DashboardCommunity /> */}
                     {tab === 1 && (isAdmin ? <DashboardAdmin /> : <DashboardDashboard />)}
                     {tab === 2 && <DashboardDiscover />}
