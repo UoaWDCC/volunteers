@@ -5,6 +5,8 @@ import { Request, Response } from 'express';  // Import types for Express reques
 // Get all friends by uid
 async function getFriends(req: Request, res: Response): Promise<void> {
 
+    console.log("Fetching friends for user");
+
     // NOTE: each document id in the friendships collection is the corresponsing user's id
     try {
         const uid = req.params.uid;
@@ -19,7 +21,10 @@ async function getFriends(req: Request, res: Response): Promise<void> {
         const friendshipsDoc = await getDoc(friendshipsRef);
         const friendshipsData = friendshipsDoc.data();
 
-        if (!friendshipsDoc.exists() || !friendshipsData) res.json([]);
+        if (!friendshipsDoc.exists() || !friendshipsData) {
+            res.json([]);
+            return;
+        }
 
         // Fetch each friends details form the user collection
         // And return them as promises
@@ -37,9 +42,13 @@ async function getFriends(req: Request, res: Response): Promise<void> {
             return { ...userData };
         });
 
+        console.log("1")
+
         // Once promises fufilled, assign them as a 'friends' constant
         const friends = (await Promise.all(friendsPromises)).filter(Boolean);
         res.json(friends);
+
+        console.log("2")
 
     } catch (error) {
         res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
