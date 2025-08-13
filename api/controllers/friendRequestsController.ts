@@ -66,6 +66,7 @@ async function createFriendRequest(req: Request, res: Response): Promise<void> {
             );
         } else {
             res.status(200).json({ message: "Friend request already exists" });
+            return;
         }
 
         res.status(200).json({ message: "Friend request sent successfully" });
@@ -80,8 +81,9 @@ async function acceptFriendRequest(req: Request, res: Response): Promise<void> {
 
     const frId = req.params.id;
 
+
     if (!frId) {
-        res.status(400).json({ error: "requester_id is required" });
+        res.status(400).json({ error: "Friend request ID is required" });
         return;
     }
 
