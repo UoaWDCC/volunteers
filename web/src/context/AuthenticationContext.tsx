@@ -1,7 +1,5 @@
 import React from 'react';
 
-import type { AuthContext } from './AuthenticationContextProvider'; 
-
-const AuthenticationContext = React.createContext<AuthContext | null>(null);
+const AuthenticationContext = React.createContext(null);
 
 export default AuthenticationContext;
