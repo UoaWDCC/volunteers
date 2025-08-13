@@ -14,6 +14,7 @@
     "html-pdf": "^3.0.1",
     "js-base64": "^3.7.7",
     "react": "^18.3.1",
+    "react-big-calendar": "^1.19.4",
     "react-circular-progressbar": "^2.1.0",
     "react-datepicker": "^7.3.0",
     "react-dom": "^18.3.1",
