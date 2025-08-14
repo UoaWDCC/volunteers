@@ -7,7 +7,7 @@ async function getFriends(req: Request, res: Response): Promise<void> {
 
     console.log("Fetching friends for user");
 
-    // NOTE: each document id in the friendships collection is the corresponsing user's id
+    // NOTE: the user's `uid` in the users collection is their corresponding document id in the friendships collection
     try {
         const uid = req.params.uid;
 
@@ -26,7 +26,7 @@ async function getFriends(req: Request, res: Response): Promise<void> {
             return;
         }
 
-        // Fetch each friends details form the user collection
+        // Fetch each friends details from the users collection
         // And return them as promises
         const friendsPromises = friendshipsData?.friend_ids.map(async (friend_id: string) => {
 
