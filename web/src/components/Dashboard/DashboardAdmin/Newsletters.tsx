@@ -1,3 +1,4 @@
+import axios from 'axios';
 import { useState, useEffect } from 'react';
 import NewsletterCard from "./NewsletterCard";
 import { EditorState, convertToRaw } from 'draft-js';;
@@ -101,6 +102,7 @@ const Newsletters: React.FC = () => {
     };
 
     const goToReview = () => {
+        generatePreview(); // Generate preview when entering review stage
         setShowIntro(false);
         setShowEvents(false);
         setShowReview(true);
@@ -231,6 +233,29 @@ const Newsletters: React.FC = () => {
         }
     };
 
+    const generatePreview = async () => {
+        try {
+            const rawContent = convertToRaw(editorState.getCurrentContent());
+            const htmlContent = draftToHtml(rawContent);
+            const appUrl = import.meta.env.VITE_API_URL;
+
+            const response = await axios.post(`${appUrl}/api/newsletter/preview`, {
+                newsletterTitle: title,
+                newsletterSubheader: date,
+                newsletterDescription: htmlContent,
+                newsletterEventIds: selectedEvents.filter(id => id) // Send only truthy IDs
+            });
+
+            if (response.data) {
+                setEmailPreview(response.data);
+            } else {
+                throw new Error('No preview data received');
+            }
+        } catch (error) {
+            console.error('Error generating preview:', error);
+        }
+    };
+
     const handleSubmit = (e?: React.FormEvent) => {
         e?.preventDefault();
         const content = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
@@ -254,10 +279,10 @@ const Newsletters: React.FC = () => {
         }
     };
 
-    const handleEventSelect = (eventName: string, index: number) => {
+    const handleEventSelect = (eventId: string, index: number) => {
         setSelectedEvents(prev => {
             const newEvents = [...prev];
-            newEvents[index] = newEvents[index] === eventName ? '' : eventName;
+            newEvents[index] = newEvents[index] === eventId ? '' : eventId;
             return newEvents;
         });
         //clear error when event selected
@@ -274,8 +299,8 @@ const Newsletters: React.FC = () => {
 
     const getAvailableEvents = (currentIndex: number) => {
         return events.filter(event => 
-            !selectedEvents.includes(event.name) || 
-            selectedEvents[currentIndex] === event.name
+            !selectedEvents.includes(event.id) || 
+            selectedEvents[currentIndex] === event.id
         );
     };
 
@@ -657,9 +682,7 @@ const Newsletters: React.FC = () => {
                                                                                 <div className="relative flex items-center">
                                                                                     <div className="text-[10px] text-[#C7C9D9] w-[190px] h-[29px] bg-[#FBFBFB] border-[0.65px] border-[#DDE5E9] rounded-[11px] px-3 py-2 flex items-center justify-center overflow-hidden">
                                                                                         <span className="whitespace-nowrap overflow-hidden text-ellipsis">
-                                                                                            {selectedEvents[index].length > 20 
-                                                                                                ? `${selectedEvents[index].substring(0, 17)}...`
-                                                                                                : selectedEvents[index]}
+                                                                                            {events.find(e => e.id === selectedEvents[index])?.name || ''}
                                                                                         </span>
                                                                                     </div>
                                                                                 </div>
@@ -732,7 +755,7 @@ const Newsletters: React.FC = () => {
                                                                                                 }}
                                                                                                 onClick={(e) => {
                                                                                                     e.stopPropagation();
-                                                                                                    handleEventSelect(event.name, index);
+                                                                                                    handleEventSelect(event.id, index);
                                                                                                     toggleDropdown(index);
                                                                                                 }}
                                                                                             >
@@ -812,7 +835,7 @@ const Newsletters: React.FC = () => {
                                 {showReview && (
                                     <>
                                         <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
-                                            Review form before submitting
+                                        Review form before submitting
                                         </div>
                                     
                                         <div 
@@ -822,11 +845,12 @@ const Newsletters: React.FC = () => {
                                                 borderStyle: 'inset',
                                             }}
                                         >
-                                            {/* html content preview */}
-                                            <div 
-                                                className="w-full h-full overflow-y-autoemail-preview-reset"
-                                                dangerouslySetInnerHTML={{ __html: emailPreview }}
-                                            />
+                                        {/* Use iframe to isolate preview */}
+                                        <iframe 
+                                            srcDoc={emailPreview}
+                                            className="w-full h-full bg-white"
+                                            frameBorder="0"
+                                        />
                                         </div>
                                         
                                         <div 
@@ -834,18 +858,8 @@ const Newsletters: React.FC = () => {
                                         >
                                             Preview of Newsletter
                                         </div>
-                                        
-                                        {/* scrollbar */}
-                                        <div 
-                                            className="absolute left-[392px] top-[191px] w-[5px] h-[360px]"
-                                            style={{
-                                                background: '#D9D9D9',
-                                                borderRadius: '5px',
-                                            }}
-                                        />
                                     </>
                                 )}
-                                
                                 {showSubmit && (
                                     <>
                                         <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
