@@ -324,7 +324,8 @@ const Newsletters: React.FC = () => {
                 <div className="flex-grow" />
 
                 {/* Create button */}
-                <div className="rounded-full ml-4 -mt-4 self-center" onClick={handleCreateNewsletter}>
+                <div className="rounded-full ml-4 -mt-4 self-center p-2 cursor-pointer transition-transform duration-200 hover:scale-110" 
+                    onClick={handleCreateNewsletter}>
                     <img src="/assets/dashboard/admin/plus.svg" alt="Create Newsletter" className="w-6 h-6" />
                 </div>
             </div>
@@ -336,15 +337,6 @@ const Newsletters: React.FC = () => {
                 {newsletters.map((newsletter) => (
                     <NewsletterCard newsletter={newsletter} key={newsletter.id} />
                 ))}
-            </div>
-
-            {/* Create button */}
-            <div className="flex bg-white mt-3 justify-center">
-                <button className="bg-primary text-body text-xs rounded-full py-3 px-5 hover:bg-primary-dark hover:text-[#f7f7fb] active:bg-[#264268] active:translate-y-0.5 transition-all ease-in-out duration-100 max-[1440px]:text-lg max-[1440px]:py-1 max-[1440px]:px-7 max-[1280px]:py-2 max-[1280px]:px-9 max-[1280px]:text-xl">
-                    <div className="flex items-center gap-2">
-                        <p className="m-0 max-[1440px]:text-[14px] max-[1280px]:text-[1rem]" onClick={ handleCreateNewsletter }>Create</p>
-                    </div>
-                </button>
             </div>
 
             {/* Popup Overlay */}
