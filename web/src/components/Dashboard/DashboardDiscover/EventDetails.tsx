@@ -34,7 +34,6 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     
     const options: Intl.DateTimeFormatOptions = { weekday: 'long', month: 'long', day: 'numeric', year: 'numeric'};
  
-    const [buttonText, setButtonText] = useState('Register for Event');
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
     const [attendanceId, setAttendanceId] = useState<string | null>(null);
@@ -42,6 +41,9 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const db = getFirestore();
 
     const auth = useAuth();
+
+    const label = isRegistered ? 'You are registered!' : 'Register for Event';
+
     const user = auth?.currentUser;
 
     // Check if user is already registered for this event
@@ -72,11 +74,9 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                 if (!querySnapshot.empty) {
                     const doc = querySnapshot.docs[0];
                     setIsRegistered(true);
-                    setButtonText('You are registered!');
                     setAttendanceId(doc.id);
                 } else {
                     setIsRegistered(false);
-                    setButtonText('Register for Event');
                     setAttendanceId(null);
                 }
             } catch (error) {
@@ -94,7 +94,6 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             } else {
                 return;
             }
-            setButtonText('You are registered!');
         } else {
             setIsPopupVisible(true);  // Show the popup if already registered
         }
@@ -106,7 +105,6 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
         } else {
             console.error("No attendanceId found for unregister");
         }
-        setButtonText('Register for Event');
         setIsPopupVisible(false);
     };
 
@@ -160,7 +158,14 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                    <div className="flex flex-row gap-10">
+                        <div
+                        className="stroked rounded-full text-body-heading whitespace-nowrap px-4 py-1 text-primary border-2 border-primary
+                                    hover:text-white hover:bg-primary flex items-center justify-center">
+                            Interested
+                        </div>
+                        <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{label}</button>
+                    </div>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -169,7 +174,8 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     ))}
                 </div>
             </div>
-            {/* Popup for confirmation */}
+
+            {/* Pop-up for confirmation */}
             {isPopupVisible && (
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50">
                     <div className="bg-white p-6 rounded-lg w-1/3 text-center">
