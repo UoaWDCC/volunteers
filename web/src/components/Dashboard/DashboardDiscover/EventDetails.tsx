@@ -2,6 +2,7 @@ import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/AuthenticationContextProvider';
+import type { User } from 'firebase/auth';
 import { addDoc, collection, doc, getFirestore, serverTimestamp, query, where, getDocs, deleteDoc } from "firebase/firestore";
 
 type Event = {
@@ -23,9 +24,10 @@ type Event = {
 interface EventProps {
     event: Event;
     setEventDetails: Dispatch<SetStateAction<null|Event>>;
+    onRegistrationChange?: () => void;
 }
 
-export default function EventDetails({event, setEventDetails}: EventProps) {
+export default function EventDetails({event, setEventDetails, onRegistrationChange}: EventProps) {
     // Need to do this for some reason to get calling methods on Date object to work
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
@@ -41,8 +43,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
 
     const db = getFirestore();
 
-    const auth = useAuth();
-    const user = auth?.currentUser;
+    const { currentUser: user } = (useAuth() as unknown) as { currentUser: User | null };
 
     // Check if user is already registered for this event
     useEffect(() => {
@@ -135,6 +136,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             
             setIsRegistered(true);
             setAttendanceId(docRef.id); // Set the attendance document ID
+            if (onRegistrationChange) onRegistrationChange();
         } catch (error) {
             console.error("Error registering for event:", error);
         }
@@ -146,6 +148,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             await deleteDoc(attendanceDoc);
             setIsRegistered(false);
             setAttendanceId(null);
+            if (onRegistrationChange) onRegistrationChange();
         } catch (error) {
             console.error("Error unregistering from event:", error);
         }
