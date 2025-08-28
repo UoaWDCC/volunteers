@@ -21,7 +21,7 @@ function DashboardProfile() {
     const [emergencyLastName, setEmergencyLastName] = useState("");
     const [relationship, setRelationship] = useState("");
     const [emergencyMobile, setEmergencyMobile] = useState("");
-    
+
     useEffect(() => {
         console.log("User is logged in: ", isUserLoggedIn);
         if (!isUserLoggedIn) {
@@ -41,6 +41,8 @@ function DashboardProfile() {
             setYearLevel(firestoreUserDetails.yearLevel);
             setDietary(firestoreUserDetails.dietaryRequirements || []);
             setLicense(firestoreUserDetails.driversLicense);
+            console.log(firestoreUserDetails.driversLicense);
+            console.log("dashboardprofile");
             setEmergencyFirstName(firestoreUserDetails.emergencyContactFirstName);
             setEmergencyLastName(firestoreUserDetails.emergencyContactLastName);
             setRelationship(firestoreUserDetails.emergencyContactRelationship);
@@ -75,7 +77,7 @@ function DashboardProfile() {
                     </div>
 
                     <div className="flex-1">
-                        <ProfileMyProfileProgressBar totalHours={20} completedHours={14}></ProfileMyProfileProgressBar>
+                        <ProfileMyProfileProgressBar totalHours={5} completedHours={firestoreUserDetails.hours}></ProfileMyProfileProgressBar>
                     </div>
                 </div>
             
