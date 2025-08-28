@@ -30,7 +30,6 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
         startExternalRegistration,
         completeRegistration,
         cancelRegistration,
-        unregisterExternalEvent,
         isExternallyRegistered
     } = useExternalRegistration();
     
@@ -54,28 +53,16 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
     const handleRegistration = () => {
-        if (event.is_external && event.external_registration_url) {
+        if (event.is_external && event.external_registration_url && event.id) {
             if (isRegistered) {
                 setShowUnregisterPopup(true);
             } else {
-                startExternalRegistration(event.id || '', event.event_title, event.external_registration_url);
+                startExternalRegistration(event.id, event.event_title, event.external_registration_url);
             }
         } else {
             console.log("Internal registration flow for", event.event_title);
         }
     };
-
-    const handleConfirmUnregister = () => {
-        if (event.id) {
-            unregisterExternalEvent(event.id);
-        }
-        setShowUnregisterPopup(false);
-    };
-
-    const handleCancelUnregister = () => {
-        setShowUnregisterPopup(false);
-    };
-
 
     return (
         <div className="relative dashboard w-fullitems-center my-2 p-4 flex rounded-xl cursor-pointer bg-grey-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 ">
