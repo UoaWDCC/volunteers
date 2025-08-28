@@ -11,9 +11,6 @@ import Dashboard from "@pages/Dashboard";
 import AuthenticationContextProvider from './context/AuthenticationContextProvider';
 import Developers from "@components/main/Developers";
 import EventContextProvider from "./context/EventContextProvider";
-import { trackExternalRegistrationReturn } from "./utils/externalRegistrationTracker";
-
-trackExternalRegistrationReturn();
 
 const router = createBrowserRouter([
   {
@@ -53,34 +50,6 @@ const router = createBrowserRouter([
 
 export default function App() {
   const [queryClient] = useState(() => new QueryClient());
-
-  useEffect(() => {
-    trackExternalRegistrationReturn();
-
-    const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
-        trackExternalRegistrationReturn();
-      }
-    };
-
-    const handleFocus = () => {
-      trackExternalRegistrationReturn();
-    };
-
-    const handlePageShow = () => {
-      trackExternalRegistrationReturn(); 
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-    window.addEventListener('pageshow', handlePageShow);
-
-    return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
-      window.removeEventListener('pageshow', handlePageShow);
-    };
-  }, []);
 
   return (
     <AuthenticationContextProvider>
