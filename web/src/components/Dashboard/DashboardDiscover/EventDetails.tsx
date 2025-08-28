@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
+import EventAttendanceVerification from './EventAttendanceVerification';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/AuthenticationContextProvider';
 import type { User } from 'firebase/auth';
@@ -163,7 +164,10 @@ export default function EventDetails({event, setEventDetails, onRegistrationChan
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                    <div className="flex flex-row gap-3">
+                        <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                        <EventAttendanceVerification event={event} />
+                    </div>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -194,6 +198,8 @@ export default function EventDetails({event, setEventDetails, onRegistrationChan
                     </div>
                 </div>
             )}
+
+
             
             <div className="flex flex-row w-[95%] justify-between">
                 <div className="w-[60%]">
