@@ -77,8 +77,8 @@ function App() {
         productsCollection,
         SponsorsCollection,
         UsersCollection,
-        NewslettersCollection
-        EventAttendanceCollection
+        NewslettersCollection,
+        EventAttendanceCollection,
     ], []);
 
     const {

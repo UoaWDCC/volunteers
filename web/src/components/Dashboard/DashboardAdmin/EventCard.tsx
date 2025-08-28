@@ -1,3 +1,5 @@
+import { useState } from 'react';
+import { useExternalRegistration } from '../../../Hooks/useExternalRegistration';
 type Event = {
     event_title: string;
     description: string;
@@ -11,8 +13,9 @@ type Event = {
     image: string;
     host: string;
     coordinates: { longitude: string; latitude: string };
-    is_external?: boolean;               
-    external_registration_url?: string;
+    id?: string;
+    is_external?: boolean;
+    external_registration_url?: string | null;
 };
 
 interface EventCardProps {
@@ -21,6 +24,18 @@ interface EventCardProps {
 }
 
 export default function EventCard({ event, onEdit }: EventCardProps) {
+    const {
+        showConfirmation,
+        pendingEvent,
+        startExternalRegistration,
+        completeRegistration,
+        cancelRegistration,
+        unregisterExternalEvent,
+        isExternallyRegistered
+    } = useExternalRegistration();
+    
+    const [showUnregisterPopup, setShowUnregisterPopup] = useState(false);
+    const isRegistered = isExternallyRegistered(event.id || '');
     const startDate = new Date(event.start_date_time);
 
     const days = ["SUN", "MON", "TUES", "WED", "THURS", "FRI", "SAT"];
@@ -40,22 +55,27 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
 
     const handleRegistration = () => {
         if (event.is_external && event.external_registration_url) {
-            // Open external URL in new tab
-            window.open(event.external_registration_url, '_blank', 'noopener,noreferrer');
-            
-            // Show confirmation when user returns to tab
-            const confirmation = confirm(
-                "Have you completed registration on the external site?"
-            );
-            if (confirmation) {
-                // Track successful redirects
-                console.log("External registration completed for", event.event_title);
+            if (isRegistered) {
+                setShowUnregisterPopup(true);
+            } else {
+                startExternalRegistration(event.id || '', event.event_title, event.external_registration_url);
             }
         } else {
-            // Internal event registration logic would go here
             console.log("Internal registration flow for", event.event_title);
         }
     };
+
+    const handleConfirmUnregister = () => {
+        if (event.id) {
+            unregisterExternalEvent(event.id);
+        }
+        setShowUnregisterPopup(false);
+    };
+
+    const handleCancelUnregister = () => {
+        setShowUnregisterPopup(false);
+    };
+
 
     return (
         <div className="relative dashboard w-fullitems-center my-2 p-4 flex rounded-xl cursor-pointer bg-grey-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 ">
@@ -79,15 +99,41 @@ export default function EventCard({ event, onEdit }: EventCardProps) {
                 <p className="mb-0 text-sm">{event.location}</p>
             </div>
 
-            {/* Add Registration Button */}
+            {/* Registration Button */}
             <div className="absolute bottom-5 right-5">
                 <button 
                     onClick={handleRegistration}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                    className={`px-4 py-2 rounded-md transition 'bg-blue-500 text-white hover:bg-blue-600`}
+                    disabled={isRegistered}
                 >
-                    {event.is_external ? "Register (External)" : "Register"}
+                    {isRegistered ? 'You are registered!' : 
+                     event.is_external ? 'Register (External)' : 'Register'}
                 </button>
             </div>
+
+            {/* External Registration Confirmation Popup */}
+            {showConfirmation && pendingEvent && (
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
+                    <div className="bg-white p-6 rounded-lg w-1/3 text-center">
+                        <h2 className="text-lg font-semibold mb-4">Registration Confirmation</h2>
+                        <p className="mb-4">Did you complete your registration for "{pendingEvent.title}"?</p>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                                onClick={completeRegistration}
+                            >
+                                Yes, I completed registration
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                                onClick={cancelRegistration}
+                            >
+                                Not yet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

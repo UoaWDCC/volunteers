@@ -1,4 +1,8 @@
-import { EntityCollection } from "@firecms/core";
+import { Entity, EntityValues, EntityCollection } from "@firecms/core";
+interface EventValues {
+    is_external?: boolean;
+	external_registration_url?: string;
+}
 
 export const EventsCollection:EntityCollection= {
 	id: 'events',
@@ -52,6 +56,44 @@ export const EventsCollection:EntityCollection= {
 			multiline: true,
 			name: 'Contact Details',
 		},
+		is_external: {
+            dataType: 'boolean',
+            name: 'External Event',
+            description: 'Check if registration happens on an external site',
+            defaultValue: false,
+            columnWidth: 120,
+			config: {
+				previewAsTag: true,
+				tagValues: {
+					true: {
+						label: "External",
+						color: "#FF5722"
+					},
+					false: {
+						label: "Internal",
+						color: "#4CAF50"
+					}
+				}
+			}
+        },
+        external_registration_url: {
+            dataType: 'string',
+            name: 'Registration URL',
+            description: 'The external registration link (required for external events)',
+            multiline: true,
+            validation: {
+                url: true,
+                required: (values: EventValues) => values.is_external ? true : false
+            },
+                disabled: ({ entity }: { entity: Entity<EventValues> }) => {
+					console.log("Current is_external value:", entity.values?.is_external);
+					return !entity.values?.is_external;
+			},
+            clearOnDisabled: true,
+            config: {
+                url: true
+            }
+        },
 		tag: {
 			columnWidth: 165,
 			of: {
@@ -135,40 +177,6 @@ export const EventsCollection:EntityCollection= {
 			},
 			description: 'The coordinates of the location on maps. Get this by right clicking in Google Maps and selecting the first option',
 		},
-		is_external: {
-            dataType: 'boolean',
-            name: 'External Event',
-            description: 'Check if registration happens on an external site',
-            defaultValue: false,
-            columnWidth: 120,
-			config: {
-				previewAsTag: true,
-				tagValues: {
-					true: {
-						label: "External",
-						color: "#FF5722"
-					},
-					false: {
-						label: "Internal",
-						color: "#4CAF50"
-					}
-				}
-			}
-        },
-        external_registration_url: {
-            dataType: 'string',
-            name: 'Registration URL',
-            description: 'The external registration link (required for external events)',
-            validation: {
-                url: true,
-                required: (values: { is_external?: boolean }) => values.is_external ? true : false
-            },
-            disabled: ({ values }: { values: { is_external?: boolean } }) => !values.is_external,
-            clearOnDisabled: true,
-            config: {
-                url: true // Makes the URL clickable in the table
-            }
-        }
 	},
 	subcollections: [],
 }

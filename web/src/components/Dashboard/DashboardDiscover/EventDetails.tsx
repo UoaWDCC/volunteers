@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
 import { useState, useEffect } from 'react';
-//import { useAuth } from '../../../context/AuthenticationContextProvider';
+import { useAuth } from '../../../context/AuthenticationContextProvider';
 import { getAuth, User } from "firebase/auth";
 import { addDoc, collection, doc, getFirestore, serverTimestamp, query, where, getDocs, deleteDoc } from "firebase/firestore";
+import { useExternalRegistration } from '../../../Hooks/useExternalRegistration';
 
 type Event = {
     event_title: string;
@@ -18,7 +19,7 @@ type Event = {
     image: string;
     host: string;
     coordinates: {longitude: string, latitude: string};
-    id?: string; // Add document ID
+    id?: string;
     is_external?: boolean;               
     external_registration_url?: string;
 }
@@ -30,6 +31,17 @@ interface EventProps {
 
 export default function EventDetails({event, setEventDetails}: EventProps) {
     // Need to do this for some reason to get calling methods on Date object to work
+    const {
+        showConfirmation,
+        pendingEvent,
+        startExternalRegistration,
+        completeRegistration,
+        cancelRegistration,
+        unregisterExternalEvent,
+        isExternallyRegistered
+    } = useExternalRegistration();
+    const externalRegister = isExternallyRegistered(event.id || '');
+    
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
 
@@ -49,12 +61,20 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
 
     // Check if user is already registered for this event
     useEffect(() => {
-        if (event.is_external) {
-            setButtonText('Register (External)');
+       if (event.is_external) {
+            if (externalRegister) {
+                setButtonText('You are registered!');
+            } else {
+                setButtonText('Register (External)');
+            }
             return;
         }
         const checkRegistration = async () => {
             if (!user?.uid || !event.id) return;
+            {/*if (event.is_external) {
+                setButtonText('Register (External)');
+                return;
+            }*/}
             
             try {
                 // First, find the user's document ID in the users collection
@@ -92,21 +112,18 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
         };
 
         checkRegistration();
-    }, [user?.uid, event.id, event.is_external]);
+    }, [user?.uid, event.id, event.is_external, externalRegister]);
 
     const handleClick = () => {
-         if (event.is_external && event.external_registration_url) {
-            // External event flow
-            window.open(event.external_registration_url, '_blank', 'noopener,noreferrer');
-            const confirmation = confirm(
-                "Have you completed registration on the external site?"
-            );
-            if (confirmation) {
-                console.log("External registration completed");
+        if (event.is_external && event.external_registration_url) {
+            if (externalRegister) {
+                setIsPopupVisible(true);
+            } else {
+                startExternalRegistration(event.id || '', event.event_title, event.external_registration_url);
             }
         } else {
             if (!user || !event.id) return; //null check
-            // Existing internal registration flow
+            // internal registration
             if (!isRegistered) {
                 if(user?.uid && event.id) {
                     registerUserToEvent(event.id, user.uid);
@@ -119,12 +136,21 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     };
 
     const handleConfirmUnregister = () => {
-        if (attendanceId) {
-            unregisterUserFromEvent(attendanceId);
+        if (event.is_external) {
+            // Handle external event unregister
+            if (event.id) {
+                unregisterExternalEvent(event.id);
+                setButtonText('Register (External)');
+            }
         } else {
-            console.error("No attendanceId found for unregister");
+            // Handle internal event unregister
+            if (attendanceId) {
+                unregisterUserFromEvent(attendanceId);
+                setButtonText('Register for Event');
+            } else {
+                console.error("No attendanceId found for unregister");
+            }
         }
-        setButtonText('Register for Event');
         setIsPopupVisible(false);
     };
 
@@ -178,7 +204,13 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                    <button 
+                        className="h-10 text-body-heading rounded-full bg-blue-500 text-white"
+                        onClick={handleClick}
+                        disabled={(event.is_external && externalRegister) || (!event.is_external && isRegistered)}
+                    >
+                        {buttonText}
+                    </button>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -187,7 +219,30 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     ))}
                 </div>
             </div>
-            {/* Popup for confirmation */}
+            {/* External Registration Confirmation Popup */}
+            {showConfirmation && pendingEvent && (
+                <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
+                    <div className="bg-white p-6 rounded-lg w-1/3 text-center">
+                        <h2 className="text-lg font-semibold mb-4">Registration Confirmation</h2>
+                        <p className="mb-4">Did you complete your registration for "{pendingEvent.title}"?</p>
+                        <div className="flex justify-center gap-4">
+                            <button
+                                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
+                                onClick={completeRegistration}
+                            >
+                                Yes, I completed registration
+                            </button>
+                            <button
+                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
+                                onClick={cancelRegistration}
+                            >
+                                Not yet
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+            {/* Unregister Popup for confirmation */}
             {isPopupVisible && (
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50">
                     <div className="bg-white p-6 rounded-lg w-1/3 text-center">
