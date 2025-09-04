@@ -44,17 +44,22 @@ async function createFriendRequest(req: Request, res: Response): Promise<void> {
     }
 
     try {
-        // Use user id as document id in friendships collection
+        // Check if user is already a friend
+        const friendsDocSnap = await getDoc(doc(db, "friendships", requester_id));
+        if (friendsDocSnap.exists() && friendsDocSnap.data().friend_ids.includes(reciever_id)) {
+            res.status(200).json({ error: "Friend already exists" });
+            return;
+        }
+
+        // Check if friend request exists
         const q = query(
             collection(db, "friendrequests"),
             where("requester_id", "==", requester_id),
             where("reciever_id", "==", reciever_id)
         );
+        const frDocSnap = await getDocs(q);
 
-        // Check if the document exists
-        const docSnap = await getDocs(q);
-
-        if (docSnap.empty) {
+        if (frDocSnap.empty) {
             // Create new document with initial array
             await addDoc(
                 collection(db, "friendrequests"),
@@ -66,6 +71,7 @@ async function createFriendRequest(req: Request, res: Response): Promise<void> {
             );
         } else {
             res.status(200).json({ message: "Friend request already exists" });
+            return;
         }
 
         res.status(200).json({ message: "Friend request sent successfully" });
@@ -80,8 +86,9 @@ async function acceptFriendRequest(req: Request, res: Response): Promise<void> {
 
     const frId = req.params.id;
 
+
     if (!frId) {
-        res.status(400).json({ error: "requester_id is required" });
+        res.status(400).json({ error: "Friend request ID is required" });
         return;
     }
 
