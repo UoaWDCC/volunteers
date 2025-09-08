@@ -2,6 +2,7 @@ import LeaderboardEntry from "./LeaderboardEntry";
 import { useState, useEffect } from "react";
 import { db } from "../../firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
+import PlaceholderPFP from "./placeholderPfp"; // Importing the PlaceholderPFP component
 
 function Leaderboard() {
   const profileImg = "assets/EventHighlights/Events/BlindLowVision/imgA.png"; // Temporary image for the leaderboard
@@ -105,6 +106,10 @@ function Leaderboard() {
       });
   }, []);
 
+  // helper function to get the name of the user 
+  const getFullName = (user?: { firstName?: string; lastName?: string }) =>
+  [user?.firstName, user?.lastName].filter(Boolean).join(" ");
+
   //sort users by their hours
   const renderUsers = users.sort((a, b) => b.hours - a.hours).slice(0, 10);
 
@@ -130,14 +135,10 @@ function Leaderboard() {
 
       {renderUsers.length > 0 ? (
         <>
-          <img
-            src={renderUsers[0].profile_picture}
-            alt="profile"
-            className="object-cover w-[90px] h-[90px] rounded-full m-2"
-          />
+          <PlaceholderPFP size="w-20 aspect-square" name= {getFullName(renderUsers[0])} imageSource= {renderUsers[0].profile_picture}/>
 
-          <h3 className="text-detail mb-1">
-            {renderUsers[0].firstName} {renderUsers[0].lastName}
+          <h3 className="text-detail my-2">
+            {getFullName(renderUsers[0])}
           </h3>
 
           <div className="flex flex-row items-center justify-center">
