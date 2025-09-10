@@ -39,12 +39,10 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const [attendanceId, setAttendanceId] = useState<string | null>(null);
 
     const db = getFirestore();
-
     const auth = useAuth();
-
     const label = isRegistered ? 'You are registered!' : 'Register for Event';
-
     const user = auth?.currentUser;
+    const [interested, setInterested] = useState(false);
 
     // Check if user is already registered for this event
     useEffect(() => {
@@ -87,7 +85,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
         checkRegistration();
     }, [user?.uid, event.id]);
 
-    const handleClick = () => {
+    const handleRegistered = () => {
         if (!isRegistered) {
             if(user?.uid && event.id) {
                 registerUserToEvent(event.id, user.uid);
@@ -97,6 +95,11 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
         } else {
             setIsPopupVisible(true);  // Show the popup if already registered
         }
+    };
+
+    const handleInterest = () => { 
+        setInterested(v => !v); // functional update (v -> !v)
+        // TODO: Inmplement this
     };
 
     const handleConfirmUnregister = () => {
@@ -160,11 +163,26 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
                     <div className="flex flex-row gap-10">
                         <div
-                        className="stroked rounded-full text-body-heading whitespace-nowrap px-4 py-1 text-primary border-2 border-primary
-                                    hover:text-white hover:bg-primary flex items-center justify-center">
+                            onClick={handleInterest}
+                            className={`stroked rounded-full text-body-heading whitespace-nowrap gap-2 px-4 py-1 border-2 flex items-center justify-center cursor-pointer
+                                ${interested
+                                ? "bg-primary text-white border-primary"
+                                : "text-primary border-primary hover:bg-primary hover:text-white"
+                                }`}
+                            >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                viewBox="0 0 24 24"
+                                className="w-[1em] h-[1em]"
+                                fill={interested ? "white" : "currentColor"}
+                                >
+                                <path d="M12 17.27L18.18 21l-1.64-7.03L22 
+                                        9.24l-7.19-.61L12 2 9.19 8.63 
+                                        2 9.24l5.46 4.73L5.82 21z"/>
+                            </svg>                            
                             Interested
                         </div>
-                        <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{label}</button>
+                        <button className="h-10 text-body-heading rounded-full" onClick={handleRegistered}>{label}</button>
                     </div>
                 </div>
 
