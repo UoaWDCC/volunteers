@@ -58,6 +58,12 @@ function Dashboard() {
   if (!isUserLoggedIn) {
     window.location.href = "/";
   }
+  // Redirect this legacy page to role-specific pages
+  if (isAdmin) {
+    window.location.href = "/dashboard/admin";
+  } else {
+    window.location.href = "/dashboard/member";
+  }
 
     return (
         <CommunitySearchContextProvider>

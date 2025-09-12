@@ -19,8 +19,11 @@ import {
   deleteDoc,
   doc,
   getDoc,
+  query,
+  where,
 } from "firebase/firestore";
 import { json } from "stream/consumers";
+import * as admin from "firebase-admin";
 
 // Temp test to show that DB is working
 router.get("/getTest", async (req: Request, res: Response) => {
@@ -32,6 +35,33 @@ router.get("/getTest", async (req: Request, res: Response) => {
   } catch (error) {
     console.error("Error fetching items from test collection:", error);
     res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// Auth: verify ID token and return user role from Firestore
+router.get("/auth/me", async (req: Request, res: Response) => {
+  try {
+    const authHeader = req.headers.authorization || "";
+    const parts = authHeader.split(" ");
+    if (parts.length !== 2 || parts[0] !== "Bearer") {
+      return res.status(401).json({ error: "Missing or invalid Authorization header" });
+    }
+    const idToken = parts[1];
+
+    const decoded = await admin.auth().verifyIdToken(idToken);
+    const uid = decoded.uid;
+
+    const usersRef = collection(db, "users");
+    const q = query(usersRef, where("uid", "==", uid));
+    const snap = await getDocs(q);
+    if (snap.empty) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    const userData = snap.docs[0].data() as any;
+    return res.status(200).json({ uid, role: userData?.role || "volunteer" });
+  } catch (err) {
+    console.error("/auth/me error", err);
+    return res.status(401).json({ error: "Unauthorized" });
   }
 });
 
