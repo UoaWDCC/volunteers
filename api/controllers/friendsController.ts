@@ -2,12 +2,18 @@ import { db } from '../config/firebase';  // Import the Firestore database confi
 import { doc, getDoc, updateDoc, arrayRemove, where, collection, query, getDocs } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 
+
+// IMPORTANT NOTE FOR ALL FRIENDS RELATED API ENDPOINTS:
+// the `uid` parameter in the api endpoints refers to the user's 'uid' field in their document NOT the actual dociment id
+
+// this was done because the `AuthenticationConextProvider.tsx` only provides this value and not the document id itself, therefore it will be used as 
+// the main identifier for fetching user data in the frontend
+
 // Get all friends by uid
 async function getFriends(req: Request, res: Response): Promise<void> {
 
     console.log("Fetching friends for user");
 
-    // NOTE: the user's `uid` in the users collection is their corresponding document id in the friendships collection
     try {
         const uid = req.params.uid;
 

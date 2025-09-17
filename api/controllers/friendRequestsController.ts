@@ -2,6 +2,12 @@ import { db } from '../config/firebase';  // Import the Firestore database confi
 import { collection, getDocs, addDoc, deleteDoc, doc, getDoc, updateDoc, query, where, setDoc, arrayUnion, arrayRemove, runTransaction, or, serverTimestamp } from 'firebase/firestore';  // Import Firestore functions
 import { Request, Response } from 'express';  // Import types for Express request and response objects
 
+// IMPORTANT NOTE FOR ALL FRIENDS RELATED API ENDPOINTS:
+// the `uid` parameter in the api endpoints refers to the user's 'uid' field in their document NOT the actual dociment id
+
+// this was done because the `AuthenticationConextProvider.tsx` only provides this value and not the document id itself, therefore it will be used as 
+// the main identifier for fetching user data in the frontend
+
 async function getFriendRequests(req: Request, res: Response): Promise<void> {
     // This returns a json object with just the requester and reciever ids
     // Will need to be revisited and refactored to return more details if needed (i.e. each user's details like name)
