@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import EventsScrollContainer from "../DashboardDiscover/EventsScrollContainer";
 import axios from "axios";
 import EventDetails from "../DashboardDiscover/EventDetails";
+import AuthenticationContext from "../../../context/AuthenticationContext";
 
 type Event = {
   event_title: string;
@@ -52,6 +53,27 @@ function DashboardDiscover() {
     "DECEMBER",
   ];
   let startDate = new Date();
+
+  const [friends, setFriends] = useState([]);
+  const authContext = useContext(AuthenticationContext);
+  const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
+
+  // Get friends from backend
+  useEffect(() => {
+    try {
+
+      const appUrl = import.meta.env.VITE_API_URL;
+      axios
+        .get(`${appUrl}/api/friends/${firestoreUserDetails.uid}`)
+        .then((res) => {
+          setFriends(res.data);
+        })
+      
+    } catch (error) {
+      console.error(error);
+    }
+  }, []);
+
 
   // Get events from backend
   useEffect(() => {
@@ -135,6 +157,7 @@ function DashboardDiscover() {
         <EventsScrollContainer
           events={events}
           setEventDetails={setEventDetails}
+          friends={friends}
         />
       </div>
 

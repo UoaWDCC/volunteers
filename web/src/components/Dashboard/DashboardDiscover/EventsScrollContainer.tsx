@@ -20,16 +20,18 @@ type Event = {
 interface EventsProps {
   events: Event[];
   setEventDetails: Dispatch<SetStateAction<null | Event>>;
+  friends?: any[];
 }
 
 export default function EventsScrollContainer({
   events,
   setEventDetails,
+  friends
 }: EventsProps) {
   return (
     <div className="bg-white-background h-full overflow-y-scroll scrollbar-none">
       {events.map((e, index) => (
-        <Event key={index} event={e} setEventDetails={setEventDetails} />
+        <Event key={index} event={e} setEventDetails={setEventDetails} friends={friends}/>
       ))}
     </div>
   );
