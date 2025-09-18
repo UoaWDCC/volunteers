@@ -26,10 +26,23 @@ interface EventProps {
     setEventDetails: Dispatch<SetStateAction<null|Event>>;
 }
 
+const isWithinVerificationWindow = (startDate: Date, endDate: Date): boolean => {
+    const now = new Date();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const twelveHoursAfter = new Date(end.getTime() + (12 * 60 * 60 * 1000));
+    
+    // Check if current time is either:
+    // 1. During the event (between start and end), or
+    // 2. Within 12 hours after the event end
+    return (now >= start && now <= end) || (now > end && now <= twelveHoursAfter);
+};
+
 export default function EventDetails({event, setEventDetails}: EventProps) {
     // Need to do this for some reason to get calling methods on Date object to work
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
+    const [showVerification, setShowVerification] = useState(false);
 
     const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=18&amp&output=embed"
     
@@ -44,6 +57,11 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
 
     const auth = useAuth();
     const user = auth?.currentUser;
+
+    useEffect(() => {
+        const isInWindow = isWithinVerificationWindow(event.start_date_time, event.end_date_time);
+        setShowVerification(isRegistered && isInWindow);
+    }, [isRegistered, event.start_date_time, event.end_date_time]);
 
     // Check if user is already registered for this event
     useEffect(() => {
@@ -162,8 +180,15 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
                     <div className="flex flex-row gap-3">
-                        <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
-                        <EventAttendanceVerification event={event} />
+                        <button 
+                            className="h-10 text-body-heading rounded-full" 
+                            onClick={handleClick}
+                        >
+                            {buttonText}
+                        </button>
+                        {showVerification && (
+                            <EventAttendanceVerification event={event} />
+                        )}
                     </div>
                 </div>
 
