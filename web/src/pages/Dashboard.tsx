@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import DashboardCommunity from "../components/Dashboard/DashboardCommunity/DashboardCommunity";
 import DashboardProfile from "@components/Dashboard/dashboardProfile/DashboardProfile";
 import DashboardDashboard from "@components/Dashboard/DashboardMain/DashboardDashboard";
@@ -41,7 +41,19 @@ function Dashboard() {
 
   // Test condition for rendering admin specific content
   // Will need to be changed later when user type column/identifier is implemented
-  const isAdmin = firestoreUserDetails.role === 'admin';
+  const isAdmin = firestoreUserDetails?.role === 'admin';
+
+  // Allow deep children to request tab switches via window event
+  useEffect(() => {
+    const handler = (e: CustomEvent<{ tab: number }>) => {
+      const nextTab = e?.detail?.tab;
+      if (typeof nextTab === 'number') {
+        setTab(nextTab);
+      }
+    };
+    window.addEventListener('switch-tab', handler as EventListener);
+    return () => window.removeEventListener('switch-tab', handler as EventListener);
+  }, []);
 
   if (!isUserLoggedIn) {
     window.location.href = "/";
@@ -53,7 +65,10 @@ function Dashboard() {
             {/* width of the left nav bar */}
             {/* place thing component here and remove bg-primary */}
             <div className='w-[16rem] sm:max-2xl:w-[7rem]'> 
-                <SideBar switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}/>
+                <SideBar 
+                  activeTab={tab === 1 ? 'dashboard' : tab === 2 ? 'discover' : tab === 3 ? 'my profile' : tab === 4 ? 'my calendar' : 'community'} 
+                  switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}
+                />
             </div>
 
             <div className='flex flex-col flex-1 '>
