@@ -49,7 +49,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [userRole, setUserRole] = useState<string>("");
   const [firstName, setFirstName] = useState<string>("");
   const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("" ?? "");
+  const [email, setEmail] = useState<string>("");
   const [uid, setUid] = useState<string>("");
   const [token, setToken] = useState<string>("");
   const [firestoreUserDetails, setFirestoreUserDetails] =

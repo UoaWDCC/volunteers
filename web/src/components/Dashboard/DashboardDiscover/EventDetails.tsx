@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
+import EventAttendanceVerification from './EventAttendanceVerification';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/AuthenticationContextProvider';
 import type { User } from 'firebase/auth';
@@ -27,10 +28,23 @@ interface EventProps {
     onRegistrationChange?: () => void;
 }
 
+const isWithinVerificationWindow = (startDate: Date, endDate: Date): boolean => {
+    const now = new Date();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const twelveHoursAfter = new Date(end.getTime() + (12 * 60 * 60 * 1000));
+    
+    // Check if current time is either:
+    // 1. During the event (between start and end), or
+    // 2. Within 12 hours after the event end
+    return (now >= start && now <= end) || (now > end && now <= twelveHoursAfter);
+};
+
 export default function EventDetails({event, setEventDetails, onRegistrationChange}: EventProps) {
     // Need to do this for some reason to get calling methods on Date object to work
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
+    const [showVerification, setShowVerification] = useState(false);
 
     const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=18&amp&output=embed"
     
@@ -44,6 +58,11 @@ export default function EventDetails({event, setEventDetails, onRegistrationChan
     const db = getFirestore();
 
     const { currentUser: user } = (useAuth() as unknown) as { currentUser: User | null };
+
+    useEffect(() => {
+        const isInWindow = isWithinVerificationWindow(event.start_date_time, event.end_date_time);
+        setShowVerification(isRegistered && isInWindow);
+    }, [isRegistered, event.start_date_time, event.end_date_time]);
 
     // Check if user is already registered for this event
     useEffect(() => {
@@ -163,7 +182,17 @@ export default function EventDetails({event, setEventDetails, onRegistrationChan
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                    <div className="flex flex-row gap-3">
+                        <button 
+                            className="h-10 text-body-heading rounded-full" 
+                            onClick={handleClick}
+                        >
+                            {buttonText}
+                        </button>
+                        {showVerification && (
+                            <EventAttendanceVerification event={event} />
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -194,6 +223,8 @@ export default function EventDetails({event, setEventDetails, onRegistrationChan
                     </div>
                 </div>
             )}
+
+
             
             <div className="flex flex-row w-[95%] justify-between">
                 <div className="w-[60%]">
