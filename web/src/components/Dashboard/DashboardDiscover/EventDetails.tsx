@@ -1,10 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
 import { IoArrowBackCircle } from "react-icons/io5";
+import EventAttendanceVerification from './EventAttendanceVerification';
 import { useState, useEffect } from 'react';
 import { useAuth } from '../../../context/AuthenticationContextProvider';
-import { getAuth, User } from "firebase/auth";
+import type { User } from 'firebase/auth';
 import { addDoc, collection, doc, getFirestore, serverTimestamp, query, where, getDocs, deleteDoc } from "firebase/firestore";
-import { useExternalRegistration } from '../../../Hooks/useExternalRegistration';
 
 type Event = {
     event_title: string;
@@ -19,31 +19,32 @@ type Event = {
     image: string;
     host: string;
     coordinates: {longitude: string, latitude: string};
-    id?: string;
-    is_external?: boolean;               
-    external_registration_url?: string;
+    id?: string; // Add document ID
 }
 
 interface EventProps {
     event: Event;
     setEventDetails: Dispatch<SetStateAction<null|Event>>;
+    onRegistrationChange?: () => void;
 }
 
-export default function EventDetails({event, setEventDetails}: EventProps) {
-    // Need to do this for some reason to get calling methods on Date object to work
-    const {
-        showConfirmation,
-        pendingEvent,
-        startExternalRegistration,
-        completeRegistration,
-        cancelRegistration,
-        unregisterExternalEvent,
-        isExternallyRegistered
-    } = useExternalRegistration();
-    const externalRegister = isExternallyRegistered(event.id || '');
+const isWithinVerificationWindow = (startDate: Date, endDate: Date): boolean => {
+    const now = new Date();
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    const twelveHoursAfter = new Date(end.getTime() + (12 * 60 * 60 * 1000));
     
+    // Check if current time is either:
+    // 1. During the event (between start and end), or
+    // 2. Within 12 hours after the event end
+    return (now >= start && now <= end) || (now > end && now <= twelveHoursAfter);
+};
+
+export default function EventDetails({event, setEventDetails, onRegistrationChange}: EventProps) {
+    // Need to do this for some reason to get calling methods on Date object to work
     const startDate = new Date(event.start_date_time);
     const endDate = new Date(event.end_date_time);
+    const [showVerification, setShowVerification] = useState(false);
 
     const mapEmbed = "https://maps.google.com/maps?q="+event.coordinates.longitude+","+event.coordinates.latitude+"&hl=en&z=18&amp&output=embed"
     
@@ -56,25 +57,17 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
 
     const db = getFirestore();
 
-    const auth = getAuth();
-    const user: User | null = auth.currentUser;
+    const { currentUser: user } = (useAuth() as unknown) as { currentUser: User | null };
+
+    useEffect(() => {
+        const isInWindow = isWithinVerificationWindow(event.start_date_time, event.end_date_time);
+        setShowVerification(isRegistered && isInWindow);
+    }, [isRegistered, event.start_date_time, event.end_date_time]);
 
     // Check if user is already registered for this event
     useEffect(() => {
-       if (event.is_external) {
-            if (externalRegister) {
-                setButtonText('You are registered!');
-            } else {
-                setButtonText('Register (External)');
-            }
-            return;
-        }
         const checkRegistration = async () => {
             if (!user?.uid || !event.id) return;
-            {/*if (event.is_external) {
-                setButtonText('Register (External)');
-                return;
-            }*/}
             
             try {
                 // First, find the user's document ID in the users collection
@@ -112,45 +105,28 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
         };
 
         checkRegistration();
-    }, [user?.uid, event.id, event.is_external, externalRegister]);
+    }, [user?.uid, event.id]);
 
     const handleClick = () => {
-        if (event.is_external && event.external_registration_url) {
-            if (externalRegister) {
-                setIsPopupVisible(true);
+        if (!isRegistered) {
+            if(user?.uid && event.id) {
+                registerUserToEvent(event.id, user.uid);
             } else {
-                startExternalRegistration(event.id || '', event.event_title, event.external_registration_url);
+                return;
             }
+            setButtonText('You are registered!');
         } else {
-            if (!user || !event.id) return; //null check
-            // internal registration
-            if (!isRegistered) {
-                if(user?.uid && event.id) {
-                    registerUserToEvent(event.id, user.uid);
-                }
-                setButtonText('You are registered!');
-            } else {
-                setIsPopupVisible(true); // Show the popup if already registered
-            }
+            setIsPopupVisible(true);  // Show the popup if already registered
         }
     };
 
     const handleConfirmUnregister = () => {
-        if (event.is_external) {
-            // Handle external event unregister
-            if (event.id) {
-                unregisterExternalEvent(event.id);
-                setButtonText('Register (External)');
-            }
+        if (attendanceId) {
+            unregisterUserFromEvent(attendanceId);
         } else {
-            // Handle internal event unregister
-            if (attendanceId) {
-                unregisterUserFromEvent(attendanceId);
-                setButtonText('Register for Event');
-            } else {
-                console.error("No attendanceId found for unregister");
-            }
+            console.error("No attendanceId found for unregister");
         }
+        setButtonText('Register for Event');
         setIsPopupVisible(false);
     };
 
@@ -179,6 +155,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             
             setIsRegistered(true);
             setAttendanceId(docRef.id); // Set the attendance document ID
+            if (onRegistrationChange) onRegistrationChange();
         } catch (error) {
             console.error("Error registering for event:", error);
         }
@@ -190,6 +167,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             await deleteDoc(attendanceDoc);
             setIsRegistered(false);
             setAttendanceId(null);
+            if (onRegistrationChange) onRegistrationChange();
         } catch (error) {
             console.error("Error unregistering from event:", error);
         }
@@ -204,13 +182,17 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button 
-                        className="h-10 text-body-heading rounded-full bg-blue-500 text-white"
-                        onClick={handleClick}
-                        disabled={(event.is_external && externalRegister) || (!event.is_external && isRegistered)}
-                    >
-                        {buttonText}
-                    </button>
+                    <div className="flex flex-row gap-3">
+                        <button 
+                            className="h-10 text-body-heading rounded-full" 
+                            onClick={handleClick}
+                        >
+                            {buttonText}
+                        </button>
+                        {showVerification && (
+                            <EventAttendanceVerification event={event} />
+                        )}
+                    </div>
                 </div>
 
                 <div className="flex flex-row justify-start gap-3 w-full">
@@ -219,30 +201,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     ))}
                 </div>
             </div>
-            {/* External Registration Confirmation Popup */}
-            {showConfirmation && pendingEvent && (
-                <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50 z-50">
-                    <div className="bg-white p-6 rounded-lg w-1/3 text-center">
-                        <h2 className="text-lg font-semibold mb-4">Registration Confirmation</h2>
-                        <p className="mb-4">Did you complete your registration for "{pendingEvent.title}"?</p>
-                        <div className="flex justify-center gap-4">
-                            <button
-                                className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
-                                onClick={completeRegistration}
-                            >
-                                Yes, I completed registration
-                            </button>
-                            <button
-                                className="px-4 py-2 bg-gray-300 text-gray-700 rounded-lg hover:bg-gray-400"
-                                onClick={cancelRegistration}
-                            >
-                                Not yet
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
-            {/* Unregister Popup for confirmation */}
+            {/* Popup for confirmation */}
             {isPopupVisible && (
                 <div className="fixed inset-0 flex justify-center items-center bg-gray-700 bg-opacity-50">
                     <div className="bg-white p-6 rounded-lg w-1/3 text-center">
@@ -264,6 +223,8 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                     </div>
                 </div>
             )}
+
+
             
             <div className="flex flex-row w-[95%] justify-between">
                 <div className="w-[60%]">

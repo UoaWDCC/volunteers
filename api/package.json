@@ -41,7 +41,7 @@
     "jsonwebtoken": "^9.0.2",
     "juice": "^11.0.1",
     "mongoose": "^8.1.1",
-    "nodemailer": "^7.0.2",
+    "nodemailer": "^7.0.5",
     "passport-api": "file:",
     "ts-node": "^10.9.2",
     "zod": "^3.22.4"

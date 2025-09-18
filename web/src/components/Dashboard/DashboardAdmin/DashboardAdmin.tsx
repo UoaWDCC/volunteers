@@ -4,7 +4,7 @@ import VolunteerEvents from "./VolunteerEvents";
 
 const DashboardAdmin: React.FC = () => {
     return (
-        <div className="flex flex-row w-full h-[88vh] gap-6 p-6">
+        <div className="flex flex-row w-full h-full gap-8">
             {/* Volunteer Events section */}
             <div className="w-[70%] h-full gap-6 ">
                 <VolunteerEvents />
