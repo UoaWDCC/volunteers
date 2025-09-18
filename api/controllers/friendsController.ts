@@ -42,19 +42,22 @@ async function getFriends(req: Request, res: Response): Promise<void> {
             );
             const userDocs = await getDocs(usersQuery);
             const userData = userDocs.docs[0].data();
+            const docId = userDocs.docs[0].id // include the document id in case someone specifically needs it
+            const user = {
+                id: docId,
+                ...userData
+            }
 
 
             // const friendDetails = userDoc.data();
-            return { ...userData };
+            return { ...user };
         });
 
-        console.log("1")
 
         // Once promises fufilled, assign them as a 'friends' constant
         const friends = (await Promise.all(friendsPromises)).filter(Boolean);
         res.json(friends);
 
-        console.log("2")
 
     } catch (error) {
         res.status(500).json({ error: `Internal server error, ${JSON.stringify(error)}` });
