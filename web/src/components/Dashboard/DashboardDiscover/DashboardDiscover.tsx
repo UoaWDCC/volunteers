@@ -5,6 +5,7 @@ import EventDetails from "../DashboardDiscover/EventDetails";
 import AuthenticationContext from "../../../context/AuthenticationContext";
 
 type Event = {
+  id: string;
   event_title: string;
   description: string;
   tasks: string;
@@ -23,6 +24,7 @@ function DashboardDiscover() {
   const [eventDetails, setEventDetails] = useState<null | Event>(null);
   const [events, setEvents] = useState<Event[]>([]);
   const [flagshipEvent, setFlagshipEvent] = useState<Event>({
+    id:"",
     event_title: "",
     description: "",
     tasks: "",

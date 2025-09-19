@@ -1,6 +1,9 @@
-import { Dispatch, SetStateAction} from "react";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { db } from "../../../firebase/firebase";
 
 type Event = {
+    id: string;
     event_title: string;
     description: string;
     tasks: string;
@@ -12,15 +15,16 @@ type Event = {
     location: string;
     image: string;
     host: string;
-    coordinates: {longitude: string, latitude: string};
+    coordinates: { longitude: string, latitude: string };
 }
 
 interface EventProps {
     event: Event;
-    setEventDetails: Dispatch<SetStateAction<null|Event>>;
+    setEventDetails: Dispatch<SetStateAction<null | Event>>;
+    friends?: any[];
 }
 
-export default function Event({event, setEventDetails}: EventProps) {
+export default function Event({ event, setEventDetails, friends }: EventProps) {
     const startDate = new Date(event.start_date_time);
 
     const days = ["SUN","MON","TUES","WED","THURS","FRI","SAT"];
@@ -37,6 +41,44 @@ export default function Event({event, setEventDetails}: EventProps) {
 
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
+    const [friendsGoing, setFriendsGoing] = useState<any[]>([]);
+    const [attendees, setAttendees] = useState<any[]>([]);
+
+    useEffect(() => {
+        const fetchAttendees = async () => {
+            const eventRef = doc(db, "events", event.id);
+            const attendeesQuery = query(
+                collection(db, "event_attendance"),
+                where("eventId", "==", eventRef),
+            )
+            const querySnapshot = await getDocs(attendeesQuery);
+            const data = querySnapshot.docs.map((doc) => doc.data().uid);
+            setAttendees(data)
+        }
+
+        const fetchFriendsGoing = async () => {
+            const eventRef = doc(db, "events", event.id);
+            const friendRefs = friends?.map(friend => doc(db, "users", friend.id));
+            const attendeesQuery = query(
+                collection(db, "event_attendance"),
+                where("eventId", "==", eventRef),
+                where("uid", "in", friendRefs)
+            )
+            const querySnapshot = await getDocs(attendeesQuery);
+            const data = querySnapshot.docs.map((doc) => doc.data());
+            const friendsGoingIds = data.map((doc) => doc.uid.id);
+            const filteredFriends = friends?.filter(friend => friendsGoingIds.includes(friend.id));
+            if (filteredFriends) {
+                setFriendsGoing(filteredFriends)
+            }
+        }
+        if (friends && friends.length > 0) {
+            fetchFriendsGoing();
+        } else {
+            fetchAttendees();
+        }
+    }, [event, friends]);
+
     return (
         <div onClick={() => setEventDetails(event)} className="dashboard bg-white-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 items-center m-4 flex rounded-xl cursor-pointer"> {/* event-container */}
             <div className="w-3/4 flex items-center">
@@ -52,9 +94,19 @@ export default function Event({event, setEventDetails}: EventProps) {
             </div>
             <div className="ml-auto p-6">
                 <p className="text-right block text-xs font-semibold">{event.host}</p>
-                <div className="">  
-                    <p className="text-right block text-xs m-0">30 interested</p>
-                    <p className="text-right block text-xs">15 going</p>
+                <div className="">
+                    {/* <p className="text-right block text-xs m-0">30 interested</p> */}
+                    <p className="text-right block text-xs">
+                    {friendsGoing.length > 0 ? (
+                            friendsGoing.length === 1
+                                ? `${friendsGoing[0].firstName}`
+                                : friendsGoing.length === 2 ? `${friendsGoing[0].firstName} and ${friendsGoing[1].firstName}`
+                                : friendsGoing.length === 3 ? `${friendsGoing[0].firstName}, ${friendsGoing[1].firstName} and 1 other`
+                                : `${friendsGoing[0].firstName}, ${friendsGoing[1].firstName} and ${friendsGoing.length - 2} others`
+                        ) + ` ${friendsGoing.length > 1 ? "are" : "is"} going`
+                        : `${attendees.length} going`
+                    }
+                    </p>
                 </div>
             </div>
         </div>

@@ -3,6 +3,7 @@ import Event from "../DashboardDiscover/Event.tsx";
 
 
 type Event = {
+  id: string;
   event_title: string;
   description: string;
   tasks: string;

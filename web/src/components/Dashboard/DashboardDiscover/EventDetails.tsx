@@ -3,6 +3,7 @@ import { IoArrowBackCircle } from "react-icons/io5";
 import { useState } from 'react';
 
 type Event = {
+    id: string;
     event_title: string;
     description: string;
     tasks: string;
