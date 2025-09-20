@@ -128,12 +128,13 @@ export default function Event({ event, setEventDetails, friends }: EventProps) {
                 <div className="flex flex-col">
                     <p className="text-right block text-xs m-0">30 interested</p>
 
-                    <p className="flex justify-end text-right block text-xs mb-0 items-center">
+                    <div className="flex justify-end text-right block text-xs mb-0 items-center">
                         {friendsGoing.length > 0 &&
                             <div className="-space-x-1 mr-2">
                                 {friendsGoing.map((friend) => {
                                     return (
                                         <img
+                                            key={`${friend.firstName}-profile-picture`}
                                             alt={`${friend.firstName}-profile-picture`}
                                             src={friend.profile_picture ? friend.profile_picture : "assets/profile_placeholder.png"}
                                             className="inline-block size-4 rounded-full outline outline-[0.5px] outline-gray-500"
@@ -151,7 +152,7 @@ export default function Event({ event, setEventDetails, friends }: EventProps) {
                             ) + ` ${friendsGoing.length > 1 ? "are" : "is"} going`
                             : `${attendees.length} going`
                         }
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>
