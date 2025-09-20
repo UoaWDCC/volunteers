@@ -117,18 +117,32 @@ export default function Event({ event, setEventDetails, friends }: EventProps) {
             </div>
             <div className="ml-auto p-6">
                 <p className="text-right block text-xs font-semibold">{event.host}</p>
-                <div className="">
-                    {/* <p className="text-right block text-xs m-0">30 interested</p> */}
-                    <p className="text-right block text-xs">
-                    {friendsGoing.length > 0 ? (
-                            friendsGoing.length === 1
+                <div className="flex flex-col">
+                    <p className="text-right block text-xs m-0">30 interested</p>
+
+                    <p className="flex justify-end text-right block text-xs mb-0 items-center">
+                        {friendsGoing.length > 0 &&
+                            <div className="-space-x-1 mr-2">
+                                {friendsGoing.map((friend) => {
+                                    return (
+                                        <img
+                                            alt={`${friend.firstName}-profile-picture`}
+                                            src={friend.profile_picture ? friend.profile_picture : "assets/profile_placeholder.png"}
+                                            className="inline-block size-4 rounded-full outline outline-[0.5px] outline-gray-500"
+                                        />
+                                    )
+                                })}
+                            </div>
+                        }
+                        {friendsGoing.length > 0 ? (
+                             friendsGoing.length === 1
                                 ? `${friendsGoing[0].firstName}`
                                 : friendsGoing.length === 2 ? `${friendsGoing[0].firstName} and ${friendsGoing[1].firstName}`
                                 : friendsGoing.length === 3 ? `${friendsGoing[0].firstName}, ${friendsGoing[1].firstName} and 1 other`
                                 : `${friendsGoing[0].firstName}, ${friendsGoing[1].firstName} and ${friendsGoing.length - 2} others`
-                        ) + ` ${friendsGoing.length > 1 ? "are" : "is"} going`
-                        : `${attendees.length} going`
-                    }
+                            ) + ` ${friendsGoing.length > 1 ? "are" : "is"} going`
+                            : `${attendees.length} going`
+                        }
                     </p>
                 </div>
             </div>
