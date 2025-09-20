@@ -18,10 +18,33 @@ type Event = {
     coordinates: { longitude: string, latitude: string };
 }
 
+type Friend = {
+    id: string;
+    dietaryRequirements: string[];
+    firstName: string;
+    yearLevel: string;
+    upi: string;
+    uid: string;
+    email: string;
+    role: string;
+    emergencyContactFirstName: string;
+    gender: string;
+    hours: number;
+    emergencyContactRelationship: string;
+    emergencyContactLastName: string;
+    otherRequirements: string;
+    birthdate: string;
+    mobile: string;
+    driversLicense: string;
+    lastName: string;
+    emergencyContactMobile: string;
+    profile_picture: string;
+};
+
 interface EventProps {
     event: Event;
     setEventDetails: Dispatch<SetStateAction<null | Event>>;
-    friends?: any[];
+    friends?: Friend[];
 }
 
 export default function Event({ event, setEventDetails, friends }: EventProps) {
@@ -41,7 +64,7 @@ export default function Event({ event, setEventDetails, friends }: EventProps) {
 
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
 
-    const [friendsGoing, setFriendsGoing] = useState<any[]>([]);
+    const [friendsGoing, setFriendsGoing] = useState<Friend[]>([]);
     const [attendees, setAttendees] = useState<any[]>([]);
 
     useEffect(() => {
