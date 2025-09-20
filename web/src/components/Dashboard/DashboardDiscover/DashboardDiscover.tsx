@@ -3,6 +3,8 @@ import EventsScrollContainer from "../DashboardDiscover/EventsScrollContainer";
 import axios from "axios";
 import EventDetails from "../DashboardDiscover/EventDetails";
 import AuthenticationContext from "../../../context/AuthenticationContext";
+import { collection, doc, getDocs, query, where } from "firebase/firestore";
+import { db } from "../../../firebase/firebase";
 
 type Event = {
   id: string;
@@ -18,6 +20,28 @@ type Event = {
   image: string;
   host: string;
   coordinates: { longitude: string; latitude: string };
+};
+
+type Friend = {
+  id: string;
+  dietaryRequirements: string[];
+  firstName: string;
+  yearLevel: string;
+  upi: string;
+  uid: string;
+  email: string;
+  role: string;
+  emergencyContactFirstName: string;
+  gender: string;
+  hours: number;
+  emergencyContactRelationship: string;
+  emergencyContactLastName: string;
+  otherRequirements: string;
+  birthdate: string;
+  mobile: string;
+  driversLicense: string;
+  lastName: string;
+  emergencyContactMobile: string;
 };
 
 function DashboardDiscover() {
@@ -56,9 +80,41 @@ function DashboardDiscover() {
   ];
   let startDate = new Date();
 
-  const [friends, setFriends] = useState([]);
+  const [friends, setFriends] = useState<Friend[]>([]);
+  const [flagshipFriendsGoing, setFlagshipFriendsGoing] = useState<Friend[]>([]);
+  const [flagshipAttendees, setFlagshipAttendees] = useState<any[]>([]);
   const authContext = useContext(AuthenticationContext);
   const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
+
+  // Function to fetch attendees of flagship event
+  const fetchFlagshipAttendees = async (event: Event) => {
+    const eventRef = doc(db, "events", event.id);
+    const attendeesQuery = query(
+      collection(db, "event_attendance"),
+      where("eventId", "==", eventRef),
+    )
+    const querySnapshot = await getDocs(attendeesQuery);
+    const data = querySnapshot.docs.map((doc) => doc.data().uid);
+    setFlagshipAttendees(data)
+  }
+
+  // Function to fetch the friends going to flagship event
+  const fetchFlagshipFriendsGoing = async (event: Event) => {
+    const eventRef = doc(db, "events", event.id);
+    const friendRefs = friends?.map(friend => doc(db, "users", friend.id));
+    const attendeesQuery = query(
+      collection(db, "event_attendance"),
+      where("eventId", "==", eventRef),
+      where("uid", "in", friendRefs)
+    )
+    const querySnapshot = await getDocs(attendeesQuery);
+    const data = querySnapshot.docs.map((doc) => doc.data());
+    const friendsGoingIds = data.map((doc) => doc.uid.id);
+    const filteredFriends = friends?.filter(friend => friendsGoingIds.includes(friend.id));
+    if (filteredFriends) {
+      setFlagshipFriendsGoing(filteredFriends)
+    }
+  }
 
   // Get friends from backend
   useEffect(() => {
@@ -101,6 +157,8 @@ function DashboardDiscover() {
           (event: Event) => {
             if (event.tag.includes("Flagship Event")) {
               setFlagshipEvent(event);
+              fetchFlagshipFriendsGoing(event);
+              fetchFlagshipAttendees(event);
             }
           },
 
@@ -138,11 +196,19 @@ function DashboardDiscover() {
           <div className="pl-5 font-medium">{flagshipEvent.event_title}</div>
           <div className="pl-5 font-light">{flagshipEvent.location}</div>
           <div className="flex flex-row pt-2 pb-2">
-            <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
-            <div className="ml-2 font-light text-sm">Eduardo is interested</div>
+            {/* <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div> */}
+            {/* <div className="ml-2 font-light text-sm">Eduardo is interested</div> */}
             <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
             <div className="ml-2 font-light text-sm">
-              John, and 4 other friends are going
+              {flagshipFriendsGoing.length > 0 ? (
+                flagshipFriendsGoing.length === 1
+                  ? `${flagshipFriendsGoing[0].firstName}`
+                  : flagshipFriendsGoing.length === 2 ? `${flagshipFriendsGoing[0].firstName} and ${flagshipFriendsGoing[1].firstName}`
+                  : flagshipFriendsGoing.length === 3 ? `${flagshipFriendsGoing[0].firstName}, ${flagshipFriendsGoing[1].firstName} and 1 other`
+                  : `${flagshipFriendsGoing[0].firstName}, ${flagshipFriendsGoing[1].firstName} and ${flagshipFriendsGoing.length - 2} others`
+              ) + ` ${flagshipFriendsGoing.length > 1 ? "are" : "is"} going`
+                : `${flagshipAttendees.length} going`
+              }
             </div>
           </div>
           <div
