@@ -69,35 +69,43 @@ export default function Event({ event, setEventDetails, friends }: EventProps) {
 
     useEffect(() => {
         const fetchAttendees = async () => {
-            const eventRef = doc(db, "events", event.id);
-            const attendeesQuery = query(
-                collection(db, "event_attendance"),
-                where("eventId", "==", eventRef),
-            )
-            const querySnapshot = await getDocs(attendeesQuery);
-            const data = querySnapshot.docs.map((doc) => doc.data().uid);
-            setAttendees(data)
+            try {
+                const eventRef = doc(db, "events", event.id);
+                const attendeesQuery = query(
+                    collection(db, "event_attendance"),
+                    where("eventId", "==", eventRef),
+                )
+                const querySnapshot = await getDocs(attendeesQuery);
+                const data = querySnapshot.docs.map((doc) => doc.data().uid);
+                setAttendees(data)
+            } catch (error) {
+                console.error(error);
+            }
         }
 
         const fetchFriendsGoing = async () => {
-            const eventRef = doc(db, "events", event.id);
-            const friendRefs = friends?.map(friend => doc(db, "users", friend.id));
-            const attendeesQuery = query(
-                collection(db, "event_attendance"),
-                where("eventId", "==", eventRef),
-                where("uid", "in", friendRefs)
-            )
-            const querySnapshot = await getDocs(attendeesQuery);
-            const data = querySnapshot.docs.map((doc) => doc.data());
-            const friendsGoingIds = data.map((doc) => doc.uid.id);
-            const filteredFriends = friends?.filter(friend => friendsGoingIds.includes(friend.id));
-            if (filteredFriends) {
-                setFriendsGoing(filteredFriends)
+            try {
+                const eventRef = doc(db, "events", event.id);
+                const friendRefs = friends?.map(friend => doc(db, "users", friend.id));
+                const attendeesQuery = query(
+                    collection(db, "event_attendance"),
+                    where("eventId", "==", eventRef),
+                    where("uid", "in", friendRefs)
+                )
+                const querySnapshot = await getDocs(attendeesQuery);
+                const data = querySnapshot.docs.map((doc) => doc.data());
+                const friendsGoingIds = data.map((doc) => doc.uid.id);
+                const filteredFriends = friends?.filter(friend => friendsGoingIds.includes(friend.id));
+                if (filteredFriends) {
+                    setFriendsGoing(filteredFriends)
+                }
+            } catch (error) {
+                console.error(error);
             }
         }
+        
         if (friends && friends.length > 0) {
             fetchFriendsGoing();
-        } else {
             fetchAttendees();
         }
     }, [event, friends]);
