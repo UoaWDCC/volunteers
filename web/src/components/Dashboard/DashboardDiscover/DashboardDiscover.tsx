@@ -42,6 +42,7 @@ type Friend = {
   driversLicense: string;
   lastName: string;
   emergencyContactMobile: string;
+  profile_picture: string;
 };
 
 function DashboardDiscover() {
@@ -170,7 +171,7 @@ function DashboardDiscover() {
         console.log(error);
       });
   }, []);
-
+ 
   console.log(flagshipEvent);
 
   return (
@@ -195,11 +196,23 @@ function DashboardDiscover() {
           </div>
           <div className="pl-5 font-medium">{flagshipEvent.event_title}</div>
           <div className="pl-5 font-light">{flagshipEvent.location}</div>
-          <div className="flex flex-row pt-2 pb-2">
+          <div className="flex flex-row pl-5 pt-2 pb-2">
             {/* <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div> */}
             {/* <div className="ml-2 font-light text-sm">Eduardo is interested</div> */}
-            <div className="ml-5 mt-1 rounded-full bg-slate-400 w-3 h-3"></div>
-            <div className="ml-2 font-light text-sm">
+            <p className="flex justify-end text-right block text-sm mb-0 items-center">
+              {flagshipFriendsGoing.length > 0 &&
+                <div className="-space-x-1 mr-2">
+                  {flagshipFriendsGoing.map((friend) => {
+                    return (
+                      <img
+                        alt={`${friend.firstName}-profile-picture`}
+                        src={friend.profile_picture ? friend.profile_picture : "assets/profile_placeholder.png"}
+                        className="inline-block size-4 rounded-full outline outline-[0.5px] outline-gray-500"
+                      />
+                    )
+                  })}
+                </div>
+              }
               {flagshipFriendsGoing.length > 0 ? (
                 flagshipFriendsGoing.length === 1
                   ? `${flagshipFriendsGoing[0].firstName}`
@@ -209,7 +222,7 @@ function DashboardDiscover() {
               ) + ` ${flagshipFriendsGoing.length > 1 ? "are" : "is"} going`
                 : `${flagshipAttendees.length} going`
               }
-            </div>
+            </p>
           </div>
           <div
             className="pl-5 text-primary hover:underline cursor-pointer"
