@@ -34,9 +34,8 @@ function Dashboard() {
     setTab(5);
   };
   const authContext = useContext(AuthenticationContext);
-  const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {
-    isUserLoggedIn: boolean,
-    firestoreUserDetails: any
+  const { firestoreUserDetails } = authContext as unknown as {
+    firestoreUserDetails: { role?: string; hours?: number; firstName?: string } | null;
   };
 
   // Test condition for rendering admin specific content
@@ -55,14 +54,13 @@ function Dashboard() {
     return () => window.removeEventListener('switch-tab', handler as EventListener);
   }, []);
 
-  if (!isUserLoggedIn) {
-    window.location.href = "/";
-  }
-  // Redirect this legacy page to role-specific pages
+  // Redirect to role-specific pages
   if (isAdmin) {
     window.location.href = "/dashboard/admin";
+    return null;
   } else {
     window.location.href = "/dashboard/member";
+    return null;
   }
 
     return (

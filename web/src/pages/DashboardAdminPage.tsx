@@ -18,15 +18,11 @@ function DashboardAdminPage() {
   const switchCalendar = () => setTab(4);
   const switchCommunity = () => setTab(5);
 
-  const authContext = useContext(AuthenticationContext as any) as any;
-  const { isUserLoggedIn, firestoreUserDetails } = authContext || {};
+  const authContext = useContext(AuthenticationContext) as {
+    firestoreUserDetails: { role?: string } | null;
+  } | null;
+  const { firestoreUserDetails } = authContext || {};
   const role = firestoreUserDetails?.role;
-
-  useEffect(() => {
-    if (!isUserLoggedIn) {
-      window.location.href = "/";
-    }
-  }, [isUserLoggedIn]);
 
   // Guard: only admins should access
   useEffect(() => {
