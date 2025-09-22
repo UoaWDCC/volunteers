@@ -5,6 +5,7 @@
 
 app = 'wdcc-volunteers'
 primary_region = 'syd'
+swap_size_mb = 512
 
 [build]
   # dockerfile contains non-sensitive build time env vars
@@ -21,4 +22,4 @@ primary_region = 'syd'
 [[vm]]
   cpu_kind = 'shared'
   cpus = 1
-  memory_mb = 1024
+  memory_mb = 512
