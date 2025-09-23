@@ -40,6 +40,8 @@ import { SponsorsCollection } from "./collections/sponsors";
 import { UsersCollection } from "./collections/users";
 import { FriendshipsCollection } from "./collections/friendships";
 import { FriendRequestsCollection } from "./collections/friendrequests";
+import { NewslettersCollection } from "./collections/newsletters";
+import { EventAttendanceCollection } from "./collections/event_attendance";
 
 import { firebaseConfig } from "./firebase_config";
 
@@ -79,6 +81,8 @@ function App() {
         UsersCollection,
         FriendshipsCollection,
         FriendRequestsCollection,
+        NewslettersCollection,
+        EventAttendanceCollection,
     ], []);
 
     const {

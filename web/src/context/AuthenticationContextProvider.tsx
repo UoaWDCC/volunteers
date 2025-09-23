@@ -41,26 +41,6 @@ export function useToken() {
   return useContext(TokenContext);
 }
 
-// ============================= Inline type definition ============================= //
-// This type defines the shape of the authentication context value
-// so TypeScript knows what properties are available when calling useAuth().
-// It enables autocomplete and prevents errors like 'property does not exist on type null'.
-export type AuthContext = {
-  currentUser: User | null;
-  firstName: string;
-  lastName: string;
-  email: string;
-  uid: string;
-  userRole: string;
-  isUserLoggedIn: boolean;
-  loading: boolean;
-  error: Error | null;
-  signInUsingGoogle: () => void;
-  signOut: () => void;
-  getFirestoreCollectionUserByStudentID: (studentID: string) => Promise<DocumentData | null>;
-  firestoreUserDetails: DocumentData | null;
-};
-
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
@@ -81,16 +61,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
-      initializeUser(user);
-      if (user) {
-        setCurrentUser(user);
-        setUid(user.uid);
-      } else {
-        setCurrentUser(null);
-        setUid('');
-      }
-    });
+    const unsubscribe = onAuthStateChanged(auth, initializeUser);
     return unsubscribe;
   }, []);
 
@@ -108,50 +79,54 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   async function initializeUser(user: User | null) {
     if (user) {
       console.log(user);
+      setCurrentUser(user);
+      setUserLoggedIn(true);
+      setUserState(); // refreshing user state after reloading page and user is still logged in.
       const token = await user.getIdToken();
       setToken(token);
 
+      // const { exists: uidExists } = await checkUidExists(user.uid); // logging user out of google if logged in but not in db (hasnt registered or finished registering)
+      // if (!uidExists) {
+      //   console.log('User not found in db, redirecting to register page');
+      //   signOut();
+      // }
       const { exists, userDetails } = await checkUidExists(user.uid);
       if (exists && userDetails) {
-        setCurrentUser(user);
-        setUserLoggedIn(true);
-        setUserState();
-        setFirestoreUserDetails(userDetails); // Now TypeScript knows userDetails is DocumentData
-      } else {
-        // User is authenticated with Google but hasn't completed registration
-        setCurrentUser(user);
-        setUserLoggedIn(false);
-        setUserState();
-        setFirestoreUserDetails(null); // Explicitly set to null when no details exist
+        setFirestoreUserDetails(userDetails);
       }
     } else {
       setCurrentUser(null);
       setUserLoggedIn(false);
-      setFirestoreUserDetails(null);
     }
     setLoading(false);
   }
 
+  /* 
+    use this function to sign in with google popup. it will check if the user exists in the firestore user collection, if not it
+    will redirect to the register page
+  */
   async function signInUsingGoogle() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const user = result.user;
-      console.log(user);
       const { exists: uidExists, userDetails } = await checkUidExists(user.uid);
-      
-      setCurrentUser(user);
-      await setUserState();
+      console.log(
+        "uid for user:",
+        user.displayName,
+        "exists in Firestore:",
+        uidExists
+      );
 
-      if (!uidExists || !userDetails) { // Check for both exists and userDetails
-        console.log("User not registered, redirecting to register");
-        setUserLoggedIn(false);
-        setFirestoreUserDetails(null); // Explicitly set to null
+      if (!uidExists) {
         window.location.href = "register";
+        console.log("user not exists");
       } else {
-        console.log("User found in db, proceeding to dashboard");
-        setUserLoggedIn(true);
-        setFirestoreUserDetails(userDetails);
+        console.log("uid found in db, firestore user details:", userDetails);
         window.location.href = "dashboard";
+        if (userDetails) {
+          setFirestoreUserDetails(userDetails);
+          console.log("Signed in with user email: ", userDetails.email);
+        }
         return userDetails;
       }
     } catch (error) {
@@ -183,7 +158,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       const appUrl = import.meta.env.VITE_API_URL;
 
       const response = await axios.get(`${appUrl}/api/users/${uid}`);
-      
+
       if (response.status === 200) {
         console.log("user exists in Firestore with UID:", uid);
         return { exists: true, userDetails: response.data };
@@ -193,8 +168,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       }
     } catch (error) {
       console.error("Error checking user UID via API:", error);
-      setUserLoggedIn(false);
-      setCurrentUser(null);
       return { exists: false, userDetails: undefined };
     }
   };
@@ -288,11 +261,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     signOut,
     getFirestoreCollectionUserByStudentID,
     firestoreUserDetails,
-    setFirestoreUserDetails,
   };
 
   return (
-    <AuthenticationContext.Provider value={contextValue}>
+    <AuthenticationContext.Provider value={contextValue as any}>
       <TokenContext.Provider value={token}>
         {!loading && children}
       </TokenContext.Provider>

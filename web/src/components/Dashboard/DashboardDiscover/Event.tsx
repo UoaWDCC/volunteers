@@ -13,6 +13,8 @@ type Event = {
     image: string;
     host: string;
     coordinates: {longitude: string, latitude: string};
+    is_external?: boolean;
+    external_registration_url?: string | null;
 }
 
 interface EventProps {
@@ -50,6 +52,7 @@ export default function Event({event, setEventDetails}: EventProps) {
                     <p className="mb-0 text-sm">{event.location}</p>
                 </div>
             </div>
+            
             <div className="ml-auto p-6">
                 <p className="text-right block text-xs font-semibold">{event.host}</p>
                 <div className="">  

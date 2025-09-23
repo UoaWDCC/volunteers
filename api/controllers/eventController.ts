@@ -33,10 +33,62 @@ async function getEvent(req: Request, res: Response): Promise<void> {
     res.json(event);  // Send the event data as JSON response
 }
 
-// Add a single event
+// Add a single event (updated)
 async function addEvent(req: Request, res: Response): Promise<void> {
-    const newEvent = await addDoc(colRef, req.body);  // Add a new document with data from the request body
-    res.json(newEvent.id);  // Send the ID of the newly added event as JSON response
+    const { is_external, external_registration_url, ...rest } = req.body;
+    
+    // Validate URL structure if provided
+    if (external_registration_url && !/^https?:\/\/.+\..+/.test(external_registration_url)) {
+        res.status(400).json({ error: "Please enter a valid URL (include http:// or https://)" });
+        return;
+    }
+
+    // Validate external events
+    if (is_external && !external_registration_url) {
+        res.status(400).json({ 
+            error: "External registration URL is required for external events",
+            fields: ["external_registration_url"]
+        });
+        return;
+    }
+
+    try {
+        await addDoc(colRef, {
+            ...rest,
+            is_external: Boolean(is_external),
+            external_registration_url: is_external ? external_registration_url : null,
+            createdAt: new Date() // Good practice for sorting
+        });
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Event creation failed" });
+    }
+}
+
+// Update a single event (updated)
+async function updateEvent(req: Request, res: Response): Promise<void> {
+    const { is_external, external_registration_url, ...updateData } = req.body;
+    const eventRef = doc(db, "events", req.params.id);
+
+    // Same validation as addEvent
+    if (is_external && !external_registration_url) {
+        res.status(400).json({ error: "URL required for external events" });
+        return;
+    }
+
+    try {
+        await updateDoc(eventRef, {
+            ...updateData,
+            is_external: Boolean(is_external),
+            external_registration_url: is_external ? external_registration_url : null,
+            updatedAt: new Date()
+        });
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ error: "Event update failed" });
+    }
 }
 
 // Delete a single event
@@ -46,9 +98,5 @@ async function deleteEvent(req: Request, res: Response): Promise<void> {
     res.json("Event deleted");  // Send a confirmation message as JSON response
 }
 
-// Update a single event
-async function updateEvent(req: Request, res: Response): Promise<void> {
-    res.json({ message: "'/:id' is working to UPDATE a single one" });  // Placeholder message for updating an event
-}
 
 export { getEvents, getEvent, addEvent, deleteEvent, updateEvent };  // Export functions for use in other modules
