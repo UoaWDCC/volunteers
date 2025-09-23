@@ -38,6 +38,8 @@ import { HighlightsCollection } from "./collections/highlights";
 import { productsCollection } from "./collections/products";
 import { SponsorsCollection } from "./collections/sponsors";
 import { UsersCollection } from "./collections/users";
+import { FriendshipsCollection } from "./collections/friendships";
+import { FriendRequestsCollection } from "./collections/friendrequests";
 import { NewslettersCollection } from "./collections/newsletters";
 import { EventAttendanceCollection } from "./collections/event_attendance";
 
@@ -77,6 +79,8 @@ function App() {
         productsCollection,
         SponsorsCollection,
         UsersCollection,
+        FriendshipsCollection,
+        FriendRequestsCollection,
         NewslettersCollection,
         EventAttendanceCollection,
     ], []);

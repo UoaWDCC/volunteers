@@ -10,6 +10,8 @@ import announcementEndpoints from './api/announcements';
 import homepageEndpoints from './api/homepage';
 import emailEndpoints from './api/email';
 import newsletterEndpoints from './api/newsletter';
+import friendsEndpoints from './api/friends';
+import friendRequestsEndpoints from './api/friendrequests';
 
 import { db } from "../config/firebase";
 import {
@@ -43,6 +45,8 @@ router.use("/announcements", announcementEndpoints);
 router.use("/homepage", homepageEndpoints); 
 router.use('/email', emailEndpoints);
 router.use('/newsletter', newsletterEndpoints);
+router.use('/friends', friendsEndpoints);
+router.use('/friendrequests', friendRequestsEndpoints);
 
 export default router;
 

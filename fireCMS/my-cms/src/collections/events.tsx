@@ -4,6 +4,7 @@ interface EventValues {
 	external_registration_url?: string;
 }
 
+
 export const EventsCollection:EntityCollection= {
 	id: 'events',
 	name: 'Events',
@@ -178,5 +179,24 @@ export const EventsCollection:EntityCollection= {
 			description: 'The coordinates of the location on maps. Get this by right clicking in Google Maps and selecting the first option',
 		},
 	},
-	subcollections: [],
+	subcollections: [
+		{
+			name: "Participants",
+			path: "participants",
+			singularName: "participant",
+			id: "participants",
+			properties: {
+				added_at: {
+					name: "Added At",
+					dataType: "date",
+					autoValue: "on_create"
+				},
+				participant_id: {
+					dataType: 'string',
+					description: 'ID of the participant in the users collection',
+					name: 'Participant ID',
+				}
+			}
+		}
+	],
 }
