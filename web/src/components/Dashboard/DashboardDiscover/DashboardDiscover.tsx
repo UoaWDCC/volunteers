@@ -201,7 +201,7 @@ function DashboardDiscover() {
             <div className="flex justify-end text-right block text-sm mb-0 items-center">
               {flagshipFriendsGoing.length > 0 &&
                 <div className="-space-x-1 mr-2">
-                  {flagshipFriendsGoing.map((friend) => {
+                  {flagshipFriendsGoing.slice(0,2).map((friend) => {
                     return (
                       <img
                         key={`${friend.firstName}-profile-picture`}
