@@ -54,9 +54,9 @@ const CommunityGallery = () => {
   }, [context.searchTerm, data]);
 
   return (  
-      <div className='bg-white rounded-3xl py-10 px-[4%] w-full text-subheading text-black shadow-lg'>
+      <div className='bg-white rounded-lg py-10 px-[4%] w-full text-subheading text-black shadow-lg'>
           <p>People you may know: </p>
-          <div className='w-full grid grid-cols-3 max-[1280px]:grid-cols-2 min-[2100px]:grid-cols-4 min-[2560px]:grid-cols-5 gap-[2%]'>
+          <div className='w-full grid grid-cols-3 max-[1280px]:grid-cols-2 min-[2100px]:grid-cols-4 min-[2560px]:grid-cols-5 gap-x-4'>
             {filteredData.map((user: userData, index: number) => (
               <CommunityGalleryCard key={index} user={user} />
             ))}
