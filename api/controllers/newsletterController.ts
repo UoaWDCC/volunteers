@@ -2,7 +2,6 @@ import { Request, Response } from 'express';
 import { db } from '../config/firebase';
 import { doc, getDoc, collection, getDocs, addDoc } from 'firebase/firestore';
 
-// Define the Newsletter interface to match the structure of the request body
 interface Newsletter {
     newsletterTitle: string;
     newsletterSubheader: string;
@@ -10,7 +9,6 @@ interface Newsletter {
     newsletterEventIds: string[];
 }
 
-// Define the EventDetail interface to match the structure of the event data
 interface EventDetail {
     id: string;
     event_title?: string;
@@ -23,18 +21,22 @@ interface EventDetail {
     end_date_time?: any;  
 }
 
+function generateCustomIdentifier(date: Date = new Date()): string {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    return `${year}-${month}`;
+}
+
 async function createNewsletter(req: Request, res: Response): Promise<void> {
     try {
         const {newsletterTitle, newsletterSubheader, newsletterDescription, newsletterEventIds} = req.body as Newsletter;
-        const eventDetails: EventDetail[] = []; // Use the new interface
-        // Loop through each event ID and fetch the corresponding event data
+        const eventDetails: EventDetail[] = [];
         for (const eventId of newsletterEventIds) {
             const eventRef = doc(db, "events", eventId);
             const eventSnapshot = await getDoc(eventRef);
             if (eventSnapshot.exists()) {
                 const eventData = eventSnapshot.data();
                 if (eventData) {
-                    // Map Firestore fields to our EventDetail interface
                     eventDetails.push({
                         id: eventSnapshot.id,
                         event_title: eventData.event_title,
@@ -52,7 +54,6 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
         
         const formattedNewsletter = formatNewsLetter(newsletterTitle, newsletterSubheader, newsletterDescription, eventDetails);
         
-        // Send success response with the formatted text
         res.status(200).json({
             success: true,
             message: "Newsletter formatted successfully",
@@ -60,7 +61,7 @@ async function createNewsletter(req: Request, res: Response): Promise<void> {
         });
 
     } catch (error) {
-        console.error("Error creating newsletter:", error); // Log the actual error
+        console.error("Error creating newsletter:", error);
         res.status(500).json({
             success: false,
             message: "Failed to create newsletter"
@@ -117,7 +118,6 @@ function formatNewsLetter(title: string, subheader: string, description: string,
             </div>`;
     }
 
-    // Generate the complete HTML
     const htmlResult = `<!DOCTYPE html>
 <html lang="en">
 <head>
