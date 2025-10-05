@@ -97,7 +97,9 @@ const router = createBrowserRouter([
     element: (
       <AuthenticationContextProvider>
         <EventContextProvider>
-          <DashboardMemberPage />
+          <ProtectedRoute requiredRole="volunteer">
+            <DashboardMemberPage />
+          </ProtectedRoute>
         </EventContextProvider>
       </AuthenticationContextProvider>
     ),

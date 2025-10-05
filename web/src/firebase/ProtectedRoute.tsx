@@ -14,8 +14,8 @@ export default function ProtectedRoute({ requiredRole, children }: Props) {
     async function verify() {
       try {
         if (!token) {
-          if (requiredRole === "volunteer") setIsAllowed(true);
-          else setIsAllowed(false);
+          // Require authentication for all protected routes
+          setIsAllowed(false);
           return;
         }
         const appUrl = import.meta.env.VITE_API_URL as string;
@@ -25,6 +25,7 @@ export default function ProtectedRoute({ requiredRole, children }: Props) {
         if (!isMounted) return;
         if (res.ok) {
           const data = await res.json();
+          // Admin route requires admin role; member route requires any authenticated role
           setIsAllowed(requiredRole === "admin" ? data.role === "admin" : true);
         } else {
           setIsAllowed(false);
