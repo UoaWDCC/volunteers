@@ -1,4 +1,5 @@
-import { Dispatch, SetStateAction} from "react";
+import { Dispatch, SetStateAction, useState, useEffect} from "react";
+import { collection, doc, getFirestore, query, where, getDocs } from "firebase/firestore";
 
 type Event = {
     event_title: string;
@@ -13,6 +14,7 @@ type Event = {
     image: string;
     host: string;
     coordinates: {longitude: string, latitude: string};
+    id?: string;
 }
 
 interface EventProps {
@@ -34,8 +36,45 @@ export default function Event({event, setEventDetails}: EventProps) {
     const minutes = startDate.getMinutes() < 10 ? `0${startDate.getMinutes()}` : startDate.getMinutes();
     const time = `${hours}:${minutes} ${startDate.getHours() > 12 ? "PM" : "AM"}`;
 
-
     const dateInfo = `${day}, ${startDate.getDate()} ${month} AT ${time}`;
+
+    const [interestedCount, setInterestedCount] = useState(0);
+    const [goingCount, setGoingCount] = useState(0);
+
+    const db = getFirestore();
+
+    useEffect(() => {
+        const fetchCounts = async () => {
+            if (!event.id) return;
+
+            try {
+                const attendanceRef = collection(db, 'event_attendance');
+                const allAttendanceQuery = query(
+                    attendanceRef,
+                    where('eventId', '==', doc(db, 'events', event.id))
+                );
+                const allAttendanceSnapshot = await getDocs(allAttendanceQuery);
+
+                let interested = 0;
+                let going = 0;
+                allAttendanceSnapshot.forEach((doc) => {
+                    const status = doc.data().status || 'going';
+                    if (status === 'interested') {
+                        interested++;
+                    } else if (status === 'going') {
+                        going++;
+                    }
+                });
+
+                setInterestedCount(interested);
+                setGoingCount(going);
+            } catch (error) {
+                console.error('Error fetching attendance counts:', error);
+            }
+        };
+
+        fetchCounts();
+    }, [event.id]);
 
     return (
         <div onClick={() => setEventDetails(event)} className="dashboard bg-white-background transition transform hover:translate-y-0.5 hover:bg-white hover:shadow-sm ease-in duration-100 items-center m-4 flex rounded-xl cursor-pointer"> {/* event-container */}
@@ -54,8 +93,8 @@ export default function Event({event, setEventDetails}: EventProps) {
             <div className="ml-auto p-6">
                 <p className="text-right block text-xs font-semibold">{event.host}</p>
                 <div className="">  
-                    <p className="text-right block text-xs m-0">30 interested</p>
-                    <p className="text-right block text-xs">15 going</p>
+                    <p className="text-right block text-xs m-0">{interestedCount} interested</p>
+                    <p className="text-right block text-xs">{goingCount} going</p>
                 </div>
             </div>
         </div>

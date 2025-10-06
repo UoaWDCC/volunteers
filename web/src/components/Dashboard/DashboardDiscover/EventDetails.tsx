@@ -38,6 +38,10 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [isRegistered, setIsRegistered] = useState(false);
     const [attendanceId, setAttendanceId] = useState<string | null>(null);
+    const [isInterested, setIsInterested] = useState(false);
+    const [interestId, setInterestId] = useState<string | null>(null);
+    const [interestedCount, setInterestedCount] = useState(0);
+    const [goingCount, setGoingCount] = useState(0);
 
     const db = getFirestore();
 
@@ -70,15 +74,49 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
                 const querySnapshot = await getDocs(q);
                 
                 if (!querySnapshot.empty) {
-                    const doc = querySnapshot.docs[0];
-                    setIsRegistered(true);
-                    setButtonText('You are registered!');
-                    setAttendanceId(doc.id);
+                    const attendanceDoc = querySnapshot.docs[0];
+                    const status = attendanceDoc.data().status || 'going';
+                    
+                    if (status === 'going') {
+                        setIsRegistered(true);
+                        setButtonText('You are registered!');
+                        setAttendanceId(attendanceDoc.id);
+                        setIsInterested(false);
+                        setInterestId(null);
+                    } else if (status === 'interested') {
+                        setIsInterested(true);
+                        setInterestId(attendanceDoc.id);
+                        setIsRegistered(false);
+                        setAttendanceId(null);
+                    }
                 } else {
                     setIsRegistered(false);
                     setButtonText('Register for Event');
                     setAttendanceId(null);
+                    setIsInterested(false);
+                    setInterestId(null);
                 }
+                
+                // Get counts for interested and going
+                const allAttendanceQuery = query(
+                    attendanceRef,
+                    where('eventId', '==', doc(db, 'events', event.id))
+                );
+                const allAttendanceSnapshot = await getDocs(allAttendanceQuery);
+                
+                let interested = 0;
+                let going = 0;
+                allAttendanceSnapshot.forEach((doc) => {
+                    const status = doc.data().status || 'going';
+                    if (status === 'interested') {
+                        interested++;
+                    } else if (status === 'going') {
+                        going++;
+                    }
+                });
+                
+                setInterestedCount(interested);
+                setGoingCount(going);
             } catch (error) {
                 console.error('Error checking registration:', error);
             }
@@ -127,14 +165,27 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             
             const userDocId = userSnapshot.docs[0].id;
             
+            // If user was interested, update the existing record
+            if (interestId) {
+                const interestDoc = doc(db, "event_attendance", interestId);
+                await deleteDoc(interestDoc);
+                setIsInterested(false);
+                setInterestId(null);
+            }
+            
             const docRef = await addDoc(collection(db, "event_attendance"), {
                 eventId: doc(db, "events", eventId), // Reference to events collection
                 uid: doc(db, "users", userDocId),    // Reference to users collection using actual document ID
+                status: "going",
                 timestamp: serverTimestamp(),
             });
             
             setIsRegistered(true);
             setAttendanceId(docRef.id); // Set the attendance document ID
+            setGoingCount(goingCount + 1);
+            if (interestId) {
+                setInterestedCount(interestedCount - 1);
+            }
         } catch (error) {
             console.error("Error registering for event:", error);
         }
@@ -146,10 +197,63 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             await deleteDoc(attendanceDoc);
             setIsRegistered(false);
             setAttendanceId(null);
+            setGoingCount(goingCount - 1);
         } catch (error) {
             console.error("Error unregistering from event:", error);
         }
     }
+
+    async function markInterestInEvent(eventId: string, userId: string) {
+        try {
+            // First, find the user's document ID in the users collection
+            const usersRef = collection(db, 'users');
+            const userQuery = query(usersRef, where('uid', '==', userId));
+            const userSnapshot = await getDocs(userQuery);
+            
+            if (userSnapshot.empty) {
+                return;
+            }
+            
+            const userDocId = userSnapshot.docs[0].id;
+            
+            const docRef = await addDoc(collection(db, "event_attendance"), {
+                eventId: doc(db, "events", eventId),
+                uid: doc(db, "users", userDocId),
+                status: "interested",
+                timestamp: serverTimestamp(),
+            });
+            
+            setIsInterested(true);
+            setInterestId(docRef.id);
+            setInterestedCount(interestedCount + 1);
+        } catch (error) {
+            console.error("Error marking interest in event:", error);
+        }
+    }
+
+    async function removeInterestInEvent(interestDocId: string) {
+        try {
+            const interestDoc = doc(db, "event_attendance", interestDocId);
+            await deleteDoc(interestDoc);
+            setIsInterested(false);
+            setInterestId(null);
+            setInterestedCount(interestedCount - 1);
+        } catch (error) {
+            console.error("Error removing interest in event:", error);
+        }
+    }
+
+    const handleInterestClick = () => {
+        if (!isInterested) {
+            if (user?.uid && event.id) {
+                markInterestInEvent(event.id, user.uid);
+            }
+        } else {
+            if (interestId) {
+                removeInterestInEvent(interestId);
+            }
+        }
+    };
     
     return (
         <div className="flex flex-col absolute top-0 left-0 items-center w-full h-full bg-[#F7F7FB] overflow-scroll scrollbar-none"> {/* event-container */}
@@ -160,13 +264,26 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
             <div className="flex flex-col w-[95%] py-4">
                 <div className="flex flex-row justify-between items-center w-full">
                     <h1 className="text-subheading font-bold">{event.event_title}</h1>
-                    <button className="h-10 text-body-heading rounded-full" onClick={handleClick}>{buttonText}</button>
+                    <div className="flex gap-2">
+                        <button 
+                            className={`h-10 px-4 text-body-heading rounded-full border-2 ${isInterested ? 'bg-blue-100 border-blue-500 text-blue-700' : 'border-gray-300 hover:border-blue-300'}`}
+                            onClick={handleInterestClick}
+                        >
+                            {isInterested ? '★ Interested' : '☆ Interested'}
+                        </button>
+                        <button className="h-10 px-4 text-body-heading rounded-full bg-primary text-white" onClick={handleClick}>{buttonText}</button>
+                    </div>
                 </div>
 
-                <div className="flex flex-row justify-start gap-3 w-full">
+                <div className="flex flex-row justify-start gap-3 w-full mt-2">
                     {event.tag.map((tag, index) => (
                         <div key={index} className="text-xs pt-[3px] px-3 h-6 text-grey border-grey border-solid border-2 rounded-full ">{tag}</div>
                     ))}
+                </div>
+
+                <div className="flex flex-row gap-4 mt-2 text-sm text-gray-600">
+                    <span>{interestedCount} interested</span>
+                    <span>{goingCount} going</span>
                 </div>
             </div>
             {/* Popup for confirmation */}
