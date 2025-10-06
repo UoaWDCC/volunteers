@@ -28,6 +28,19 @@ export const EventAttendanceCollection: EntityCollection = {
         required: true,
       },
     },
+    status: {
+      dataType: "string",
+      name: "Status",
+      description: "User's attendance status for the event",
+      enumValues: {
+        interested: "Interested",
+        going: "Going",
+      },
+      validation: {
+        required: true,
+      },
+      defaultValue: "going",
+    },
     timestamp: {
       dataType: "date",
       name: "RSVP Time",
