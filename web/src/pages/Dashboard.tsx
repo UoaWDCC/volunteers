@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import DashboardCommunity from "../components/Dashboard/DashboardCommunity/DashboardCommunity";
 import DashboardProfile from "@components/Dashboard/dashboardProfile/DashboardProfile";
 import DashboardDashboard from "@components/Dashboard/DashboardMain/DashboardDashboard";
@@ -8,9 +8,8 @@ import DashboardHeader from "@components/Dashboard/DashboardHeader";
 import SideBar from "@components/Dashboard/SideBar";
 import { CommunitySearchContextProvider } from "../context/CommunitySearchContextProvider";
 import DashboardDiscover from "@components/Dashboard/DashboardDiscover/DashboardDiscover";
-import SearchBar from "@components/Dashboard/DashboardCommunity/SearchBar";
 import AuthenticationContext from "../context/AuthenticationContext";
-
+import DashboardAdmin from "@components/Dashboard/DashboardAdmin/DashboardAdmin";
 
 function Dashboard() {
   const [tab, setTab] = useState(1);
@@ -35,9 +34,26 @@ function Dashboard() {
     setTab(5);
   };
   const authContext = useContext(AuthenticationContext);
-  const { isUserLoggedIn } = authContext as unknown as {
-    isUserLoggedIn: boolean;
+  const { isUserLoggedIn, firestoreUserDetails } = authContext as unknown as {
+    isUserLoggedIn: boolean,
+    firestoreUserDetails: any
   };
+
+  // Test condition for rendering admin specific content
+  // Will need to be changed later when user type column/identifier is implemented
+  const isAdmin = firestoreUserDetails?.role === 'admin';
+
+  // Allow deep children to request tab switches via window event
+  useEffect(() => {
+    const handler = (e: CustomEvent<{ tab: number }>) => {
+      const nextTab = e?.detail?.tab;
+      if (typeof nextTab === 'number') {
+        setTab(nextTab);
+      }
+    };
+    window.addEventListener('switch-tab', handler as EventListener);
+    return () => window.removeEventListener('switch-tab', handler as EventListener);
+  }, []);
 
   if (!isUserLoggedIn) {
     window.location.href = "/";
@@ -49,26 +65,21 @@ function Dashboard() {
             {/* width of the left nav bar */}
             {/* place thing component here and remove bg-primary */}
             <div className='w-[16rem] sm:max-2xl:w-[7rem]'> 
-                <SideBar switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}/>
+                <SideBar 
+                  activeTab={tab === 1 ? 'dashboard' : tab === 2 ? 'discover' : tab === 3 ? 'my profile' : tab === 4 ? 'my calendar' : 'community'} 
+                  switchDashboard={switchDashboard} switchCalendar={switchCalendar} switchCommunity={switchCommunity} switchDiscover={switchDiscover} switchProfile={switchProfile}
+                />
             </div>
 
-            {/* width of the everything else (other than the left nav bar) or in otherwords the length of the searchbar*/}
-            <div className='flex flex-col flex-1'>
-                <div className='flex flex-row justify-end items-center w-[95%] h-[6rem] pl-5'>
-                    {/* place notifcation stuff in here and remove bg-yellow for henrys thing it'll probably break the styling a bit but it shouldnt be too hard to fix, maybe instead of having a whole nav bar just have the notifcation and pfp component as separate thing or something*/}
-                    {tab === 5 &&(
-                        <>
-                            <h1 className="m-0">other thig</h1>
-                            <SearchBar />
-                        </>
-                    )}
-                    <DashboardHeader/>
+            <div className='flex flex-col flex-1 '>
+                <div className='flex flex-row justify-end items-center w-full mb-4'>
+                    <DashboardHeader tab = {tab}/>
                 </div>
 
                 {/* whole tabs go in here */}
-                <div className='flex flex-row h-[90%] pt-0 p-5'>
+                <div className='flex flex-row h-[90%] py-6 px-8'>
                     {/* <DashboardCommunity /> */}
-                    {tab === 1 && <DashboardDashboard />}
+                    {tab === 1 && (isAdmin ? <DashboardAdmin /> : <DashboardDashboard />)}
                     {tab === 2 && <DashboardDiscover />}
                     {tab === 3 &&
                         <>

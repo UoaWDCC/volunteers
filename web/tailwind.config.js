@@ -76,6 +76,7 @@ export default {
           colors: {
             primary: "#3B87DD", /* blue */
             "white-background": "#F5F5F5", 
+            "grey-background": "#F7F7FB",
           },
           fontSize: {
             'heading': ['72px', {

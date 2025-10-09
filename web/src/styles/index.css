@@ -6,6 +6,12 @@
 /* global.css */
 
 
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 100px; /* Adjusts scroll position to account for fixed header */
+  }
+}
 
 @layer utilities {
   .mask-tab { /* Tailwind doesnt support masks, so need to use css. This is used in SideBarTab.tsx */
@@ -75,7 +81,7 @@ a:hover {
 /* Buttons */
 button {
   cursor: pointer;
-  background-color: #007bff;
+  background-color: #3B87DD;
   color: #fff;
   border: none;
   border-radius: 4px;
@@ -87,19 +93,113 @@ button {
   background-color: #0056b3;
 } */
 
-/* Containers */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
+button.stroked {
+  cursor: pointer;
+  background-color: white;
+  color: #3B87DD;
+  border: 2px solid #3B87DD;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
-/* Flexbox Utilities */
-.flex {
-  display: flex;
+button.stroked:hover {
+  background-color: #f0f0f0;
 }
 
-.flex-center {
-  justify-content: center;
-  align-items: center;
+/* body text editor */
+.wrapper-class {
+  border-radius: 11px;
+  background: #FBFBFB;
+  height: 100%;
+}
+
+.editor-class {
+  font-family: 'Poppins', sans-serif;
+  font-size: 10px;
+  color: #33342E;
+  background: #FBFBFB;
+  border-radius: 0 0 11px 11px;
+  padding: 6px 8px !important;
+  min-height: 60px !important; 
+  font-size: 12px !important;
+  height: calc(100% - 28px) !important;
+  overflow-y: auto !important;
+}
+
+.toolbar-class {
+  margin: 0;
+  border-radius: 11px 11px 0 0;
+  border-bottom: 0.65px solid #DDE5E9;
+  background: #353535;
+  min-height: 28px !important;
+  position: sticky !important;
+  top: 0 !important;
+  z-index: 1 !important;
+}
+
+.rdw-option-wrapper svg path {
+  fill: #ffffff !important;
+}
+
+.rdw-option-wrapper {
+  background: transparent;
+  border: none;
+  min-width: 20px !important; 
+  height: 20px !important;   
+  margin: 0 1px !important;  
+  padding: 2px !important; 
+}
+
+.rdw-option-wrapper img {
+  width: 12px !important;
+  height: 12px !important;
+  filter: brightness(0) invert(1);
+}
+
+.rdw-option-wrapper:hover {
+  box-shadow: none;
+  background: #4a4a4a !important;
+}
+
+.rdw-option-active {
+  box-shadow: none;
+  background: #2a2a2a !important;
+}
+
+.file-preview {
+    transition: all 0.2s ease;
+}
+
+.file-preview:hover {
+    transform: scale(1.02);
+}
+
+/*scrollbar styling */
+.editor-class::-webkit-scrollbar {
+  width: 6px;
+}
+
+.editor-class::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.editor-class::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 3px;
+}
+
+.editor-class::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* reset for email preview content */
+.email-preview-reset {
+  all: initial;
+  * {
+    all: unset;
+  }
+}
+
+.email-preview-reset div {
+  display: block;
 }

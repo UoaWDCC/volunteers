@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import SideBarTab from './SideBarTab';
 import { Link } from 'react-router-dom';
 import AuthenticationContext from '../../context/AuthenticationContext';
@@ -9,11 +9,18 @@ type SideBarProps = {
     switchProfile: () => void;
     switchCalendar: () => void;
     switchCommunity: () => void;
+    activeTab?: 'dashboard' | 'discover' | 'my profile' | 'my calendar' | 'community';
 }
 
-const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, switchProfile, switchCalendar, switchCommunity}) => {
+const SideBar: React.FC<SideBarProps> = ({ switchDashboard, switchDiscover, switchProfile, switchCalendar, switchCommunity, activeTab}) => {
     
     const [selectedTab, setSelectedTab] = useState('dashboard');
+
+    useEffect(() => {
+        if (activeTab) {
+            setSelectedTab(activeTab);
+        }
+    }, [activeTab]);
 
     const authContext = useContext(AuthenticationContext);
     const { signOut } = authContext as unknown as { signOut: () => void };

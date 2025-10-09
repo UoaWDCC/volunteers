@@ -21,7 +21,7 @@ function DashboardProfile() {
     const [emergencyLastName, setEmergencyLastName] = useState("");
     const [relationship, setRelationship] = useState("");
     const [emergencyMobile, setEmergencyMobile] = useState("");
-    
+
     useEffect(() => {
         console.log("User is logged in: ", isUserLoggedIn);
         if (!isUserLoggedIn) {
@@ -41,13 +41,15 @@ function DashboardProfile() {
             setYearLevel(firestoreUserDetails.yearLevel);
             setDietary(firestoreUserDetails.dietaryRequirements || []);
             setLicense(firestoreUserDetails.driversLicense);
+            console.log(firestoreUserDetails.driversLicense);
+            console.log("dashboardprofile");
             setEmergencyFirstName(firestoreUserDetails.emergencyContactFirstName);
             setEmergencyLastName(firestoreUserDetails.emergencyContactLastName);
             setRelationship(firestoreUserDetails.emergencyContactRelationship);
             setEmergencyMobile(firestoreUserDetails.emergencyContactMobile);
             
         }
-    }, [firestoreUserDetails]);
+    }, []);
   return (
     <div className="flex flex-col gap-6 w-[96%] h-full overflow-auto scrollbar-none">
                 {/* width of the gallery */}
@@ -75,7 +77,7 @@ function DashboardProfile() {
                     </div>
 
                     <div className="flex-1">
-                        <ProfileMyProfileProgressBar totalHours={20} completedHours={14}></ProfileMyProfileProgressBar>
+                        <ProfileMyProfileProgressBar totalHours={5} completedHours={firestoreUserDetails.hours}></ProfileMyProfileProgressBar>
                     </div>
                 </div>
             
