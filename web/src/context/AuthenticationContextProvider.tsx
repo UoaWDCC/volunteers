@@ -42,6 +42,7 @@ export function useToken() {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const [profile_picture, setProfilePicture] = useState<string>("");
   const [currentUser, setCurrentUser] = useState<User | null>(null);
   const [isUserLoggedIn, setUserLoggedIn] = useState(false);
   const [error, setError] = useState<Error | null>(null);
