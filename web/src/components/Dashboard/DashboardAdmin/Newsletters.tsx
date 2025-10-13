@@ -835,7 +835,7 @@ const Newsletters: React.FC = () => {
                                 {showReview && (
                                     <>
                                         <div className="absolute left-[47px] top-[134px] w-[208px] h-[19px] font-poppins text-[13px] leading-[150%] text-[#33342E]">
-                                        Review form before submitting
+                                            Review form before submitting
                                         </div>
                                     
                                         <div 

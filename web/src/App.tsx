@@ -1,6 +1,6 @@
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MainMenu from "@pages/MainMenu";
 import NotFound from "@pages/NotFound";
 import TestingComponent from "@components/TestComponent";

@@ -13,6 +13,8 @@ type Event = {
     image: string;
     host: string;
     coordinates: {longitude: string, latitude: string};
+    is_external?: boolean;
+    external_registration_url?: string | null;
 }
 
 interface EventProps {

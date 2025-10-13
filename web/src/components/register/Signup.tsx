@@ -231,7 +231,8 @@ function Signup() {
           emergencyContactLastName,
           emergencyContactMobile,
           emergencyContactRelationship,
-          hours: 0
+          hours: 0,
+          profile_picture
         });
         console.log('Document successfully written!');
         goToDashboard();
