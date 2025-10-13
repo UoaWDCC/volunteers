@@ -123,7 +123,11 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log("user not exists");
       } else {
         console.log("uid found in db, firestore user details:", userDetails);
-        window.location.href = "dashboard";
+        if (userDetails && userDetails.role === 'admin') {
+          window.location.href = "/dashboard/admin";
+        } else {
+          window.location.href = "/dashboard/member";
+        }
         if (userDetails) {
           setFirestoreUserDetails(userDetails);
           console.log("Signed in with user email: ", userDetails.email);

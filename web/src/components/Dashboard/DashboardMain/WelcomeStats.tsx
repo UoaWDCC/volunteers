@@ -8,6 +8,18 @@ function WelcomeStats() {
   const authContext = useContext(AuthenticationContext);
   const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
 
+  // Guard against null/undefined firestoreUserDetails
+  if (!firestoreUserDetails) {
+    return (
+      <div className="bg-white rounded-xl shadow-lg flex items-center space-x-4">
+        <div className="flex-1 p-6 ml-5">
+          <h1 className="text-4xl font-bold text-primary">Loading...</h1>
+          <p className="text-black">Please wait while we load your data.</p>
+        </div>
+      </div>
+    );
+  }
+
   function calculateLevel(hours: number) {
     return Math.floor(hours / 5) + 1;
   }
