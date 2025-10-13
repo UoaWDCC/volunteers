@@ -13,7 +13,8 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({ tab }) => {
   const { firestoreUserDetails } = authContext as unknown as {firestoreUserDetails: any};
   const isAdmin = firestoreUserDetails.role === 'admin';
 
-  const profileImage = auth.profile_picture;
+  // never used?
+  // const profileImage = auth.profile_picture;
 
   const toggleNotificationTab = () => {
     if (isNotificationTabOpen) {
