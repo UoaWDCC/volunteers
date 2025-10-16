@@ -26,9 +26,16 @@ export default function EventsScrollContainer({
   events,
   setEventDetails,
 }: EventsProps) {
+  // Filter out events that have already ended
+  const currentDate = new Date();
+  const upcomingEvents = events.filter(event => {
+    const eventEndDate = new Date(event.end_date_time);
+    return eventEndDate > currentDate;
+  });
+
   return (
     <div className="bg-white-background h-full overflow-y-scroll scrollbar-none">
-      {events.map((e, index) => (
+      {upcomingEvents.map((e, index) => (
         <Event key={index} event={e} setEventDetails={setEventDetails} />
       ))}
     </div>
