@@ -41,7 +41,7 @@ export default function EventDetails({event, setEventDetails}: EventProps) {
 
     const db = getFirestore();
 
-    const auth = useAuth();
+    const auth = useAuth() as unknown as { currentUser: { uid: string } | null } | null;
     const user = auth?.currentUser;
 
     // Check if user is already registered for this event
