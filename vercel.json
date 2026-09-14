@@ -1,0 +1,19 @@
+{
+  "services": {
+    "web": {
+      "root": "web/",
+      "framework": "vite"
+    },
+    "api": {
+      "root": "api/",
+      "framework": "express",
+      "entrypoint": "index.ts"
+    }
+  },
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": { "service": "api" } },
+    { "source": "/admin/(.*)", "destination": { "service": "api" } },
+    { "source": "/images/(.*)", "destination": { "service": "api" } },
+    { "source": "/(.*)", "destination": { "service": "web" } }
+  ]
+}

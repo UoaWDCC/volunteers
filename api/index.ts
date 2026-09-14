@@ -18,7 +18,11 @@ app.use('/admin', express.static('public/admin/build'));
 // Routes
 app.use('/api', routes);
 
-const port = Number.parseInt(process.env.PORT || '3000');
-app.listen(port, () => {
- console.log(`Listening on port ${port}`);
-});
+if (require.main === module) {
+  const port = Number.parseInt(process.env.PORT || '3000');
+  app.listen(port, () => {
+    console.log(`Listening on port ${port}`);
+  });
+}
+
+export default app;
